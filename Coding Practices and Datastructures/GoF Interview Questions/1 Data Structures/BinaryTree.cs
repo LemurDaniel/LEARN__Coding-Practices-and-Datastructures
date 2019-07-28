@@ -6,8 +6,25 @@ using System.Threading.Tasks;
 
 namespace GoF_Coding_Interview_Algos.GoF_Interview_Questions._1_Data_Structures
 {
-    public class BinaryTree<V> where V : IComparable
+    public class TraverseType
     {
+        public static readonly TraverseType InOrder = new TraverseType("InOrder",0);        // Left, Root, Right
+        public static readonly TraverseType PreOrder = new TraverseType("PreOrder", 1);     // Root, Left, Right
+        public static readonly TraverseType PostOrder = new TraverseType("PostOrder", 2);   // Left, Right, Root
+        public static readonly TraverseType LevelOrder = new TraverseType("LevelOrder", 3); // Prit all on same Level Startig from Top
+
+        public readonly int typ;
+        public readonly string desc;
+        private TraverseType(string desc, int typ)
+        {
+            this.desc = desc;
+            this.typ = typ;
+        }
+        public override string ToString() => desc;
+    }
+
+    public class BinaryTree<V> where V : IComparable
+    {       
         public class Node
         {
             private Node left, right;
@@ -69,6 +86,19 @@ namespace GoF_Coding_Interview_Algos.GoF_Interview_Questions._1_Data_Structures
 
                 return node.val.Equals(val) && rightBool && leftBool;
             }
+
+            // Travers
+            public StringBuilder PrintRecursive(StringBuilder sb, TraverseType traverseType)
+            {
+                if(traverseType == TraverseType.PreOrder) sb.Append(val + "; ");
+                left?.PrintRecursive(sb, traverseType);
+                if (traverseType == TraverseType.InOrder) sb.Append(val + "; ");
+                right?.PrintRecursive(sb, traverseType);
+                if (traverseType == TraverseType.PostOrder) sb.Append(val + "; ");
+                return sb;
+            }
+
+
         }
 
 
@@ -121,8 +151,38 @@ namespace GoF_Coding_Interview_Algos.GoF_Interview_Questions._1_Data_Structures
             return tree.Root.Equals(Root);
         }
 
+
+
+
+        // TRAVERSAL
+        // Depth First
+        public string PrintInOrder(TraverseType traverseType)
+        {
+            if (root == null) return "";
+            StringBuilder sb = new StringBuilder();
+            if (traverseType.Equals(TraverseType.LevelOrder)) return PrintLevelOrder(sb).ToString().Substring(0, sb.Length - 2);
+            else return root.PrintRecursive(sb, traverseType).ToString().Substring(0, sb.Length-2);
+        }
+
+        private StringBuilder PrintLevelOrder(StringBuilder sb)
+        {
+            Queue<Node> queue = new Queue<Node>();
+            queue.Enqueue(root);
+
+            while(queue.Count != 0)
+            {
+                Node node = queue.Dequeue();
+                sb.Append(node.Val+ "; ");
+
+                if (node.Left != null) queue.Enqueue(node.Left);
+                if (node.Right != null) queue.Enqueue(node.Right);
+            }
+            return sb;
+        }
+
         //static Methods
 
 
     }
+
 }

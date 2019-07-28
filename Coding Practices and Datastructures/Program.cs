@@ -1,4 +1,5 @@
-﻿using GoF_Coding_Interview_Algos.Coding_Train.Challenges.TicTacToe;
+﻿using Coding_Practices_and_Datastructures.Other;
+using GoF_Coding_Interview_Algos.Coding_Train.Challenges.TicTacToe;
 using GoF_Coding_Interview_Algos.Daily_Code;
 using GoF_Coding_Interview_Algos.Data_Structures_and_Algos;
 using GoF_Coding_Interview_Algos.GoF_Interview_Questions.LinkedLists;
@@ -27,6 +28,9 @@ namespace GoF_Coding_Interview_Algos
             // new Konsolenbedinung();
 
             ITestable aufgabe;
+
+            /* OTHER */
+            aufgabe = new TreeTraversal();
 
 
             /* Daily Coding Problems  */
@@ -74,7 +78,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Floor_and_Ceiling_of_a_Binary_Search_Tree();
             //  aufgabe = new Max_Stack();
             //  aufgabe = new Number_of_Ways_to_Climb_Stairs();     // Hard
-            aufgabe = new Invert_a_Binary_Tree();
+            //  aufgabe = new Invert_a_Binary_Tree();
 
             while (true) { aufgabe.Test(); }
         }

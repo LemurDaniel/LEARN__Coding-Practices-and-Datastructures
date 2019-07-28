@@ -88,6 +88,7 @@
     <Compile Include="GoF Interview Questions\Two Pointers\Valid Palindrom.cs" />
     <Compile Include="Other\Daily Coding Problem\Infinite 2D Grid [Easy].cs" />
     <Compile Include="Other\Tower of Hanoi\Hanoi.cs" />
+    <Compile Include="Other\TreeTraversal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
