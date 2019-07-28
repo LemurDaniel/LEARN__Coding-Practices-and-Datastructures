@@ -1,10 +1,10 @@
-﻿using GoF_Coding_Interview_Algos.Daily_Code;
+﻿using Coding_Practices_and_Datastructures.Daily_Code;
 using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoF_Coding_Interview_Algos.GoF_Interview_Questions.Stack
+namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Stack
 {
     class Evaluate_Reverse_Polish_Notation : Testable
     {

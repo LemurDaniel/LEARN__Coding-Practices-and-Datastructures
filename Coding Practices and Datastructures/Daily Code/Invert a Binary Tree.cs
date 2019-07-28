@@ -1,11 +1,11 @@
-﻿using GoF_Coding_Interview_Algos.GoF_Interview_Questions._1_Data_Structures;
+﻿using Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_Structures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoF_Coding_Interview_Algos.Daily_Code
+namespace Coding_Practices_and_Datastructures.Daily_Code
 {
     class Invert_a_Binary_Tree : Testable
     {

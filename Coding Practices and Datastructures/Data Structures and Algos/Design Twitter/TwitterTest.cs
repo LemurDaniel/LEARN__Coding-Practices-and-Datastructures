@@ -1,11 +1,11 @@
-﻿using GoF_Coding_Interview_Algos.Design_Twitter.Tw;
+﻿using Coding_Practices_and_Datastructures.Design_Twitter.Tw;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoF_Coding_Interview_Algos.Design_Twitter
+namespace Coding_Practices_and_Datastructures.Design_Twitter
 {
     public class TwitterTest
     {

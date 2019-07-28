@@ -1,12 +1,12 @@
 ﻿
-using GoF_Coding_Interview_Algos.Daily_Code;
+using Coding_Practices_and_Datastructures.Daily_Code;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace GoF_Coding_Interview_Algos.GoF_Interview_Questions.Two_Pointers
+namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Two_Pointers
 {
     class Move_Zeroes : Testable
     {

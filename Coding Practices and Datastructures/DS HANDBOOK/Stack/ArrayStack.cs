@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoF_Coding_Interview_Algos.DS_HANDBOOK.Stack
+namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Stack
 {
     // Implementierung eines Stacks mit einem Array
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoF_Coding_Interview_Algos.Tower_of_Hanoi
+namespace Coding_Practices_and_Datastructures.Tower_of_Hanoi
 {
     class Hanoi
     {

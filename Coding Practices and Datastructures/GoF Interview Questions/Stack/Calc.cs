@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoF_Coding_Interview_Algos.GoF_Interview_Questions.Stack
+namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Stack
 {
 
     class Calc

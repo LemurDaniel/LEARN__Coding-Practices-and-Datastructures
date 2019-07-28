@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoF_Coding_Interview_Algos.DS_HANDBOOK.Queue
+namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Queue
 {
     // Implementierung einer Queue mit einem Array
 

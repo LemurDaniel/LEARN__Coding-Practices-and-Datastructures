@@ -1,11 +1,11 @@
-﻿using GoF_Coding_Interview_Algos.Daily_Code;
+﻿using Coding_Practices_and_Datastructures.Daily_Code;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoF_Coding_Interview_Algos.Data_Structures_and_Algos
+namespace Coding_Practices_and_Datastructures.Data_Structures_and_Algos
 {
     public class InfoBase<V>
     {

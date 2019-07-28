@@ -1,13 +1,13 @@
 ﻿using Coding_Practices_and_Datastructures.Other;
-using GoF_Coding_Interview_Algos.Coding_Train.Challenges.TicTacToe;
-using GoF_Coding_Interview_Algos.Daily_Code;
-using GoF_Coding_Interview_Algos.Data_Structures_and_Algos;
-using GoF_Coding_Interview_Algos.GoF_Interview_Questions.LinkedLists;
-using GoF_Coding_Interview_Algos.GoF_Interview_Questions.Stack;
-using GoF_Coding_Interview_Algos.GoF_Interview_Questions.Strings;
-using GoF_Coding_Interview_Algos.GoF_Interview_Questions.Two_Pointers;
-using GoF_Coding_Interview_Algos.Other.Daily_Coding_Problem;
-using GoF_Coding_Interview_Algos.Tower_of_Hanoi;
+using Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe;
+using Coding_Practices_and_Datastructures.Daily_Code;
+using Coding_Practices_and_Datastructures.Data_Structures_and_Algos;
+using Coding_Practices_and_Datastructures.GoF_Interview_Questions.LinkedLists;
+using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Stack;
+using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Strings;
+using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Two_Pointers;
+using Coding_Practices_and_Datastructures.Other.Daily_Coding_Problem;
+using Coding_Practices_and_Datastructures.Tower_of_Hanoi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +30,7 @@ namespace GoF_Coding_Interview_Algos
             ITestable aufgabe;
 
             /* OTHER */
-            aufgabe = new TreeTraversal();
+            //  aufgabe = new TreeTraversal();
 
 
             /* Daily Coding Problems  */
@@ -79,6 +79,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Max_Stack();
             //  aufgabe = new Number_of_Ways_to_Climb_Stairs();     // Hard
             //  aufgabe = new Invert_a_Binary_Tree();
+            aufgabe = new Simple_Calculator();
 
             while (true) { aufgabe.Test(); }
         }

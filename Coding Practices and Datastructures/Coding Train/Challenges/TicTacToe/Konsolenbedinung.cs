@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoF_Coding_Interview_Algos.Coding_Train.Challenges.TicTacToe
+namespace Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe
 {
     class Konsolenbedinung
     {

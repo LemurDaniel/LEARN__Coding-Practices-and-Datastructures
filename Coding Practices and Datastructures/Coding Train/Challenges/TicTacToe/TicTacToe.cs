@@ -1,12 +1,12 @@
-﻿using GoF_Coding_Interview_Algos.Daily_Code;
+﻿using Coding_Practices_and_Datastructures.Daily_Code;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static GoF_Coding_Interview_Algos.Coding_Train.Challenges.TicTacToe.Konsolenbedinung;
+using static Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe.Konsolenbedinung;
 
-namespace GoF_Coding_Interview_Algos.Coding_Train.Challenges.TicTacToe
+namespace Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe
 {
     class TicTacToe
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoF_Coding_Interview_Algos.Daily_Code
+namespace Coding_Practices_and_Datastructures.Daily_Code
 {
     public class First_and_Last_Indices_of_an_Element_in_a_Sorted_Array : Testable
     {

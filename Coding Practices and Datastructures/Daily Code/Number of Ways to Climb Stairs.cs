@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace GoF_Coding_Interview_Algos.Daily_Code
+namespace Coding_Practices_and_Datastructures.Daily_Code
 {
     class Number_of_Ways_to_Climb_Stairs : Testable
     {

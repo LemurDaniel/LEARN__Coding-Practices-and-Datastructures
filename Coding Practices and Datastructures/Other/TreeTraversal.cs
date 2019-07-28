@@ -1,5 +1,5 @@
-﻿using GoF_Coding_Interview_Algos.Daily_Code;
-using GoF_Coding_Interview_Algos.GoF_Interview_Questions._1_Data_Structures;
+﻿using Coding_Practices_and_Datastructures.Daily_Code;
+using Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_Structures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
