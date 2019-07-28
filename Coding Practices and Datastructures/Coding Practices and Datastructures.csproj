@@ -54,7 +54,7 @@
     <Compile Include="Daily Code\Non-decreasing Array with Single Modification.cs" />
     <Compile Include="Daily Code\Number of Ways to Climb Stairs.cs" />
     <Compile Include="Daily Code\Reverse_A_Linked_List.cs" />
-    <Compile Include="Daily Code\Simple Calculator.cs" />
+    <Compile Include="Daily Code\SimpleCalculator.cs" />
     <Compile Include="Daily Code\Sorting a list with 3 unique numbers.cs" />
     <Compile Include="Daily Code\Two-Sum.cs" />
     <Compile Include="Daily Code\Validate Balanced Parentheses.cs" />
