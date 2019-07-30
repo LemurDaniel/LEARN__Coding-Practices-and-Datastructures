@@ -50,6 +50,7 @@
     <Compile Include="Daily Code\Floor and Ceiling of a Binary Search Tree.cs" />
     <Compile Include="Daily Code\Invert a Binary Tree.cs" />
     <Compile Include="Daily Code\Longest Palindrom.cs" />
+    <Compile Include="Daily Code\Longest Sequence with Two Unique Numbers.cs" />
     <Compile Include="Daily Code\Max Stack.cs" />
     <Compile Include="Daily Code\Non-decreasing Array with Single Modification.cs" />
     <Compile Include="Daily Code\Number of Ways to Climb Stairs.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="GoF Interview Questions\Stack\Basic Calculator.cs" />
     <Compile Include="GoF Interview Questions\Stack\Calc.cs" />
     <Compile Include="GoF Interview Questions\Stack\Evaluate Reverse Polish Notation.cs" />
+    <Compile Include="GoF Interview Questions\Stack\MinStack.cs" />
     <Compile Include="GoF Interview Questions\Strings\Integer_To_Roman.cs" />
     <Compile Include="GoF Interview Questions\Strings\String To Integer.cs" />
     <Compile Include="GoF Interview Questions\Strings\ZigZag Conversion.cs" />

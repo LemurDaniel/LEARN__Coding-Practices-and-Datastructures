@@ -30,7 +30,7 @@ namespace GoF_Coding_Interview_Algos
             ITestable aufgabe;
 
             /* OTHER */
-            //  aufgabe = new TreeTraversal();
+            // aufgabe = new TreeTraversal();   UNFINISHED !!!!!
 
 
             /* Daily Coding Problems  */
@@ -56,6 +56,7 @@ namespace GoF_Coding_Interview_Algos
             //------>STACK - STRUCTURES
             //  aufgabe = new Validate_Balanced_Parentheses(); ???????????? IMPLEMENT OWN STACK STRUCTURE
             //  aufgabe = new Evaluate_Reverse_Polish_Notation();
+            //  aufgabe = new Min_Stack();
 
             //aufgabe = new Basic_Calculator(); NIcht fertig
 
@@ -79,7 +80,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Max_Stack();
             //  aufgabe = new Number_of_Ways_to_Climb_Stairs();     // Hard
             //  aufgabe = new Invert_a_Binary_Tree();
-            aufgabe = new Simple_Calculator();
+            //  aufgabe = new Simple_Calculator();
+            aufgabe = new Longest_Sequence_with_Two_Unique_Numbers();
 
             while (true) { aufgabe.Test(); }
         }

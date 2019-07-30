@@ -11,7 +11,14 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public static readonly TraverseType InOrder = new TraverseType("InOrder",0);        // Left, Root, Right
         public static readonly TraverseType PreOrder = new TraverseType("PreOrder", 1);     // Root, Left, Right
         public static readonly TraverseType PostOrder = new TraverseType("PostOrder", 2);   // Left, Right, Root
-        public static readonly TraverseType LevelOrder = new TraverseType("LevelOrder", 3); // Prit all on same Level Startig from Top
+        public static readonly TraverseType LevelOrder = new TraverseType("LevelOrder", 3); // Print all on same Level Startig from Top
+        public static readonly TraverseType ZigZagLevelOrder = new TraverseType("ZigZagLevelOrder", 4);
+
+        public bool IsInorder { get => this.Equals(InOrder); }
+        public bool IsPreOrder { get => this.Equals(PreOrder); }
+        public bool IsPostOrder { get => this.Equals(PostOrder); }
+        public bool IsLevelOrder { get => this.Equals(LevelOrder); }
+        public bool IsZigZagLevelOrder { get => this.Equals(ZigZagLevelOrder); }
 
         public readonly int typ;
         public readonly string desc;
@@ -156,26 +163,95 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         // TRAVERSAL
         // Depth First
-        public string PrintInOrder(TraverseType traverseType)
+        public string PrintInOrderRecursive(TraverseType traverseType)
         {
             if (root == null) return "";
             StringBuilder sb = new StringBuilder();
-            if (traverseType.Equals(TraverseType.LevelOrder)) return PrintLevelOrder(sb).ToString().Substring(0, sb.Length - 2);
+            if (traverseType.IsZigZagLevelOrder || traverseType.IsLevelOrder) return PrintLevelOrder(sb, traverseType).ToString().Substring(0, sb.Length - 2);
             else return root.PrintRecursive(sb, traverseType).ToString().Substring(0, sb.Length-2);
         }
 
-        private StringBuilder PrintLevelOrder(StringBuilder sb)
+        public string PrintInOrderIterative(TraverseType traverseType)
+        {
+            if (root == null) return "";
+            StringBuilder sb = new StringBuilder();
+            if(traverseType.IsZigZagLevelOrder || traverseType.IsLevelOrder) return PrintLevelOrder(sb, traverseType).ToString().Substring(0, sb.Length - 2);
+
+            Stack<Node> stack = new Stack<Node>();
+
+            Node node = root;
+            while(node != null || stack.Count > 0)
+            {            
+                if(node != null)
+                {
+                    if (traverseType.IsPreOrder) sb.Append(node.Val + "; ");
+                    stack.Push(node);
+                    node = node.Left;
+                    continue;
+                }
+                node = stack.Pop();
+                if(traverseType.IsInorder) sb.Append(node.Val+"; ");
+                node = node.Right;
+            }
+            return sb.ToString().Substring(0, sb.Length-2);
+        }
+
+        private StringBuilder PrintPostOrderIt(StringBuilder sb) // ????????????????????
+        {
+            Stack<Node> main = new Stack<Node>();
+            Stack<Node> rights = new Stack<Node>();
+
+            Node node = root, tmp = null;
+            while (true)
+            {
+                if (node.Left != null)
+                {
+                    main.Push(node);
+                    node = node.Left;
+                    continue;
+                }
+                else if (node.Right != null)
+                {
+                    node = node.Right;
+                    rights.Push(node);
+                    continue;
+                }
+                else
+                    sb.Append(node.Val);
+            }
+        }
+
+        private StringBuilder PrintLevelOrder(StringBuilder sb, TraverseType traverseType)
         {
             Queue<Node> queue = new Queue<Node>();
             queue.Enqueue(root);
+            if(traverseType.IsZigZagLevelOrder) queue.Enqueue(null);
+            bool Zig = true;
 
+            string substring = "";
             while(queue.Count != 0)
             {
                 Node node = queue.Dequeue();
-                sb.Append(node.Val+ "; ");
+
+                if (traverseType.IsZigZagLevelOrder)
+                {
+                    if (Zig) substring += node.Val + "; ";
+                    else substring = node.Val + "; " + substring;
+                }
+                else sb.Append(node.Val + "; ");
 
                 if (node.Left != null) queue.Enqueue(node.Left);
                 if (node.Right != null) queue.Enqueue(node.Right);
+
+                if(queue.Count > 0 && queue.Peek() == null)
+                {
+                    queue.Dequeue();
+                    sb.Append(substring);
+                    if (queue.Count == 0) break;
+                    substring = "";
+                    queue.Enqueue(null);
+                    Zig = !Zig;
+                }
             }
             return sb;
         }

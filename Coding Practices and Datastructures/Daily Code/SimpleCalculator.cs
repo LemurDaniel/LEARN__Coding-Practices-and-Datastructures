@@ -47,6 +47,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             testcases.Add(new InOut("-(3+(2-1))", -4));
             testcases.Add(new InOut("3+4*2/(1-5)", 1));
             testcases.Add(new InOut("3+4*2*2/(1-5)", -1));
+            testcases.Add(new InOut("(1+(4+5+2)-3)+(6+8)", 23));
         }
 
 
@@ -75,10 +76,10 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             {
                 token = exp[i];
                 if (token == ' ') continue;
-                else if (token == '-' && lastToken != ')' && !Char.IsDigit(lastToken)) token = '#';
+                else if (token == '-' && lastToken != ')' && !Char.IsDigit(lastToken)) token = '#';     // If - is used as a Negation operator => change Token to Negation: #
 
-                if (Char.IsDigit(token)) stack.Push(int.Parse(token + ""));
-                else if (token == '(') operators.Push(token);
+                if (Char.IsDigit(token)) stack.Push(int.Parse(token + "")); // Push Digits
+                else if (token == '(') operators.Push(token);   // Push Brackets
                 else if (token == ')' || IsOperator(token)) Process(token, stack, operators);
 
                 lastToken = token;
@@ -89,7 +90,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
         private static void Process(char token, Stack<int> stack, Stack<char> operators)
         {
-            if (token == ')')
+            if (token == ')')   // If Closing Brackets Evaluate until opening bracket
             {
                 while (operators.Count > 0 && operators.Peek() != '(') stack.Push(Calc(operators.Pop(), stack));
                 if (operators.Peek() == '(') operators.Pop();
@@ -97,8 +98,8 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 return;
             }
 
-            if (operators.Count > 0 && operators.Peek() != '(' && GetPrecedence(operators.Peek()) >= GetPrecedence(token))
-                stack.Push(Calc(operators.Pop(), stack));
+            if (operators.Count > 0 && operators.Peek() != '(' && GetPrecedence(operators.Peek()) >= GetPrecedence(token)) // If Operator with greater Precedence on Stack
+                stack.Push(Calc(operators.Pop(), stack));   // Pop operator and Push Result on outputStack
 
             operators.Push(token);
         }

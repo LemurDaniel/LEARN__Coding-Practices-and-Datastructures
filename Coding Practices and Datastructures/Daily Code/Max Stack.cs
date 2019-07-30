@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coding_Practices_and_Datastructures.DS_HANDBOOK.Stack;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,12 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 {
     class Max_Stack : Testable
     {
-        private class InOut : InOutBase<MaxStack<int>, int>
+        private class InOut : InOutBase<string, int>
         {
-            public InOut(string input, int output) : base(MaxStack<int>.Assemble(input), output, true)
+            public InOut(string input, int output) : base(input, output, true)
             {
-                AddSolver((inp, erg) => erg.Setze(inp.Max));
+                AddSolver((inp, erg) => erg.Setze(Assemble(inp, new MaxStack<int>()).Max()),"Max Stack 1");
+                AddSolver((inp, erg) => erg.Setze(Assemble(inp, new MaxStack2()).Max()), "Max Stack 2");
             }
         }
 
@@ -28,7 +30,28 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         }
 
 
-        private class MaxStack<V> where V : IComparable
+        private static IMaxStack<int> Assemble(string input, IMaxStack<int> st)
+        {
+            string[] arr = input.Split(';');
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] == "POP") st.Pop();
+                else if (arr[i] == "PEEK") st.Peek();
+                else st.Push(int.Parse(arr[i]));
+            }
+            return st;
+        }
+
+        private interface IMaxStack<V>
+        {
+            V Pop();
+            V Peek();
+            void Push(V obj);
+            V Max();
+        }
+
+
+        private class MaxStack<V> : IMaxStack<V> where V : IComparable
         {
             private class Node
             {
@@ -45,24 +68,9 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 }
             }
 
-            private string[] s;
             private Node top;   // Stack
             private Node max;   // Ordered Linkedlist of MaxElements
-            public V Max { get => max.data;  }
-
-            public static MaxStack<int> Assemble (string input){
-                MaxStack<int> st = new MaxStack<int>();
-                string[] arr = input.Split(';');
-                for (int i = 0; i < arr.Length; i++)
-                {
-                    if (arr[i] == "POP") st.Pop();
-                    else if (arr[i] == "PEEK") st.Peek();
-                    else st.Push(int.Parse(arr[i]));
-                }
-                st.s = arr;
-                return st;
-            }
-            public override string ToString() => Helfer.Arrayausgabe<string>("", s);
+            public V Max() => max.data;
 
             public V Pop() => Pop(true);
             public V Peek() => Pop(false);
@@ -128,6 +136,30 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 }
                 return data;
             } 
+        }
+
+        private class MaxStack2 : IMaxStack<int>
+        {
+            private LLStack<int> stack = new LLStack<int>();
+            private int max = int.MinValue;
+            public int Max() => max;
+
+            public void Push(int data)
+            {
+                if(data >= max) {
+                    stack.Push(max);    // Store the Last max Value behind new Max value in Stack
+                    max = data;
+                }
+                stack.Push(data);
+            }
+            public int Peek() => stack.Peek();
+            public int Pop()
+            {
+                int data = stack.Pop();
+                if (data == max) max = stack.Pop();
+                return data;
+            }
+
         }
     }
 }
