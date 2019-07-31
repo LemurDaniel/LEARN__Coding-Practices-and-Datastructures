@@ -46,6 +46,20 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             return sb.ToString();
         }
 
+        public static String MatrixAusgabe<V>(string s, V[,] mat)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(s);
+            for (int i=0; i<mat.GetLength(0); i++)
+            {
+                if (i != 0) sb.Append(string.Format("{0, -" + s.Length + "}[", ""));
+                else sb.Append("[");
+                for (int j = 0; j < mat.GetLength(1); j++) sb.Append(mat[i,j]+ (j == mat.GetLength(1)-1 ? "":"  "));
+                sb.Append("]\n");
+            }
+            return sb.ToString();
+        }
+
         public static bool ArrayVergleich<V>(V[] arr, V[] arr2)
         {
             if (arr == arr2) return true;
@@ -66,8 +80,36 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             return copyarr;
         }
 
+        public static char[,] AssembleCharMatrix(string s)
+        {
+            string[] arrS = s.Split('|');
+            int count = 0;
+            for (int i = 0; i < arrS[0].Length; i++) if (Char.IsLetter(arrS[0][i])) count++;
+            char[,] matrix = new char[arrS.Length, count];
+
+
+            for (int i = 0; i < arrS.Length; i++)
+            {
+                for (int j = 0, z=0; j < count; j++)
+                {
+                    while (!Char.IsLetter(arrS[i][z])) z++;
+                    matrix[i, j] = arrS[i][z++];
+                }
+            }
+            return matrix;
+        }
+
 
         // INT ARRAY
+        public static int[,] AssembleIntMatrix(string s)
+        {
+            string[] arrS = s.Split('|');
+            int[] arr = Assemble(arrS[0]);
+            int[,] matrix = new int[arrS.Length, arr.Length];
+            matrix.SetValue(arr, 0);
+            for (int i = 1; i < arrS.Length; i++) matrix.SetValue(Assemble(arrS[i]), i);
+            return matrix;
+        }
         public static int[] Assemble(string s)
         {
             if (s.Contains(";")) return Assemble2(s);

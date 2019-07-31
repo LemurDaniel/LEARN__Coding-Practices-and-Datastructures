@@ -81,7 +81,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Number_of_Ways_to_Climb_Stairs();     // Hard
             //  aufgabe = new Invert_a_Binary_Tree();
             //  aufgabe = new Simple_Calculator();
-            aufgabe = new Longest_Sequence_with_Two_Unique_Numbers();
+            //  aufgabe = new Longest_Sequence_with_Two_Unique_Numbers();
+            aufgabe = new Word_Search();
 
             while (true) { aufgabe.Test(); }
         }

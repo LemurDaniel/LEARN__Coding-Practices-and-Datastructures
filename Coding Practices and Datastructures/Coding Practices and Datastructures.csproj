@@ -59,6 +59,7 @@
     <Compile Include="Daily Code\Sorting a list with 3 unique numbers.cs" />
     <Compile Include="Daily Code\Two-Sum.cs" />
     <Compile Include="Daily Code\Validate Balanced Parentheses.cs" />
+    <Compile Include="Daily Code\Word Search.cs" />
     <Compile Include="Daily Code\zeug\Helfer.cs" />
     <Compile Include="Daily Code\zeug\ITestable.cs" />
     <Compile Include="Daily Code\zeug\Wrappers.cs" />
