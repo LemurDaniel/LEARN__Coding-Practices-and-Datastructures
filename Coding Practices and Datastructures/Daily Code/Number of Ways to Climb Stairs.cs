@@ -17,11 +17,12 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 AddSolver(BinaryTree_Solver_Optimized1);
                 AddSolver(Counting_Subtrees);
                 AddSolver(Counting_Subtrees_2);
+                MaxDur = new TimeSpan(0, 0, 5);
             }
         }
 
 
-        private static int MAX_ITERATIONS = 10_000_000;
+        private static int MAX_ITERATIONS = 1_000_000_000;
         public Number_of_Ways_to_Climb_Stairs()
         {
             testcases.Add(new InOut(int.MinValue, 0));

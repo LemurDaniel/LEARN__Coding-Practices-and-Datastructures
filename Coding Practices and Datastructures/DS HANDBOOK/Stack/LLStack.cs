@@ -28,11 +28,17 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Stack
 
         /* KONSTRUKTOR */
 
+        private int count = 0;
+        public int Count { get => count;  }
 
         /* METHODEN */
         public V Pop() => Pop(true);
         public V Peek() => Pop(false);
-        public void Push(V data) => top = new Node(top, data);   // Neue Node als Top-Element, die auf das vorherige Top-Element zeigt 
+        public void Push(V data)
+        {
+            top = new Node(top, data);   // Neue Node als Top-Element, die auf das vorherige Top-Element zeigt 
+            count++;
+        }
 
 
         private V Pop(bool pop)
@@ -40,7 +46,11 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Stack
             if (top == null) throw new InvalidOperationException("Der Stack ist Leer");
 
             V data = top.data;
-            if(pop) top = top.next;     
+            if (pop)
+            {
+                top = top.next;
+                count--;
+            }
             return data;  
         }
     }

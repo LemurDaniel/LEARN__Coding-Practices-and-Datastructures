@@ -54,7 +54,6 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Reverse_Linked_List_2();
 
             //------>STACK - STRUCTURES
-            //  aufgabe = new Validate_Balanced_Parentheses(); ???????????? IMPLEMENT OWN STACK STRUCTURE
             //  aufgabe = new Evaluate_Reverse_Polish_Notation();
             //  aufgabe = new Min_Stack();
 
@@ -82,7 +81,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Invert_a_Binary_Tree();
             //  aufgabe = new Simple_Calculator();
             //  aufgabe = new Longest_Sequence_with_Two_Unique_Numbers();
-            aufgabe = new Word_Search();
+            //  aufgabe = new Word_Search();
+            //  aufgabe = new Minimum_Size_Subarray_Sum();
 
             while (true) { aufgabe.Test(); }
         }

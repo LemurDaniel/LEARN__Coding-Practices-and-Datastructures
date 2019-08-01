@@ -52,6 +52,7 @@
     <Compile Include="Daily Code\Longest Palindrom.cs" />
     <Compile Include="Daily Code\Longest Sequence with Two Unique Numbers.cs" />
     <Compile Include="Daily Code\Max Stack.cs" />
+    <Compile Include="Daily Code\Minimum Size Subarray Sum.cs" />
     <Compile Include="Daily Code\Non-decreasing Array with Single Modification.cs" />
     <Compile Include="Daily Code\Number of Ways to Climb Stairs.cs" />
     <Compile Include="Daily Code\Reverse_A_Linked_List.cs" />

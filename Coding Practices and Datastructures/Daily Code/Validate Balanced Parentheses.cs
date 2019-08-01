@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Coding_Practices_and_Datastructures.DS_HANDBOOK.Interfaces;
+using Coding_Practices_and_Datastructures.DS_HANDBOOK.Stack;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,7 +34,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         private static void Solve1(string input, InOut.Ergebnis erg)
         {
             int count = 0;
-            Stack<char> stack = new Stack<char>();
+            LLStack<char> stack = new LLStack<char>();
             for(int i=0; i< input.Length; i++)
             {
                 count++;
