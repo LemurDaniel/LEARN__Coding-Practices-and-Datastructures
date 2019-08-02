@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Coding_Practices_and_Datastructures.GoF_Interview_Questions.MathEx;
 
 namespace GoF_Coding_Interview_Algos
 {
@@ -64,6 +65,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Add_Two_Numbers_II();
             //  aufgabe = new Move_Zeroes();
 
+            //------>MATH - EXCERCISES
+            aufgabe = new Integer_to_English_Words();
 
             /* Daily Code  */
 
@@ -83,7 +86,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Longest_Sequence_with_Two_Unique_Numbers();
             //  aufgabe = new Word_Search();
             //  aufgabe = new Minimum_Size_Subarray_Sum();
-            aufgabe = new Ways_to_Traverse_a_Grid();
+            //  aufgabe = new Ways_to_Traverse_a_Grid();
 
             while (true) { aufgabe.Test(); }
         }
