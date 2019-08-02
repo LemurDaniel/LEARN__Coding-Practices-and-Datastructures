@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,6 +61,7 @@
     <Compile Include="Daily Code\Sorting a list with 3 unique numbers.cs" />
     <Compile Include="Daily Code\Two-Sum.cs" />
     <Compile Include="Daily Code\Validate Balanced Parentheses.cs" />
+    <Compile Include="Daily Code\Ways to Traverse a Grid.cs" />
     <Compile Include="Daily Code\Word Search.cs" />
     <Compile Include="Daily Code\zeug\Helfer.cs" />
     <Compile Include="Daily Code\zeug\ITestable.cs" />

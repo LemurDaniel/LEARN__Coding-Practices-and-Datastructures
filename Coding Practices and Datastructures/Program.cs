@@ -83,6 +83,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Longest_Sequence_with_Two_Unique_Numbers();
             //  aufgabe = new Word_Search();
             //  aufgabe = new Minimum_Size_Subarray_Sum();
+            aufgabe = new Ways_to_Traverse_a_Grid();
 
             while (true) { aufgabe.Test(); }
         }
