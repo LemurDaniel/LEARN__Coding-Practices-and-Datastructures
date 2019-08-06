@@ -304,6 +304,18 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             Root.OperateOnNodes(node => { if (--k == 1) node.RemoveNext(); return; });
             return this;
         }
+        public LinkedList<V> RemoveElements(V val)
+        {
+            Node node = Root;
+            if (root == null) return this;
+            while(node != null && node.Next != null)
+            {
+                if (node.Next.Val.Equals(val)) node.RemoveNext();
+                else node = node.Next;
+            }
+            if (Root.Val.Equals(val)) root = Root.Next;
+            return this;
+        }
 
 
         // ILIST SCHNITTSTELLE

@@ -54,7 +54,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Add_Two_Numbers();
             //  aufgabe = new Reverse_A_Linked_List();
             //  aufgabe = new Reverse_Linked_List_2();
-            aufgabe = new Palindrom_Linked_List();
+            //  aufgabe = new Palindrom_Linked_List();
+            aufgabe = new Remove_Linked_List_Element();
 
             //------>STACK - STRUCTURES
             //  aufgabe = new Evaluate_Reverse_Polish_Notation();
