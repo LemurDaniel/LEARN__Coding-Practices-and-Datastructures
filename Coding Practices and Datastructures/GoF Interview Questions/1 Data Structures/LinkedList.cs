@@ -228,8 +228,22 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         public static LinkedList<int> Assemble(string number)
         {
+            if (number.Contains(',')) return Assemble2(number);
             LinkedList<int> llist = new LinkedList<int>();
             for (int i = 0; i < number.Length; i++) llist.Append(Int32.Parse(number[i] + ""));
+            return llist;
+        }
+        public static LinkedList<int> Assemble2(string number)
+        {
+            string[] nums = number.Split(',');
+            LinkedList<int> llist = new LinkedList<int>();
+            for (int i = 0; i < nums.Length; i++) llist.Append(Int32.Parse(nums[i] + ""));
+            return llist;
+        }
+        public static LinkedList<char> AssembleChar(string number)
+        {
+            LinkedList<char> llist = new LinkedList<char>();
+            for (int i = 0; i < number.Length; i++) llist.Append(number[i]);
             return llist;
         }
 
@@ -282,6 +296,14 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             return this;
         }
 
+
+
+        // Remove K-th Element
+        public LinkedList<V> Remove_Kth_Element(int k)
+        {
+            Root.OperateOnNodes(node => { if (--k == 1) node.RemoveNext(); return; });
+            return this;
+        }
 
 
         // ILIST SCHNITTSTELLE

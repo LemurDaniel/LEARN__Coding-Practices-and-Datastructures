@@ -48,11 +48,13 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Integer_To_Roman();
             //  aufgabe = new String_To_Integer();
             //  aufgabe = new ZigZag_Conversion();
+            //  aufgabe = new Decode_String();
 
             //------>LINKED LIST - STRUCTURES
             //  aufgabe = new Add_Two_Numbers();
             //  aufgabe = new Reverse_A_Linked_List();
             //  aufgabe = new Reverse_Linked_List_2();
+            aufgabe = new Palindrom_Linked_List();
 
             //------>STACK - STRUCTURES
             //  aufgabe = new Evaluate_Reverse_Polish_Notation();
@@ -66,7 +68,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Move_Zeroes();
 
             //------>MATH - EXCERCISES
-            aufgabe = new Integer_to_English_Words();
+            //  aufgabe = new Integer_to_English_Words();
 
             /* Daily Code  */
 
@@ -87,6 +89,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Word_Search();
             //  aufgabe = new Minimum_Size_Subarray_Sum();
             //  aufgabe = new Ways_to_Traverse_a_Grid();
+            //  aufgabe = new Remove_Consecutive_Nodes_that_Sum_to_0();
+            //  aufgabe = new Remove_k_th_Last_Element_From_Linked_List();
 
             while (true) { aufgabe.Test(); }
         }
