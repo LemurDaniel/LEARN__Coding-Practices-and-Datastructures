@@ -93,6 +93,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
                 return node.val.Equals(val) && rightBool && leftBool;
             }
+            public override int GetHashCode() => base.GetHashCode();
 
             // Travers
             public StringBuilder PrintRecursive(StringBuilder sb, TraverseType traverseType)
@@ -157,7 +158,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             if (tree.Root == null && Root == null) return true;
             return tree.Root.Equals(Root);
         }
-
+        public override int GetHashCode() => base.GetHashCode();
 
 
 
@@ -201,7 +202,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             Stack<Node> main = new Stack<Node>();
             Stack<Node> rights = new Stack<Node>();
 
-            Node node = root, tmp = null;
+            Node node = root;
             while (true)
             {
                 if (node.Left != null)

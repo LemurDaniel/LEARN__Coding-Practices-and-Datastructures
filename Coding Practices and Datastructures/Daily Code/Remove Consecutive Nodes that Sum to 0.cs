@@ -46,10 +46,10 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
         public static void Sole(LinkedList<int> ll ,InOut.Ergebnis erg)
         {
-            LinkedList<int>.Node Root = ll.Root;
+           // LinkedList<int>.Node Root = ll.Root;
 
-            LLQueue<int> q;
-            int sum;
+            //LLQueue<int> q;
+            //int sum;
 
         }
     }

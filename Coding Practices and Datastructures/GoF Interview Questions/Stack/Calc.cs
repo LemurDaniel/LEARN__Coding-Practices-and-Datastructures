@@ -54,7 +54,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Stack
         }
 
 
-        private Stack stack;
+        private readonly Stack stack = new Stack();
         private bool INFIX = true;
 
         private IList<Operator> operatorsList = new List<Operator>();

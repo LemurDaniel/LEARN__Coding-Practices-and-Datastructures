@@ -8,7 +8,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 {
     public class Wrapper<V>
     {
-        private bool isNull;
+        //private bool isNull;
         private V val;
         public bool IsNull { get; set; }
         public V Val { get => val; }

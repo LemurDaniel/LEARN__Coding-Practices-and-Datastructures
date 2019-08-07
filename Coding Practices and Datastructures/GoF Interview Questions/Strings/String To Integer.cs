@@ -56,7 +56,6 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Strings
                 else throw wrongFormat;
 
                 char seperator = ' ';
-                bool sep = true;
                 bool sepSet = false;
 
                 for(int i=input.Length-1, multi=0, curr; i>= (signed ? 1:0); i--)
@@ -68,8 +67,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Strings
                         if (!sepSet)
                         {
                             seperator = input[i];
-                            if (curr != -1) sep = false;
-                            else if (!IsSeperator(input[i])) throw wrongFormat;
+                            if (!IsSeperator(input[i])) throw wrongFormat;
                             else continue;
                         }
                         else

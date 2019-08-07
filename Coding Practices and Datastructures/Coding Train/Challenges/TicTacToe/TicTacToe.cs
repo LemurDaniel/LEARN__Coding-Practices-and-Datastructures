@@ -11,9 +11,12 @@ namespace Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe
     class TicTacToe
     {
         private int size = 4;
+        public int Size { get => size;  }
         private char[,] grid;
         private int maxTurns;
         private int turn = 0;
+        public ISet<int> Free;
+        public int lastMove;
 
         private bool gameEnd = false;
         public bool GameEnd { get => gameEnd; }
@@ -21,19 +24,51 @@ namespace Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe
         private char winner = ' ';
         public char Winner { get => winner; }
 
-        private char player1 = 'X', player2 = 'O';
+        public readonly char player1 = 'X', player2 = 'O';
         private char activeplayer = 'X'; 
         public char ActivePlayer { get => activeplayer;  }
 
+
+
         public TicTacToe() : this(3) { }
+        private TicTacToe(char[,] grid)
+        {
+            this.size = grid.GetLength(0);
+            maxTurns = size * size; 
+            this.grid = new char[size, size];
+            Free = new HashSet<int>();
+            for (int i = 0; i < grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    this.grid[i, j] = grid[i, j];
+                    if(grid[i, j] == ' ') Free.Add(i * size + j);
+                }
+            }
+            gameEnd = size == 0 || size == 1 || size == 2;
+        }
         public TicTacToe(int size)
         {
             this.size = size;
-            maxTurns = size * size; 
+            maxTurns = size * size;
             grid = new char[size, size];
+            Free = new HashSet<int>();
             for (int i = 0; i < grid.GetLength(0); i++)
-                for (int j = 0; j < grid.GetLength(1); j++) grid[i, j] = ' ';
+            {
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    grid[i, j] = ' ';
+                    Free.Add(i*size + j);
+                }
+            }
             gameEnd = size == 0 || size == 1 || size == 2;
+        }
+        public TicTacToe GetCopy()
+        {
+            TicTacToe t = new TicTacToe(grid);
+            t.activeplayer = activeplayer;
+            t.turn = turn;
+            return t;
         }
 
 
@@ -52,7 +87,6 @@ namespace Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe
             return sb.ToString();
         }
         public void GibAus() => Console.WriteLine(ToString());
-
 
         private void SelectRandom()
         {
@@ -93,14 +127,32 @@ namespace Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe
             if (grid[row,col] != ' ') throw new InvalidOperationException("Feld ist bereits besetzt");  
             grid[row, col] = activeplayer;
             turn++;
+            lastMove = row * size + col;
+            Free.Remove(row*size + col);
             if (CheckForWin()) return;
 
             activeplayer = activeplayer == player1 ? player2 : player1;
         }
 
+        public void Reset()
+        {
+            winner = ' ';
+            gameEnd = false;
+            for (int i = 0; i < grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    grid[i, j] = ' ';
+                    Free.Add(i * size + j);
+                }
+            }
+            activeplayer = player1;
+            turn = 0;
+        }
+
         private bool CheckForWin()
         {
-            if (turn == maxTurns) gameEnd = true;
+            if (turn == maxTurns)gameEnd = true;
 
             //  Horizontal
             if (winner == ' ')
@@ -153,9 +205,11 @@ namespace Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe
         public static void RunGame()
         {
             TicTacToe game;
+            TicTacToeSolver solver;
+            Option data;
             while (true)
             {
-                Option data = Konsolenbedinung.MainLoop("Wähle eine Größe: ", "", false, true);
+                data = Konsolenbedinung.MainLoop("Wähle eine Größe: ", "", false, true);
                 if (data.IsExit) return;
                 else {
                     try { game = new TicTacToe(int.Parse(data.DataContainer)); break; } catch {
@@ -166,15 +220,35 @@ namespace Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe
             }
 
             ISet<Option> opts = new HashSet<Option>();
-            opts.Add(Option.GetOption("Random", 'R', () => game.SelectRandom(), () => !game.GameEnd ));
+            opts.Add(Option.GetOption("Ja", 'J', () => { }, () => false));
+            opts.Add(Option.GetOption("Nein", 'N', () => { }, () => false));
+            data = Konsolenbedinung.MainLoop("Zwei Spieler?[J/N]: ", "", false, false, false, opts);
+
+            if (data.IsExit) return;
+            if (data.kurz == 'N') solver = new TicTacToeSolver(game);
+            else solver = null;
+            Run(game, solver);
+        }
+
+        private static void Run(TicTacToe game, TicTacToeSolver solver)
+        {
+            ISet<Option> opts = new HashSet<Option>();
+            opts.Add(Option.GetOption("Random", 'R', () => { if (solver != null) solver.NextBadMove(); else game.SelectRandom(); }, () => false));
 
             Console.Clear();
+            Option opt;
             while (true)
             {
                 if (game.GameEnd) break;
+                else if (game.ActivePlayer == game.player2 && solver != null)
+                {
+                    solver.NextMove();
+                    continue;
+                }
+
                 Func<string> eingabe = () => "\nGameBoard: \n" + game.ToString() + "\n\nSpieler " + game.ActivePlayer + " wählen sie ein Position (x, y): ";
 
-                Option opt = Konsolenbedinung.MainLoop(eingabe, "Geben sie die Position in zwei Zahlen, die per Komma Getrennt sind, an: \n(row, col)", false, true, true, opts);
+                opt = Konsolenbedinung.MainLoop(eingabe, "Geben sie die Position in zwei Zahlen, die per Komma Getrennt sind, an: \n(row, col)", false, true, true, opts);
 
                 Console.Clear();
                 if (opt.IsExit)
@@ -191,6 +265,16 @@ namespace Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe
             }
             Console.WriteLine("\n\nThe Game Ended: \n" + game.ToString() + "\n" + (game.Winner != ' ' ? "The Winner is Player: " + game.Winner : "It's a Tie"));
             Konsolenbedinung.Wait();
+            opts = new HashSet<Option>();
+            opts.Add(Option.GetOption("YES", 'Y', () => { }));
+            opts.Add(Option.GetOption("NO", 'N', () => { }));
+            opt = Konsolenbedinung.MainLoop("Nochmal Spielen", null, false, false, false, opts);
+            if(opt.kurz == 'Y')
+            {
+                game.Reset();
+                solver.Reset();
+                Run(game, solver);
+            }
         }
     }
 }

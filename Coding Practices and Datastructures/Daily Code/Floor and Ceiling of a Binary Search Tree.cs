@@ -44,6 +44,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 return true;
             }
             public override string ToString() => String.Format("Erwartet: ({0}, {1})", m, n);
+            public override int GetHashCode() => base.GetHashCode();
         }
 
         private class InOut : InOutBase<Input, Output>{

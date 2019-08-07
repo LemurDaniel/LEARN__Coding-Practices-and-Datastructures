@@ -165,7 +165,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
         public void SolveOne(Solver key){
             AbortableBackgroundWorker wk = new AbortableBackgroundWorker();
-            wk.DoWork += async (ob, e) => await DoWork(wk, key);
+            wk.DoWork += (ob, e) => DoWork(wk, key);
             wk.RunWorkerAsync();
 
             DateTime start = DateTime.Now;
@@ -183,7 +183,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             }
         }
 
-        private async Task DoWork(AbortableBackgroundWorker wk , Solver key)
+        private void DoWork(AbortableBackgroundWorker wk , Solver key)
         {
             I inp = Input;
             setup?.Invoke();

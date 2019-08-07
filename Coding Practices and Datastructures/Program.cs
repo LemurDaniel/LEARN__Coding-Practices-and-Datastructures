@@ -55,7 +55,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Reverse_A_Linked_List();
             //  aufgabe = new Reverse_Linked_List_2();
             //  aufgabe = new Palindrom_Linked_List();
-            aufgabe = new Remove_Linked_List_Element();
+            //  aufgabe = new Remove_Linked_List_Element();
 
             //------>STACK - STRUCTURES
             //  aufgabe = new Evaluate_Reverse_Polish_Notation();
@@ -92,6 +92,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Ways_to_Traverse_a_Grid();
             //  aufgabe = new Remove_Consecutive_Nodes_that_Sum_to_0();
             //  aufgabe = new Remove_k_th_Last_Element_From_Linked_List();
+            //  aufgabe = new Witness_of_The_Tall_People();
 
             while (true) { aufgabe.Test(); }
         }

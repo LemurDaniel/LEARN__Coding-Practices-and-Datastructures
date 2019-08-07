@@ -17,7 +17,7 @@ namespace Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe
             public static readonly Option DATA = new Option("DATA", 'D', null, null);
 
             public readonly string name;
-            public readonly string description;
+            //public readonly string description;
             public readonly char kurz;
 
             public string DataContainer;
@@ -101,6 +101,7 @@ namespace Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe
                 {
                     Console.WriteLine(help == null || help.Length == 0 ? "Wählen sie ein Option \n => (LIST) für alle Optionen" : help);
                     Wait();
+                    continue;
                 }
                 else if (Option.LIST.Is(input))
                 {
@@ -118,7 +119,7 @@ namespace Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe
                 else if (Option.CLEAR.Is(input)) Console.Clear();
                 else if (options != null)
                 {
-                    foreach (Option opt in options)
+                    foreach (Option opt in options) {
                         if (opt.Is(input))
                         {
                             if (ExceOpt)
@@ -130,6 +131,7 @@ namespace Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe
                             }
                             else return opt;
                         }
+                    }
                 }
                 if(GetData) return Option.GetDatacontainer(input);
                 else Console.Clear();

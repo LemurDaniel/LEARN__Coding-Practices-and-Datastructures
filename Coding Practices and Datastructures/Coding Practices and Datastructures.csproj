@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Coding Train\Challenges\TicTacToe\Konsolenbedinung.cs" />
     <Compile Include="Coding Train\Challenges\TicTacToe\TicTacToe.cs" />
+    <Compile Include="Coding Train\Challenges\TicTacToe\TicTacToeSolver.cs" />
     <Compile Include="Daily Code\Falling Dominoes.cs" />
     <Compile Include="Daily Code\Find the non-duplicate number.cs" />
     <Compile Include="Daily Code\First and Last Indices of an Element in a Sorted Array.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Daily Code\Two-Sum.cs" />
     <Compile Include="Daily Code\Validate Balanced Parentheses.cs" />
     <Compile Include="Daily Code\Ways to Traverse a Grid.cs" />
+    <Compile Include="Daily Code\Witness of The Tall People.cs" />
     <Compile Include="Daily Code\Word Search.cs" />
     <Compile Include="Daily Code\zeug\Helfer.cs" />
     <Compile Include="Daily Code\zeug\ITestable.cs" />
