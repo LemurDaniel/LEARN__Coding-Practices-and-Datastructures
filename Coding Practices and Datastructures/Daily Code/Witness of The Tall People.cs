@@ -49,7 +49,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             int highest = 0;
             for(int i=arr.Length-1; i>=0; i--)
             {
-                if(arr[i] >= highest)
+                if(arr[i] > highest)
                 {
                     highest = arr[i];
                     count++;
