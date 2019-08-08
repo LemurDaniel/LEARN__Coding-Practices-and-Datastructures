@@ -30,9 +30,12 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Queue
         public void Enqueue(V data)
         {
             if (ausgabe == null) eingabe = ausgabe = new Node(data);
-            Node insert = new Node(data);
-            eingabe.next = insert;          // Eingabe zeigt auf eingfügtes Element
-            eingabe = insert;               // Eingefügtes Element ist nun Anfang der Queue
+            else
+            {
+                Node insert = new Node(data);
+                eingabe.next = insert;          // Eingabe zeigt auf eingfügtes Element
+                eingabe = insert;               // Eingefügtes Element ist nun Anfang der Queue
+            }
         }
 
         public V Dequeue()
@@ -41,7 +44,6 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Queue
 
             V data = ausgabe.data;
             ausgabe = ausgabe.next;
-            if (ausgabe == null) eingabe = null;
             return data;
         }
 

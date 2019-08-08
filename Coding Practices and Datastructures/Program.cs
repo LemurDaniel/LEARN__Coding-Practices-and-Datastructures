@@ -92,7 +92,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Ways_to_Traverse_a_Grid();
             //  aufgabe = new Remove_Consecutive_Nodes_that_Sum_to_0();
             //  aufgabe = new Remove_k_th_Last_Element_From_Linked_List();
-            aufgabe = new Witness_of_The_Tall_People();
+            //  aufgabe = new Witness_of_The_Tall_People();
+            aufgabe = new Course_Prerequisites();
 
             while (true) { aufgabe.Test(); }
         }
