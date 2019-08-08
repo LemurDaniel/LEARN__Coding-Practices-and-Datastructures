@@ -67,6 +67,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Valid_Palindrom();
             //  aufgabe = new Add_Two_Numbers_II();
             //  aufgabe = new Move_Zeroes();
+            //  aufgabe = new Implement_StrStr();
 
             //------>MATH - EXCERCISES
             //  aufgabe = new Integer_to_English_Words();
@@ -83,7 +84,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Non_decreasing_Array_with_Single_Modification();
             //  aufgabe = new Floor_and_Ceiling_of_a_Binary_Search_Tree();
             //  aufgabe = new Max_Stack();
-            //  aufgabe = new Number_of_Ways_to_Climb_Stairs();     // Hard
+            aufgabe = new Number_of_Ways_to_Climb_Stairs();     // Hard
             //  aufgabe = new Invert_a_Binary_Tree();
             //  aufgabe = new Simple_Calculator();
             //  aufgabe = new Longest_Sequence_with_Two_Unique_Numbers();
@@ -93,7 +94,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Remove_Consecutive_Nodes_that_Sum_to_0();
             //  aufgabe = new Remove_k_th_Last_Element_From_Linked_List();
             //  aufgabe = new Witness_of_The_Tall_People();
-            aufgabe = new Course_Prerequisites();
+            //  aufgabe = new Course_Prerequisites();
 
             while (true) { aufgabe.Test(); }
         }

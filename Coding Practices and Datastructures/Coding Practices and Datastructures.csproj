@@ -102,6 +102,7 @@
     <Compile Include="GoF Interview Questions\Strings\String To Integer.cs" />
     <Compile Include="GoF Interview Questions\Strings\ZigZag Conversion.cs" />
     <Compile Include="GoF Interview Questions\Two Pointers\Add Two Numbers II.cs" />
+    <Compile Include="GoF Interview Questions\Two Pointers\Implement StrStr.cs" />
     <Compile Include="GoF Interview Questions\Two Pointers\Move Zeroes.cs" />
     <Compile Include="GoF Interview Questions\Two Pointers\Valid Palindrom.cs" />
     <Compile Include="Other\Daily Coding Problem\Infinite 2D Grid [Easy].cs" />
