@@ -92,6 +92,7 @@
     <Compile Include="GoF Interview Questions\LinkedLists\Palindrom Linked List.cs" />
     <Compile Include="GoF Interview Questions\LinkedLists\Remove Linked List Element.cs" />
     <Compile Include="GoF Interview Questions\LinkedLists\Reverse Linked List 2.cs" />
+    <Compile Include="GoF Interview Questions\MathEx\Base 7.cs" />
     <Compile Include="GoF Interview Questions\MathEx\Integer to English Words.cs" />
     <Compile Include="GoF Interview Questions\Stack\Basic Calculator.cs" />
     <Compile Include="GoF Interview Questions\Stack\Calc.cs" />

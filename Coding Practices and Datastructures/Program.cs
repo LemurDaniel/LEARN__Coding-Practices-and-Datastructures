@@ -71,6 +71,7 @@ namespace GoF_Coding_Interview_Algos
 
             //------>MATH - EXCERCISES
             //  aufgabe = new Integer_to_English_Words();
+            aufgabe = new Base_7();
 
             /* Daily Code  */
 
@@ -95,7 +96,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Remove_k_th_Last_Element_From_Linked_List();
             //  aufgabe = new Witness_of_The_Tall_People();
             //  aufgabe = new Course_Prerequisites();
-            aufgabe = new Move_Zeroes();
+            //  aufgabe = new Move_Zeroes();
 
             while (true) { aufgabe.Test(); }
         }
