@@ -147,6 +147,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         public void SolveIt()
         {
             Console.WriteLine(ToString());
+            setup?.Invoke();
             foreach (Solver key in solvers.Keys)
             {
                 try
@@ -186,7 +187,6 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         private void DoWork(AbortableBackgroundWorker wk , Solver key)
         {
             I inp = Input;
-            setup?.Invoke();
             solverStarted = DateTime.Now;
             try
             {
