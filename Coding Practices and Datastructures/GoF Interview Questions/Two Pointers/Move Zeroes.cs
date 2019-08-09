@@ -31,18 +31,27 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Two_Pointe
 
 
         // SOLUTION
+
+            // Constant Space O(1) and Constant Time Complexity O(n)
+
+            //  If Zero Element Encounter 
+            //      Then Continue
+            //  --> Pointer points the Last Encounter Zero Element
+            //  If Pointer points to Zero Element And current Element is not Zero
+            //    Then Swap
+            //    Increment pointer
         private static void MoveZeroes(int[] input, InOut.Ergebnis erg)
         {
             int pointer = 0;
             for(int i=0; i<input.Length; i++)
             {
                 if (input[i] == 0) continue;
-                else if (pointer == i) pointer++;
-                else
+                else if (pointer != i)
                 {
-                    input[pointer++] = input[i];
+                    input[pointer] = input[i];
                     input[i] = 0;
                 }
+                pointer++;
             }
             erg.Setze(input);
         }
