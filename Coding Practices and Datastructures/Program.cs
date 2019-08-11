@@ -97,6 +97,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Witness_of_The_Tall_People();
             //  aufgabe = new Course_Prerequisites();
             //  aufgabe = new Move_Zeroes();
+            //  aufgabe = new Spiral_Traversal_of_Grid();
+            aufgabe = new Find_the_k_th_Largest_Element_in_a_List();
 
             while (true) { aufgabe.Test(); }
         }

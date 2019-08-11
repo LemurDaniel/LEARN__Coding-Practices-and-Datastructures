@@ -45,16 +45,16 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             if (len) sb.Append("\nLänge: " + arr.Length);
             return sb.ToString();
         }
-
-        public static String MatrixAusgabe<V>(string s, V[,] mat)
+        public static String MatrixAusgabe<V>(string s, V[,] mat) => MatrixAusgabe<V>(s, mat, 2);
+        public static String MatrixAusgabe<V>(string s, V[,] mat, int spacing)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(s);
-            for (int i=0; i<mat.GetLength(0); i++)
+            for (int i=0; i<mat.GetLength(1); i++)
             {
                 if (i != 0) sb.Append(string.Format("{0, -" + s.Length + "}[", ""));
                 else sb.Append("[");
-                for (int j = 0; j < mat.GetLength(1); j++) sb.Append(mat[i,j]+ (j == mat.GetLength(1)-1 ? "":"  "));
+                for (int j = 0; j < mat.GetLength(0); j++) sb.Append(string.Format("{0,"+spacing+"}" + (j == mat.GetLength(1) - 1 ? "" : "  "), mat[j,i]));
                 sb.Append("]\n");
             }
             return sb.ToString();
@@ -105,21 +105,26 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         {
             string[] arrS = s.Split('|');
             int[] arr = Assemble(arrS[0]);
-            int[,] matrix = new int[arrS.Length, arr.Length];
-            matrix.SetValue(arr, 0);
-            for (int i = 1; i < arrS.Length; i++) matrix.SetValue(Assemble(arrS[i]), i);
+            int[,] matrix = new int[arr.Length, arrS.Length];
+            for (int i = 0; i < matrix.GetLength(1); i++)
+            {
+                if(i!=0)    arr = Assemble(arrS[i]);
+                for (int j = 0; j < matrix.GetLength(0); j++) matrix[j, i] = arr[j];
+            }
             return matrix;
         }
         public static int[] Assemble(string s)
         {
-            if (s.Contains(";")) return Assemble2(s);
+            if (s.Contains(";")) return Assemble2(s, ';');
+            else if (s.Contains(",")) return Assemble2(s, ',');
             int[] arr = new int[s.Length];
             for (int i = 0; i < s.Length; i++) arr[i] = GetNumber(s[i]);
             return arr;
         }
-        private static int[] Assemble2(string s)
+        private static int[] Assemble2(string s) => Assemble2(s, ';');
+        private static int[] Assemble2(string s, char spliter)
         {
-            string[] arrS = s.Split(';');
+            string[] arrS = s.Split(spliter);
             int[] arr = new int[arrS.Length];
             for (int i = 0; i < arrS.Length; i++) arr[i] = int.Parse(arrS[i]);
             return arr;

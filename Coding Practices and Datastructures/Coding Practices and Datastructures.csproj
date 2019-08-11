@@ -49,6 +49,7 @@
     <Compile Include="Coding Train\Challenges\TicTacToe\TicTacToeSolver.cs" />
     <Compile Include="Daily Code\Course Prerequisites.cs" />
     <Compile Include="Daily Code\Falling Dominoes.cs" />
+    <Compile Include="Daily Code\Find the k-th Largest Element in a List.cs" />
     <Compile Include="Daily Code\Find the non-duplicate number.cs" />
     <Compile Include="Daily Code\First and Last Indices of an Element in a Sorted Array.cs" />
     <Compile Include="Daily Code\Floor and Ceiling of a Binary Search Tree.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Daily Code\Reverse_A_Linked_List.cs" />
     <Compile Include="Daily Code\SimpleCalculator.cs" />
     <Compile Include="Daily Code\Sorting a list with 3 unique numbers.cs" />
+    <Compile Include="Daily Code\Spiral Traversal of Grid.cs" />
     <Compile Include="Daily Code\Two-Sum.cs" />
     <Compile Include="Daily Code\Validate Balanced Parentheses.cs" />
     <Compile Include="Daily Code\Ways to Traverse a Grid.cs" />
