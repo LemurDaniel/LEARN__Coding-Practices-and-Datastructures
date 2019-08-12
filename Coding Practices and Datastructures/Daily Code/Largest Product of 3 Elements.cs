@@ -75,8 +75,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             Array.Sort(arr);
             //if(arr[arr.Length-1] < 0) // Only Negative Elements in Array ==> Covered by PosSum ==> Summing topmost 3 Elements of Array which should be the 3 smallest negative ints
 
-            int negSum = arr[arr.Length-1]; //Topmost Positive ints
-            negSum *= arr[0] * arr[1];  // 2 most negative ints
+            int negSum = arr[arr.Length-1] * arr[0] * arr[1];  // Topmost Positive ints * 2 most negative ints
             int posSum = arr[arr.Length-1] * arr[arr.Length-2] * arr[arr.Length-3]; // 3 most positive ints
             return Math.Max(negSum, posSum);
         }
