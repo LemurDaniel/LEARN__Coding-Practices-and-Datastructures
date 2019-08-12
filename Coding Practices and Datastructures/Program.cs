@@ -98,7 +98,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Course_Prerequisites();
             //  aufgabe = new Move_Zeroes();
             //  aufgabe = new Spiral_Traversal_of_Grid();
-            aufgabe = new Find_the_k_th_Largest_Element_in_a_List();
+            //  aufgabe = new Find_the_k_th_Largest_Element_in_a_List();
+            aufgabe = new Largest_Product_of_3_Elements();
 
             while (true) { aufgabe.Test(); }
         }
