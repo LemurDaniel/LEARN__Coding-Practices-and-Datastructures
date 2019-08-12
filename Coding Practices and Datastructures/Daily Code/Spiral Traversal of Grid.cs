@@ -10,9 +10,9 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
     {
         private class InOut : InOutBase<int[,], string>
         {
-            public InOut(string s, string s2) : base(Helfer.AssembleIntMatrix(s),s2, true)
+            public InOut(string s, string s2) : base(Helfer.Matrix<int>.AssembleIntMatrix(s),s2, true)
             {
-                inputStringConverter = arg => Helfer.MatrixAusgabe<int>("Eingabe: ", arg, 4);
+                inputStringConverter = arg => Helfer.Matrix<int>.MatrixAusgabe("Eingabe: ", arg, 4);
                 AddSolver(SprialTraverseRecursive);
             }
         }

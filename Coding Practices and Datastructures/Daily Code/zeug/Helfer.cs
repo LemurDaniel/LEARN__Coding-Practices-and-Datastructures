@@ -9,6 +9,101 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 {
     public class Helfer
     {
+        public static readonly Random Rand = new Random();
+        public class Matrix<V>
+        {
+            public V[,] mat;
+            public int Length { get => mat.Length; }
+            public Matrix(V[,] mat) => this.mat = mat;
+
+
+            /*  Encoding:   posAbs = posY * T + posX    where T > MaxValueOf(posX) => T == colCount
+           *  As long as T satisfies given Criteria following is true:    
+           *      -   posY = (int) posAbs / T
+           *      -   posX = posA mod T
+           *      
+           *      // !!! T must be bigger than MaxValOf(posX) so pos X can be Encoded as the remainder of the number !!!
+           *      
+           *  posAbs = posY * (colCount+1) + posX         
+           * 
+           */
+            public V GetElementAtIndex(int ind) => GetElementAtIndex(ind, mat);
+            public int GetRow(int ind) => GetRow(ind, mat);
+            public int GetCol(int ind) => GetCol(ind, mat);
+            public int EncodePos(int col, int row) => EncodePos(col, row, mat);
+            public int EncodeRow(int row) => EncodeRow(row, mat);
+            public int EncodeCol(int col) => EncodeCol(col, mat);
+            public static V GetElementAtIndex(int ind, V[,] mat) => mat[GetCol(ind, mat), GetRow(ind, mat)];
+            public static int GetRow(int ind, V[,] mat) => ind / mat.GetLength(0);
+            public static int GetCol(int ind, V[,] mat) => ind % mat.GetLength(0);
+            public static int EncodePos(int col, int row, V[,] mat) => EncodeRow(row, mat) + EncodeCol(col, mat);
+            public static int EncodeRow(int row, V[,] mat) => row * mat.GetLength(0);
+            public static int EncodeCol(int col, V[,] mat) => col;
+
+            public String MatrixAusgabe(string s="", int spacing = 2) => MatrixAusgabe(s, mat, spacing);
+            public static String MatrixAusgabe(string s, V[,] mat, int spacing = 2)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append(s);
+                for (int row = 0; row < mat.GetLength(1); row++)
+                {
+                    if (row != 0) sb.Append(string.Format("{0, -" + s.Length + "}[", ""));
+                    else sb.Append("[");
+                    for (int col = 0; col < mat.GetLength(0); col++) sb.Append(string.Format("{0," + spacing + "}" +(col == mat.GetLength(0) - 1 ? "{1,"+(spacing-1)+"}" : ""), mat[col, row], ""));
+                    sb.Append("]\n");
+                }
+                return sb.ToString();
+            }
+
+
+            public static Matrix<char> GetCharMatrix(string s) => new Matrix<char>(AssembleCharMatrix(s));
+            public static Matrix<int> GetIntMatrix(string s) => new Matrix<int>(AssembleIntMatrix(s));
+            public static Matrix<int> GetIntMatrix(int min, int max, int col = -1, int row = -1) => new Matrix<int>(AssembleIntMatrix(min, max, col, row));
+
+            public static char[,] AssembleCharMatrix(string s)
+            {
+                string[] arrS = s.Split('|');
+                int count = 0;
+                for (int i = 0; i < arrS[0].Length; i++) if (Char.IsLetter(arrS[0][i])) count++;
+                char[,] matrix = new char[arrS.Length, count];
+
+
+                for (int i = 0; i < arrS.Length; i++)
+                {
+                    for (int j = 0, z = 0; j < count; j++)
+                    {
+                        while (!Char.IsLetter(arrS[i][z])) z++;
+                        matrix[i, j] = arrS[i][z++];
+                    }
+                }
+                return matrix;
+            }
+            public static int[,] AssembleIntMatrix(int min, int max, int col=-1, int row=-1)
+            {
+                if (col == -1) col = Rand.Next(1, 15);
+                if (row == -1) row = Rand.Next(1, 15);
+                int[,] matrix = new int[col, row];
+                for (int i = 0; i < row; i++)
+                {
+                    for (int j = 0; j < col; j++) matrix[j, i] = Rand.Next(min, max + 1);
+                }
+                return matrix;
+
+            }
+            public static int[,] AssembleIntMatrix(string s)
+            {
+                string[] arrS = s.Split('|');
+                int[] arr = Assemble(arrS[0]);
+                int[,] matrix = new int[arr.Length, arrS.Length];
+                for (int i = 0; i < matrix.GetLength(1); i++)
+                {
+                    if (i != 0) arr = Assemble(arrS[i]);
+                    for (int j = 0; j < matrix.GetLength(0); j++) matrix[j, i] = arr[j];
+                }
+                return matrix;
+            }
+
+        }
 
         public static Random random = new Random();
         public static string RandomString(int len)
@@ -45,21 +140,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             if (len) sb.Append("\nLänge: " + arr.Length);
             return sb.ToString();
         }
-        public static String MatrixAusgabe<V>(string s, V[,] mat) => MatrixAusgabe<V>(s, mat, 2);
-        public static String MatrixAusgabe<V>(string s, V[,] mat, int spacing)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(s);
-            for (int i=0; i<mat.GetLength(1); i++)
-            {
-                if (i != 0) sb.Append(string.Format("{0, -" + s.Length + "}[", ""));
-                else sb.Append("[");
-                for (int j = 0; j < mat.GetLength(0); j++) sb.Append(string.Format("{0,"+spacing+"}" + (j == mat.GetLength(1) - 1 ? "" : "  "), mat[j,i]));
-                sb.Append("]\n");
-            }
-            return sb.ToString();
-        }
-
+     
         public static bool ArrayVergleich<V>(V[] arr, V[] arr2)
         {
             if (arr == arr2) return true;
@@ -80,38 +161,12 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             return copyarr;
         }
 
-        public static char[,] AssembleCharMatrix(string s)
-        {
-            string[] arrS = s.Split('|');
-            int count = 0;
-            for (int i = 0; i < arrS[0].Length; i++) if (Char.IsLetter(arrS[0][i])) count++;
-            char[,] matrix = new char[arrS.Length, count];
-
-
-            for (int i = 0; i < arrS.Length; i++)
-            {
-                for (int j = 0, z=0; j < count; j++)
-                {
-                    while (!Char.IsLetter(arrS[i][z])) z++;
-                    matrix[i, j] = arrS[i][z++];
-                }
-            }
-            return matrix;
-        }
-
-
         // INT ARRAY
-        public static int[,] AssembleIntMatrix(string s)
+        public static int[] Assemble(int min, int max, int len)
         {
-            string[] arrS = s.Split('|');
-            int[] arr = Assemble(arrS[0]);
-            int[,] matrix = new int[arr.Length, arrS.Length];
-            for (int i = 0; i < matrix.GetLength(1); i++)
-            {
-                if(i!=0)    arr = Assemble(arrS[i]);
-                for (int j = 0; j < matrix.GetLength(0); j++) matrix[j, i] = arr[j];
-            }
-            return matrix;
+            int[] arr = new int[len];
+            for (int i = 0; i < len; i++) arr[i] = Rand.Next(min, max+1);
+            return arr;
         }
         public static int[] Assemble(string s)
         {
@@ -149,7 +204,6 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         }
 
 
-
         // INT BINARY TREE
         public static BinaryTree<char> AssembleBTreeChar(string s)
         {
@@ -168,6 +222,24 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             BinaryTree<int> tree = new BinaryTree<int>();
             foreach (int el in arr) tree.Append(el);
             return tree;
+        }
+
+
+
+
+
+        public static bool BinarySearch(int lowBound, int upBound, ref int current, ref int iterations, Func<int,int> compare)
+        {
+            while(lowBound <= upBound)
+            {
+                iterations++;
+                current = (lowBound + upBound) / 2;
+                int comp = compare(current);
+                if (comp > 0) upBound = current - 1;
+                else if (comp < 0) lowBound = current + 1;
+                else return true;
+            }
+            return false;
         }
     }
 }

@@ -74,12 +74,12 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 timeSpan = DateTime.Now.Subtract(baseClass.solverStarted);
                 iterations = it;
                 this.erg = erg;
-                success = baseClass.CompareOutErg(baseClass.output, erg);
+                if(baseClass.output != null) success = baseClass.CompareOutErg(baseClass.output, erg);
             }
 
             public override string ToString()
             {
-                string s = "Solver ----> " + description + ": " + Success + "\n"; ;
+                string s = "Solver ----> " + description + ": " +  (baseClass.output!=null ? Success:"I dunno ????") + "\n";
                 if (exception != null) return s += "   --> " + exception.GetType().Name + ": " + exception.Message + "\n   --> METHODE: " + exception.TargetSite + "\n\n";
 
                 if (erg != null) s += (baseClass.ergStringConverter?.Invoke(erg) ?? erg.ToString()) + "\n";

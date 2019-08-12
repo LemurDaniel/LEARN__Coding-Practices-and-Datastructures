@@ -30,10 +30,10 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             public Input(string s, string w)
             {
                 word = s;
-                matrix = Helfer.AssembleCharMatrix(w);
+                matrix = Helfer.Matrix<char>.AssembleCharMatrix(w);
             }
 
-            public override string ToString() => "Wort: " + word + "\n" + Helfer.MatrixAusgabe<char>("Matrix: ", matrix);
+            public override string ToString() => "Wort: " + word + "\n" + Helfer.Matrix<char>.MatrixAusgabe("Matrix: ", matrix);
         }
 
         private class InOut : InOutBase<Input, bool>

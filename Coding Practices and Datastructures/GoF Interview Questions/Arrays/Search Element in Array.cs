@@ -82,8 +82,8 @@ namespace Coding_Practices_and_Datastructures.Data_Structures_and_Algos
                 current = (upBound + lowBound) / 2;
                 if (sortedArray[current] == target) return new InfoBase<int>(iterations, current, "Position: ");
                 else if (upBound - lowBound < 1) return new InfoBase<int>(iterations, -1, "Position: ");
-                else if (sortedArray[current] > target) upBound = current;
-                else lowBound = current;
+                else if (sortedArray[current] > target) upBound = current-1;
+                else lowBound = current+1;
             }
         }
     }

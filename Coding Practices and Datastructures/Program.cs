@@ -2,10 +2,6 @@
 using Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe;
 using Coding_Practices_and_Datastructures.Daily_Code;
 using Coding_Practices_and_Datastructures.Data_Structures_and_Algos;
-using Coding_Practices_and_Datastructures.GoF_Interview_Questions.LinkedLists;
-using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Stack;
-using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Strings;
-using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Two_Pointers;
 using Coding_Practices_and_Datastructures.Other.Daily_Coding_Problem;
 using Coding_Practices_and_Datastructures.Tower_of_Hanoi;
 using System;
@@ -14,6 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Coding_Practices_and_Datastructures.GoF_Interview_Questions.MathEx;
+using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays;
+using Coding_Practices_and_Datastructures.GoF_Interview_Questions.LinkedLists;
+using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Stack;
+using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Strings;
+using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Two_Pointers;
 
 namespace GoF_Coding_Interview_Algos
 {
@@ -43,6 +44,9 @@ namespace GoF_Coding_Interview_Algos
             //------>ARRAY - STRUCTURES
             //  aufgabe = new Search_Element_in_Array();
             //  aufgabe = new GoF_Interview_Questions.Arrays.Two_Sum();
+            //  aufgabe = new Search_A_2D_Matrix_();
+            //  aufgabe = new Sort_Colors();
+            aufgabe = new Set_Matrix_Zeroes();
 
             //------>STRING - STRUCTURES
             //  aufgabe = new Integer_To_Roman();
@@ -71,7 +75,7 @@ namespace GoF_Coding_Interview_Algos
 
             //------>MATH - EXCERCISES
             //  aufgabe = new Integer_to_English_Words();
-            aufgabe = new Base_7();
+            //  aufgabe = new Base_7();
 
             /* Daily Code  */
 
@@ -99,7 +103,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Move_Zeroes();
             //  aufgabe = new Spiral_Traversal_of_Grid();
             //  aufgabe = new Find_the_k_th_Largest_Element_in_a_List();
-            aufgabe = new Largest_Product_of_3_Elements();
+            //  aufgabe = new Largest_Product_of_3_Elements();
 
             while (true) { aufgabe.Test(); }
         }
