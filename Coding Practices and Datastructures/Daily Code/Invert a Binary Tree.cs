@@ -11,9 +11,9 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
     {
         private class InOut : InOutBase<BinarySearchTree<char>, BinarySearchTree<char>>
         {
-            public InOut(string input, string output) : base (Helfer.AssembleBTreeChar(input), Helfer.AssembleBTreeChar(output), true)
+            public InOut(string input, string output) : base (Helfer.AssembleBTreeChar(input) as BinarySearchTree<char>, Helfer.AssembleBTreeChar(output) as BinarySearchTree<char>, true)
             {
-                copiedInputProvider = arg => Helfer.AssembleBTreeChar(input);
+                copiedInputProvider = arg => Helfer.AssembleBTreeChar(input) as BinarySearchTree<char>;
                 AddSolver((inp, erg) => erg.Setze(inp.InvertRecursive() as BinarySearchTree<char>), "InvertiereRekursiv");
             }
         }

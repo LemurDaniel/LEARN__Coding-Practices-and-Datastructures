@@ -36,8 +36,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public BTreeNode(V val) => this.val = val;
         public override IBTreeNode<V> Insert(BTreeNode<V> n, object arg = null)
         {
-            if (left != null) left = n;
-            else if (right != null) right = n;
+            if (left == null) left = n;
+            else if (right == null) right = n;
             return null;
         }
 
@@ -92,7 +92,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
     }
 
-    public abstract class BinaryTree<V, N> : IEnumerable<V> where V : IComparable where N : IBTreeNode<V>
+
+    public abstract class BinaryTree<V, N> : IEnumerable<V>, IBTree<V> where V : IComparable where N : IBTreeNode<V>
     {       
         
         // BINARY TREE
@@ -108,7 +109,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
 
         //Reverse
-        public virtual BinaryTree<V, N> InvertRecursive()
+        public virtual IBTree<V> InvertRecursive()
         {
             Root?.SwapRecursive();
             return this;
@@ -132,7 +133,45 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         }
         public override int GetHashCode() => base.GetHashCode();
 
+        public bool IsMirrorRecurse()
+        {
+            if (root == null) return true;
+            else return IsMirrorRecurse(root.Left, root.Right);
+        }
+        private bool IsMirrorRecurse(IBTreeNode<V> left, IBTreeNode<V> right)
+        {
+            if (left == null) return left == null && right == null;
+            else if (!left.Val.Equals(right.Val)) return false;
+            else return IsMirrorRecurse(left.Left, right.Right) && IsMirrorRecurse(left.Right, right.Left);
 
+        }
+        public bool IsMirrorIt()
+        {
+            if (root == null) return true;
+            //Traverse seperatae levelorder on left
+            //Traverse inverse levelorder on right
+            //compare vals
+            Queue<IBTreeNode<V>> left = new Queue<IBTreeNode<V>>();
+            Queue<IBTreeNode<V>> right = new Queue<IBTreeNode<V>>();
+            if(root.Left != null) left.Enqueue(root.Left);
+            if (root.Right != null)  right.Enqueue(root.Right);
+
+            IBTreeNode<V> leftN, rightN;
+            while (left.Count != 0)
+            {
+                if (left.Count != right.Count) return false;
+                leftN = left.Dequeue();
+                rightN = right.Dequeue();
+                if (!leftN.Val.Equals(rightN.Val)) return false;
+
+                if (leftN.Left != null) left.Enqueue(leftN.Left);   // Enqueue left one first
+                if (leftN.Right != null) left.Enqueue(leftN.Right);
+
+                if (rightN.Right != null) right.Enqueue(rightN.Right);  // Enqueue right one first !!!!
+                if (rightN.Left != null) right.Enqueue(rightN.Left);
+            }
+            return true;
+        }
 
         // TRAVERSAL
         // Depth First
@@ -208,16 +247,16 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         //TEST ENUMERABLES
         public IEnumerator<V> GetEnumerator() => GetIEnumerable(TraverseType.InOrder).GetEnumerator();
-        public IEnumerable<V> GetIEnumerable(TraverseType traverseType)
+        public IEnumerable<V> GetIEnumerable(TraverseType traverseType, IBTreeNode<V> node = null)
         {
+            if (node == null) node = root;
             if (traverseType.IsZigZagLevelOrder || traverseType.IsLevelOrder)
-                foreach (V val in GetIEnumerableLevelOrder(traverseType)) yield return val;
+                foreach (V val in GetIEnumerableLevelOrder(traverseType, node)) yield return val;
             else
             {
                 Stack<IBTreeNode<V>> stack = new Stack<IBTreeNode<V>>();
                 Stack<V> postorderStack = new Stack<V>();
 
-                IBTreeNode<V> node = root;
                 while (node != null || stack.Count > 0)
                 {
                     if (node != null)
@@ -234,17 +273,17 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                 if (traverseType.IsPostOrder) while (postorderStack.Count > 0) yield return postorderStack.Pop();
             }
         }
-        private IEnumerable<V> GetIEnumerableLevelOrder(TraverseType traverseType)
+        private IEnumerable<V> GetIEnumerableLevelOrder(TraverseType traverseType, IBTreeNode<V> node)
         {
             Queue<IBTreeNode<V>> queue = new Queue<IBTreeNode<V>>();
             Stack<V> zagSt = new Stack<V>();
-            queue.Enqueue(root);
+            queue.Enqueue(node);
             if (traverseType.IsZigZagLevelOrder) queue.Enqueue(null);    // To force an alternation from zig to zag after root
             bool Zig = true;
 
             while (queue.Count != 0)
             {
-                IBTreeNode<V> node = queue.Dequeue();
+                node = queue.Dequeue();
 
                 if (traverseType.IsZigZagLevelOrder && !Zig) zagSt.Push(node.Val);
                 else yield return node.Val;

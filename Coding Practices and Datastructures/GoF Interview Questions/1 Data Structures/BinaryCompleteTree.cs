@@ -18,16 +18,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         }
         //NODE END
-
-        private bool inverted;
-        public bool Inverted { get => inverted; }
         public new Node Root { get => root as Node; }
-
-        public override BinaryTree<V, Node> InvertRecursive()
-        {
-            inverted = !inverted;
-            return base.InvertRecursive();
-        }
 
         public override void Append(V val) => Append(new Node(val));
         public override void Append(Node insert)

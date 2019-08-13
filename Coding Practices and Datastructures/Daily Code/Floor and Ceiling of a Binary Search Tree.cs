@@ -21,7 +21,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             {
                 this.s = s;
                 this.k = k;
-                tree = Helfer.AssembleBTree(s);
+                tree = Helfer.AssembleBTree(s) as BinarySearchTree<int>;
             }
 
             public override string ToString() => "Eingabe: " + s + "\nK: " + k;

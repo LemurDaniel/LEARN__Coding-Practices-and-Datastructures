@@ -36,7 +36,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public bool Inverted { get => inverted; }
         public new Node Root { get => root as Node;  }
 
-        public override BinaryTree<V, Node> InvertRecursive()
+        public override IBTree<V> InvertRecursive()
         {
             inverted = !inverted;
             return base.InvertRecursive();

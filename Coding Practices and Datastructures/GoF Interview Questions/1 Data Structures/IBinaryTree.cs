@@ -21,4 +21,21 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public abstract StringBuilder GenerateStringRecursive(StringBuilder sb);
         public abstract StringBuilder PrintRecursive(StringBuilder sb, TraverseType traverseType);
     }
+    public interface IBTree<V> : IEnumerable<V>{
+        void Append(V val);
+        IBTree<V> InvertRecursive();
+
+        bool IsMirrorRecurse();
+        bool IsMirrorIt();
+
+        // TRAVERSAL
+        // Depth First
+        string PrintRecursive(TraverseType traverseType);
+
+        string PrintIterative(TraverseType traverseType);
+
+
+        //TEST ENUMERABLES
+        IEnumerable<V> GetIEnumerable(TraverseType traverseType, IBTreeNode<V> node = null);
+    }
 }
