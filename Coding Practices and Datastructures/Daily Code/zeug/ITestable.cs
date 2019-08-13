@@ -27,6 +27,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
         void ITestable.Test()
         {
+            //testcases[0].SolveIt();
             Console.Clear();
             Console.WriteLine(aufgabe);
             foreach(ISolvable testcase in testcases)

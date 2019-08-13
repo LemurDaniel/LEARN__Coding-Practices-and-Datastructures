@@ -32,7 +32,7 @@ namespace GoF_Coding_Interview_Algos
             ITestable aufgabe;
 
             /* OTHER */
-            aufgabe = new TreeTraversal();  // UNFINISHED !!!!!
+            aufgabe = new TreeTraversal();  //*
 
 
             /* Daily Coding Problems  */
@@ -44,21 +44,21 @@ namespace GoF_Coding_Interview_Algos
             //------>ARRAY - STRUCTURES
             //  aufgabe = new Search_Element_in_Array();
             //  aufgabe = new GoF_Interview_Questions.Arrays.Two_Sum();
-            //  aufgabe = new Search_A_2D_Matrix_();
-            //  aufgabe = new Sort_Colors();
+            //  aufgabe = new Search_A_2D_Matrix_();    //*
+            //  aufgabe = new Sort_Colors();    //*
             //  aufgabe = new Set_Matrix_Zeroes();
 
             //------>STRING - STRUCTURES
             //  aufgabe = new Integer_To_Roman();
             //  aufgabe = new String_To_Integer();
-            //  aufgabe = new ZigZag_Conversion();
-            //  aufgabe = new Decode_String();
+            //  aufgabe = new ZigZag_Conversion();  //*
+            //  aufgabe = new Decode_String();  //*
 
             //------>LINKED LIST - STRUCTURES
             //  aufgabe = new Add_Two_Numbers();
             //  aufgabe = new Reverse_A_Linked_List();
             //  aufgabe = new Reverse_Linked_List_2();
-            //  aufgabe = new Palindrom_Linked_List();
+            //  aufgabe = new Palindrom_Linked_List();  //*
             //  aufgabe = new Remove_Linked_List_Element();
 
             //------>STACK - STRUCTURES
@@ -74,8 +74,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Implement_StrStr();
 
             //------>MATH - EXCERCISES
-            //  aufgabe = new Integer_to_English_Words();
-            //  aufgabe = new Base_7();
+            //  aufgabe = new Integer_to_English_Words();   //*
+            //  aufgabe = new Base_7(); //*
 
             /* Daily Code  */
 
@@ -89,23 +89,25 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Non_decreasing_Array_with_Single_Modification();
             //  aufgabe = new Floor_and_Ceiling_of_a_Binary_Search_Tree();
             //  aufgabe = new Max_Stack();
-            //  aufgabe = new Number_of_Ways_to_Climb_Stairs();     // Hard
+            //  aufgabe = new Number_of_Ways_to_Climb_Stairs();     //*
             //  aufgabe = new Invert_a_Binary_Tree();
-            //  aufgabe = new Simple_Calculator();
+            //  aufgabe = new Simple_Calculator();      
             //  aufgabe = new Longest_Sequence_with_Two_Unique_Numbers();
             //  aufgabe = new Word_Search();
             //  aufgabe = new Minimum_Size_Subarray_Sum();
-            //  aufgabe = new Ways_to_Traverse_a_Grid();
+            //  aufgabe = new Ways_to_Traverse_a_Grid();    //*
             //  aufgabe = new Remove_Consecutive_Nodes_that_Sum_to_0();
             //  aufgabe = new Remove_k_th_Last_Element_From_Linked_List();
             //  aufgabe = new Witness_of_The_Tall_People();
             //  aufgabe = new Course_Prerequisites();
-            //  aufgabe = new Move_Zeroes();
+            //  aufgabe = new Move_Zeroes();    //*
             //  aufgabe = new Spiral_Traversal_of_Grid();
             //  aufgabe = new Find_the_k_th_Largest_Element_in_a_List();
-            //  aufgabe = new Largest_Product_of_3_Elements();
+            //  aufgabe = new Largest_Product_of_3_Elements();  //*
+
 
             while (true) { aufgabe.Test(); }
         }
+
     }
 }
