@@ -205,9 +205,9 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
 
         // INT BINARY TREE
-        public static BinaryTree<char> AssembleBTreeChar(string s)
+        public static BinarySearchTree<char> AssembleBTreeChar(string s, BinarySearchTree<char> tree = null)
         {
-            BinaryTree<char> tree = new BinaryTree<char>();
+            if(tree == null) tree = new BinarySearchTree<char>();
             if (s[0] == '*')
             {
                 tree.InvertRecursive();
@@ -216,10 +216,10 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             foreach (char c in s) tree.Append(c);
             return tree;
         }
-        public static BinaryTree<int> AssembleBTree(string s) => AssembleBTree(Assemble(s));
-        public static BinaryTree<int> AssembleBTree(int[] arr)
+        public static BinarySearchTree<int> AssembleBTree(string s, BinarySearchTree<int> tree = null) => AssembleBTree(Assemble(s), tree);
+        public static BinarySearchTree<int> AssembleBTree(int[] arr, BinarySearchTree<int> tree = null)
         {
-            BinaryTree<int> tree = new BinaryTree<int>();
+            if (tree == null) tree = new BinarySearchTree<int>();
             foreach (int el in arr) tree.Append(el);
             return tree;
         }

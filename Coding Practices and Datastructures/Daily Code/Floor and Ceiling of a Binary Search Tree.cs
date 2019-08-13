@@ -13,8 +13,8 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         private class Input
         {
             private string s;
-            private BinaryTree<int> tree;
-            public BinaryTree<int>.Node Root { get => tree.Root;  }
+            private BinarySearchTree<int> tree;
+            public BinarySearchTree<int>.Node Root { get => tree.Root; }
             public int k;
 
             public Input(String s, int k)
@@ -69,7 +69,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             erg.Setze(outp);
         }
 
-        private static bool Find(BinaryTree<int>.Node root, int k)
+        private static bool Find(BinarySearchTree<int>.Node root, int k)
         {
             while (root != null)
             {

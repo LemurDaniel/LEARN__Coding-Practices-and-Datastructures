@@ -31,115 +31,86 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public override string ToString() => desc;
     }
 
-    public class BinaryTree<V> : IEnumerable<V> where V : IComparable
-    {       
-        public class Node
+    public abstract class BTreeNode<V> : IBTreeNode<V>
+    {
+        public BTreeNode(V val) => this.val = val;
+        public override IBTreeNode<V> Insert(BTreeNode<V> n, object arg = null)
         {
-            private Node left, right;
-            private V val;
+            if (left != null) left = n;
+            else if (right != null) right = n;
+            return null;
+        }
 
-            public Node Left { get => left; set => left = value; }
-            public Node Right { get => right; set => right = value; }
-            public V Val { get => val; set => val = value; }
+        // For Inverting the Binary Tree => swaps left and right and calls swap on subNodes
+        public override void SwapRecursive()
+        {
+            left?.SwapRecursive();
+            right?.SwapRecursive();
+            IBTreeNode<V> tmp = right;
+            right = left;
+            left = tmp;
+        }
 
-            public Node(V val) => this.val = val;
-
-            public Node Insert(Node n, bool invertedInsertion)
-            {
-                if (invertedInsertion ^ (n.Val.CompareTo(val) > 0) )
-                {
-                    if (right == null) right = n;
-                    else return right;
-                }
-                else
-                {
-                    if (left == null) left = n;
-                    else return left;
-                }
-                return null;
-            }
-
-            // For Inverting the Binary Tree => swaps left and right and calls swap on subNodes
-            public void SwapRecursive()
-            {
-                left?.SwapRecursive();
-                right?.SwapRecursive();
-                Node tmp = right;
-                right = left;
-                left = tmp;
-            }
-
-            public StringBuilder GenerateStringRecursive(StringBuilder sb)
-            {
-                sb.Append(val + "; ");
-                left?.GenerateStringRecursive(sb);
-                right?.GenerateStringRecursive(sb);
-                return sb;
-            }
-
-
-            public override bool Equals(object obj)
-            {
-                if (obj == null) return false;
-                if (!obj.GetType().Equals(typeof(Node))) return false;
-                Node node = obj as Node;
-
-                bool rightBool = false;
-                if (right == null && node.right == null) rightBool = true;
-                else rightBool = right.Equals(node.right);
-
-                bool leftBool = false;
-                if (left == null && node.left == null) leftBool = true;
-                else leftBool = left.Equals(node.left);
-
-                return node.val.Equals(val) && rightBool && leftBool;
-            }
-            public override int GetHashCode() => base.GetHashCode();
-
-            // Travers
-            public StringBuilder PrintRecursive(StringBuilder sb, TraverseType traverseType)
-            {
-                if(traverseType == TraverseType.PreOrder) sb.Append(val + "; ");
-                left?.PrintRecursive(sb, traverseType);
-                if (traverseType == TraverseType.InOrder) sb.Append(val + "; ");
-                right?.PrintRecursive(sb, traverseType);
-                if (traverseType == TraverseType.PostOrder) sb.Append(val + "; ");
-                return sb;
-            }
-
-
+        public override StringBuilder GenerateStringRecursive(StringBuilder sb)
+        {
+            sb.Append(val + "; ");
+            left?.GenerateStringRecursive(sb);
+            right?.GenerateStringRecursive(sb);
+            return sb;
         }
 
 
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            if (!obj.GetType().Equals(typeof(BTreeNode<V>))) return false;
+            BTreeNode<V> node = obj as BTreeNode<V>;
+
+            bool rightBool = false;
+            if (right == null && node.right == null) rightBool = true;
+            else rightBool = right.Equals(node.right);
+
+            bool leftBool = false;
+            if (left == null && node.left == null) leftBool = true;
+            else leftBool = left.Equals(node.left);
+
+            return node.val.Equals(val) && rightBool && leftBool;
+        }
+        public override int GetHashCode() => base.GetHashCode();
+
+        // Travers
+        public override StringBuilder PrintRecursive(StringBuilder sb, TraverseType traverseType)
+        {
+            if (traverseType == TraverseType.PreOrder) sb.Append(val + "; ");
+            left?.PrintRecursive(sb, traverseType);
+            if (traverseType == TraverseType.InOrder) sb.Append(val + "; ");
+            right?.PrintRecursive(sb, traverseType);
+            if (traverseType == TraverseType.PostOrder) sb.Append(val + "; ");
+            return sb;
+        }
+
+
+    }
+
+    public abstract class BinaryTree<V, N> : IEnumerable<V> where V : IComparable where N : IBTreeNode<V>
+    {       
+        
         // BINARY TREE
-        private Node root;
-        private bool inverted;
-        public Node Root { get => root;  }
+        protected N root;
+        public N Root { get => root;  }
 
         //KONSTRUKTOR
-        public BinaryTree() => this.inverted = false;
-        public BinaryTree(bool inverted) => this.inverted = inverted;
+        // public BinaryTree();
 
         //Methods
-        public void Append(V val) => Append(new Node(val));
-        public void Append(Node insert)
-        {
-            if (root == null)
-            {
-                root = insert;
-                return;
-            }
-
-            Node node = root;
-            while (node != null)    node = node.Insert(insert, inverted);
-        }
+        public abstract void Append(V val);
+        public abstract void Append(N insert);
 
 
         //Reverse
-        public BinaryTree<V> InvertRecursive()
+        public virtual BinaryTree<V, N> InvertRecursive()
         {
             Root?.SwapRecursive();
-            inverted = !inverted;
             return this;
         }
 
@@ -153,8 +124,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public override bool Equals(object obj)
         {
             if (obj == null) return false;
-            if (!obj.GetType().Equals(typeof(BinaryTree<V>))) return false;
-            BinaryTree<V> tree = obj as BinaryTree<V>;
+            if (!obj.GetType().Equals(typeof(BinaryTree<V, N>))) return false;
+            BinaryTree<V, N> tree = obj as BinaryTree<V, N>;
             if (tree.Root == null && Root != null) return false;
             if (tree.Root == null && Root == null) return true;
             return tree.Root.Equals(Root);
@@ -180,9 +151,9 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             StringBuilder sb = new StringBuilder();
             if(traverseType.IsZigZagLevelOrder || traverseType.IsLevelOrder) return PrintLevelOrder(sb, traverseType).ToString().Substring(0, sb.Length - 2);
 
-            Stack<Node> stack = new Stack<Node>();
+            Stack<IBTreeNode<V>> stack = new Stack<IBTreeNode<V>>();
 
-            Node node = root;
+            IBTreeNode<V> node = root;
             while(node != null || stack.Count > 0)
             {            
                 if(node != null)
@@ -201,7 +172,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         private StringBuilder PrintLevelOrder(StringBuilder sb, TraverseType traverseType)
         {
-            Queue<Node> queue = new Queue<Node>();
+            Queue<IBTreeNode<V>> queue = new Queue<IBTreeNode<V>>();
             queue.Enqueue(root);
             if(traverseType.IsZigZagLevelOrder) queue.Enqueue(null);    // To force an alternation from zig to zag after root
             bool Zig = true;
@@ -209,7 +180,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             StringBuilder subSb = new StringBuilder();
             while(queue.Count != 0)
             {
-                Node node = queue.Dequeue();
+                IBTreeNode<V> node = queue.Dequeue();
 
                 if (traverseType.IsZigZagLevelOrder)
                 {
@@ -243,10 +214,10 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                 foreach (V val in GetIEnumerableLevelOrder(traverseType)) yield return val;
             else
             {
-                Stack<Node> stack = new Stack<Node>();
+                Stack<IBTreeNode<V>> stack = new Stack<IBTreeNode<V>>();
                 Stack<V> postorderStack = new Stack<V>();
 
-                Node node = root;
+                IBTreeNode<V> node = root;
                 while (node != null || stack.Count > 0)
                 {
                     if (node != null)
@@ -265,7 +236,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         }
         private IEnumerable<V> GetIEnumerableLevelOrder(TraverseType traverseType)
         {
-            Queue<Node> queue = new Queue<Node>();
+            Queue<IBTreeNode<V>> queue = new Queue<IBTreeNode<V>>();
             Stack<V> zagSt = new Stack<V>();
             queue.Enqueue(root);
             if (traverseType.IsZigZagLevelOrder) queue.Enqueue(null);    // To force an alternation from zig to zag after root
@@ -273,7 +244,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
             while (queue.Count != 0)
             {
-                Node node = queue.Dequeue();
+                IBTreeNode<V> node = queue.Dequeue();
 
                 if (traverseType.IsZigZagLevelOrder && !Zig) zagSt.Push(node.Val);
                 else yield return node.Val;
@@ -293,8 +264,6 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         }
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         //static Methods
-
-
     }
 
 }

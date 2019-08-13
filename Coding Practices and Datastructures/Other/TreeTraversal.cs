@@ -13,7 +13,7 @@ namespace Coding_Practices_and_Datastructures.Other
 
         private class Input{
             public readonly TraverseType traverseType;
-            public readonly BinaryTree<int> tree;
+            public readonly BinarySearchTree<int> tree;
 
             public Input(string s, TraverseType traverseType)
             {

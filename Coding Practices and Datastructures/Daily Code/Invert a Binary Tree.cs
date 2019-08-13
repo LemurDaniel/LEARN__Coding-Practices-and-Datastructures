@@ -9,12 +9,12 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 {
     class Invert_a_Binary_Tree : Testable
     {
-        private class InOut : InOutBase<BinaryTree<char>, BinaryTree<char>>
+        private class InOut : InOutBase<BinarySearchTree<char>, BinarySearchTree<char>>
         {
             public InOut(string input, string output) : base (Helfer.AssembleBTreeChar(input), Helfer.AssembleBTreeChar(output), true)
             {
                 copiedInputProvider = arg => Helfer.AssembleBTreeChar(input);
-                AddSolver((inp, erg) => erg.Setze(inp.InvertRecursive()), "InvertiereRekursiv");
+                AddSolver((inp, erg) => erg.Setze(inp.InvertRecursive() as BinarySearchTree<char>), "InvertiereRekursiv");
             }
         }
 

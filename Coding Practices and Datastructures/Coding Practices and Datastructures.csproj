@@ -86,7 +86,10 @@
     <Compile Include="DS HANDBOOK\Stack\ArrayStack.cs" />
     <Compile Include="DS HANDBOOK\Stack\LLStack.cs" />
     <Compile Include="DS HANDBOOK\Tree\NormalBTree.cs" />
-    <Compile Include="GoF Interview Questions\1 Data Structures\BinaryTree.cs" />
+    <Compile Include="GoF Interview Questions\1 Data Structures\BinaryCompleteTree.cs" />
+    <Compile Include="GoF Interview Questions\1 Data Structures\BinarySearchTree.cs" />
+    <Compile Include="GoF Interview Questions\1 Data Structures\BinaryBaseTree.cs" />
+    <Compile Include="GoF Interview Questions\1 Data Structures\IBinaryTree.cs" />
     <Compile Include="GoF Interview Questions\1 Data Structures\LinkedList.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Search A 2D Matrix+.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Search Element in Array.cs" />

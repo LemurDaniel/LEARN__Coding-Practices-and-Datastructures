@@ -65,7 +65,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Evaluate_Reverse_Polish_Notation();
             //  aufgabe = new Min_Stack();
 
-            //aufgabe = new Basic_Calculator(); NIcht fertig
+            //aufgabe = new Basic_Calculator(); Nicht fertig
 
             //------>TWO POINTERS - EXCERCISES
             //  aufgabe = new Valid_Palindrom();
