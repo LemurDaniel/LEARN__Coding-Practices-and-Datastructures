@@ -22,6 +22,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
             public Output(int[] erg) => this.erg = erg;
             public override string ToString() => Helfer.Arrayausgabe<int>(erg) + ((exp != null) ? "\nExpression: " + exp : "");
             public override bool Equals(object obj) => Helfer.ArrayVergleich<int>( ((Output)obj).erg, erg);
+            public override int GetHashCode() => base.GetHashCode();
 
         }
 

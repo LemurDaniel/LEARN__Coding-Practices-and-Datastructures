@@ -29,7 +29,9 @@ namespace Coding_Practices_and_Datastructures.Other
             public InOut(Input inp, string output) : base (inp, output, true)
             {
                 inputStringConverter = null;
+                AddSolver(TraverseTreeRecursive);
                 AddSolver(TraverseTreeIterative);
+                AddSolver(TraverseTreeIterator);
             }
         }
 
@@ -50,8 +52,15 @@ namespace Coding_Practices_and_Datastructures.Other
         }
 
 
-        private static void TraverseTreeRecursive(Input inp, InOut.Ergebnis erg) => erg.Setze(inp.tree.PrintInOrderRecursive(inp.traverseType));
-        private static void TraverseTreeIterative(Input inp, InOut.Ergebnis erg) => erg.Setze(inp.tree.PrintInOrderIterative(inp.traverseType));
+        private static void TraverseTreeRecursive(Input inp, InOut.Ergebnis erg) => erg.Setze(inp.tree.PrintRecursive(inp.traverseType));
+        private static void TraverseTreeIterative(Input inp, InOut.Ergebnis erg) => erg.Setze(inp.tree.PrintIterative(inp.traverseType));
+
+        private static void TraverseTreeIterator(Input inp, InOut.Ergebnis erg)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (int i in inp.tree.GetIEnumerable(inp.traverseType)) sb.Append(i+"; ");
+            erg.Setze(sb.ToString().Substring(0, sb.Length-2));
+        }
 
     }
 }

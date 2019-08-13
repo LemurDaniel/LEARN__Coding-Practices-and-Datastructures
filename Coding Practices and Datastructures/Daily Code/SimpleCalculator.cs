@@ -28,6 +28,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
             public override string ToString() => erg + (rpn == null ? "" : "\nRPN: " + rpn);
             public override bool Equals(object obj) => (obj as OutPut).erg == erg;
+            public override int GetHashCode() => base.GetHashCode();
         }
 
         private class InOut : InOutBase<string, OutPut>

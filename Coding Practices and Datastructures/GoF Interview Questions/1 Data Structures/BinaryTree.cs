@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,7 +31,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public override string ToString() => desc;
     }
 
-    public class BinaryTree<V> where V : IComparable
+    public class BinaryTree<V> : IEnumerable<V> where V : IComparable
     {       
         public class Node
         {
@@ -164,15 +165,16 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         // TRAVERSAL
         // Depth First
-        public string PrintInOrderRecursive(TraverseType traverseType)
+        public string PrintRecursive(TraverseType traverseType)
         {
             if (root == null) return "";
             StringBuilder sb = new StringBuilder();
-            if (traverseType.IsZigZagLevelOrder || traverseType.IsLevelOrder) return PrintLevelOrder(sb, traverseType).ToString().Substring(0, sb.Length - 2);
-            else return root.PrintRecursive(sb, traverseType).ToString().Substring(0, sb.Length-2);
+            if (traverseType.IsZigZagLevelOrder || traverseType.IsLevelOrder) PrintLevelOrder(sb, traverseType);
+            else root.PrintRecursive(sb, traverseType);
+            return sb.ToString().Substring(0, sb.Length - 2);
         }
 
-        public string PrintInOrderIterative(TraverseType traverseType)
+        public string PrintIterative(TraverseType traverseType)
         {
             if (root == null) return "";
             StringBuilder sb = new StringBuilder();
@@ -186,58 +188,33 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                 if(node != null)
                 {
                     if (traverseType.IsPreOrder) sb.Append(node.Val + "; ");
+                    else if (traverseType.IsPostOrder) sb.Insert(0, node.Val + "; ");   // Insert at 0 to reverse WRL to LRW => Postorder
                     stack.Push(node);
-                    node = node.Left;
+                    node = traverseType.IsPostOrder ? node.Right : node.Left;   // if postOrder do WRL else WLR
                     continue;
                 }
-                node = stack.Pop();
-                if(traverseType.IsInorder) sb.Append(node.Val+"; ");
-                node = node.Right;
+                if(traverseType.IsInorder) sb.Append(stack.Peek().Val+"; ");
+                node = traverseType.IsPostOrder ? stack.Pop().Left : stack.Pop().Right; // if postOrder do WRL else WLR
             }
             return sb.ToString().Substring(0, sb.Length-2);
-        }
-
-        private StringBuilder PrintPostOrderIt(StringBuilder sb) // ????????????????????
-        {
-            Stack<Node> main = new Stack<Node>();
-            Stack<Node> rights = new Stack<Node>();
-
-            Node node = root;
-            while (true)
-            {
-                if (node.Left != null)
-                {
-                    main.Push(node);
-                    node = node.Left;
-                    continue;
-                }
-                else if (node.Right != null)
-                {
-                    node = node.Right;
-                    rights.Push(node);
-                    continue;
-                }
-                else
-                    sb.Append(node.Val);
-            }
         }
 
         private StringBuilder PrintLevelOrder(StringBuilder sb, TraverseType traverseType)
         {
             Queue<Node> queue = new Queue<Node>();
             queue.Enqueue(root);
-            if(traverseType.IsZigZagLevelOrder) queue.Enqueue(null);
+            if(traverseType.IsZigZagLevelOrder) queue.Enqueue(null);    // To force an alternation from zig to zag after root
             bool Zig = true;
 
-            string substring = "";
+            StringBuilder subSb = new StringBuilder();
             while(queue.Count != 0)
             {
                 Node node = queue.Dequeue();
 
                 if (traverseType.IsZigZagLevelOrder)
                 {
-                    if (Zig) substring += node.Val + "; ";
-                    else substring = node.Val + "; " + substring;
+                    if (Zig) subSb.Append(node.Val + "; ");
+                    else subSb.Insert(0, node.Val + "; ");
                 }
                 else sb.Append(node.Val + "; ");
 
@@ -247,16 +224,74 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                 if(queue.Count > 0 && queue.Peek() == null)
                 {
                     queue.Dequeue();
-                    sb.Append(substring);
-                    if (queue.Count == 0) break;
-                    substring = "";
+                    sb.Append(subSb);
+                    subSb.Clear();
+                    if (queue.Count == 0)   break;
                     queue.Enqueue(null);
-                    Zig = !Zig;
+                    Zig = !Zig; //Alternate between Zig and Zag
                 }
             }
             return sb;
         }
 
+
+        //TEST ENUMERABLES
+        public IEnumerator<V> GetEnumerator() => GetIEnumerable(TraverseType.InOrder).GetEnumerator();
+        public IEnumerable<V> GetIEnumerable(TraverseType traverseType)
+        {
+            if (traverseType.IsZigZagLevelOrder || traverseType.IsLevelOrder)
+                foreach (V val in GetIEnumerableLevelOrder(traverseType)) yield return val;
+            else
+            {
+                Stack<Node> stack = new Stack<Node>();
+                Stack<V> postorderStack = new Stack<V>();
+
+                Node node = root;
+                while (node != null || stack.Count > 0)
+                {
+                    if (node != null)
+                    {
+                        if (traverseType.IsPreOrder) yield return node.Val;
+                        else if (traverseType.IsPostOrder) postorderStack.Push(node.Val);   // Insert at 0 to reverse WRL to LRW => Postorder
+                        stack.Push(node);
+                        node = traverseType.IsPostOrder ? node.Right : node.Left;   // if postOrder do WRL else WLR
+                        continue;
+                    }
+                    if (traverseType.IsInorder) yield return stack.Peek().Val;
+                    node = traverseType.IsPostOrder ? stack.Pop().Left : stack.Pop().Right; // if postOrder do WRL else WLR
+                }
+                if (traverseType.IsPostOrder) while (postorderStack.Count > 0) yield return postorderStack.Pop();
+            }
+        }
+        private IEnumerable<V> GetIEnumerableLevelOrder(TraverseType traverseType)
+        {
+            Queue<Node> queue = new Queue<Node>();
+            Stack<V> zagSt = new Stack<V>();
+            queue.Enqueue(root);
+            if (traverseType.IsZigZagLevelOrder) queue.Enqueue(null);    // To force an alternation from zig to zag after root
+            bool Zig = true;
+
+            while (queue.Count != 0)
+            {
+                Node node = queue.Dequeue();
+
+                if (traverseType.IsZigZagLevelOrder && !Zig) zagSt.Push(node.Val);
+                else yield return node.Val;
+
+                if (node.Left != null) queue.Enqueue(node.Left);
+                if (node.Right != null) queue.Enqueue(node.Right);
+
+                if (queue.Count > 0 && queue.Peek() == null)
+                {
+                    while (zagSt.Count > 0) yield return zagSt.Pop();
+                    queue.Dequeue();
+                    if (queue.Count == 0) break;
+                    queue.Enqueue(null);
+                    Zig = !Zig; //Alternate between Zig and Zag
+                }
+            }
+        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         //static Methods
 
 

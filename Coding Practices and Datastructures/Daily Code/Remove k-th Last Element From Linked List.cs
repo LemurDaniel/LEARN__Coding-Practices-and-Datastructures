@@ -25,6 +25,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             public override string ToString() => "K: " + k + "\nLinkedList: " + ll;
             public Input Copy() => new Input(k, ll.Copy());
             public override bool Equals(object obj) => ll.Equals(obj);
+            public override int GetHashCode() => base.GetHashCode();
         }
         private class InOut : InOutBase<Input, LinkedList<int>>
         {

@@ -32,7 +32,7 @@ namespace GoF_Coding_Interview_Algos
             ITestable aufgabe;
 
             /* OTHER */
-            // aufgabe = new TreeTraversal();   UNFINISHED !!!!!
+            aufgabe = new TreeTraversal();  // UNFINISHED !!!!!
 
 
             /* Daily Coding Problems  */
@@ -46,7 +46,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new GoF_Interview_Questions.Arrays.Two_Sum();
             //  aufgabe = new Search_A_2D_Matrix_();
             //  aufgabe = new Sort_Colors();
-            aufgabe = new Set_Matrix_Zeroes();
+            //  aufgabe = new Set_Matrix_Zeroes();
 
             //------>STRING - STRUCTURES
             //  aufgabe = new Integer_To_Roman();

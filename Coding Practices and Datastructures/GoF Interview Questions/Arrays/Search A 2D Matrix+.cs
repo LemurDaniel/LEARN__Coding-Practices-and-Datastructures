@@ -24,6 +24,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
                 Pos p2 = obj as Pos;
                 return p2.x == x && p2.y == y;
             }
+            public override int GetHashCode() => base.GetHashCode();
         }   
 
         private class Input

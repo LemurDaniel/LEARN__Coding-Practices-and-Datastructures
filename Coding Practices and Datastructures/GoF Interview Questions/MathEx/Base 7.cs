@@ -38,6 +38,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.MathEx
                 if (outp.z2 != z2) return false;
                 return true;
             }
+            public override int GetHashCode() => base.GetHashCode();
         }
 
         private class InOut : InOutBase<Input, Output>
