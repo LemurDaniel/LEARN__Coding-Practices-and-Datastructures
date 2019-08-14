@@ -16,6 +16,7 @@ using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Stack;
 using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Strings;
 using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Two_Pointers;
 using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Breadth_First_Search;
+using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Tries;
 
 namespace GoF_Coding_Interview_Algos
 {
@@ -79,7 +80,10 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Base_7(); //*
 
             //------>BREADTH FIRST - EXCERCISES
-            aufgabe = new Symmetric_Tree();
+            //  aufgabe = new Symmetric_Tree();
+
+            //------>TRIE - EXCERCISES
+            aufgabe = new Implement_Trie();
 
             /* Daily Code  */
 

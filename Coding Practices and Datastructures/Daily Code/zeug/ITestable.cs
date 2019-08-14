@@ -147,7 +147,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         }
         public void SolveIt()
         {
-            Console.WriteLine(ToString());
+            Console.WriteLine(ToString()+"\n");
             setup?.Invoke();
             foreach (Solver key in solvers.Keys)
             {
@@ -206,7 +206,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         {
             string s = "Testcase: " + id + "\n";
              s += (inputToString ?? (inputStringConverter?.Invoke(input) ?? input.ToString()))  +"\n";
-            s += (outputStringConverter?.Invoke(output) ?? output.ToString()) + "\n";
+            s += (outputStringConverter?.Invoke(output) ?? (output != null ? output.ToString():"<NULL>") ) + "\n";
             //s += "\n";
             //foreach (Ergebnis erg in solvers.Values) s += erg.ToString();
             //s += "\n";
