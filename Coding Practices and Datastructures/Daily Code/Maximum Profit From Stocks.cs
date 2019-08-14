@@ -25,12 +25,15 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             public InOut(string s, int i) : base(s, i)
             {
                 AddSolver(Get_MaxProfit);
+                AddSolver(Get_MaxProfit2);
             }
         }
 
         public Maximum_Profit_From_Stocks()
         {
             testcases.Add(new InOut("9,11,8,5,7,10",5));
+            testcases.Add(new InOut("7,1,5,3,6,4", 5));
+            testcases.Add(new InOut("7,6,4,3,1", 0));
         }
 
 
@@ -39,8 +42,8 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         public static void Get_MaxProfit(int[] arr, InOut.Ergebnis erg)
         {
             int max = 0;
-            for(int i=0; i<arr.Length; i++) max = Get_MaxProfit(arr, i);
-            erg.Setze(max, Complexity.EXPONENTIAL, Complexity.CONSTANT);
+            for(int i=1; i<arr.Length; i++) max = Math.Max(Get_MaxProfit(arr, i), max);
+            erg.Setze(max, Complexity.FACTORIAL, Complexity.CONSTANT);
         }
 
         private static int Get_MaxProfit(int[] arr, int pos)
@@ -48,6 +51,18 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             int max = 0;
             for (int i = 0; i < pos; i++) max = Math.Max(max, arr[pos]-arr[i]);
             return max;
+        }
+
+        public static void Get_MaxProfit2(int[] arr, InOut.Ergebnis erg)
+        {
+            int minVal = arr[0];
+            int maxProfit = 0;
+            for (int i = 1; i < arr.Length; i++)
+            {
+                minVal = Math.Min(minVal, arr[i]);
+                maxProfit = Math.Max(maxProfit, arr[i] - minVal);
+            }
+            erg.Setze(maxProfit, Complexity.LINEAR, Complexity.CONSTANT);
         }
     }
 }

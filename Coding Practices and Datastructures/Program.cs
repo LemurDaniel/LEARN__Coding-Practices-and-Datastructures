@@ -49,6 +49,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Search_A_2D_Matrix_();    //*
             //  aufgabe = new Sort_Colors();    //*
             //  aufgabe = new Set_Matrix_Zeroes();
+            aufgabe = new Best_Time_To_Buy_And_Sell_Stock();
 
             //------>STRING - STRUCTURES
             //  aufgabe = new Integer_To_Roman();
@@ -112,7 +113,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Spiral_Traversal_of_Grid();
             //  aufgabe = new Find_the_k_th_Largest_Element_in_a_List();
             //  aufgabe = new Largest_Product_of_3_Elements();  //*
-            aufgabe = new Maximum_Profit_From_Stocks();
+            //  aufgabe = new Maximum_Profit_From_Stocks();
 
 
             while (true) { aufgabe.Test(); }
