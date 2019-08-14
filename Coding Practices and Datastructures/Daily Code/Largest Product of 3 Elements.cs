@@ -22,8 +22,8 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             public InOut(string s, int i) : base(Helfer.Assemble(s), i, true)
             {
                 inputStringConverter = arg => Helfer.Arrayausgabe<int>("Eingabe: ", arg);
-                AddSolver((arg, erg) => erg.Setze(MaxProdOfThree_Enumerable(arg)), "MaxProdOfThree_Enumerable");
-                AddSolver((arg, erg) => erg.Setze(MaxProdOfThree_SortedArray(arg)), "MaxProdOfThree_SortedArray");
+                AddSolver((arg, erg) => erg.Setze(MaxProdOfThree_Enumerable(arg), Complexity.LINEAR, Complexity.CONSTANT), "MaxProdOfThree_Enumerable");
+                AddSolver((arg, erg) => erg.Setze(MaxProdOfThree_SortedArray(arg), Complexity.LINEAR, Complexity.CONSTANT), "MaxProdOfThree_SortedArray");
             }
         }
 

@@ -45,6 +45,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         {
             private readonly InOutBase<I, O> baseClass;
             private readonly string description;
+            private Complexity complexity;
             private O erg;
             private Exception exception;
             private int iterations;
@@ -68,19 +69,22 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 success = false;
                 erg = default(O);
             }
+
             public void Setze(O erg) => Setze(erg, -1);
+            public void Setze(O erg, Complexity.C time = null, Complexity.C space = null) => Setze(erg, -1, time, space);
             public void Setze(Exception exception) => this.exception = exception;
-            public void Setze(O erg, int it)
+            public void Setze(O erg, int it = -1, Complexity.C time = null, Complexity.C space = null)
             {
                 timeSpan = DateTime.Now.Subtract(baseClass.solverStarted);
                 iterations = it;
                 this.erg = erg;
-                if(baseClass.output != null) success = baseClass.CompareOutErg(baseClass.output, erg);
+                complexity = new Complexity(time, space);
+                if (baseClass.output != null) success = baseClass.CompareOutErg(baseClass.output, erg);
             }
 
             public override string ToString()
             {
-                string s = "Solver ----> " + description + ": " +  (baseClass.output!=null ? Success:"I dunno ????") + "\n";
+                string s = "Solver ----> " + description + ": " +  (baseClass.output!=null ? Success:"I dunno ????") +"\n";
                 if (exception != null) return s += "   --> " + exception.GetType().Name + ": " + exception.Message + "\n   --> METHODE: " + exception.TargetSite + "\n\n";
 
                 if (erg != null) s += (baseClass.ergStringConverter?.Invoke(erg) ?? erg.ToString()) + "\n";
@@ -88,6 +92,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 if (Iterations > 0) s += "Iterations: " + Iterations + "\n";
                 if (timeSpan.TotalMilliseconds > 0) s += "Milliseconds: " + timeSpan.TotalMilliseconds + "  ||   ";
                 if (timeSpan.Ticks > 0) s += "Ticks: " + timeSpan.Ticks + "\n";
+                s += complexity.ToString() + "\n";
                 s += "\n";
                 return s;
             }
@@ -199,8 +204,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             }
         }
 
-        public void AddSolver(Solver solver) => AddSolver(solver, solver.Method.Name);
-        public void AddSolver(Solver solver, string description) => solvers.Add(solver, new Ergebnis(this, description));
+        public void AddSolver(Solver solver, string description = null) => solvers.Add(solver, new Ergebnis(this, description ?? solver.Method.Name));
 
         public override string ToString()
         {

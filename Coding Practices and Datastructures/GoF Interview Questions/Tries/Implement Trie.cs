@@ -77,6 +77,10 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Tries
                 }
                 return true;
             }
+            public override int GetHashCode()
+            {
+                return base.GetHashCode();
+            }
 
             public override string ToString()
             {
@@ -89,6 +93,9 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Tries
             }
         }
 
+        /// <summary>
+        /// ///////////////////////////////
+        /// </summary>
         private class InOut : InOutBase<Input, Output>
         {
             public InOut(Input inp, Output outp) : base(inp, outp)

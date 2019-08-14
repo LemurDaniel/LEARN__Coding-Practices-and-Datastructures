@@ -58,6 +58,7 @@
     <Compile Include="Daily Code\Longest Palindrom.cs" />
     <Compile Include="Daily Code\Longest Sequence with Two Unique Numbers.cs" />
     <Compile Include="Daily Code\Max Stack.cs" />
+    <Compile Include="Daily Code\Maximum Profit From Stocks.cs" />
     <Compile Include="Daily Code\Minimum Size Subarray Sum.cs" />
     <Compile Include="Daily Code\Non-decreasing Array with Single Modification.cs" />
     <Compile Include="Daily Code\Number of Ways to Climb Stairs.cs" />
@@ -72,8 +73,10 @@
     <Compile Include="Daily Code\Ways to Traverse a Grid.cs" />
     <Compile Include="Daily Code\Witness of The Tall People.cs" />
     <Compile Include="Daily Code\Word Search.cs" />
+    <Compile Include="Daily Code\zeug\Complexity.cs" />
     <Compile Include="Daily Code\zeug\Helfer.cs" />
     <Compile Include="Daily Code\zeug\ITestable.cs" />
+    <Compile Include="Daily Code\zeug\St_InOuts.cs" />
     <Compile Include="Daily Code\zeug\Wrappers.cs" />
     <Compile Include="Data Structures and Algos\Design Twitter\TwitterTest.cs" />
     <Compile Include="Data Structures and Algos\Design Twitter\Tw\Tweet.cs" />

@@ -83,7 +83,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Symmetric_Tree();
 
             //------>TRIE - EXCERCISES
-            aufgabe = new Implement_Trie();
+            //  aufgabe = new Implement_Trie();
 
             /* Daily Code  */
 
@@ -112,6 +112,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Spiral_Traversal_of_Grid();
             //  aufgabe = new Find_the_k_th_Largest_Element_in_a_List();
             //  aufgabe = new Largest_Product_of_3_Elements();  //*
+            aufgabe = new Maximum_Profit_From_Stocks();
 
 
             while (true) { aufgabe.Test(); }

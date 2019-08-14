@@ -126,7 +126,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 else curr = new Node(curr, data); // If left < n Create new Left Node
             }
 
-            erg.Setze(k, iterations);
+            erg.Setze(k, iterations, Complexity.EXPONENTIAL, Complexity.EXPONENTIAL);
         }
 
         private static void BinaryTree_Solver_Optimized1(int n, InOut.Ergebnis erg)
@@ -179,7 +179,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 else curr = new Node(curr, data); // If left < n Create new Left Node
             }
 
-            erg.Setze(k, iterations);
+            erg.Setze(k, iterations, Complexity.EXPONENTIAL, Complexity.EXPONENTIAL);
         }
 
 
@@ -202,7 +202,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 sub1 += sub2;
                 sub2 = tmp;
             }
-            erg.Setze(sub1, iterations == 0 ? 1 : iterations);
+            erg.Setze(sub1, iterations == 0 ? 1 : iterations, Complexity.LINEAR, Complexity.CONSTANT);
 
             /*         13:      0
              *         8:      1
@@ -238,7 +238,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 sub2 = tmp;
             }
 
-            erg.Setze(sub1, iterations == 0 ? 1:iterations);
+            erg.Setze(sub1, iterations == 0 ? 1:iterations, Complexity.LINEAR, Complexity.CONSTANT);
         }
     }
 }

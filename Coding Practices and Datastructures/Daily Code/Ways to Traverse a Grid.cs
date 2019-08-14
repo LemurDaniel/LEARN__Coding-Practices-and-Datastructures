@@ -28,7 +28,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             public InOut(int n, int m, BigInteger outp) : base(new int[] { n, m }, outp, true)
             {
                 inputStringConverter = arg => Helfer.Arrayausgabe<int>("Eingabe: ", arg);
-                AddSolver((arg, erg) => erg.Setze(Num_ways(arg[0], arg[1])), "Calculate Permuations");
+                AddSolver((arg, erg) => erg.Setze(Num_ways(arg[0], arg[1]), Complexity.LINEAR, Complexity.CONSTANT), "Calculate Permuations");
             }
         }
 
