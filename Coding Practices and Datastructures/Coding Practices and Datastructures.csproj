@@ -62,6 +62,7 @@
     <Compile Include="Daily Code\Minimum Size Subarray Sum.cs" />
     <Compile Include="Daily Code\Non-decreasing Array with Single Modification.cs" />
     <Compile Include="Daily Code\Number of Ways to Climb Stairs.cs" />
+    <Compile Include="Daily Code\Queue Using Two Stacks.cs" />
     <Compile Include="Daily Code\Remove Consecutive Nodes that Sum to 0.cs" />
     <Compile Include="Daily Code\Remove k-th Last Element From Linked List.cs" />
     <Compile Include="Daily Code\Reverse_A_Linked_List.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="GoF Interview Questions\Stack\Basic Calculator.cs" />
     <Compile Include="GoF Interview Questions\Stack\Calc.cs" />
     <Compile Include="GoF Interview Questions\Stack\Evaluate Reverse Polish Notation.cs" />
+    <Compile Include="GoF Interview Questions\Stack\Implement Queue Using Stack.cs" />
     <Compile Include="GoF Interview Questions\Stack\MinStack.cs" />
     <Compile Include="GoF Interview Questions\Strings\Decode String.cs" />
     <Compile Include="GoF Interview Questions\Strings\Integer_To_Roman.cs" />
