@@ -192,11 +192,10 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
         private void DoWork(AbortableBackgroundWorker wk , Solver key)
         {
-            I inp = Input;
             solverStarted = DateTime.Now;
             try
             {
-                key(inp, solvers[key]);
+                key(Input, solvers[key]);
             }
             catch (Exception excep)
             {

@@ -96,6 +96,7 @@
     <Compile Include="GoF Interview Questions\1 Data Structures\LinkedList.cs" />
     <Compile Include="GoF Interview Questions\1 Data Structures\Trie.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Best Time To Buy And Sell Stock.cs" />
+    <Compile Include="GoF Interview Questions\Arrays\Remove Duplicates from Sorted Array.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Search A 2D Matrix+.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Search Element in Array.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Set Matrix Zeroes.cs" />
