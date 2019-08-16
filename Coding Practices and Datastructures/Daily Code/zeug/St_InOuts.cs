@@ -13,6 +13,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             public IntArr_Primary(string s, O o) : base(Helfer.Assemble(s), o, true)
             {
                 inputStringConverter = arg => Helfer.Arrayausgabe<int>("Eingabe: ", arg);
+                copiedInputProvider = Helfer.ArrayCopy<int>;
             }
         }
 

@@ -68,7 +68,7 @@ namespace GoF_Coding_Interview_Algos
             //------>STACK - STRUCTURES
             //  aufgabe = new Evaluate_Reverse_Polish_Notation();
             //  aufgabe = new Min_Stack();
-            aufgabe = new Implement_Queue_Using_Stack();
+            //  aufgabe = new Implement_Queue_Using_Stack();
 
             //aufgabe = new Basic_Calculator(); Nicht fertig
 
@@ -117,6 +117,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Largest_Product_of_3_Elements();  //*
             //  aufgabe = new Maximum_Profit_From_Stocks();
             //  aufgabe = new Queue_Using_Two_Stacks();
+            aufgabe = new Contiguous_Subarray_with_Maximum_Sum();
 
 
             while (true) { aufgabe.Test(); }

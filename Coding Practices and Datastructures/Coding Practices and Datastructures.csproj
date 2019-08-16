@@ -47,6 +47,7 @@
     <Compile Include="Coding Train\Challenges\TicTacToe\Konsolenbedinung.cs" />
     <Compile Include="Coding Train\Challenges\TicTacToe\TicTacToe.cs" />
     <Compile Include="Coding Train\Challenges\TicTacToe\TicTacToeSolver.cs" />
+    <Compile Include="Daily Code\Contiguous Subarray with Maximum Sum.cs" />
     <Compile Include="Daily Code\Course Prerequisites.cs" />
     <Compile Include="Daily Code\Falling Dominoes.cs" />
     <Compile Include="Daily Code\Find the k-th Largest Element in a List.cs" />
