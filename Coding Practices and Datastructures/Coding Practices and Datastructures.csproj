@@ -60,6 +60,7 @@
     <Compile Include="Daily Code\Longest Sequence with Two Unique Numbers.cs" />
     <Compile Include="Daily Code\Max Stack.cs" />
     <Compile Include="Daily Code\Maximum Profit From Stocks.cs" />
+    <Compile Include="Daily Code\Merge K Sorted Linked Lists.cs" />
     <Compile Include="Daily Code\Minimum Size Subarray Sum.cs" />
     <Compile Include="Daily Code\Non-decreasing Array with Single Modification.cs" />
     <Compile Include="Daily Code\Number of Ways to Climb Stairs.cs" />
@@ -88,8 +89,10 @@
     <Compile Include="DS HANDBOOK\Interfaces\IStack.cs" />
     <Compile Include="DS HANDBOOK\Queue\ArrayQueue.cs" />
     <Compile Include="DS HANDBOOK\Queue\LLQueue.cs" />
+    <Compile Include="DS HANDBOOK\Queue\PrioArrayQueue.cs" />
     <Compile Include="DS HANDBOOK\Stack\ArrayStack.cs" />
     <Compile Include="DS HANDBOOK\Stack\LLStack.cs" />
+    <Compile Include="DS HANDBOOK\Test\Test PrioArrayQueue.cs" />
     <Compile Include="DS HANDBOOK\Tree\NormalBTree.cs" />
     <Compile Include="GoF Interview Questions\1 Data Structures\BinaryCompleteTree.cs" />
     <Compile Include="GoF Interview Questions\1 Data Structures\BinarySearchTree.cs" />

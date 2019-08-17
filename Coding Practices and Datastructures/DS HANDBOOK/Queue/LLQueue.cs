@@ -47,5 +47,7 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Queue
             return data;
         }
 
+        public bool IsEmpty() => ausgabe == null;
+
     }
 }

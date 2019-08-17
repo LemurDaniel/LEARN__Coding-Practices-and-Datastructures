@@ -100,6 +100,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
         protected static int MAX_PRINT_LEN = 500;
         protected TimeSpan MaxDur = new TimeSpan(0, 0, 15); // 15 Sekunden
+        protected bool HasMaxDur = true;
 
         private static int ids = 0;
 
@@ -180,7 +181,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             {
                 Task.Delay(100);
                 if (!wk.IsBusy) break;
-                if (DateTime.Now.Subtract(start).CompareTo(MaxDur) > -1)
+                if (HasMaxDur && DateTime.Now.Subtract(start).CompareTo(MaxDur) > -1)
                 {
                     wk.Abort();
                     wk.Dispose();

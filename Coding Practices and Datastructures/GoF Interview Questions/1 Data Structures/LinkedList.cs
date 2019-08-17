@@ -247,6 +247,24 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             return llist;
         }
 
+       //Merge
+        public static LinkedList<X> Merge_K_Sorted_LinkedLists<X>(LinkedList<X>[] arr) where X : IComparable<X>
+        {
+            DS_HANDBOOK.Interfaces.IQueue<LinkedList<X>.Node> q = new DS_HANDBOOK.Queue.PrioArrayQueue<LinkedList<X>.Node>((n, n2) => n.Val.CompareTo(n2.Val));
+            foreach (LinkedList<X> llist in arr) q.Enqueue(llist.root);
+
+            LinkedList<X>.Node node = q.Dequeue();
+            if (node.Next != null) q.Enqueue(node.Next);
+            LinkedList<X> list = new LinkedList<X>(node);
+            while (!q.IsEmpty())
+            {
+                node.Next = q.Dequeue();
+                node = node.Next;
+                if (node.Next != null) q.Enqueue(node.Next);
+            }
+            return list;
+        }
+
         /* METHODS */
         public override string ToString() => root != null ? root.PrintFromNode():"<NULL>";
         public override int GetHashCode() => base.GetHashCode();
@@ -316,6 +334,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             if (Root.Val.Equals(val)) root = Root.Next;
             return this;
         }
+
 
 
         // ILIST SCHNITTSTELLE

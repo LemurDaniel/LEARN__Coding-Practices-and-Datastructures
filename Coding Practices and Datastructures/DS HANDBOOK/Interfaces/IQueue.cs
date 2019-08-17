@@ -29,8 +29,11 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Interfaces
             -   Qircular Queue (Circular Buffer)
                     --> Has Maximum size
       */
-
+      
         void Enqueue(V data);
         V Dequeue();
+
+        //Additionals
+        bool IsEmpty();
     }
 }

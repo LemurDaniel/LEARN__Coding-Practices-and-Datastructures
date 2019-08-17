@@ -121,7 +121,8 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         // ARRAY
         public static String Arrayausgabe<V>(V[] arr) => Arrayausgabe<V>("", arr, false);
         public static String Arrayausgabe<V>(string s, V[] arr) => Arrayausgabe<V>(s, arr, false);
-        public static String Arrayausgabe<V>(string s, V[] arr, bool len)
+        public static String Arrayausgabe<V>(string s, V[] arr, bool len) => Arrayausgabe<V>(s, arr, false, ", ");
+        public static String Arrayausgabe<V>(string s, V[] arr, bool len, string concat = ", ")
         {
             if (arr == null) return "{ NULL }";
             if (arr.Length == 0) return s;
@@ -129,10 +130,10 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             sb.Append(s + " { " + arr[0]);
             for (int i = 1; i < arr.Length; i++)
             {
-                sb.Append(", " + arr[i]);
+                sb.Append(concat + arr[i]);
                 if (i > 25)
                 {
-                    sb.Append(", ...");
+                    sb.Append(concat+"...");
                     break;
                 }
             }
@@ -228,18 +229,18 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
 
 
-
         public static bool BinarySearch(int lowBound, int upBound, ref int current, ref int iterations, Func<int,int> compare)
         {
-            while(lowBound <= upBound)
+            while(lowBound != upBound)
             {
                 iterations++;
                 current = (lowBound + upBound) / 2;
                 int comp = compare(current);
-                if (comp > 0) upBound = current - 1;
-                else if (comp < 0) lowBound = current + 1;
+                if (comp > 0) upBound = Math.Max(current - 1, lowBound);
+                else if (comp < 0) lowBound = Math.Min(current + 1, upBound);
                 else return true;
             }
+            current = lowBound;
             return false;
         }
     }

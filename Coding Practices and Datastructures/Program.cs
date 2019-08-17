@@ -17,6 +17,7 @@ using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Strings;
 using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Two_Pointers;
 using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Breadth_First_Search;
 using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Tries;
+using Coding_Practices_and_Datastructures.DS_HANDBOOK.Test;
 
 namespace GoF_Coding_Interview_Algos
 {
@@ -32,6 +33,9 @@ namespace GoF_Coding_Interview_Algos
             // new Konsolenbedinung();
 
             ITestable aufgabe;
+
+            /* DS HANDBOOK */
+            // aufgabe = new Test_PrioArrayQueue();
 
             /* OTHER */
             // aufgabe = new TreeTraversal();  //*
@@ -117,8 +121,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Largest_Product_of_3_Elements();  //*
             //  aufgabe = new Maximum_Profit_From_Stocks();
             //  aufgabe = new Queue_Using_Two_Stacks();
-            aufgabe = new Contiguous_Subarray_with_Maximum_Sum();
-
+            //  aufgabe = new Contiguous_Subarray_with_Maximum_Sum();
+            aufgabe = new Merge_K_Sorted_Linked_Lists();
 
             while (true) { aufgabe.Test(); }
         }
