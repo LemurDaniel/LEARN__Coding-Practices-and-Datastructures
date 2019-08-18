@@ -9,36 +9,37 @@ using System.Threading.Tasks;
 
 namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Test
 {
-    class Test_PrioArrayQueue : Testable
+    class TestArrayQueue : Testable
     {
         public class InOut : St_InOuts.IntArr_Primary<string>
         {
             public InOut(string s, string s2) : base(s, s2)
             {
                 AddSolver(Solve);
+                HasMaxDur = false;
             }
         }
 
 
-        public Test_PrioArrayQueue()
+        public TestArrayQueue()
         {
-            testcases.Add(new InOut("9923847651", "1 2 3 4 5 6 7 8 9"));
-            testcases.Add(new InOut("5,5,4,3,2,1", "1 2 3 4 5"));
-            testcases.Add(new InOut("7,5,2,4,3,4,2,1", "1 2 2 3 4 4 5"));
-            testcases.Add(new InOut("5,5,2,3,-1,-1,99,68,70,72", "5 68 70 72 99"));
+            testcases.Add(new InOut("5,1,2,3,4,5", "1 2 3 4 5"));
+            testcases.Add(new InOut("5,1,2,3,4,5,-1,-1,-1,-1,6,7,8,9", "5 6 7 8 9"));
+            testcases.Add(new InOut("5,2,-1", ""));
+            testcases.Add(new InOut("1,2,2", ""));
         }
 
         //SOL
         private static void Solve(int[] arr, InOut.Ergebnis erg)
         {
             string res = "";
-            IQueue<int> q = new PrioArrayQueue<int>(arr[0], (z, z2) => z.CompareTo(z2) );
+            IQueue<int> q = new ArrayQueue<int>(arr[0]);
             for(int i=1; i<arr.Length; i++)
             {
                 if (arr[i] == -1) q.Dequeue();
                 else q.Enqueue(arr[i]);
             }
-            while (!q.IsEmpty()) res += q.Dequeue()+" ";
+            while (!q.IsEmpty()) res += q.Dequeue() + " ";
             erg.Setze(res.Trim(' '));
         }
     }

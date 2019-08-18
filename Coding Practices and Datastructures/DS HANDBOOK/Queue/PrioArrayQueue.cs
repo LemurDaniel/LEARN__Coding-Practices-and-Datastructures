@@ -13,12 +13,14 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Queue
         public delegate int Priotize(V data, V data2); // 1 = data > data2 ;; 0 = data == data2 ;; -1 = data < data2
         private Priotize priotize = null;   // data which = 1 gets priotized
 
+        public PrioArrayQueue(int size, Priotize priotize) : base(size) => this.priotize = priotize;
         public PrioArrayQueue(Priotize priotize) => this.priotize = priotize;
 
         public override void Enqueue(V data)
         {
-            if (eingabe == ausgabe || priotize(data, queue[eingabe]) > -1)  base.Enqueue(data);
-            else if(priotize(data, queue[ausgabe+1]) < 1) InsertAtIndex(data, ausgabe+1);
+            if (IsFull) throw new InvalidOperationException("Die Queue ist Voll");
+            if (IsEmpty() || priotize(data, queue[(AbsPosEingabe-1)%queue.Length]) > -1)  base.Enqueue(data);  // if empty or data >= last element of queue
+            else if(priotize(data, queue[ausgabe]) < 1) InsertAtIndex(data, ausgabe);   // if data < first element of queue
             else InsertAtIndex(data, BSearchLowBound(data));
         }
 
@@ -38,14 +40,14 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Queue
 
         private void InsertAtIndex(V data, int index)
         {        
-            for (int i=index, relIndex; i<=AbsPosEingabe+1; i++)
+            for (int i=index, relIndex; i<=AbsPosEingabe; i++)
             {
                 relIndex = i % queue.Length;
                 V tmp = queue[relIndex];
                 queue[relIndex] = data;
                 data = tmp;
             }
-            eingabe++;
+            Enqueued();
         }
 
     }

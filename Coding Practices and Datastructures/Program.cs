@@ -36,6 +36,7 @@ namespace GoF_Coding_Interview_Algos
 
             /* DS HANDBOOK */
             // aufgabe = new Test_PrioArrayQueue();
+            // aufgabe = new TestArrayQueue();
 
             /* OTHER */
             // aufgabe = new TreeTraversal();  //*

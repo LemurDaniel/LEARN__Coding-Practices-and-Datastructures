@@ -13,38 +13,49 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Queue
     {
         private static readonly int DEFAULT_SIZE = 100; // Standartgröße des Arrays
 
-        protected V[] queue = new V[DEFAULT_SIZE];
-        protected int eingabe = -1, ausgabe = -1;
-        protected int AbsPosEingabe { get => eingabe >= ausgabe ? eingabe : eingabe + queue.Length; }
+        protected V[] queue;
+        protected int eingabe = 0, ausgabe = 0;
+        private bool isFull = false;
 
-        public ArrayQueue() { }
-        public ArrayQueue(int size) => queue = new V[size];
+        public ArrayQueue() => queue = new V[DEFAULT_SIZE];
+        public ArrayQueue(int size) => queue = new V[Math.Max(1, size)];
+
+
+        public bool IsFull { get => isFull; }
+        protected int AbsPosEingabe { get => eingabe >= ausgabe && !isFull ? eingabe : eingabe + queue.Length; }
+        public bool IsEmpty() => !isFull && ausgabe == eingabe;
+
+
+        protected void Enqueued()
+        {
+            eingabe = (eingabe + 1) % queue.Length;  //Wraps around to start of Array
+            if (eingabe == ausgabe) isFull = true;
+        }
 
         public virtual void Enqueue(V data)
         {
-            if (eingabe == ausgabe-1) throw new InvalidOperationException("Die Queue ist Voll");    //Wenn eingabe direkt hinter ausgabe => Note this queue wraps at the end of the Array back to the begining
-            eingabe = (eingabe + 1) % queue.Length; //Wraps around to start of Array
+            if (isFull) throw new InvalidOperationException("Die Queue ist Voll");   
             queue[eingabe] = data;
+            Enqueued();          
         }
 
         public virtual V Dequeue()
         {
-            if (eingabe == ausgabe) throw new InvalidOperationException("Die Queue ist Leer");
-
-            ausgabe = (ausgabe + 1) % queue.Length; // Wraps back around
+            if (IsEmpty()) throw new InvalidOperationException("Die Queue ist Leer");
             V data = queue[ausgabe];
-            if (eingabe == ausgabe) eingabe = ausgabe = -1;
+            ausgabe = (ausgabe + 1) % queue.Length; //Wraps around to start of Array
+            isFull = false;
+            if (eingabe == ausgabe) eingabe = ausgabe = 0;
             return data;
         }
 
-        public bool IsEmpty() => eingabe == ausgabe;
 
 
 
         public override string ToString()
         {
             string s = "";
-            for (int i = ausgabe+1; i < AbsPosEingabe + 1; i++) s += queue[i%queue.Length]+" ";
+            for (int i = ausgabe; i < AbsPosEingabe; i++) s += queue[i%queue.Length]+" ";
             return s;
         }
     }
