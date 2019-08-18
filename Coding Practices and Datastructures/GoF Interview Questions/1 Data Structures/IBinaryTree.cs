@@ -27,6 +27,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         bool IsMirrorRecurse();
         bool IsMirrorIt();
+        bool IsBalancedIt();
 
         // TRAVERSAL
         // Depth First

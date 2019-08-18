@@ -118,6 +118,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         public override string ToString()
         {
+            if (root == null) return "";
             StringBuilder sb = new StringBuilder();
             Root?.GenerateStringRecursive(sb);
             return sb.ToString().Substring(0, sb.Length-2);
@@ -169,6 +170,37 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
                 if (rightN.Right != null) right.Enqueue(rightN.Right);  // Enqueue right one first !!!!
                 if (rightN.Left != null) right.Enqueue(rightN.Left);
+            }
+            return true;
+        }
+
+        public bool IsBalancedIt()
+        {
+            if (root == null) return true;
+            Queue<IBTreeNode<V>> q = new Queue<IBTreeNode<V>>();
+            q.Enqueue(root);
+            q.Enqueue(null);
+
+
+            IBTreeNode<V> node;
+            int expectedNodeCount = 1;
+            int count = 0;
+            while (q.Count != 0)
+            {
+                node = q.Dequeue();
+                count++;
+
+                if (node.Left != null) q.Enqueue(node.Left); 
+                if (node.Right != null) q.Enqueue(node.Right);
+
+                if(q.Peek() == null)
+                {
+                    q.Enqueue(q.Dequeue());
+                    if (q.Count == 1) break;
+                    if (count != expectedNodeCount) return false;
+                    expectedNodeCount *= 2;
+                    count = 0;
+                }
             }
             return true;
         }

@@ -35,5 +35,6 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Interfaces
 
         //Additionals
         bool IsEmpty();
+        void AddStringConverter(Func<V, string> converter);
     }
 }

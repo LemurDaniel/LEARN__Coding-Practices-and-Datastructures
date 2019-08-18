@@ -25,7 +25,7 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Queue
 
         // eingabe(node) <-- node <-- node <-- node <-- ausgabe(node)
         private Node eingabe, ausgabe;
-
+        private Func<V, string> stringConverter = s => s.ToString() + " ";
 
         public void Enqueue(V data)
         {
@@ -49,5 +49,6 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Queue
 
         public bool IsEmpty() => ausgabe == null;
 
+        public void AddStringConverter(Func<V, string> converter) => this.stringConverter = converter;
     }
 }

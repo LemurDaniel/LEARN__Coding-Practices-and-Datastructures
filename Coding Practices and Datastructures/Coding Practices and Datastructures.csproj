@@ -49,6 +49,7 @@
     <Compile Include="Coding Train\Challenges\TicTacToe\TicTacToeSolver.cs" />
     <Compile Include="Daily Code\Contiguous Subarray with Maximum Sum.cs" />
     <Compile Include="Daily Code\Course Prerequisites.cs" />
+    <Compile Include="Daily Code\Create a balanced binary search tree from a sorted list.cs" />
     <Compile Include="Daily Code\Falling Dominoes.cs" />
     <Compile Include="Daily Code\Find the k-th Largest Element in a List.cs" />
     <Compile Include="Daily Code\Find the non-duplicate number.cs" />

@@ -16,6 +16,7 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Queue
         protected V[] queue;
         protected int eingabe = 0, ausgabe = 0;
         private bool isFull = false;
+        private Func<V, string> stringConverter = s => s.ToString()+" "; 
 
         public ArrayQueue() => queue = new V[DEFAULT_SIZE];
         public ArrayQueue(int size) => queue = new V[Math.Max(1, size)];
@@ -51,11 +52,11 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Queue
 
 
 
-
+        public void AddStringConverter(Func<V, string> converter) => this.stringConverter = converter;
         public override string ToString()
         {
             string s = "";
-            for (int i = ausgabe; i < AbsPosEingabe; i++) s += queue[i%queue.Length]+" ";
+            for (int i = ausgabe; i < AbsPosEingabe; i++) s += stringConverter(queue[i%queue.Length]);
             return s;
         }
     }
