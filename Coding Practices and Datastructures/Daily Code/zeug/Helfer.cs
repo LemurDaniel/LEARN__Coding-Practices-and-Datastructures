@@ -185,7 +185,13 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             for (int i = 0; i < arrS.Length; i++) arr[i] = int.Parse(arrS[i]);
             return arr;
         }
-
+        public static bool[] AssembleBool(string s)
+        {
+            string[] arrS = s.Split(',');
+            bool[] arr = new bool[arrS.Length];
+            for (int i = 0; i < arrS.Length; i++) arr[i] = bool.Parse(arrS[i]);
+            return arr;
+        }
         public static int GetNumber(char c)
         {
             switch (c)
