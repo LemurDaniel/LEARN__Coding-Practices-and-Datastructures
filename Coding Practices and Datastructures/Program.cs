@@ -82,6 +82,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Add_Two_Numbers_II();
             //  aufgabe = new Move_Zeroes();
             //  aufgabe = new Implement_StrStr();
+            //  aufgabe = new Trapping_Rainwater_GoF();
 
             //------>MATH - EXCERCISES
             //  aufgabe = new Integer_to_English_Words();   //*
@@ -92,7 +93,7 @@ namespace GoF_Coding_Interview_Algos
 
             //------>TRIE - EXCERCISES
             //  aufgabe = new Implement_Trie();
-            aufgabe = new Add_nad_Search_Word__Data_Structure_Design();
+            //  aufgabe = new Add_nad_Search_Word__Data_Structure_Design();
 
             /* Daily Code  */
 
@@ -126,6 +127,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Contiguous_Subarray_with_Maximum_Sum();
             //  aufgabe = new Merge_K_Sorted_Linked_Lists();
             //  aufgabe = new Create_a_balanced_binary_search_tree_from_a_sorted_list();
+            aufgabe = new Trapping_Rainwater();
 
             while (true) { aufgabe.Test(); }
         }
