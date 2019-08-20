@@ -247,7 +247,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 else return true;
             }
             current = lowBound;
-            return false;
+            return compare(current) == 0;
         }
     }
 }

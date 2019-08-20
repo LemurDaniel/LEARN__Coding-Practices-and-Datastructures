@@ -87,6 +87,8 @@ namespace GoF_Coding_Interview_Algos
             //------>MATH - EXCERCISES
             //  aufgabe = new Integer_to_English_Words();   //*
             //  aufgabe = new Base_7(); //*
+            //  aufgabe = new Implement_Square_Root();
+            //  aufgabe = new Implement_Sqrt_Double();
 
             //------>BREADTH FIRST - EXCERCISES
             //  aufgabe = new Symmetric_Tree();
@@ -127,7 +129,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Contiguous_Subarray_with_Maximum_Sum();
             //  aufgabe = new Merge_K_Sorted_Linked_Lists();
             //  aufgabe = new Create_a_balanced_binary_search_tree_from_a_sorted_list();
-            aufgabe = new Trapping_Rainwater();
+            //  aufgabe = new Trapping_Rainwater();
+            aufgabe = new Buddy_Strings();
 
             while (true) { aufgabe.Test(); }
         }
