@@ -130,7 +130,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Merge_K_Sorted_Linked_Lists();
             //  aufgabe = new Create_a_balanced_binary_search_tree_from_a_sorted_list();
             //  aufgabe = new Trapping_Rainwater();
-            aufgabe = new Buddy_Strings();
+            //  aufgabe = new Buddy_Strings();
+            aufgabe = new Deepest_Node_in_a_Binary_Tree();
 
             while (true) { aufgabe.Test(); }
         }

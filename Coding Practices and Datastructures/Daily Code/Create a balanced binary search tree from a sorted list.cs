@@ -15,7 +15,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             {
                 AddSolver(SolveRecursive);
                 AddSolver(SolveIterative);
-                CompareOutErg = (outp, erg) => erg.IsBalancedIt();
+                CompareOutErg = (outp, erg) => erg.IsCompleteIt();
                 ergStringConverter = erg => erg.PrintIterative(TraverseType.LevelOrder);
                 HasMaxDur = false;
             }

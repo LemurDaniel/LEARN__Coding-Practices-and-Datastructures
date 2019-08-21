@@ -18,6 +18,10 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public abstract IBTreeNode<V> Insert(BTreeNode<V> n, object arg = null);
         public abstract void SwapRecursive();
 
+        public abstract void GetLeafsRecursive(IList<IBTreeNode<V>> list);
+        public abstract void GetLeafsRecursive(IList<V> list);
+
+        public abstract IBTreeNode<V> GetDeepestNodeRecursive();
         public abstract StringBuilder GenerateStringRecursive(StringBuilder sb);
         public abstract StringBuilder PrintRecursive(StringBuilder sb, TraverseType traverseType);
     }
@@ -27,12 +31,17 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         bool IsMirrorRecurse();
         bool IsMirrorIt();
+        bool IsCompleteIt();
         bool IsBalancedIt();
+
+        IList<IBTreeNode<V>> GetLeafsRecursive();
+        IList<V> GetLeafsRecursiveVals();
+        IBTreeNode<V> GetDeepestNodeRecursive();
+        IBTreeNode<V> GetDeepestNodeIt();
 
         // TRAVERSAL
         // Depth First
         string PrintRecursive(TraverseType traverseType);
-
         string PrintIterative(TraverseType traverseType);
 
 

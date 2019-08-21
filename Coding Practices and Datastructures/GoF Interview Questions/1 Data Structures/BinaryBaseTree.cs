@@ -59,6 +59,38 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             return sb;
         }
 
+        public override void GetLeafsRecursive(IList<IBTreeNode<V>> list)
+        {
+            if (right == null && left == null) list.Add(this);
+            left?.GetLeafsRecursive(list);
+            right?.GetLeafsRecursive(list);
+        }
+        public override void GetLeafsRecursive(IList<V> list)
+        {
+            if (right == null && left == null) list.Add(this.Val);
+            left?.GetLeafsRecursive(list);
+            right?.GetLeafsRecursive(list);
+        }
+
+        public override IBTreeNode<V> GetDeepestNodeRecursive() => GetDeepestNodeRecursive(0).node;
+        private Wrap GetDeepestNodeRecursive(int currDepth)
+        {
+            Wrap leftW = null;
+            Wrap rightW = null;
+
+            if(left != null) leftW = (left as BTreeNode<V>)?.GetDeepestNodeRecursive(currDepth+1);
+            if (right != null) rightW = (right as BTreeNode<V>)?.GetDeepestNodeRecursive(currDepth+1);
+            if (right == null && left == null) return new Wrap { node = this, depth = currDepth };
+
+            if (leftW == null) return rightW;
+            else if (rightW == null) return leftW;
+            else return leftW.depth > rightW.depth ? leftW : rightW;
+        }
+        private class Wrap
+        {
+            public int depth;
+            public BTreeNode<V> node;
+        }
 
         public override bool Equals(object obj)
         {
@@ -173,8 +205,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             }
             return true;
         }
-
-        public bool IsBalancedIt()
+        public bool IsBalancedIt() => throw new NotImplementedException();
+        public bool IsCompleteIt()
         {
             if (root == null) return true;
             Queue<IBTreeNode<V>> q = new Queue<IBTreeNode<V>>();
@@ -203,6 +235,68 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                 }
             }
             return true;
+        }
+
+        public IList<IBTreeNode<V>> GetLeafsRecursive()
+        {
+            IList<IBTreeNode<V>> list = new List<IBTreeNode<V>>();
+            root?.GetLeafsRecursive(list);
+            return list;
+        }
+        public IList<V> GetLeafsRecursiveVals()
+        {
+            IList<V> list = new List<V>();
+            root?.GetLeafsRecursive(list);
+            return list;
+        }
+        public IList<IBTreeNode<V>> GetLeafsIt()
+        {
+            IList<IBTreeNode<V>> list = new List<IBTreeNode<V>>();
+            if (root == null) return list;
+
+            Queue<IBTreeNode<V>> q = new Queue<IBTreeNode<V>>();
+            IBTreeNode<V> node = root;
+            q.Enqueue(root);
+            while (q.Count > 0)
+            {
+                node = q.Dequeue();
+                if (node.Left != null) q.Enqueue(node.Left);
+                if (node.Right != null) q.Enqueue(node.Right);
+                if (node.Right == null && node.Left == null) list.Add(node);
+            }
+            return list;
+        }
+        public IList<V> GetLeafsItVals()
+        {
+            IList<V> list = new List<V>();
+            if (root == null) return list;
+
+            Queue<IBTreeNode<V>> q = new Queue<IBTreeNode<V>>();
+            IBTreeNode<V> node = root;
+            q.Enqueue(root);
+            while (q.Count > 0)
+            {
+                node = q.Dequeue();
+                if (node.Left != null) q.Enqueue(node.Left);
+                if (node.Right != null) q.Enqueue(node.Right);
+                if (node.Right == null && node.Left == null) list.Add(node.Val);
+            }
+            return list;
+        }
+
+        public IBTreeNode<V> GetDeepestNodeRecursive() => root == null ? null : root.GetDeepestNodeRecursive();
+        public IBTreeNode<V> GetDeepestNodeIt()
+        {
+            Queue<IBTreeNode<V>> q = new Queue<IBTreeNode<V>>();
+            IBTreeNode<V> node = root;
+            q.Enqueue(root);
+            while (q.Count > 0)
+            {
+                node = q.Dequeue();
+                if (node.Left != null) q.Enqueue(node.Left);
+                if (node.Right != null) q.Enqueue(node.Right);
+            }
+            return node;
         }
 
         // TRAVERSAL
