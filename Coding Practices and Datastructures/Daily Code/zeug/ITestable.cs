@@ -136,7 +136,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         public static Converter<O> StandartErgStringConverter { get => standartErgStringConverter; }
 
         private DateTime solverStarted;
-        public static string Convert<T>(string s, T arg) => s + (arg == null ? " NULL " : ((arg.ToString().Length > 500) ? arg.ToString().Substring(0, MAX_PRINT_LEN) + " ...) --> Too Long" : arg.ToString()));
+        public static string Convert<T>(string s, T arg) => s + (arg == null ? " NULL " : ((arg.ToString().Length > 500) ? arg.ToString().Substring(0, MAX_PRINT_LEN) + " ...) --> Too Long ("+arg.ToString().Length+" chars)" : arg.ToString()));
 
         public InOutBase(I input, O output) : this(input, output, false) { }
         public InOutBase(I input, O output, bool standartConverter)
