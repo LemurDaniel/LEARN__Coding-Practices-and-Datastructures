@@ -71,14 +71,14 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             }
 
             public void Setze(O erg) => Setze(erg, -1);
-            public void Setze(O erg, Complexity.C time = null, Complexity.C space = null) => Setze(erg, -1, time, space);
+            public void Setze(O erg, Complexity.C time = null, Complexity.C space = null, string detail = null) => Setze(erg, -1, time, space, detail);
             public void Setze(Exception exception) => this.exception = exception;
-            public void Setze(O erg, int it = -1, Complexity.C time = null, Complexity.C space = null)
+            public void Setze(O erg, int it = -1, Complexity.C time = null, Complexity.C space = null, string detail = null)
             {
                 timeSpan = DateTime.Now.Subtract(baseClass.solverStarted);
                 iterations = it;
                 this.erg = erg;
-                complexity = new Complexity(time, space);
+                complexity = new Complexity(time, space).AddDetail(detail);
                 if (baseClass.output != null) success = baseClass.CompareOutErg(baseClass.output, erg);
             }
 

@@ -135,10 +135,11 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         //KONSTRUKTOR
         // public BinaryTree();
 
+        //Statics
+
         //Methods
         public abstract void Append(V val);
         public abstract void Append(N insert);
-
 
         //Reverse
         public virtual IBTree<V> InvertRecursive()

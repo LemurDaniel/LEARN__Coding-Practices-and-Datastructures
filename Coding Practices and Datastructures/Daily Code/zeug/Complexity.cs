@@ -38,12 +38,19 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
         private C time;
         private C space;
+        private string detail;
         public Complexity(C time, C space)
         {
             this.time = time;
             this.space = space;
         }
 
-        public override string ToString() => (time != null ? "Time: " + time + " | " : "") + (space != null ? "Space: " + space : "");
+        public Complexity AddDetail(string detail)
+        {
+            this.detail = detail;
+            return this;
+        }
+
+        public override string ToString() => (time != null ? "---> Time: " + time + "\n" : "") + (space != null ? "---> Space: " + space : "") + (detail != null ? "\n---> "+detail:"");
     }
 }

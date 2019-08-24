@@ -74,7 +74,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Evaluate_Reverse_Polish_Notation();
             //  aufgabe = new Min_Stack();
             //  aufgabe = new Implement_Queue_Using_Stack();
-            aufgabe = new Simplify_File_Path();
+            //  aufgabe = new Simplify_File_Path();
 
             //aufgabe = new Basic_Calculator(); //Nicht fertig
 
@@ -135,6 +135,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Deepest_Node_in_a_Binary_Tree();
             //  aufgabe = new Look_and_Say_Sequence();
             //  aufgabe = new First_Missing_Positive_Integer(); // NOT FINISHED
+            aufgabe = new Validate_a_Binary_Search_Tree();
 
             while (true) { aufgabe.Test(); }
         }

@@ -78,6 +78,7 @@
     <Compile Include="Daily Code\Spiral Traversal of Grid.cs" />
     <Compile Include="Daily Code\Trapping Rainwater.cs" />
     <Compile Include="Daily Code\Two-Sum.cs" />
+    <Compile Include="Daily Code\Validate a Binary Search Tree.cs" />
     <Compile Include="Daily Code\Validate Balanced Parentheses.cs" />
     <Compile Include="Daily Code\Ways to Traverse a Grid.cs" />
     <Compile Include="Daily Code\Witness of The Tall People.cs" />

@@ -25,6 +25,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
                 if (len != op.len) return false;
                 return Helfer.ArrayVergleich<int>(arr, op.arr);
             }
+
+            public override int GetHashCode() => base.GetHashCode();
             public override string ToString() => Helfer.Arrayausgabe<int>(arr) + "\nLength: " + len;
         }
         private class InOut : InOutBase<int[], Output>
