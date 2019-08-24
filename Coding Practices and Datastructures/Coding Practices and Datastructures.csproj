@@ -56,6 +56,7 @@
     <Compile Include="Daily Code\Find the k-th Largest Element in a List.cs" />
     <Compile Include="Daily Code\Find the non-duplicate number.cs" />
     <Compile Include="Daily Code\First and Last Indices of an Element in a Sorted Array.cs" />
+    <Compile Include="Daily Code\First Missing Positive Integer.cs" />
     <Compile Include="Daily Code\Floor and Ceiling of a Binary Search Tree.cs" />
     <Compile Include="Daily Code\Invert a Binary Tree.cs" />
     <Compile Include="Daily Code\Largest Product of 3 Elements.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="GoF Interview Questions\Stack\Evaluate Reverse Polish Notation.cs" />
     <Compile Include="GoF Interview Questions\Stack\Implement Queue Using Stack.cs" />
     <Compile Include="GoF Interview Questions\Stack\MinStack.cs" />
+    <Compile Include="GoF Interview Questions\Stack\Simplify File Path.cs" />
     <Compile Include="GoF Interview Questions\Strings\Decode String.cs" />
     <Compile Include="GoF Interview Questions\Strings\Integer_To_Roman.cs" />
     <Compile Include="GoF Interview Questions\Strings\String To Integer.cs" />

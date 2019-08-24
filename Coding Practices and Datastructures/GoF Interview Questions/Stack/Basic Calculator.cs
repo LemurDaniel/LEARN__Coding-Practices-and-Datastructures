@@ -24,7 +24,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Stack
             // number always positive, must support +, - and brackets, Testcases are always valid
             testcases.Add(new InOut("1 + 1", 2));
             testcases.Add(new InOut("2 - 1 + 2", 3));
-            //testcases.Add(new InOut("(1+(4+5+2)-3)+(6+8)", 23));
+            testcases.Add(new InOut("(1+(4+5+2)-3)+(6+8)", 23));
         }
 
 
