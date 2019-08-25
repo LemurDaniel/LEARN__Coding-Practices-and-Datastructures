@@ -300,6 +300,36 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             return node;
         }
 
+        public V[] GetValuesAtHeight(int h) // root == 1
+        {
+            if (root == null) throw new InvalidOperationException("No values Present");
+            if (h <= 0) throw new InvalidOperationException("height must be greater than zero");
+            if (h == 1) return new V[] { root.Val };
+
+            IBTreeNode<V> node;
+            Queue<IBTreeNode<V>> q = new Queue<IBTreeNode<V>>();
+            q.Enqueue(root);
+            q.Enqueue(null);
+            while(true)
+            {
+                node = q.Dequeue();
+                if (node.Left != null) q.Enqueue(node.Left);
+                if (node.Right != null) q.Enqueue(node.Right);
+
+                if(q.Peek() == null)
+                {
+                    q.Dequeue();
+                    if (--h == 1) break;
+                    else if (q.Count == 0) throw new InvalidOperationException("No Values Present at Level");
+                    else q.Enqueue(null);   //Seperates Levels
+                }
+            }
+
+            V[] vals = new V[q.Count];
+            while (q.Count > 0) vals[vals.Length - q.Count] = q.Dequeue().Val;
+            return vals;
+        }
+
         // TRAVERSAL
         // Depth First
         public string PrintRecursive(TraverseType traverseType)

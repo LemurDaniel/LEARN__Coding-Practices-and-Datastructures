@@ -38,6 +38,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         IList<V> GetLeafsRecursiveVals();
         IBTreeNode<V> GetDeepestNodeRecursive();
         IBTreeNode<V> GetDeepestNodeIt();
+        V[] GetValuesAtHeight(int h);
 
         // TRAVERSAL
         // Depth First

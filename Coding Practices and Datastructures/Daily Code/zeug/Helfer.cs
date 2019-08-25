@@ -177,6 +177,20 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             for (int i = 0; i < s.Length; i++) arr[i] = GetNumber(s[i]);
             return arr;
         }
+        public static char[] AssembleChar(string s)
+        {
+            string[] arr = null;
+            char[] carr = null;
+            if (s.Contains(";")) arr = s.Split(';');
+            else if (s.Contains(",")) arr = s.Split(',');
+            else carr = new char[s.Length];
+
+            if (carr == null) carr = new char[arr.Length];
+
+            if (arr != null) for (int i = 0; i < arr.Length; i++) carr[i] = arr[i][0];
+            else for (int i = 0; i < s.Length; i++) carr[i] = s[i];
+            return carr;
+        }
         private static int[] Assemble2(string s) => Assemble2(s, ';');
         private static int[] Assemble2(string s, char spliter)
         {
@@ -214,6 +228,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         // INT BINARY TREE
         public static IBTree<char> AssembleBTreeChar(string s, IBTree<char> tree = null)
         {
+            if (s.Contains(',') || s.Contains(';')) return AssembleBTreeChar(Helfer.AssembleChar(s), tree);
             if(tree == null) tree = new BinarySearchTree<char>();
             if (s[0] == '*')
             {
@@ -221,6 +236,18 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 s = s.Substring(1);
             }
             foreach (char c in s) tree.Append(c);
+            return tree;
+        }
+        public static IBTree<char> AssembleBTreeChar(char[] arr, IBTree<char> tree = null)
+        {
+            if (tree == null) tree = new BinarySearchTree<char>();
+            int i = 0;
+            if (arr[0] == '*')
+            {
+                tree.InvertRecursive();
+                i++;
+            }
+            for (; i < arr.Length; i++) tree.Append(arr[i]);
             return tree;
         }
 
