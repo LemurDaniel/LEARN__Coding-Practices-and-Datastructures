@@ -56,6 +56,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Set_Matrix_Zeroes();
             //  aufgabe = new Best_Time_To_Buy_And_Sell_Stock();
             //  aufgabe = new Remove_Duplicates_from_Sorted_Array();
+            aufgabe = new JumpGame();
 
             //------>STRING - STRUCTURES
             //  aufgabe = new Integer_To_Roman();
@@ -137,7 +138,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new First_Missing_Positive_Integer(); // NOT FINISHED
             //  aufgabe = new Validate_a_Binary_Search_Tree();
             //  aufgabe = new Get_all_Values_at_a_Certain_Height_in_a_Binary_Tree();
-            aufgabe = new Longest_Substring_With_K_Distinct_Characters();
+            //  aufgabe = new Longest_Substring_With_K_Distinct_Characters();
 
             while (true) { aufgabe.Test(); }
         }
