@@ -22,6 +22,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public abstract void GetLeafsRecursive(IList<V> list);
         public abstract int GetNumberOfUnvialSubtreesRecursiveStart();
         public abstract int[] GetNumberOfUnvialSubtreesRecursive();
+        public abstract int GetNumberOfUnvialSubtreesRecursiveMethod2();
 
         public abstract void RemoveNodeValsRecursive(V val);
 
@@ -44,6 +45,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         IBTreeNode<V> GetDeepestNodeIt();
         V[] GetValuesAtHeight(int h);
         int GetNumberOfUnivalSubtreesRecursive();
+        int GetNumberOfUnivalSubtreesRecursiveMethod2();
+
 
         void RemoveNodeVals(V val);
 

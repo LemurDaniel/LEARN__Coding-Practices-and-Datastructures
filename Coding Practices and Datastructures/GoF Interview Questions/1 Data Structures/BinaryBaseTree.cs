@@ -113,6 +113,26 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             else return new int[] { larr[0] + rarr[0], 0 };
         }
 
+        //positive == unival || negative == not unival
+        public override int GetNumberOfUnvialSubtreesRecursiveMethod2()
+        {
+            int lCount = 0, rCount = 0; //If no child unvial by default
+            if (left == null && right == null) return -1;   //Is Leaf?
+            if (right != null)
+            {
+                rCount = right.GetNumberOfUnvialSubtreesRecursiveMethod2();
+                rCount = rCount < 0 && val.Equals(right.Val) ? rCount : Math.Abs(rCount);   //Is Unvial?
+            }
+            if (left != null)
+            {
+                lCount = left.GetNumberOfUnvialSubtreesRecursiveMethod2();
+                lCount = lCount < 0 && val.Equals(left.Val) ? lCount : Math.Abs(lCount);    //Is Unvial?
+            }
+
+            if (lCount <= 0 && rCount <= 0) return lCount + rCount - 1;   // IsUnival!
+            else return Math.Abs(lCount) + Math.Abs(rCount);    //NotUnival
+        }
+
         public override void RemoveNodeValsRecursive(V val)
         {
             if (right != null)
@@ -372,6 +392,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         }
 
         public int GetNumberOfUnivalSubtreesRecursive() => root == null ? 0 : root.GetNumberOfUnvialSubtreesRecursiveStart();
+        public int GetNumberOfUnivalSubtreesRecursiveMethod2() => root == null ? 0 : Math.Abs(root.GetNumberOfUnvialSubtreesRecursiveMethod2());
         public void RemoveNodeVals(V val) => root?.RemoveNodeValsRecursive(val);
         // TRAVERSAL
         // Depth First

@@ -36,6 +36,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             {
                 inputStringConverter = arg => "Eingabe: " + arg.PrintIterative(TraverseType.LevelOrder);
                 AddSolver( (arg, erg) => erg.Setze(arg.GetNumberOfUnivalSubtreesRecursive()) ,"Rekursiv");
+                AddSolver((arg, erg) => erg.Setze(arg.GetNumberOfUnivalSubtreesRecursiveMethod2()), "Rekursiv2");
                 HasMaxDur = false;
             }
         }
