@@ -56,7 +56,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Set_Matrix_Zeroes();
             //  aufgabe = new Best_Time_To_Buy_And_Sell_Stock();
             //  aufgabe = new Remove_Duplicates_from_Sorted_Array();
-            aufgabe = new JumpGame();
+            //  aufgabe = new JumpGame();
+            aufgabe = new JumpGame2();
 
             //------>STRING - STRUCTURES
             //  aufgabe = new Integer_To_Roman();

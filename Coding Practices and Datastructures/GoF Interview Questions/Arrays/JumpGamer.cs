@@ -14,7 +14,6 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
             public InOut(string s, bool b) : base(s, b)
             {
                 AddSolver(SearchRecursive);
-                HasMaxDur = false;
             }
         }
 
