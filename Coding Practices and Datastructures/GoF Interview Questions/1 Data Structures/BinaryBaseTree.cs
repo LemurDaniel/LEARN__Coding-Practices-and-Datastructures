@@ -86,6 +86,47 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             else if (rightW == null) return leftW;
             else return leftW.depth > rightW.depth ? leftW : rightW;
         }
+
+
+        public override int GetNumberOfUnvialSubtreesRecursiveStart() => GetNumberOfUnvialSubtreesRecursive()[0];
+        /*
+         * int[] {UnvialSubtree, IsUnival(0 or 1)} 
+         * 
+         */
+        public override int[] GetNumberOfUnvialSubtreesRecursive()
+        {
+            int[] larr, rarr;
+            larr = rarr = new int[] { 0, 1 };    //If no child unvial by default
+            if (left == null && right == null) return new int[] { 1, 1 };   //Is Leaf?
+            if (right != null)
+            {
+                rarr = right.GetNumberOfUnvialSubtreesRecursive();
+                rarr[1] = rarr[1] == 1 && val.Equals(right.Val) ? 1 : 0;   //Is Unvial?
+            }
+            if (left != null)
+            {
+                larr = left.GetNumberOfUnvialSubtreesRecursive();
+                larr[1] = larr[1] == 1 && val.Equals(left.Val) ? 1 : 0;   //Is Unvial?
+            }
+
+            if (larr[1] == 1 && rarr[1] == 1) return new int[] { larr[0] + rarr[0] + 1, 1 };
+            else return new int[] { larr[0] + rarr[0], 0 };
+        }
+
+        public override void RemoveNodeValsRecursive(V val)
+        {
+            if (right != null)
+            {
+                if (right.Val.Equals(val)) right = null;
+                else right.RemoveNodeValsRecursive(val);
+            }
+            if (left != null)
+            {
+                if (left.Val.Equals(val)) left = null;
+                else left.RemoveNodeValsRecursive(val);
+            }
+        }
+
         private class Wrap
         {
             public int depth;
@@ -330,6 +371,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             return vals;
         }
 
+        public int GetNumberOfUnivalSubtreesRecursive() => root == null ? 0 : root.GetNumberOfUnvialSubtreesRecursiveStart();
+        public void RemoveNodeVals(V val) => root?.RemoveNodeValsRecursive(val);
         // TRAVERSAL
         // Depth First
         public string PrintRecursive(TraverseType traverseType)
