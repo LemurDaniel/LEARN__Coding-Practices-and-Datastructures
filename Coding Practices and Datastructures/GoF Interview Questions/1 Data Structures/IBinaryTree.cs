@@ -20,6 +20,10 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         public abstract void GetLeafsRecursive(IList<IBTreeNode<V>> list);
         public abstract void GetLeafsRecursive(IList<V> list);
+        public abstract int GetNumberOfUnvialSubtreesRecursiveStart();
+        public abstract int[] GetNumberOfUnvialSubtreesRecursive();
+
+        public abstract void RemoveNodeValsRecursive(V val);
 
         public abstract IBTreeNode<V> GetDeepestNodeRecursive();
         public abstract StringBuilder GenerateStringRecursive(StringBuilder sb);
@@ -39,6 +43,9 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         IBTreeNode<V> GetDeepestNodeRecursive();
         IBTreeNode<V> GetDeepestNodeIt();
         V[] GetValuesAtHeight(int h);
+        int GetNumberOfUnivalSubtreesRecursive();
+
+        void RemoveNodeVals(V val);
 
         // TRAVERSAL
         // Depth First

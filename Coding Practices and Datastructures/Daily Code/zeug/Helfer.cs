@@ -236,6 +236,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 s = s.Substring(1);
             }
             foreach (char c in s) tree.Append(c);
+            tree.RemoveNodeVals('/');
             return tree;
         }
         public static IBTree<char> AssembleBTreeChar(char[] arr, IBTree<char> tree = null)
@@ -248,14 +249,16 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 i++;
             }
             for (; i < arr.Length; i++) tree.Append(arr[i]);
+            tree.RemoveNodeVals('/');
             return tree;
         }
 
-        public static IBTree<int> AssembleBTree(string s, IBTree<int> tree = null) => AssembleBTree(Assemble(s), tree);
-        public static IBTree<int> AssembleBTree(int[] arr, IBTree<int> tree = null)
+        public static IBTree<int> AssembleBTree(string s, IBTree<int> tree = null, bool rem = false, int val = 2) => AssembleBTree(Assemble(s), tree, rem, val);
+        public static IBTree<int> AssembleBTree(int[] arr, IBTree<int> tree = null, bool rem = false, int val = 2)
         {
             if(tree == null) tree = new BinarySearchTree<int>();
             foreach (int el in arr) tree.Append(el);
+            if (rem) tree.RemoveNodeVals(val);
             return tree;
         }
 

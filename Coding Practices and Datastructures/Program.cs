@@ -140,6 +140,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Validate_a_Binary_Search_Tree();
             //  aufgabe = new Get_all_Values_at_a_Certain_Height_in_a_Binary_Tree();
             //  aufgabe = new Longest_Substring_With_K_Distinct_Characters();
+            aufgabe = new Count_Number_of_Unival_Subtrees();
 
             while (true) { aufgabe.Test(); }
         }
