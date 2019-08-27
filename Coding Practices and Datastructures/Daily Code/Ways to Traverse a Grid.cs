@@ -91,7 +91,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
          * 
          */
 
-        private static BigInteger Num_ways(int n, int m)
+        public static BigInteger Num_ways(int n, int m)
         {
             BigInteger total = fact(n+m-2);
             return (BigInteger) (  total / (fact(n - 1) * fact(m - 1)) );

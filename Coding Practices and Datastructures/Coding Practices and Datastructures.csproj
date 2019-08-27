@@ -120,6 +120,8 @@
     <Compile Include="GoF Interview Questions\Arrays\Set Matrix Zeroes.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Sort Colors.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Two_Sum.cs" />
+    <Compile Include="GoF Interview Questions\Arrays\Unique Paths.cs" />
+    <Compile Include="GoF Interview Questions\Arrays\Unique Paths2.cs" />
     <Compile Include="GoF Interview Questions\Breadth First Search\Symmetric Tree.cs" />
     <Compile Include="GoF Interview Questions\Hashing\Valid Sudoku.cs" />
     <Compile Include="GoF Interview Questions\LinkedLists\Add Two Numbers.cs" />
