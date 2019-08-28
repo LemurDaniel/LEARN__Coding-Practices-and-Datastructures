@@ -44,40 +44,61 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             public static String MatrixAusgabe(string s, V[,] mat, int spacing = 2)
             {
                 StringBuilder sb = new StringBuilder();
-                sb.Append(s);
-                for (int row = 0; row < mat.GetLength(1); row++)
+                sb.Append(s+"\n");
+                for (int row = 0; row < mat.GetLength(0); row++)
                 {
                     if (row != 0) sb.Append(string.Format("{0, -" + s.Length + "}[", ""));
                     else sb.Append("[");
-                    for (int col = 0; col < mat.GetLength(0); col++) sb.Append(string.Format("{0," + spacing + "}" +(col == mat.GetLength(0) - 1 ? "{1,"+(spacing-1)+"}" : ""), mat[col, row], ""));
+                    for (int col = 0; col < mat.GetLength(1); col++) sb.Append(string.Format("{0," + spacing + "}" +(col == mat.GetLength(1) - 1 ? "{1,"+(spacing-1)+"}" : ""), mat[row, col], ""));
                     sb.Append("]\n");
                 }
                 return sb.ToString();
             }
 
 
-            public static Matrix<char> GetCharMatrix(string s) => new Matrix<char>(AssembleCharMatrix(s));
+            public static Matrix<char> GetCharMatrix(string s, string splitter = null, bool flip = false) => new Matrix<char>(AssembleCharMatrix(s, splitter, flip));
             public static Matrix<int> GetIntMatrix(string s) => new Matrix<int>(AssembleIntMatrix(s));
             public static Matrix<int> GetIntMatrix(int min, int max, int col = -1, int row = -1) => new Matrix<int>(AssembleIntMatrix(min, max, col, row));
 
-            public static char[,] AssembleCharMatrix(string s)
+            public static char[,] AssembleCharMatrix(string s, string splitter = null, bool flip = false)
             {
+                s = s.Trim('|');
                 string[] arrS = s.Split('|');
                 int count = 0;
-                for (int i = 0; i < arrS[0].Length; i++) if (Char.IsLetter(arrS[0][i])) count++;
-                char[,] matrix = new char[arrS.Length, count];
+                char[,] matrix;
 
+                if (splitter == null)
+                {
+                    for (int i = 0; i < arrS[0].Length; i++) if (Char.IsLetter(arrS[0][i])) count++;
+                    if (!flip) matrix = new char[arrS.Length, count];
+                    else matrix = new char[count, arrS.Length];
+                }
+                else
+                {
+                    if(!flip)   matrix = new char[arrS.Length, arrS[0].Split(splitter[0]).Length];
+                    else matrix = new char[arrS[0].Split(splitter[0]).Length, arrS.Length];
+                }
 
                 for (int i = 0; i < arrS.Length; i++)
                 {
-                    for (int j = 0, z = 0; j < count; j++)
+                    for (int j = 0, z = 0; j < matrix.GetLength(1); j++)
                     {
-                        while (!Char.IsLetter(arrS[i][z])) z++;
-                        matrix[i, j] = arrS[i][z++];
+                        if (splitter == null)
+                        {
+                            while (!Char.IsLetter(arrS[i][z])) z++;
+                            if (!flip) matrix[i, j] = arrS[i][z++];
+                            else matrix[i, j] = arrS[z++][i];
+                        }
+                        else
+                        {
+                            if (!flip) matrix[i, j] = arrS[i].Split(',')[j][0];
+                            else matrix[i, j] = arrS[j].Split(',')[i][0];
+                        }
                     }
                 }
                 return matrix;
             }
+
             public static int[,] AssembleIntMatrix(int min, int max, int col=-1, int row=-1)
             {
                 if (col == -1) col = Rand.Next(1, 15);
@@ -103,6 +124,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 return matrix;
             }
 
+            public override string ToString() => MatrixAusgabe();
         }
 
         public static Random random = new Random();
