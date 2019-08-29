@@ -40,7 +40,7 @@ namespace GoF_Coding_Interview_Algos
 
             /* OTHER */
             // aufgabe = new TreeTraversal();  //*
-            aufgabe = new MazeSolver();
+            // aufgabe = new MazeSolver();
 
 
             /* Daily Coding Problems  */
@@ -53,7 +53,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Search_Element_in_Array();
             //  aufgabe = new GoF_Interview_Questions.Arrays.Two_Sum();
             //  aufgabe = new Search_A_2D_Matrix_();    //*
-            //  aufgabe = new Sort_Colors();    //*
+            //  aufgabe = new Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays.Sort_Colors();    //*
             //  aufgabe = new Set_Matrix_Zeroes();
             //  aufgabe = new Best_Time_To_Buy_And_Sell_Stock();
             //  aufgabe = new Remove_Duplicates_from_Sorted_Array();
@@ -144,6 +144,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Get_all_Values_at_a_Certain_Height_in_a_Binary_Tree();
             //  aufgabe = new Longest_Substring_With_K_Distinct_Characters();
             //  aufgabe = new Count_Number_of_Unival_Subtrees();
+            aufgabe = new Coding_Practices_and_Datastructures.Daily_Code.Sort_Colors();
 
             while (true) { aufgabe.Test(); }
         }

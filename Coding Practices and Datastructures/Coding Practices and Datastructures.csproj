@@ -78,6 +78,7 @@
     <Compile Include="Daily Code\Remove k-th Last Element From Linked List.cs" />
     <Compile Include="Daily Code\Reverse_A_Linked_List.cs" />
     <Compile Include="Daily Code\SimpleCalculator.cs" />
+    <Compile Include="Daily Code\Sort Colors.cs" />
     <Compile Include="Daily Code\Sorting a list with 3 unique numbers.cs" />
     <Compile Include="Daily Code\Spiral Traversal of Grid.cs" />
     <Compile Include="Daily Code\Trapping Rainwater.cs" />

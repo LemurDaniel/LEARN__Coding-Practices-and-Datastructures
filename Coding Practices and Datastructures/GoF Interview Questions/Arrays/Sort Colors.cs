@@ -43,8 +43,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
          */
         private static void SolveOnePass_ConstantSpace_TwoPointers(int[] arr, InOut.Ergebnis erg)
         {
-            int it = 1;
-            for(int i=0, stP = 0, eP = arr.Length-1; i<eP; it++)
+            int it = 1; //Iterations
+            for(int i=0, stP = 0, eP = arr.Length-1; i<=eP; it++)
             {
                 if (arr[i] == 0)
                 {
@@ -59,7 +59,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
                 }
                 i++;    //Next element
             }
-            erg.Setze(arr, it);
+            erg.Setze(arr, it, Complexity.LINEAR, Complexity.CONSTANT);
         }
 
         private static void Swap(int[] arr, int source, int target)
