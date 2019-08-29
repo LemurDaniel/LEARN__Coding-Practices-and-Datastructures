@@ -128,11 +128,14 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         }
 
         public static Random random = new Random();
-        public static string RandomString(int len)
+        public static string RandomString(int len, bool report = false)
         {
             string s = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < len; i++) sb.Append(s[random.Next(0, s.Length - 1)]);
+            for (int i = 0; i < len; i++) {
+                sb.Append(s[random.Next(0, s.Length - 1)]);
+                if (report && i % (len/100) == 0) Console.WriteLine("Length: " + sb.Length + "    ---    Done: " + (((double)sb.Length) / len * 100) + "%");
+            };
             return sb.ToString();
         }
 

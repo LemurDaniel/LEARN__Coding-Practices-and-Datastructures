@@ -61,12 +61,14 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new JumpGame2();
             //  aufgabe = new Unique_Paths();
             //  aufgabe = new Unique_Paths2();
+            aufgabe = new Remove_Element();
 
             //------>STRING - STRUCTURES
             //  aufgabe = new Integer_To_Roman();
             //  aufgabe = new String_To_Integer();
             //  aufgabe = new ZigZag_Conversion();  //*
             //  aufgabe = new Decode_String();  //*
+            //  aufgabe = new Revers_A_String();
 
             //------>LINKED LIST - STRUCTURES
             //  aufgabe = new Add_Two_Numbers();
@@ -144,7 +146,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Get_all_Values_at_a_Certain_Height_in_a_Binary_Tree();
             //  aufgabe = new Longest_Substring_With_K_Distinct_Characters();
             //  aufgabe = new Count_Number_of_Unival_Subtrees();
-            aufgabe = new Coding_Practices_and_Datastructures.Daily_Code.Sort_Colors();
+            //  aufgabe = new Coding_Practices_and_Datastructures.Daily_Code.Sort_Colors();
 
             while (true) { aufgabe.Test(); }
         }
