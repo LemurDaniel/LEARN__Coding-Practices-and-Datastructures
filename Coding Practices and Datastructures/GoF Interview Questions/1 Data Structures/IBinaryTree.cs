@@ -23,12 +23,13 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public abstract int GetNumberOfUnvialSubtreesRecursiveStart();
         public abstract int[] GetNumberOfUnvialSubtreesRecursive();
         public abstract int GetNumberOfUnvialSubtreesRecursiveMethod2();
-
         public abstract void RemoveNodeValsRecursive(V val);
+
+        public abstract IBTreeNode<V> GetLargestBst(Func<V, V, int> compare);
 
         public abstract IBTreeNode<V> GetDeepestNodeRecursive();
         public abstract StringBuilder GenerateStringRecursive(StringBuilder sb);
-        public abstract StringBuilder PrintRecursive(StringBuilder sb, TraverseType traverseType);
+        public abstract StringBuilder PrintRecursive(StringBuilder sb, TraverseType traverseType, string split = "; ");
     }
     public interface IBTree<V> : IEnumerable<V>{
         void Append(V val);
@@ -50,10 +51,12 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         void RemoveNodeVals(V val);
 
+        IBTreeNode<V> GetLargestBst(Func<V, V, int> compare);
+
         // TRAVERSAL
         // Depth First
-        string PrintRecursive(TraverseType traverseType);
-        string PrintIterative(TraverseType traverseType);
+        string PrintRecursive(TraverseType traverseType, IBTreeNode<V> baseNode = null, string split = "; ");
+        string PrintIterative(TraverseType traverseType, IBTreeNode<V> baseNode = null, string split = "; ");
 
 
         //TEST ENUMERABLES

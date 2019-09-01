@@ -305,5 +305,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             current = lowBound;
             return compare(current) == 0;
         }
+
+        public static int NegateInt(int i) => i > 0 ? i * -1 : i;
     }
 }

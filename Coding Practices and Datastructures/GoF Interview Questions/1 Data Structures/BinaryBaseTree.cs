@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coding_Practices_and_Datastructures.Daily_Code;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -147,6 +148,27 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             }
         }
 
+        //negative == false && int == node count
+        public override IBTreeNode<V> GetLargestBst(Func<V, V, int> compare)
+        {
+            Wrap wp = new Wrap();
+            GetLargestBst(wp, compare);
+            return wp.node;
+        }
+        private int GetLargestBst(Wrap largest, Func<V, V, int> compare) 
+        {
+            BTreeNode<V> right = this.right as BTreeNode<V>, left = this.left as BTreeNode<V>;
+            bool IsValid = (left == null ? true : compare(val, left.Val) > -1) && (right == null ? true : compare(val, right.Val) == -1);
+            int count = (right == null ? 0 : right.GetLargestBst(largest, compare)) + (left == null ? 0 : left.GetLargestBst(largest, compare)) + 1;
+            if (!IsValid) return -1;
+            else if (count > largest.depth)
+            {
+                largest.depth = count;
+                largest.node = this;
+            }
+            return count;
+        }
+
         private class Wrap
         {
             public int depth;
@@ -172,13 +194,13 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public override int GetHashCode() => base.GetHashCode();
 
         // Travers
-        public override StringBuilder PrintRecursive(StringBuilder sb, TraverseType traverseType)
+        public override StringBuilder PrintRecursive(StringBuilder sb, TraverseType traverseType, string split = "; ")
         {
-            if (traverseType == TraverseType.PreOrder) sb.Append(val + "; ");
+            if (traverseType == TraverseType.PreOrder) sb.Append(val + split);
             left?.PrintRecursive(sb, traverseType);
-            if (traverseType == TraverseType.InOrder) sb.Append(val + "; ");
+            if (traverseType == TraverseType.InOrder) sb.Append(val + split);
             right?.PrintRecursive(sb, traverseType);
-            if (traverseType == TraverseType.PostOrder) sb.Append(val + "; ");
+            if (traverseType == TraverseType.PostOrder) sb.Append(val + split);
             return sb;
         }
 
@@ -394,46 +416,50 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public int GetNumberOfUnivalSubtreesRecursive() => root == null ? 0 : root.GetNumberOfUnvialSubtreesRecursiveStart();
         public int GetNumberOfUnivalSubtreesRecursiveMethod2() => root == null ? 0 : Math.Abs(root.GetNumberOfUnvialSubtreesRecursiveMethod2());
         public void RemoveNodeVals(V val) => root?.RemoveNodeValsRecursive(val);
+        public IBTreeNode<V> GetLargestBst(Func<V, V, int> compare) => root == null ? null : root.GetLargestBst(compare);
+
         // TRAVERSAL
         // Depth First
-        public string PrintRecursive(TraverseType traverseType)
+        public string PrintRecursive(TraverseType traverseType, IBTreeNode<V> baseNode = null ,string split = "; ")
         {
-            if (root == null) return "";
+            if (baseNode == null) baseNode = root;
+            if (baseNode == null) return "";
             StringBuilder sb = new StringBuilder();
-            if (traverseType.IsZigZagLevelOrder || traverseType.IsLevelOrder) PrintLevelOrder(sb, traverseType);
-            else root.PrintRecursive(sb, traverseType);
-            return sb.ToString().Substring(0, sb.Length - 2);
+            if (traverseType.IsZigZagLevelOrder || traverseType.IsLevelOrder) PrintLevelOrder(sb, traverseType, baseNode, split);
+            else baseNode.PrintRecursive(sb, traverseType, split);
+            return sb.ToString().Substring(0, sb.Length - split.Length);
         }
 
-        public string PrintIterative(TraverseType traverseType)
+        public string PrintIterative(TraverseType traverseType, IBTreeNode<V> baseNode = null, string split = "; ")
         {
-            if (root == null) return "";
+            if (baseNode == null) baseNode = root;
+            if (baseNode == null) return "";
             StringBuilder sb = new StringBuilder();
-            if(traverseType.IsZigZagLevelOrder || traverseType.IsLevelOrder) return PrintLevelOrder(sb, traverseType).ToString().Substring(0, sb.Length - 2);
+            if(traverseType.IsZigZagLevelOrder || traverseType.IsLevelOrder) return PrintLevelOrder(sb, traverseType, baseNode, split).ToString().Substring(0, sb.Length - split.Length);
 
             Stack<IBTreeNode<V>> stack = new Stack<IBTreeNode<V>>();
 
-            IBTreeNode<V> node = root;
+            IBTreeNode<V> node = baseNode;
             while(node != null || stack.Count > 0)
             {            
                 if(node != null)
                 {
-                    if (traverseType.IsPreOrder) sb.Append(node.Val + "; ");
-                    else if (traverseType.IsPostOrder) sb.Insert(0, node.Val + "; ");   // Insert at 0 to reverse WRL to LRW => Postorder
+                    if (traverseType.IsPreOrder) sb.Append(node.Val + split);
+                    else if (traverseType.IsPostOrder) sb.Insert(0, node.Val + split);   // Insert at 0 to reverse WRL to LRW => Postorder
                     stack.Push(node);
                     node = traverseType.IsPostOrder ? node.Right : node.Left;   // if postOrder do WRL else WLR
                     continue;
                 }
-                if(traverseType.IsInorder) sb.Append(stack.Peek().Val+"; ");
+                if(traverseType.IsInorder) sb.Append(stack.Peek().Val+ split);
                 node = traverseType.IsPostOrder ? stack.Pop().Left : stack.Pop().Right; // if postOrder do WRL else WLR
             }
-            return sb.ToString().Substring(0, sb.Length-2);
+            return sb.ToString().Substring(0, sb.Length-split.Length);
         }
 
-        private StringBuilder PrintLevelOrder(StringBuilder sb, TraverseType traverseType)
+        private StringBuilder PrintLevelOrder(StringBuilder sb, TraverseType traverseType, IBTreeNode<V> baseNode, string split = "; ")
         {
             Queue<IBTreeNode<V>> queue = new Queue<IBTreeNode<V>>();
-            queue.Enqueue(root);
+            queue.Enqueue(baseNode);
             if(traverseType.IsZigZagLevelOrder) queue.Enqueue(null);    // To force an alternation from zig to zag after root
             bool Zig = true;
 
@@ -444,10 +470,10 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
                 if (traverseType.IsZigZagLevelOrder)
                 {
-                    if (Zig) subSb.Append(node.Val + "; ");
-                    else subSb.Insert(0, node.Val + "; ");
+                    if (Zig) subSb.Append(node.Val + split);
+                    else subSb.Insert(0, node.Val + split);
                 }
-                else sb.Append(node.Val + "; ");
+                else sb.Append(node.Val + split);
 
                 if (node.Left != null) queue.Enqueue(node.Left);
                 if (node.Right != null) queue.Enqueue(node.Right);
