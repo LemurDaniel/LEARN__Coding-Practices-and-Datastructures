@@ -216,6 +216,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             else for (int i = 0; i < s.Length; i++) carr[i] = s[i];
             return carr;
         }
+
         private static int[] Assemble2(string s) => Assemble2(s, ';');
         private static int[] Assemble2(string s, char spliter)
         {

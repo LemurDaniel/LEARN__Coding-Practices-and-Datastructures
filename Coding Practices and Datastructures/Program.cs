@@ -61,7 +61,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new JumpGame2();
             //  aufgabe = new Unique_Paths();
             //  aufgabe = new Unique_Paths2();
-            aufgabe = new Remove_Element();
+            //  aufgabe = new Remove_Element();
 
             //------>STRING - STRUCTURES
             //  aufgabe = new Integer_To_Roman();
@@ -147,6 +147,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Longest_Substring_With_K_Distinct_Characters();
             //  aufgabe = new Count_Number_of_Unival_Subtrees();
             //  aufgabe = new Coding_Practices_and_Datastructures.Daily_Code.Sort_Colors();
+            aufgabe = new Word_Ordering_in_a_Different_Alphabetical_Order();
 
             while (true) { aufgabe.Test(); }
         }

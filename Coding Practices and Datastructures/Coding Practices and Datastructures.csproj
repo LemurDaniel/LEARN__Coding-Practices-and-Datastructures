@@ -87,6 +87,7 @@
     <Compile Include="Daily Code\Validate Balanced Parentheses.cs" />
     <Compile Include="Daily Code\Ways to Traverse a Grid.cs" />
     <Compile Include="Daily Code\Witness of The Tall People.cs" />
+    <Compile Include="Daily Code\Word Ordering in a Different Alphabetical Order.cs" />
     <Compile Include="Daily Code\Word Search.cs" />
     <Compile Include="Daily Code\zeug\Complexity.cs" />
     <Compile Include="Daily Code\zeug\Helfer.cs" />
