@@ -33,11 +33,11 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             public int EncodePos(int col, int row) => EncodePos(col, row, mat);
             public int EncodeRow(int row) => EncodeRow(row, mat);
             public int EncodeCol(int col) => EncodeCol(col, mat);
-            public static V GetElementAtIndex(int ind, V[,] mat) => mat[GetCol(ind, mat), GetRow(ind, mat)];
-            public static int GetRow(int ind, V[,] mat) => ind / mat.GetLength(0);
-            public static int GetCol(int ind, V[,] mat) => ind % mat.GetLength(0);
+            public static V GetElementAtIndex(int ind, V[,] mat) => mat[GetRow(ind, mat), GetCol(ind, mat)];
+            public static int GetRow(int ind, V[,] mat) => ind / mat.GetLength(1);
+            public static int GetCol(int ind, V[,] mat) => ind % mat.GetLength(1);
             public static int EncodePos(int col, int row, V[,] mat) => EncodeRow(row, mat) + EncodeCol(col, mat);
-            public static int EncodeRow(int row, V[,] mat) => row * mat.GetLength(0);
+            public static int EncodeRow(int row, V[,] mat) => row * mat.GetLength(1);
             public static int EncodeCol(int col, V[,] mat) => col;
 
             public String MatrixAusgabe(string s="", int spacing = 2) => MatrixAusgabe(s, mat, spacing);
@@ -47,8 +47,8 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 sb.Append(s+"\n");
                 for (int row = 0; row < mat.GetLength(0); row++)
                 {
-                    if (row != 0) sb.Append(string.Format("{0, -" + s.Length + "}[", ""));
-                    else sb.Append("[");
+                    //if (row != 0) sb.Append(string.Format("{0, -" + s.Length + "}[", ""));
+                    sb.Append("[");
                     for (int col = 0; col < mat.GetLength(1); col++) sb.Append(string.Format("{0," + spacing + "}" +(col == mat.GetLength(1) - 1 ? "{1,"+(spacing-1)+"}" : ""), mat[row, col], ""));
                     sb.Append("]\n");
                 }
@@ -113,13 +113,13 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             }
             public static int[,] AssembleIntMatrix(string s)
             {
-                string[] arrS = s.Split('|');
+                string[] arrS = s.Trim('|').Split('|');
                 int[] arr = Assemble(arrS[0]);
-                int[,] matrix = new int[arr.Length, arrS.Length];
-                for (int i = 0; i < matrix.GetLength(1); i++)
+                int[,] matrix = new int[arrS.Length, arr.Length];
+                for (int i = 0; i < matrix.GetLength(0); i++)
                 {
                     if (i != 0) arr = Assemble(arrS[i]);
-                    for (int j = 0; j < matrix.GetLength(0); j++) matrix[j, i] = arr[j];
+                    for (int j = 0; j < matrix.GetLength(1); j++) matrix[i, j] = arr[j];
                 }
                 return matrix;
             }

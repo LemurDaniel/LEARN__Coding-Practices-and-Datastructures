@@ -36,7 +36,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
                 this.target = target;
                 this.mat = Helfer.Matrix<int>.GetIntMatrix(s);
             }
-            public override string ToString() => "Target: " + target + "\n" + mat.MatrixAusgabe("Matrix: ", 4)+"Length: "+mat.Length+"\n";
+            public override string ToString() => "Target: " + target + "\n" + mat.MatrixAusgabe("Matrix:", 4)+"Length: "+mat.Length+"\n";
         }
         private class InOut : InOutBase<Input, Pos>
         {
@@ -58,8 +58,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
         }
 
 
-        private static void BinarySearchMatrix(Input inp, InOut.Ergebnis erg, int iterations = 1) => erg.Setze(BinarySearchMatrix(inp.mat, inp.target, ref iterations), iterations);
-        private static void BinarySearchMatrix2(Input inp, InOut.Ergebnis erg, int iterations = 1) => erg.Setze(BinarySearchMatrix(inp.mat, inp.target, ref iterations), iterations);
+        private static void BinarySearchMatrix(Input inp, InOut.Ergebnis erg, int iterations = 1) => erg.Setze(BinarySearchMatrix(inp.mat, inp.target, ref iterations), iterations, Complexity.LOGARITHMIC, Complexity.CONSTANT);
+        private static void BinarySearchMatrix2(Input inp, InOut.Ergebnis erg, int iterations = 1) => erg.Setze(BinarySearchMatrix(inp.mat, inp.target, ref iterations), iterations, Complexity.LOGARITHMIC, Complexity.CONSTANT);
 
 
         /*  Encoding:   posAbs = posY * T + posX    where T > MaxValueOf(posX) => T == colCount
@@ -78,7 +78,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
             int lowBound = 0;
             int current;
 
-            while(upBound >= lowBound)
+
+            while (upBound >= lowBound)
             {
                 iterations++;
                 current = (upBound + lowBound) / 2;

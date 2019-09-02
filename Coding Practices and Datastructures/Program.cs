@@ -148,7 +148,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Count_Number_of_Unival_Subtrees();
             //  aufgabe = new Coding_Practices_and_Datastructures.Daily_Code.Sort_Colors();
             //  aufgabe = new Word_Ordering_in_a_Different_Alphabetical_Order();
-            aufgabe = new Largest_BST_in_a_Binary_Tree();
+            //  aufgabe = new Largest_BST_in_a_Binary_Tree();
+            aufgabe = new Find_Number_of_Islands();
 
             while (true) { aufgabe.Test(); }
         }
