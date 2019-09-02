@@ -307,5 +307,11 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         }
 
         public static int NegateInt(int i) => i > 0 ? i * -1 : i;
+        public static string removeChar(string s, string rems = ". ,")
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in s) if (!rems.Contains(c)) sb.Append(c);
+            return sb.ToString();
+        }
     }
 }
