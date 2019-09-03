@@ -65,6 +65,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Container_with_most_water();
             //  aufgabe = new AddNumbers();
             //  aufgabe = new Add_One();
+            aufgabe = new Merge_Sorted_Arrays();
 
             //------>STRING - STRUCTURES
             //  aufgabe = new Integer_To_Roman();
@@ -153,7 +154,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Word_Ordering_in_a_Different_Alphabetical_Order();
             //  aufgabe = new Largest_BST_in_a_Binary_Tree();
             //  aufgabe = new Find_Number_of_Islands();
-            aufgabe = new Minimal_Removals_for_Valid_Parenthesises();
+            //  aufgabe = new Minimal_Removals_for_Valid_Parenthesises();
 
             while (true) { aufgabe.Test(); }
         }
