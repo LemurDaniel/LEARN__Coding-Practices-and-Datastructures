@@ -66,6 +66,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new AddNumbers();
             //  aufgabe = new Add_One();
             //  aufgabe = new Merge_Sorted_Arrays();
+            //  aufgabe = new Minimum_Path_Sum(); //*
+            aufgabe = new Minimum_Path_Sum2(); //*
 
             //------>STRING - STRUCTURES
             //  aufgabe = new Integer_To_Roman();
@@ -73,7 +75,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new ZigZag_Conversion();  //*
             //  aufgabe = new Decode_String();  //*
             //  aufgabe = new Revers_A_String();
-            aufgabe = new Reverse_Vowels_of_a_String();
+            //  aufgabe = new Reverse_Vowels_of_a_String();
 
             //------>LINKED LIST - STRUCTURES
             //  aufgabe = new Add_Two_Numbers();

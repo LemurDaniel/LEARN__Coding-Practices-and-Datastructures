@@ -55,10 +55,10 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             pos.Add(index);
             int col = mat.GetCol(index);
             int row = mat.GetRow(index);
-            if (origin != 3 && col > 0) FindAdjacent(1, mat, mat.EncodePos(col - 1, row), pos);
-            if (origin != 4 && row > 0) FindAdjacent(2, mat, mat.EncodePos(col, row - 1), pos);
-            if (origin != 1 && col < mat.mat.GetLength(1) - 1) FindAdjacent(3, mat, mat.EncodePos(col + 1, row), pos);
-            if (origin != 2 && row < mat.mat.GetLength(0) - 1) FindAdjacent(4, mat, mat.EncodePos(col, row + 1), pos);
+            if (origin != 3 && col > 0) FindAdjacent(1, mat, mat.EncodePos(row, col - 1), pos);
+            if (origin != 4 && row > 0) FindAdjacent(2, mat, mat.EncodePos(row - 1, col), pos);
+            if (origin != 1 && col < mat.mat.GetLength(1) - 1) FindAdjacent(3, mat, mat.EncodePos(row, col + 1), pos);
+            if (origin != 2 && row < mat.mat.GetLength(0) - 1) FindAdjacent(4, mat, mat.EncodePos(row + 1, col), pos);
         }
     }
 }

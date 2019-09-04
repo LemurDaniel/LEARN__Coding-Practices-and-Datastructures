@@ -10,10 +10,42 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
     public class Helfer
     {
         public static readonly Random Rand = new Random();
+
+        public class Point
+        {
+            public int Y;
+            public int X;
+
+            public Point(int Y, int X)
+            {
+                this.Y = Y;
+                this.X = X;
+            }
+
+            public override string ToString() => string.Format("({0}, {1})", Y, X);
+            public override bool Equals(object obj)
+            {
+                if (obj == this) return true;
+                if (!obj.GetType().Equals(typeof(Point))) return false;
+                Point p2 = obj as Point;
+                return p2.X == X && p2.Y == Y;
+            }
+            public override int GetHashCode()
+            {
+                var hashCode = 27121115;
+                hashCode = hashCode * -1521134295 + Y.GetHashCode();
+                hashCode = hashCode * -1521134295 + X.GetHashCode();
+                return hashCode;
+            }
+        }
+
         public class Matrix<V>
         {
             public V[,] mat;
             public int Length { get => mat.Length; }
+            public int RowNum { get => mat.GetLength(0); }
+            public int ColNum { get => mat.GetLength(1); }
+
             public Matrix(V[,] mat) => this.mat = mat;
 
 
@@ -27,18 +59,25 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
            *  posAbs = posY * (colCount+1) + posX         
            * 
            */
+            public void SetElementAtIndex(int ind, V val) => SetElementAtIndex(ind, val, mat);
             public V GetElementAtIndex(int ind) => GetElementAtIndex(ind, mat);
+            public V GetElement(int row, int col) => mat[row, col];
             public int GetRow(int ind) => GetRow(ind, mat);
             public int GetCol(int ind) => GetCol(ind, mat);
-            public int EncodePos(int col, int row) => EncodePos(col, row, mat);
+            public int EncodePos(int row, int col) => EncodePos(row, col, mat);
             public int EncodeRow(int row) => EncodeRow(row, mat);
             public int EncodeCol(int col) => EncodeCol(col, mat);
+            public int IndexAddRows(int index, int add) => IndexAddRows(index, add, mat);
+            public int IndexAddCols(int index, int add) => IndexAddCols(index, add, mat);
+            public static void SetElementAtIndex(int ind, V val, V[,] mat) => mat[GetRow(ind, mat), GetCol(ind, mat)] = val;
             public static V GetElementAtIndex(int ind, V[,] mat) => mat[GetRow(ind, mat), GetCol(ind, mat)];
             public static int GetRow(int ind, V[,] mat) => ind / mat.GetLength(1);
             public static int GetCol(int ind, V[,] mat) => ind % mat.GetLength(1);
-            public static int EncodePos(int col, int row, V[,] mat) => EncodeRow(row, mat) + EncodeCol(col, mat);
+            public static int EncodePos(int row, int col, V[,] mat) => EncodeRow(row, mat) + EncodeCol(col, mat);
             public static int EncodeRow(int row, V[,] mat) => row * mat.GetLength(1);
             public static int EncodeCol(int col, V[,] mat) => col;
+            public static int IndexAddCols(int index, int add, V[,] mat) => EncodePos(GetRow(index, mat), Math.Min(Math.Max(GetCol(index, mat) + add, mat.GetLength(1) - 1), 0), mat);
+            public static int IndexAddRows(int index, int add, V[,] mat) => EncodePos(Math.Min(Math.Max(GetRow(index, mat) + add, mat.GetLength(0) - 1), 0), GetCol(index, mat), mat);
 
             public String MatrixAusgabe(string s="", int spacing = 2) => MatrixAusgabe(s, mat, spacing);
             public static String MatrixAusgabe(string s, V[,] mat, int spacing = 2)
@@ -54,7 +93,6 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 }
                 return sb.ToString();
             }
-
 
             public static Matrix<char> GetCharMatrix(string s, string splitter = null, bool flip = false) => new Matrix<char>(AssembleCharMatrix(s, splitter, flip));
             public static Matrix<int> GetIntMatrix(string s) => new Matrix<int>(AssembleIntMatrix(s));
