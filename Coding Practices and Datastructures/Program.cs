@@ -65,7 +65,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Container_with_most_water();
             //  aufgabe = new AddNumbers();
             //  aufgabe = new Add_One();
-            aufgabe = new Merge_Sorted_Arrays();
+            //  aufgabe = new Merge_Sorted_Arrays();
 
             //------>STRING - STRUCTURES
             //  aufgabe = new Integer_To_Roman();
@@ -103,7 +103,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Implement_Sqrt_Double();
 
             //------>BREADTH FIRST - EXCERCISES
-            //  aufgabe = new Symmetric_Tree();
+            aufgabe = new Symmetric_Tree();
 
             //------>TRIE - EXCERCISES
             //  aufgabe = new Implement_Trie();

@@ -14,7 +14,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Breadth_Fi
         {
             public InOut(string s, bool b) : base(Helfer.AssembleBTree(s, new BinaryCompleteTree<int>()), b, true)
             {
-                inputStringConverter = arg => arg.PrintIterative(TraverseType.LevelOrder);
+                //inputStringConverter = arg => arg.PrintIterative(TraverseType.LevelOrder);
                 AddSolver((arg, erg) => erg.Setze(arg.IsMirrorIt()), "Iterative");
                 AddSolver((arg, erg) => erg.Setze(arg.IsMirrorRecurse()), "Recursive");
             }

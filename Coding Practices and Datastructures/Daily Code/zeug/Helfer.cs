@@ -138,6 +138,23 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             };
             return sb.ToString();
         }
+        public static string GenerateString(int len, string s = " ")
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0, j=0; i < len; i++)
+            {
+                j = (j + 1) % s.Length;
+                sb.Append(s[j]);
+            };
+            return sb.ToString();
+        }
+        public static string ShortenString(int len, string s, bool middle = false, string end = "...")
+        {
+            if (s.Length == len) return s;
+            if(len < s.Length) return s.Substring(0, len - end.Length) + end;
+            if(middle) return (GenerateString((len - s.Length) / 2) + s + GenerateString((len - s.Length) / 2 + 1)).Substring(0, len);
+            return s + GenerateString((len - s.Length));
+        }
 
         // DELEGATE
         public delegate V Copy<V>(V element);

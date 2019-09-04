@@ -34,6 +34,11 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
     public abstract class BTreeNode<V> : IBTreeNode<V>
     {
+        private class Node : BTreeNode<V> { }
+        public static readonly BTreeNode<V> EMPTY = new Node();
+        public bool IsEMPTY { get => this == EMPTY;  }
+
+        private BTreeNode() { }
         public BTreeNode(V val) => this.val = val;
         public override IBTreeNode<V> Insert(BTreeNode<V> n, object arg = null)
         {
@@ -59,7 +64,48 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             right?.GenerateStringRecursive(sb);
             return sb;
         }
+        public override StringBuilder GenerateStringIt(int lenEl = 4, int spacing = 4)
+        {
+            int height = GetHeightRecursive();
+            int neededSpace = ((int)Math.Pow(2, height)) * (lenEl+spacing) +spacing;
+            int numOfNodes = 1;
+            int baseSpacing = spacing;
+            int depth = height;
+            StringBuilder sbBase = new StringBuilder();
+            StringBuilder sb = new StringBuilder("\n" + Helfer.GenerateString((neededSpace)/2) + Helfer.ShortenString(lenEl, this.val.ToString()));
+            Queue<IBTreeNode<V>> q = new Queue<IBTreeNode<V>>();
 
+            IBTreeNode<V> node;
+            q.Enqueue(null);
+            q.Enqueue(this);
+
+            while(true)
+            {
+                if (q.Peek() == null)
+                {
+                    //spacing = (neededSpace - (numOfNodes * lenEl)) / (numOfNodes+1);
+                    spacing = baseSpacing * height;
+                    if (height-- == -1) break;
+                    numOfNodes *= 2;
+                    q.Enqueue(q.Dequeue());
+                    sbBase.Append("\n"+sb);
+                    sb = new StringBuilder(Helfer.GenerateString(spacing));
+                }
+
+                node = q.Dequeue();
+                if (node != BTreeNode<V>.EMPTY)
+                {
+                    q.Enqueue(node.Left ?? BTreeNode<V>.EMPTY);
+                    q.Enqueue(node.Right ?? BTreeNode<V>.EMPTY);
+
+                    sb.Append(Helfer.ShortenString(lenEl, (node.Left ?? BTreeNode<V>.EMPTY).Val.ToString(), true) + Helfer.GenerateString(spacing));
+                    sb.Append(Helfer.ShortenString(lenEl, (node.Right ?? BTreeNode<V>.EMPTY).Val.ToString(), true) + Helfer.GenerateString(baseSpacing, "-"));
+                }
+            }
+            return sbBase;
+        }
+
+        public override int GetHeightRecursive() => Math.Max(left != null ? 1 : left.GetHeightRecursive(), left != null ? 1 : right.GetHeightRecursive()) + 1;
         public override void GetLeafsRecursive(IList<IBTreeNode<V>> list)
         {
             if (right == null && left == null) list.Add(this);
@@ -235,9 +281,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public override string ToString()
         {
             if (root == null) return "";
-            StringBuilder sb = new StringBuilder();
-            Root?.GenerateStringRecursive(sb);
-            return sb.ToString().Substring(0, sb.Length-2);
+            StringBuilder sb = Root.GenerateStringIt();
+            return sb.ToString();
         }
         public override bool Equals(object obj)
         {
