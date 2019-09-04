@@ -92,6 +92,7 @@
     <Compile Include="Daily Code\Witness of The Tall People.cs" />
     <Compile Include="Daily Code\Word Ordering in a Different Alphabetical Order.cs" />
     <Compile Include="Daily Code\Word Search.cs" />
+    <Compile Include="Daily Code\Words that are Anagrams.cs" />
     <Compile Include="Daily Code\zeug\Complexity.cs" />
     <Compile Include="Daily Code\zeug\Helfer.cs" />
     <Compile Include="Daily Code\zeug\ITestable.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="GoF Interview Questions\Strings\Decode String.cs" />
     <Compile Include="GoF Interview Questions\Strings\Integer_To_Roman.cs" />
     <Compile Include="GoF Interview Questions\Strings\Revers A String.cs" />
+    <Compile Include="GoF Interview Questions\Strings\Reverse Vowels of a String.cs" />
     <Compile Include="GoF Interview Questions\Strings\String To Integer.cs" />
     <Compile Include="GoF Interview Questions\Strings\ZigZag Conversion.cs" />
     <Compile Include="GoF Interview Questions\Tries\Add nad Search Word -Data Structure Design.cs" />

@@ -73,6 +73,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new ZigZag_Conversion();  //*
             //  aufgabe = new Decode_String();  //*
             //  aufgabe = new Revers_A_String();
+            aufgabe = new Reverse_Vowels_of_a_String();
 
             //------>LINKED LIST - STRUCTURES
             //  aufgabe = new Add_Two_Numbers();
@@ -103,7 +104,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Implement_Sqrt_Double();
 
             //------>BREADTH FIRST - EXCERCISES
-            aufgabe = new Symmetric_Tree();
+            //  aufgabe = new Symmetric_Tree();
 
             //------>TRIE - EXCERCISES
             //  aufgabe = new Implement_Trie();
@@ -155,6 +156,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Largest_BST_in_a_Binary_Tree();
             //  aufgabe = new Find_Number_of_Islands();
             //  aufgabe = new Minimal_Removals_for_Valid_Parenthesises();
+            //  aufgabe = new Words_that_are_Anagrams();
 
             while (true) { aufgabe.Test(); }
         }
