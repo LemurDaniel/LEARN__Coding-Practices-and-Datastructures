@@ -67,7 +67,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Add_One();
             //  aufgabe = new Merge_Sorted_Arrays();
             //  aufgabe = new Minimum_Path_Sum(); //*
-            aufgabe = new Minimum_Path_Sum2(); //*
+            //  aufgabe = new Minimum_Path_Sum2(); //*
 
             //------>STRING - STRUCTURES
             //  aufgabe = new Integer_To_Roman();
@@ -159,6 +159,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Find_Number_of_Islands();
             //  aufgabe = new Minimal_Removals_for_Valid_Parenthesises();
             //  aufgabe = new Words_that_are_Anagrams();
+            aufgabe = new Running_Median();
 
             while (true) { aufgabe.Test(); }
         }
