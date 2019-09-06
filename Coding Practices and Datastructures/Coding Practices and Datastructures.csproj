@@ -80,6 +80,7 @@
     <Compile Include="Daily Code\Remove Consecutive Nodes that Sum to 0.cs" />
     <Compile Include="Daily Code\Remove k-th Last Element From Linked List.cs" />
     <Compile Include="Daily Code\Reverse_A_Linked_List.cs" />
+    <Compile Include="Daily Code\Room Scheduling.cs" />
     <Compile Include="Daily Code\Running Median.cs" />
     <Compile Include="Daily Code\SimpleCalculator.cs" />
     <Compile Include="Daily Code\Sort Colors.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="DS HANDBOOK\Test\Test PrioArrayQueue.cs" />
     <Compile Include="DS HANDBOOK\Test\TestArrayQueue.cs" />
     <Compile Include="DS HANDBOOK\Tree\NormalBTree.cs" />
+    <Compile Include="GoF Interview Questions\1 Data Structures\BinarSearchList.cs" />
     <Compile Include="GoF Interview Questions\1 Data Structures\BinaryCompleteTree.cs" />
     <Compile Include="GoF Interview Questions\1 Data Structures\BinarySearchTree.cs" />
     <Compile Include="GoF Interview Questions\1 Data Structures\BinaryBaseTree.cs" />

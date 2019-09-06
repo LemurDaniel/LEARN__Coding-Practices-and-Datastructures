@@ -159,7 +159,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Find_Number_of_Islands();
             //  aufgabe = new Minimal_Removals_for_Valid_Parenthesises();
             //  aufgabe = new Words_that_are_Anagrams();
-            aufgabe = new Running_Median();
+            //  aufgabe = new Running_Median();
+            aufgabe = new Room_Scheduling();
 
             while (true) { aufgabe.Test(); }
         }
