@@ -17,15 +17,21 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             }
         }
 
-        public class SameArr<O> : InOutBase<O[], O[]>
+        public class TwoArr<O, N> : InOutBase<O[], N[]>
         {
-            public SameArr(O[] i, O[] o) : base(i, o)
+            public TwoArr(O[] o, N[] n) : base(o, n)
             {
-                inputStringConverter = arg => Helfer.Arrayausgabe<O>("Eingabe: ", arg);
-                outputStringConverter = arg => Helfer.Arrayausgabe<O>("Erwartet: ", arg);
-                ergStringConverter = arg => Helfer.Arrayausgabe<O>("Ausgabe: ", arg);
-                CompareOutErg = Helfer.ArrayVergleich<O>;
-                copiedInputProvider = Helfer.ArrayCopy<O>;
+                inputStringConverter = arg => Helfer.Arrayausgabe("Eingabe: ", arg);
+                outputStringConverter = arg => Helfer.Arrayausgabe("Erwartet: ", arg);
+                ergStringConverter = arg => Helfer.Arrayausgabe("Ausgabe: ", arg);
+                CompareOutErg = Helfer.ArrayVergleich;
+                copiedInputProvider = Helfer.ArrayCopy;
+            }
+        }
+        public class SameArr<O> : TwoArr<O, O>
+        {
+            public SameArr(O[] o, O[] n) : base(o, n)
+            {
             }
         }
     }

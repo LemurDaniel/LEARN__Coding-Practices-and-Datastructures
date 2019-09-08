@@ -72,6 +72,7 @@
     <Compile Include="Daily Code\Max Stack.cs" />
     <Compile Include="Daily Code\Maximum Profit From Stocks.cs" />
     <Compile Include="Daily Code\Merge K Sorted Linked Lists.cs" />
+    <Compile Include="Daily Code\Merge List Of Number Into Ranges.cs" />
     <Compile Include="Daily Code\Minimal Removals for Valid Parenthesises.cs" />
     <Compile Include="Daily Code\Minimum Size Subarray Sum.cs" />
     <Compile Include="Daily Code\Non-decreasing Array with Single Modification.cs" />

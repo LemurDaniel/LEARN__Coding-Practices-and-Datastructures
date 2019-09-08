@@ -161,7 +161,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Words_that_are_Anagrams();
             //  aufgabe = new Running_Median();
             //  aufgabe = new Room_Scheduling();
-            aufgabe = new Reverse_Words_in_a_String();
+            //  aufgabe = new Reverse_Words_in_a_String();
+            aufgabe = new Merge_List_Of_Number_Into_Ranges();
 
             while (true) { aufgabe.Test(); }
         }
