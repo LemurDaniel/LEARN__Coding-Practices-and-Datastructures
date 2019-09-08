@@ -68,6 +68,9 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Merge_Sorted_Arrays();
             //  aufgabe = new Minimum_Path_Sum(); //*
             //  aufgabe = new Minimum_Path_Sum2(); //*
+            //  aufgabe = new Find_All_Numbers_Disappeared_in_an_Array();
+            // aufgabe = new Max_Consecutive_Ones();
+            aufgabe = new Third_Maximum_Number();
 
             //------>STRING - STRUCTURES
             //  aufgabe = new Integer_To_Roman();
@@ -162,7 +165,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Running_Median();
             //  aufgabe = new Room_Scheduling();
             //  aufgabe = new Reverse_Words_in_a_String();
-            aufgabe = new Merge_List_Of_Number_Into_Ranges();
+            //  aufgabe = new Merge_List_Of_Number_Into_Ranges();
+
 
             while (true) { aufgabe.Test(); }
         }

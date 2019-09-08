@@ -6,6 +6,11 @@ using System.Text;
 
 namespace Coding_Practices_and_Datastructures.Daily_Code
 {
+    /*
+     * Hi, here's your problem today. This problem was recently asked by LinkedIn:
+
+You are given a positive integer N which represents the number of steps in a staircase. You can either climb 1 or 2 steps at a time. Write a function that returns the number of unique ways to climb the stairs.
+*/
     class Number_of_Ways_to_Climb_Stairs : Testable
     {
 
@@ -70,7 +75,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
          *          
          */
 
-        private class Node
+    private class Node
         {
             public int data;
             public Node prev;   // No Next Node needed; only Node to Find back

@@ -128,9 +128,11 @@
     <Compile Include="GoF Interview Questions\Arrays\Add One.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Best Time To Buy And Sell Stock.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Container with most water.cs" />
+    <Compile Include="GoF Interview Questions\Arrays\Find All Numbers Disappeared in an Array.cs" />
     <Compile Include="GoF Interview Questions\Arrays\JumpGame2.cs" />
     <Compile Include="GoF Interview Questions\Arrays\JumpGamer.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Add Numbers.cs" />
+    <Compile Include="GoF Interview Questions\Arrays\Max Consecutive Ones.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Merge Sorted Arrays.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Minimum Path Sum 2.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Minimum Path Sum.cs" />
@@ -140,6 +142,7 @@
     <Compile Include="GoF Interview Questions\Arrays\Search Element in Array.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Set Matrix Zeroes.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Sort Colors.cs" />
+    <Compile Include="GoF Interview Questions\Arrays\Third Maximum Number.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Two_Sum.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Unique Paths.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Unique Paths2.cs" />

@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 
 namespace Coding_Practices_and_Datastructures.Daily_Code
 {
+    /*
+     * Hi, here's your problem today. This problem was recently asked by Google:
+
+        You are given an array of tuples (start, end) representing time intervals for lectures. The intervals may be overlapping. Return the number of rooms that are required.
+
+        For example. [(30, 75), (0, 50), (60, 150)] should return 2.
+        */
     class Room_Scheduling : Testable
     {
         public class InOut : InOutBase<Schedule[], int>

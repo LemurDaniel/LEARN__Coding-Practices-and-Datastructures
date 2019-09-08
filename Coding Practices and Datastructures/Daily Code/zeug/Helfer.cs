@@ -199,10 +199,8 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
 
         // ARRAY
-        public static String Arrayausgabe<V>(V[] arr) => Arrayausgabe<V>("", arr, false);
-        public static String Arrayausgabe<V>(string s, V[] arr) => Arrayausgabe<V>(s, arr, false);
-        public static String Arrayausgabe<V>(string s, V[] arr, bool len) => Arrayausgabe<V>(s, arr, false, ", ");
-        public static String Arrayausgabe<V>(string s, V[] arr, bool len, string concat = ", ")
+        public static String Arrayausgabe<V>(V[] arr) => Arrayausgabe<V>("", arr);
+        public static String Arrayausgabe<V>(string s, V[] arr, bool len = false, string concat = ", ")
         {
             if (arr == null) return "{ NULL }";
             if (arr.Length == 0) return s;
@@ -218,7 +216,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 }
             }
             sb.Append(" }");
-            if (len) sb.Append("\nLänge: " + arr.Length);
+            if (len) sb.Append("  Länge: " + arr.Length);
             return sb.ToString();
         }
      
