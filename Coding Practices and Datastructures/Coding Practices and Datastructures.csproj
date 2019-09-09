@@ -77,6 +77,7 @@
     <Compile Include="Daily Code\Minimum Size Subarray Sum.cs" />
     <Compile Include="Daily Code\Non-decreasing Array with Single Modification.cs" />
     <Compile Include="Daily Code\Number of Ways to Climb Stairs.cs" />
+    <Compile Include="Daily Code\Product of Array Except Self.cs" />
     <Compile Include="Daily Code\Queue Using Two Stacks.cs" />
     <Compile Include="Daily Code\Remove Consecutive Nodes that Sum to 0.cs" />
     <Compile Include="Daily Code\Remove k-th Last Element From Linked List.cs" />

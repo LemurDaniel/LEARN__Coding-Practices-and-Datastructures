@@ -170,7 +170,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Room_Scheduling();
             //  aufgabe = new Reverse_Words_in_a_String();
             //  aufgabe = new Merge_List_Of_Number_Into_Ranges();
-
+            aufgabe = new Product_of_Array_Except_Self();
 
             while (true) { aufgabe.Test(); }
         }
