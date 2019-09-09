@@ -63,14 +63,13 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Unique_Paths2();
             //  aufgabe = new Remove_Element();
             //  aufgabe = new Container_with_most_water();
-            //  aufgabe = new AddNumbers();
             //  aufgabe = new Add_One();
             //  aufgabe = new Merge_Sorted_Arrays();
             //  aufgabe = new Minimum_Path_Sum(); //*
             //  aufgabe = new Minimum_Path_Sum2(); //*
             //  aufgabe = new Find_All_Numbers_Disappeared_in_an_Array();
-            // aufgabe = new Max_Consecutive_Ones();
-            aufgabe = new Third_Maximum_Number();
+            //  aufgabe = new Max_Consecutive_Ones();
+            //  aufgabe = new Third_Maximum_Number();
 
             //------>STRING - STRUCTURES
             //  aufgabe = new Integer_To_Roman();
@@ -79,6 +78,11 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Decode_String();  //*
             //  aufgabe = new Revers_A_String();
             //  aufgabe = new Reverse_Vowels_of_a_String();
+            //  aufgabe = new Count_and_Say();
+            //  aufgabe = new Length_of_Last_Word();
+            //  aufgabe = new Longest_Substring_without_Repeating_Characters();
+            //  aufgabe = new AddNumbers();
+            //  aufgabe = new AddBinary();
 
             //------>LINKED LIST - STRUCTURES
             //  aufgabe = new Add_Two_Numbers();

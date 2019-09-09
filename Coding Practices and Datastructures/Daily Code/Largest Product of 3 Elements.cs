@@ -23,7 +23,8 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             {
                 inputStringConverter = arg => Helfer.Arrayausgabe<int>("Eingabe: ", arg);
                 AddSolver((arg, erg) => erg.Setze(MaxProdOfThree_Enumerable(arg), Complexity.LINEAR, Complexity.CONSTANT), "MaxProdOfThree_Enumerable");
-                AddSolver((arg, erg) => erg.Setze(MaxProdOfThree_SortedArray(arg), Complexity.LINEAR, Complexity.CONSTANT), "MaxProdOfThree_SortedArray");
+                AddSolver((arg, erg) => erg.Setze(MaxProdOfThree_SortedArray(arg), Complexity.QUADRATIC, Complexity.CONSTANT), "MaxProdOfThree_SortedArray");
+                AddSolver((arg, erg) => erg.Setze(MaxProdOfThree_SortedArray(arg), Complexity.LINEAR, Complexity.CONSTANT), "MaxProdOfThree_OnePass");
             }
         }
 
@@ -79,5 +80,41 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             int posSum = arr[arr.Length-1] * arr[arr.Length-2] * arr[arr.Length-3]; // 3 most positive ints
             return Math.Max(negSum, posSum);
         }
+
+        private static int MaxProdOfThree_SortedArray_OnePass(int[] arr)
+        {
+            if (arr.Length <= 3) throw new InvalidOperationException("Arraylength must be greater or equal to 3");
+            //if(arr[arr.Length-1] < 0) // Only Negative Elements in Array ==> Covered by PosSum ==> Summing topmost 3 Elements of Array which should be the 3 smallest negative ints
+
+            int max3 = int.MinValue, max2 = int.MinValue, max1 = int.MinValue, small2 = int.MaxValue, small1 = int.MaxValue;
+            for(int i=0; i<arr.Length; i++)
+            {
+                if (arr[i] >= max3)
+                {
+                    max1 = max2;
+                    max2 = max3;
+                    max3 = arr[i];
+                }
+                else if (arr[i] >= max2)
+                {
+                    max1 = max2;
+                    max2 = arr[i];
+                }
+                else if (arr[i] > max1) max1 = arr[i];
+
+                if (arr[i] <= small2)
+                {
+                    small1 = small2;
+                    small2 = arr[i];
+                }
+                else if (arr[i] < small1) small1 = arr[i];
+            }
+
+
+            int negSum = max3 * small1 * small2;  // Topmost Positive ints * 2 most negative ints
+            int posSum = max3 * max2 * max1; // 3 most positive ints
+            return Math.Max(negSum, posSum);
+        }
+
     }
 }
