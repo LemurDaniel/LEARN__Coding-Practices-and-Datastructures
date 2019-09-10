@@ -70,7 +70,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Find_All_Numbers_Disappeared_in_an_Array();
             //  aufgabe = new Max_Consecutive_Ones();
             //  aufgabe = new Third_Maximum_Number();
-            aufgabe = new Contains_Duplicate();
+            //  aufgabe = new Contains_Duplicate();
 
             //------>STRING - STRUCTURES
             //  aufgabe = new Integer_To_Roman();
@@ -172,6 +172,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Reverse_Words_in_a_String();
             //  aufgabe = new Merge_List_Of_Number_Into_Ranges();
             //  aufgabe = new Product_of_Array_Except_Self();
+            aufgabe = new Given_two_arrays_write_a_function_to_compute_their_intersection();
 
             while (true) { aufgabe.Test(); }
         }

@@ -34,5 +34,12 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             {
             }
         }
+
+        public class TwoIntArr: SameArr<int>
+        {
+            public TwoIntArr(string arr, string arr1, bool len = false) : base(Helfer.Assemble(arr), Helfer.Assemble(arr1), len)
+            {
+            }
+        }
     }
 }
