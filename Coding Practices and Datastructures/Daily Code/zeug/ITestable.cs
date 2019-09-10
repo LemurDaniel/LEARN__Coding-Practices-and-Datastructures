@@ -17,6 +17,17 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         void SolveIt();
     }
 
+    public class ItErgWrapper<V>
+    {
+        public readonly int it;
+        public readonly V erg;
+        public ItErgWrapper(V erg, int it)
+        {
+            this.it = it;
+            this.erg = erg;
+        }
+    }
+
     public abstract class Testable : ITestable
     {
         private readonly string aufgabe;
@@ -70,9 +81,11 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 erg = default(O);
             }
 
+
             public void Setze(O erg) => Setze(erg, -1);
             public void Setze(O erg, Complexity.C time = null, Complexity.C space = null, string detail = null) => Setze(erg, -1, time, space, detail);
             public void Setze(Exception exception) => this.exception = exception;
+            public void Setze(ItErgWrapper<O> wrap, Complexity.C time = null, Complexity.C space = null, string detail = null) => Setze(wrap.erg, wrap.it, time, space, detail);
             public void Setze(O erg, int it = -1, Complexity.C time = null, Complexity.C space = null, string detail = null)
             {
                 timeSpan = DateTime.Now.Subtract(baseClass.solverStarted);
