@@ -66,6 +66,7 @@
     <Compile Include="Daily Code\Invert a Binary Tree.cs" />
     <Compile Include="Daily Code\Largest BST in a Binary Tree.cs" />
     <Compile Include="Daily Code\Largest Product of 3 Elements.cs" />
+    <Compile Include="Daily Code\Longest Increasing Subsequence.cs" />
     <Compile Include="Daily Code\Longest Palindrom.cs" />
     <Compile Include="Daily Code\Longest Sequence with Two Unique Numbers.cs" />
     <Compile Include="Daily Code\Longest Substring With K Distinct Characters.cs" />

@@ -172,7 +172,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Reverse_Words_in_a_String();
             //  aufgabe = new Merge_List_Of_Number_Into_Ranges();
             //  aufgabe = new Product_of_Array_Except_Self();
-            aufgabe = new Given_two_arrays_write_a_function_to_compute_their_intersection();
+            //  aufgabe = new Given_two_arrays_write_a_function_to_compute_their_intersection();
+            //  aufgabe = new Longest_Increasing_Subsequence(); // NOT WORKING
 
             while (true) { aufgabe.Test(); }
         }
