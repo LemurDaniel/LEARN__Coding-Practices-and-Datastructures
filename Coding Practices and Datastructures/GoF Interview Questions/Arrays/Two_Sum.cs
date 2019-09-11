@@ -7,15 +7,23 @@ using System.Threading.Tasks;
 
 namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
 { 
-    class Two_Sum : Testable
+
+    // Each arr has only one Solution
+    // Return indexes of the two elements that add up to target
+    class Two_Sum_GoF : Testable
     {
-        private class Input
+        public class Input
         {
             public int[] arr;
             public int target;
             public override string ToString() => Helfer.Arrayausgabe<int>("Eingabe: ", arr, true) + "\nTarget: " + target;
+            public Input(int[] arr, int target)
+            {
+                this.arr = arr;
+                this.target = target;
+            }
         }
-        private class Output
+        public class Output
         {
             public int[] erg;
             public string exp;
@@ -26,20 +34,16 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
 
         }
 
-        private class InOut : InOutBase<Input, Output>
+        public class InOut : InOutBase<Input, Output>
         {
-            public InOut(Input input, Output output) : base(input, output, true) => AddSolver(TwoSumSolve, "Two Sum Solver 1");
+            public InOut(string arr, int tar, string arr2) : this(Helfer.Assemble(arr), tar, Helfer.Assemble(arr2)){ }
+            public InOut(int[] arr, int tar, int[] arr2) : base(new Input(arr, tar), new Output(arr2), true) => AddSolver(TwoSumSolve, "Two Sum Solver 1");
 
         }
 
-        public Two_Sum() : base("--- Two Sum ---")
+        public Two_Sum_GoF() : base("--- Two Sum ---")
         {
-            testcases.Add(new InOut(
-                new Input
-                {
-                    arr = new int[] { 4, 7, 1, -3, 2 },
-                    target = 5
-                }, new Output(new int[] { 0, 2 })));
+            testcases.Add(new InOut(new int[] { 4, 7, 1, -3, 2 }, 5, new int[] { 0, 2 }));
 
 
             int[] arr1 = new int[1_000_000];
@@ -49,19 +53,9 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
                 else if (i == 40) arr1[i] = 15;
                 else arr1[i] = Helfer.random.Next(55, 100);
             }
-            testcases.Add(new InOut(
-                new Input
-                {
-                    arr = arr1,
-                    target = 50
-                }, new Output(new int[] { 40, 500 })));
+            testcases.Add(new InOut( arr1, 50 , new int[] { 40, 500 }));
 
-            testcases.Add(new InOut(
-                new Input
-                {
-                    arr = new int[1_000_000],
-                    target = 50
-                }, new Output(null)));
+            testcases.Add(new InOut( new int[1_000_000], 50, null));
         }
 
 
@@ -88,7 +82,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
                     numbers.Add(target - n1, i);
             }
 
-            erg.Setze(outp, i);
+            erg.Setze(outp, i, Complexity.LINEAR, Complexity.LINEAR);
         }
     }
 }

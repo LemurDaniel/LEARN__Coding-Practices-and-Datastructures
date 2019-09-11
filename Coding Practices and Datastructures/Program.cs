@@ -51,7 +51,7 @@ namespace GoF_Coding_Interview_Algos
 
             //------>ARRAY - STRUCTURES
             //  aufgabe = new Search_Element_in_Array();
-            //  aufgabe = new GoF_Interview_Questions.Arrays.Two_Sum();
+            //  aufgabe = new Two_Sum_GoF();
             //  aufgabe = new Search_A_2D_Matrix_();    //*
             //  aufgabe = new Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays.Sort_Colors();    //*
             //  aufgabe = new Set_Matrix_Zeroes();
@@ -71,6 +71,11 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Max_Consecutive_Ones();
             //  aufgabe = new Third_Maximum_Number();
             //  aufgabe = new Contains_Duplicate();
+            //  aufgabe = new Intersection_of_Two_Arrays();
+            //  aufgabe = new Intersection_of_Two_Arrays2();
+            aufgabe = new Two_Sum2_Input_Array_is_Sorted();
+
+
 
             //------>STRING - STRUCTURES
             //  aufgabe = new Integer_To_Roman();
@@ -172,7 +177,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Reverse_Words_in_a_String();
             //  aufgabe = new Merge_List_Of_Number_Into_Ranges();
             //  aufgabe = new Product_of_Array_Except_Self();
-            aufgabe = new Given_two_arrays_write_a_function_to_compute_their_intersection();
+            //  aufgabe = new Given_two_arrays_write_a_function_to_compute_their_intersection();
 
             while (true) { aufgabe.Test(); }
         }

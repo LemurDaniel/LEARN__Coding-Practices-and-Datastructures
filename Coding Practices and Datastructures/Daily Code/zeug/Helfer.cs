@@ -225,9 +225,32 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             if (arr == arr2) return true;
             if (arr == null || arr2 == null) return false;
             if (arr.Length != arr2.Length) return false;
+
             for (int i = 0; i < arr.Length; i++)
             {
                 if (!arr[i].Equals(arr2[i])) return false;
+            }
+            return true;
+        }
+
+        public static bool ArrayVergleichAnyOrder<V>(V[] arr, V[] arr2)
+        {
+            if (arr == arr2) return true;
+            if (arr == null || arr2 == null) return false;
+            if (arr.Length != arr2.Length) return false;
+
+            Dictionary<V, int> dict = new Dictionary<V, int>();
+            foreach(V el in arr)
+            {
+                if (dict.ContainsKey(el)) dict[el]++;
+                else dict.Add(el, 1);
+            }
+
+            foreach(V el in arr2)
+            {
+                if (!dict.ContainsKey(el)) return false; // Not existent in arr
+                else if (dict[el] <= 0) return false;
+                else dict[el]--; // Appear more often in arr2 than arr
             }
             return true;
         }

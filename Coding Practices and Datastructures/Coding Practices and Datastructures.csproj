@@ -132,8 +132,11 @@
     <Compile Include="GoF Interview Questions\Arrays\Container with most water.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Contains Duplicate.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Find All Numbers Disappeared in an Array.cs" />
+    <Compile Include="GoF Interview Questions\Arrays\Intersection of Two Arrays.cs" />
+    <Compile Include="GoF Interview Questions\Arrays\Intersection of Two Arrays2.cs" />
     <Compile Include="GoF Interview Questions\Arrays\JumpGame2.cs" />
     <Compile Include="GoF Interview Questions\Arrays\JumpGamer.cs" />
+    <Compile Include="GoF Interview Questions\Arrays\Two Sum2 Input Array is Sorted.cs" />
     <Compile Include="GoF Interview Questions\Strings\Add Numbers.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Max Consecutive Ones.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Merge Sorted Arrays.cs" />
