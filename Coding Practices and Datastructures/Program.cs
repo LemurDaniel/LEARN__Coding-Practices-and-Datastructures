@@ -76,6 +76,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Two_Sum2_Input_Array_is_Sorted();
             //  aufgabe = new Search_Insert_Position();
             //  aufgabe = new Maximum_Subarray();  // Not Working
+            //  aufgabe = new Implement_Pow();
 
 
             //------>STRING - STRUCTURES
@@ -180,7 +181,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Product_of_Array_Except_Self();
             //  aufgabe = new Given_two_arrays_write_a_function_to_compute_their_intersection();
             //  aufgabe = new Longest_Increasing_Subsequence(); // NOT WORKING
-            aufgabe = new Given_two_arrays_write_a_function_to_compute_their_intersection();
+            //  aufgabe = new Given_two_arrays_write_a_function_to_compute_their_intersection();
+            aufgabe = new Angles_of_a_Clock();
 
             while (true) { aufgabe.Test(); }
         }
