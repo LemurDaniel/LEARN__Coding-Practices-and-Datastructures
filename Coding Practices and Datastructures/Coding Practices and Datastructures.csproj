@@ -48,6 +48,7 @@
     <Compile Include="Coding Train\Challenges\TicTacToe\Konsolenbedinung.cs" />
     <Compile Include="Coding Train\Challenges\TicTacToe\TicTacToe.cs" />
     <Compile Include="Coding Train\Challenges\TicTacToe\TicTacToeSolver.cs" />
+    <Compile Include="Daily Code\Angles of a Clock.cs" />
     <Compile Include="Daily Code\Buddy Strings.cs" />
     <Compile Include="Daily Code\Contiguous Subarray with Maximum Sum.cs" />
     <Compile Include="Daily Code\Count Number of Unival Subtrees.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="GoF Interview Questions\Arrays\Maximum Subarray.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Search Insert Position.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Two Sum2 Input Array is Sorted.cs" />
+    <Compile Include="GoF Interview Questions\MathEx\Implement Pow.cs" />
     <Compile Include="GoF Interview Questions\Strings\Add Numbers.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Max Consecutive Ones.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Merge Sorted Arrays.cs" />
