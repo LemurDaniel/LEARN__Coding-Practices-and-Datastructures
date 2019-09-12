@@ -218,6 +218,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         }
 
         public void AddSolver(Solver solver, string description = null) => solvers.Add(solver, new Ergebnis(this, description ?? solver.Method.Name));
+        public void ClearSolvers() => solvers.Clear();
 
         public override string ToString()
         {
