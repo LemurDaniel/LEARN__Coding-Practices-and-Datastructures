@@ -136,6 +136,8 @@
     <Compile Include="GoF Interview Questions\Arrays\Intersection of Two Arrays2.cs" />
     <Compile Include="GoF Interview Questions\Arrays\JumpGame2.cs" />
     <Compile Include="GoF Interview Questions\Arrays\JumpGamer.cs" />
+    <Compile Include="GoF Interview Questions\Arrays\Maximum Subarray.cs" />
+    <Compile Include="GoF Interview Questions\Arrays\Search Insert Position.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Two Sum2 Input Array is Sorted.cs" />
     <Compile Include="GoF Interview Questions\Strings\Add Numbers.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Max Consecutive Ones.cs" />

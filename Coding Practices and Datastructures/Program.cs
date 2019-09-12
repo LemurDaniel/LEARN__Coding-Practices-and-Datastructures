@@ -73,8 +73,9 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Contains_Duplicate();
             //  aufgabe = new Intersection_of_Two_Arrays();
             //  aufgabe = new Intersection_of_Two_Arrays2();
-            aufgabe = new Two_Sum2_Input_Array_is_Sorted();
-
+            //  aufgabe = new Two_Sum2_Input_Array_is_Sorted();
+            //  aufgabe = new Search_Insert_Position();
+            //  aufgabe = new Maximum_Subarray();  // Not Working
 
 
             //------>STRING - STRUCTURES
