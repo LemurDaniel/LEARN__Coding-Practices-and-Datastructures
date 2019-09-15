@@ -8,6 +8,20 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 {
     class Angles_of_a_Clock : Testable
     {
+        /*
+         * Hi, here's your problem today. This problem was recently asked by Microsoft:
+
+            Given a time in the format of hour and minute, calculate the angle of the hour and minute hand on a clock.
+
+            def calcAngle(h, m):
+              # Fill this in.
+
+            print calcAngle(3, 30)
+            # 75
+            print calcAngle(12, 30)
+            # 165
+
+            */
         public class InOut : InOutBase<int[], int>
         {
             public InOut(int hour, int min, int erg) : base(new int[] { hour, min }, erg, true)
@@ -43,7 +57,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
          * if (Angle > 180) Angle = 360 - Angle
          * 
          */
-         public static int calcAngle(int hour, int min)
+        public static int calcAngle(int hour, int min)
         {
             //1. / 2. Calc Angles
             int hourAngle = 30 * hour + (int) (min * 0.5); // 30° per hour + 0.5° per minute; Half degrees are rounded Down

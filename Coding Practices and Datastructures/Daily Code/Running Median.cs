@@ -117,5 +117,10 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             if (root == null) root = insert;
             else root = root.Insert(insert, null) as Node;
         }
+
+        public override IBTreeNode<V> CreateNode(V val)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

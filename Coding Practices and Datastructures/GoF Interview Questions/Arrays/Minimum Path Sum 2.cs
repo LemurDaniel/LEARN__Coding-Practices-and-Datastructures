@@ -22,7 +22,9 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
                 this.mat = mat;
             }
             public override string ToString() => minSum + "\n" + (trace == null ? "<NULL>" : Helfer.Arrayausgabe("Trace => ", trace, false, " => ")) + (mat == null? "":Helfer.Matrix<int>.MatrixAusgabe("", mat, (minSum+"").Length+1));
-            public override bool Equals(object obj) => (obj as Output).minSum == minSum; 
+            public override bool Equals(object obj) => (obj as Output).minSum == minSum;
+            public override int GetHashCode() => base.GetHashCode();
+
         }
         public class InOut : InOutBase<Helfer.Matrix<int>, Output>
         {

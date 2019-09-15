@@ -83,6 +83,12 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                 AllEmpty = node.Left == null && node.Right == null && AllEmpty;
                 sbsssss.Append(Helfer.ShortenString(lenEl, (!node.IsEMPTY ? node.Val.ToString() : "-"), true));
 
+                if(q.Count > 100)
+                {
+                    sbsssss.Append("\n(....To Long)");
+                    break;
+                }
+
                 if (q.Peek() == null)
                 {
                     if (AllEmpty) break;
@@ -250,10 +256,47 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             public BTreeNode<V> node;
         }
 
+
+
+
+        public override string SerializeRecursive(Func<V, string> serializer) => SerializeRecursive(new StringBuilder(), serializer).ToString().Trim('|');
+
+        //Does Preorder => Null = <NULL>, Seperator = "|";
+        private StringBuilder SerializeRecursive(StringBuilder sb, Func<V, string> serializer)
+        {
+            sb.Append(serializer(val) + "|");
+            if (Left == null) sb.Append("<NULL>|");
+            else (Left as BTreeNode<V>).SerializeRecursive(sb, serializer);
+            if (Right == null) sb.Append("<NULL>|");
+            else (Right as BTreeNode<V>).SerializeRecursive(sb, serializer);
+            return sb;
+        }
+
+        public override void DeSerializeRecursive(string[] arr, Func<string, V> deserializer, Func<V, IBTreeNode<V>> CreateNode) => DeSerializeRecursive(arr, 1, deserializer, CreateNode);
+        //Does Preorder => Null = <NULL>, Seperator = "|";
+        private int DeSerializeRecursive(string[] arr, int count, Func<string, V> deserializer, Func<V, IBTreeNode<V>> CreateNode)
+        {
+            if (count >= arr.Length) return count;
+
+            if (arr[count] == "<NULL>") left = null;
+            else left = CreateNode(deserializer(arr[count]));
+            if (left != null) count = (left as BTreeNode<V>).DeSerializeRecursive(arr, count + 1, deserializer, CreateNode);
+            else count++;
+
+            if (count >= arr.Length) return count;
+
+            if (arr[count] == "<NULL>") right = null;
+            else right = CreateNode(deserializer(arr[count]));
+            if (right != null) count = (right as BTreeNode<V>).DeSerializeRecursive(arr, count + 1, deserializer, CreateNode);
+            else count++;
+            return count;
+        }
+
+
         public override bool Equals(object obj)
         {
             if (obj == null) return false;
-            if (!obj.GetType().Equals(typeof(BTreeNode<V>))) return false;
+            if (!typeof(BTreeNode<V>).IsAssignableFrom(obj.GetType())) return false;
             BTreeNode<V> node = obj as BTreeNode<V>;
 
             bool rightBool = false;
@@ -290,14 +333,19 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         protected N root;
         public N Root { get => root;  }
 
+        public IBTreeNode<V> GetRoot() => Root;
+
         //KONSTRUKTOR
         // public BinaryTree();
 
         //Statics
 
         //Methods
+        public void Clear() => root = null;
         public abstract void Append(V val);
         public abstract void Append(N insert);
+        public void Append(IBTreeNode<V> insert) => Append(insert as N);
+        public abstract IBTreeNode<V> CreateNode(V val);
 
         //Reverse
         public virtual IBTree<V> InvertRecursive()
@@ -316,11 +364,11 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public override bool Equals(object obj)
         {
             if (obj == null) return false;
-            if (!obj.GetType().Equals(typeof(BinaryTree<V, N>))) return false;
-            BinaryTree<V, N> tree = obj as BinaryTree<V, N>;
-            if (tree.Root == null && Root != null) return false;
-            if (tree.Root == null && Root == null) return true;
-            return tree.Root.Equals(Root);
+            if (!typeof(IBTree<V>).IsAssignableFrom(obj.GetType())) return false;
+            IBTree<V> tree = obj as IBTree<V>;
+            if (tree.GetRoot() == null && Root != null) return false;
+            if (tree.GetRoot() == null && Root == null) return true;
+            return tree.GetRoot().Equals(Root);
         }
         public override int GetHashCode() => base.GetHashCode();
 
@@ -566,6 +614,72 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         }
 
 
+        public string SerializeRecursive(Func<V, string> serializeEl) => root == null ? "<NULL>" : root.SerializeRecursive(serializeEl);
+        public string SerializeIt(Func<V, string> serializeEl)
+        {
+            if (root == null) return "<NULL>";
+            StringBuilder sb = new StringBuilder();
+            Stack<IBTreeNode<V>> stack = new Stack<IBTreeNode<V>>();
+            IBTreeNode<V> node = root;
+            do
+            {
+                if (node != null)
+                {
+                    sb.Append(serializeEl(node.Val) + "|");
+                    stack.Push(node);
+                    node = node.Left;
+                    continue;
+                }
+
+                sb.Append("<NULL>|");
+                node = stack.Pop().Right;
+            } while (stack.Count != 0 || node != null);
+            return sb.ToString().Trim('|');
+        }
+
+        public IBTree<V> DeSerializeIt(string s, Func<string, V> DeSerializeEl) => DeSerializeIt(s, DeSerializeEl, this);
+        public static IBTree<V> DeSerializeIt(string s, Func<string, V> DeSerializeEl, IBTree<V> tree = null)
+        {
+            if (tree == null) tree = new BinaryCompleteTree<V>();
+            if (s.Length == 0) return tree;
+
+            string[] arr = s.Split('|');
+            if (arr[0] == "<NULL>") return tree;
+            Stack<IBTreeNode<V>> stack = new Stack<IBTreeNode<V>>();
+            IBTreeNode<V> node = tree.CreateNode(DeSerializeEl(arr[0]));
+            tree.Append(node);
+            int count = 1;
+            do
+            {
+                if (node != null)
+                {
+                    stack.Push(node);
+                    if (arr[count] == "<NULL>") node.Left = null;
+                    else node.Left = tree.CreateNode(DeSerializeEl(arr[count]));
+                    count++;
+                    node = node.Left;
+                    continue;
+                }
+
+                node = stack.Pop();
+                if (arr[count] == "<NULL>") node.Right = null;
+                else node.Right = tree.CreateNode(DeSerializeEl(arr[count]));
+                count++;
+                node = node.Right;
+            } while (count < arr.Length);
+            return tree;
+        }
+
+        public IBTree<V> DeSerializeRecursive(string s, Func<string, V> DeSerializeEl) => DeSerializeRecursive(s, DeSerializeEl, this);
+        public static IBTree<V> DeSerializeRecursive(string s, Func<string, V> DeSerializeEl, IBTree<V> tree = null)
+        {
+            if (tree == null) tree = new BinaryCompleteTree<V>();
+            if (s.Length == 0) return tree;
+            tree.Append(IBTreeNode<V>.DeSerializeRecursive(s, DeSerializeEl, tree.CreateNode) as N);
+            return tree;
+        }
+
+
         //TEST ENUMERABLES
         public IEnumerator<V> GetEnumerator() => GetIEnumerable(TraverseType.InOrder).GetEnumerator();
         public IEnumerable<V> GetIEnumerable(TraverseType traverseType, IBTreeNode<V> node = null)
@@ -623,6 +737,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             }
         }
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
         //static Methods
     }
 

@@ -18,6 +18,7 @@ using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Two_Pointers;
 using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Breadth_First_Search;
 using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Tries;
 using Coding_Practices_and_Datastructures.DS_HANDBOOK.Test;
+using _2019 = Coding_Practices_and_Datastructures.Daily_Coding_Problem._2019;
 
 namespace GoF_Coding_Interview_Algos
 {
@@ -127,7 +128,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Implement_Trie();
             //  aufgabe = new Add_nad_Search_Word__Data_Structure_Design();
 
-            /* Daily Code  */
+            //----------------------------------------------
+            /* Daily Code  Interview PRO */
 
             //  aufgabe = new Longest_Palindrom();
             //  aufgabe = new First_and_Last_Indices_of_an_Element_in_a_Sorted_Array();
@@ -182,7 +184,14 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Given_two_arrays_write_a_function_to_compute_their_intersection();
             //  aufgabe = new Longest_Increasing_Subsequence(); // NOT WORKING
             //  aufgabe = new Given_two_arrays_write_a_function_to_compute_their_intersection();
-            aufgabe = new Angles_of_a_Clock();
+            //  aufgabe = new Angles_of_a_Clock();
+            //  aufgabe = new Arithmetic_Binary_Tree_DailyCode();
+            aufgabe = new Tree_Serialization();
+
+            //----------------------------------------------
+            /* Daily Coding Problemt */
+            //2019
+            // aufgabe = new _2019.Daily_Coding_Problem_157___Easy();
 
             while (true) { aufgabe.Test(); }
         }

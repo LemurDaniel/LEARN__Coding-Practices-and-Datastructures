@@ -49,6 +49,7 @@
     <Compile Include="Coding Train\Challenges\TicTacToe\TicTacToe.cs" />
     <Compile Include="Coding Train\Challenges\TicTacToe\TicTacToeSolver.cs" />
     <Compile Include="Daily Code\Angles of a Clock.cs" />
+    <Compile Include="Daily Code\Arithmetic Binary Tree.cs" />
     <Compile Include="Daily Code\Buddy Strings.cs" />
     <Compile Include="Daily Code\Contiguous Subarray with Maximum Sum.cs" />
     <Compile Include="Daily Code\Count Number of Unival Subtrees.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Daily Code\Sorting a list with 3 unique numbers.cs" />
     <Compile Include="Daily Code\Spiral Traversal of Grid.cs" />
     <Compile Include="Daily Code\Trapping Rainwater.cs" />
+    <Compile Include="Daily Code\Tree Serialization.cs" />
     <Compile Include="Daily Code\Two-Sum.cs" />
     <Compile Include="Daily Code\Validate a Binary Search Tree.cs" />
     <Compile Include="Daily Code\Validate Balanced Parentheses.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="Daily Code\zeug\Numeric.cs" />
     <Compile Include="Daily Code\zeug\St_InOuts.cs" />
     <Compile Include="Daily Code\zeug\Wrappers.cs" />
+    <Compile Include="Daily Coding Problem\2019\Daily Coding Problem 157 - Easy.cs" />
     <Compile Include="Data Structures and Algos\Design Twitter\TwitterTest.cs" />
     <Compile Include="Data Structures and Algos\Design Twitter\Tw\Tweet.cs" />
     <Compile Include="Data Structures and Algos\Design Twitter\Tw\Twitter.cs" />
@@ -123,6 +126,7 @@
     <Compile Include="DS HANDBOOK\Test\TestArrayQueue.cs" />
     <Compile Include="DS HANDBOOK\Tree\NormalBTree.cs" />
     <Compile Include="GoF Interview Questions\1 Data Structures\BinarSearchList.cs" />
+    <Compile Include="GoF Interview Questions\1 Data Structures\Binary Arithmetic Tree.cs" />
     <Compile Include="GoF Interview Questions\1 Data Structures\BinaryCompleteTree.cs" />
     <Compile Include="GoF Interview Questions\1 Data Structures\BinarySearchTree.cs" />
     <Compile Include="GoF Interview Questions\1 Data Structures\BinaryBaseTree.cs" />

@@ -355,6 +355,43 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             return tree;
         }
 
+        public static IBTree<char> AssembleBTreeCharPreOrder(string s, IBTree<char> tree = null)
+        {
+            if (tree == null) tree = new BinarySearchTree<char>();
+            if (s == null | s.Length == 0) return tree;
+            int i = 0;
+            if (s[0] == '*')
+            {
+                tree.InvertRecursive();
+                i++;
+            }
+            if (s[i] == '/') return tree;
+            IBTreeNode<char> node = tree.CreateNode(s[i++]);
+            tree.Append(node);
+            Stack<IBTreeNode<char>> stack = new Stack<IBTreeNode<char>>();
+            do
+            {
+                if ((s[i] == ',' || s[i] == ';') && i++ == i) continue;
+                if (node != null)
+                {
+                    stack.Push(node);
+                    if (s[i] == '/') node.Left = null;
+                    else node.Left = tree.CreateNode(s[i]);
+                    i++;
+                    node = node.Left;
+                    continue;
+                }
+
+                node = stack.Pop();
+                if (s[i] == '/') node.Right = null;
+                else node.Right = tree.CreateNode(s[i]);
+                i++;
+                node = node.Right;
+            } while (i < s.Length);
+            return tree;
+        }
+
+
         public static IBTree<int> AssembleBTree(string s, IBTree<int> tree = null, bool rem = false, int val = 2) => AssembleBTree(Assemble(s), tree, rem, val);
         public static IBTree<int> AssembleBTree(int[] arr, IBTree<int> tree = null, bool rem = false, int val = 2)
         {
@@ -364,6 +401,42 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             return tree;
         }
 
+        public static IBTree<int> AssembleBTreePreOrder(string s, IBTree<int> tree = null, string rem ="/")
+        {
+            if (tree == null) tree = new BinarySearchTree<int>();
+            if (s == null | s.Length == 0) return tree;
+            string[] arr = s.Split(s.Contains(';') ? ';' : ',');
+            int i = 0;
+            if (arr[0] == "*")
+            {
+                tree.InvertRecursive();
+                i++;
+            }
+            if (arr[i] == rem) return tree;
+            IBTreeNode<int> node = tree.CreateNode(int.Parse(arr[i++]));
+            tree.Append(node);
+            Stack<IBTreeNode<int>> stack = new Stack<IBTreeNode<int>>();
+            do
+            {
+                if ((s[i] == ',' || s[i] == ';') && i++ == i) continue;
+                if (node != null)
+                {
+                    stack.Push(node);
+                    if (arr[i] == rem) node.Left = null;
+                    else node.Left = tree.CreateNode(int.Parse(arr[i]));
+                    i++;
+                    node = node.Left;
+                    continue;
+                }
+
+                node = stack.Pop();
+                if (arr[i] == rem) node.Right = null;
+                else node.Right = tree.CreateNode(int.Parse(arr[i]));
+                i++;
+                node = node.Right;
+            } while (i < arr.Length);
+            return tree;
+        }
 
 
 
