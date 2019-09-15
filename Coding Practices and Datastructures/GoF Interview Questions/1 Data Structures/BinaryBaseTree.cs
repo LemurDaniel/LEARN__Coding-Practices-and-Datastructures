@@ -278,16 +278,20 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         {
             if (count >= arr.Length) return count;
 
-            if (arr[count] == "<NULL>") left = null;
-            else left = CreateNode(deserializer(arr[count]));
-            if (left != null) count = (left as BTreeNode<V>).DeSerializeRecursive(arr, count + 1, deserializer, CreateNode);
+            if (arr[count] != "<NULL>")
+            {
+                left = CreateNode(deserializer(arr[count]));
+                count = (left as BTreeNode<V>).DeSerializeRecursive(arr, count + 1, deserializer, CreateNode);
+            }
             else count++;
 
             if (count >= arr.Length) return count;
 
-            if (arr[count] == "<NULL>") right = null;
-            else right = CreateNode(deserializer(arr[count]));
-            if (right != null) count = (right as BTreeNode<V>).DeSerializeRecursive(arr, count + 1, deserializer, CreateNode);
+            if (arr[count] != "<NULL>")
+            {
+                right = CreateNode(deserializer(arr[count]));
+                count = (right as BTreeNode<V>).DeSerializeRecursive(arr, count + 1, deserializer, CreateNode);
+            }
             else count++;
             return count;
         }
@@ -654,16 +658,14 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                 if (node != null)
                 {
                     stack.Push(node);
-                    if (arr[count] == "<NULL>") node.Left = null;
-                    else node.Left = tree.CreateNode(DeSerializeEl(arr[count]));
+                    if (arr[count] != "<NULL>") node.Left = tree.CreateNode(DeSerializeEl(arr[count]));
                     count++;
                     node = node.Left;
                     continue;
                 }
 
                 node = stack.Pop();
-                if (arr[count] == "<NULL>") node.Right = null;
-                else node.Right = tree.CreateNode(DeSerializeEl(arr[count]));
+                if (arr[count] != "<NULL>") node.Right = tree.CreateNode(DeSerializeEl(arr[count]));
                 count++;
                 node = node.Right;
             } while (count < arr.Length);

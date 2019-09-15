@@ -19,6 +19,7 @@ using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Breadth_First_
 using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Tries;
 using Coding_Practices_and_Datastructures.DS_HANDBOOK.Test;
 using _2019 = Coding_Practices_and_Datastructures.Daily_Coding_Problem._2019;
+using Coding_Practices_and_Datastructures.Other.Own;
 
 namespace GoF_Coding_Interview_Algos
 {
@@ -46,6 +47,9 @@ namespace GoF_Coding_Interview_Algos
 
             /* Daily Coding Problems  */
             //  aufgabe = new Infinite_2D_Grid__Easy_();
+
+            /* OWN */
+            // aufgabe = new Something_with_Strings();
 
 
             /* Data Structures and Algos  */
@@ -186,7 +190,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Given_two_arrays_write_a_function_to_compute_their_intersection();
             //  aufgabe = new Angles_of_a_Clock();
             //  aufgabe = new Arithmetic_Binary_Tree_DailyCode();
-            aufgabe = new Tree_Serialization();
+            //  aufgabe = new Tree_Serialization();
+            aufgabe = new Distribute_Bonuses();
 
             //----------------------------------------------
             /* Daily Coding Problemt */

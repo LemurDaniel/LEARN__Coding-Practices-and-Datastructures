@@ -56,6 +56,7 @@
     <Compile Include="Daily Code\Course Prerequisites.cs" />
     <Compile Include="Daily Code\Create a balanced binary search tree from a sorted list.cs" />
     <Compile Include="Daily Code\Deepest Node in a Binary Tree.cs" />
+    <Compile Include="Daily Code\Distribute Bonuses.cs" />
     <Compile Include="Daily Code\Falling Dominoes.cs" />
     <Compile Include="Daily Code\Find Number of Islands.cs" />
     <Compile Include="Daily Code\Find the k-th Largest Element in a List.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="GoF Interview Questions\Two Pointers\Valid Palindrom.cs" />
     <Compile Include="Other\Daily Coding Problem\Infinite 2D Grid [Easy].cs" />
     <Compile Include="Other\MazeSolver.cs" />
+    <Compile Include="Other\Own\Something with Strings.cs" />
     <Compile Include="Other\Tower of Hanoi\Hanoi.cs" />
     <Compile Include="Other\TreeTraversal.cs" />
     <Compile Include="Program.cs" />
