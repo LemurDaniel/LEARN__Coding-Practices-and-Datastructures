@@ -96,7 +96,9 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Longest_Substring_without_Repeating_Characters();
             //  aufgabe = new AddNumbers();
             //  aufgabe = new AddBinary();
-            aufgabe = new Text_Justification();
+            //  aufgabe = new Text_Justification();
+            //  aufgabe = new Pascal_s_Triangle();
+            aufgabe = new Pascal_s_Triangle2();
 
             //------>LINKED LIST - STRUCTURES
             //  aufgabe = new Add_Two_Numbers();

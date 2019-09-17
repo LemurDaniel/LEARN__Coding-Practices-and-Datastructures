@@ -202,7 +202,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         public static String Arrayausgabe<V>(V[] arr) => Arrayausgabe<V>("", arr);
         public static String Arrayausgabe<V>(string s, V[] arr, bool len = false, string concat = ", ")
         {
-            if (arr == null) return "{ NULL }";
+            if (arr == null) return "{ <NULL> }";
             if (arr.Length == 0) return s;
             StringBuilder sb = new StringBuilder();
             sb.Append(s + " { " + arr[0]);
@@ -219,6 +219,14 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             if (len) sb.Append("  Länge: " + arr.Length);
             return sb.ToString();
         }
+        public static String _2Dim_Arrayausgabe<V>(V[][] _2dim, bool len = false, string concat = "\n") => _2Dim_Arrayausgabe<V>(_2dim, len, concat);
+        public static String _2Dim_Arrayausgabe<V>(string s, V[][] _2dim, bool len = false, string concat = "\n")
+        {
+            if (_2dim == null) return "{ <NULL> }";
+            StringBuilder sb = new StringBuilder(s+"[");
+            foreach (V[] arr in _2dim) sb.Append(Arrayausgabe<V>("\n", arr, len));
+            return sb.ToString() + "\n]";
+        }
      
         public static bool ArrayVergleich<V>(V[] arr, V[] arr2)
         {
@@ -229,6 +237,19 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             for (int i = 0; i < arr.Length; i++)
             {
                 if (!arr[i].Equals(arr2[i])) return false;
+            }
+            return true;
+        }
+
+        public static bool _2Dim_ArrayVergleich<V>(V[][] _2dim, V[][] _2dim2)
+        {
+            if (_2dim == _2dim2) return true;
+            if (_2dim == null || _2dim2 == null) return false;
+            if (_2dim.Length != _2dim2.Length) return false;
+
+            for (int i = 0; i < _2dim.Length; i++)
+            {
+                if (!ArrayVergleich<V>(_2dim[i], _2dim2[i])) return false;
             }
             return true;
         }
@@ -270,9 +291,18 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             for (int i = 0; i < len; i++) arr[i] = Rand.Next(min, max+1);
             return arr;
         }
-        public static int[] Assemble(string s)
+        public static int[][] Assemble2Dim(string s, char spliter = ',', char spliter2 = ';')
         {
-            if (s.Contains(";")) return Assemble2(s, ';');
+            if (spliter == spliter2) throw new InvalidOperationException("Splitter must be different");
+            string[] Sarr = s.Split(spliter2);
+            int[][] arr = new int[Sarr.Length][];
+            for (int i = 0; i < Sarr.Length; i++) arr[i] = Assemble(Sarr[i], spliter);
+            return arr;
+        }
+        public static int[] Assemble(string s, char spliter = ',')
+        {
+            if (s.Contains(spliter)) return Assemble2(s, spliter);
+            else if (s.Contains(";")) return Assemble2(s, ';');
             else if (s.Contains(",")) return Assemble2(s, ',');
             int[] arr = new int[s.Length];
             for (int i = 0; i < s.Length; i++) arr[i] = GetNumber(s[i]);

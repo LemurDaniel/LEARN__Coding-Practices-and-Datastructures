@@ -145,6 +145,8 @@
     <Compile Include="GoF Interview Questions\Arrays\JumpGame2.cs" />
     <Compile Include="GoF Interview Questions\Arrays\JumpGamer.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Maximum Subarray.cs" />
+    <Compile Include="GoF Interview Questions\Arrays\Pascal%27s Triangle.cs" />
+    <Compile Include="GoF Interview Questions\Arrays\Pascal_s_Triangle.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Search Insert Position.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Two Sum2 Input Array is Sorted.cs" />
     <Compile Include="GoF Interview Questions\MathEx\Implement Pow.cs" />
