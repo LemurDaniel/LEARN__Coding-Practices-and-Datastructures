@@ -189,6 +189,7 @@
     <Compile Include="GoF Interview Questions\Strings\Revers A String.cs" />
     <Compile Include="GoF Interview Questions\Strings\Reverse Vowels of a String.cs" />
     <Compile Include="GoF Interview Questions\Strings\String To Integer.cs" />
+    <Compile Include="GoF Interview Questions\Strings\Text Justification.cs" />
     <Compile Include="GoF Interview Questions\Strings\ZigZag Conversion.cs" />
     <Compile Include="GoF Interview Questions\Tries\Add nad Search Word -Data Structure Design.cs" />
     <Compile Include="GoF Interview Questions\Tries\Implement Trie.cs" />

@@ -96,6 +96,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Longest_Substring_without_Repeating_Characters();
             //  aufgabe = new AddNumbers();
             //  aufgabe = new AddBinary();
+            aufgabe = new Text_Justification();
 
             //------>LINKED LIST - STRUCTURES
             //  aufgabe = new Add_Two_Numbers();
@@ -192,7 +193,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Arithmetic_Binary_Tree_DailyCode();
             //  aufgabe = new Tree_Serialization();
             //  aufgabe = new Distribute_Bonuses();
-            aufgabe = new Min_Range_Needed_to_Sort();
+            //  aufgabe = new Min_Range_Needed_to_Sort();
 
             //----------------------------------------------
             /* Daily Coding Problemt */
