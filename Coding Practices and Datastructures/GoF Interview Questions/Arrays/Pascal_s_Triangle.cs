@@ -72,7 +72,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
                     list.Add(1);
                     list[0] = 1;
                     int prev = list[0], tmp = list[1];
-                    for (int j = list.Count <= 2 ? 20 : 1; j <= (list.Count-1)/2; j++)
+                    for (int j = list.Count <= 2 ? 20 : 1; j <= (list.Count-1)/2; j++, it++)
                     {
                         tmp = list[j];
                         list[j] = prev + list[j];
