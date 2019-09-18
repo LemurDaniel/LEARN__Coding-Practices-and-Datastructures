@@ -196,7 +196,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Tree_Serialization();
             //  aufgabe = new Distribute_Bonuses();
             //  aufgabe = new Min_Range_Needed_to_Sort();
-            aufgabe = new Reverse_Integer();
+            //  aufgabe = new Reverse_Integer();
+            aufgabe = new Min_Stack_DailyCode();
 
             //----------------------------------------------
             /* Daily Coding Problemt */
