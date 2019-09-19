@@ -64,6 +64,7 @@
     <Compile Include="Daily Code\First and Last Indices of an Element in a Sorted Array.cs" />
     <Compile Include="Daily Code\First Missing Positive Integer.cs" />
     <Compile Include="Daily Code\Floor and Ceiling of a Binary Search Tree.cs" />
+    <Compile Include="Daily Code\Full Binary Tree.cs" />
     <Compile Include="Daily Code\Get all Values at a Certain Height in a Binary Tree.cs" />
     <Compile Include="Daily Code\Given two arrays write a function to compute their intersection.cs" />
     <Compile Include="Daily Code\Invert a Binary Tree.cs" />

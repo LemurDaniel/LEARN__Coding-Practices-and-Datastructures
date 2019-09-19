@@ -122,5 +122,10 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         {
             throw new NotImplementedException();
         }
+
+        protected override IBTree<V> TreeGetNewInstance()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

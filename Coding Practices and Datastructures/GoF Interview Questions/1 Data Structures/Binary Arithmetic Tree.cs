@@ -31,6 +31,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         public override void Append(long val) => Append(new Node(val));
         public override void Append(Node insert) => throw new NotImplementedException();
+        protected override IBTree<long> TreeGetNewInstance() => throw new NotImplementedException();
         public override IBTreeNode<long> CreateNode(long val) => throw new NotImplementedException();
         public long SolveRecursive() => root == null ? -1 : root.SolveRecursive();
 

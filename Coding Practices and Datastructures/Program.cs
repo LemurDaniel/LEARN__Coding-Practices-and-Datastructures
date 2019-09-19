@@ -130,9 +130,9 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Implement_Sqrt_Double();
 
             //------>BIT MANIPULATION - EXCERCISES
-            aufgabe = new Single_Number();
-            aufgabe = new Power_of_Two();
-            aufgabe = new Hamming_Distance();
+            //  aufgabe = new Single_Number();
+            //  aufgabe = new Power_of_Two();
+            //  aufgabe = new Hamming_Distance();
 
             //------>BREADTH FIRST - EXCERCISES
             //  aufgabe = new Symmetric_Tree();
@@ -204,6 +204,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Min_Range_Needed_to_Sort();
             //  aufgabe = new Reverse_Integer();
             //  aufgabe = new Min_Stack_DailyCode();
+            aufgabe = new Full_Binary_Tree();
 
             //----------------------------------------------
             /* Daily Coding Problem */

@@ -33,6 +33,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public abstract StringBuilder GenerateStringIt(int lenEl = 4, int spacing = 4);
         public abstract StringBuilder PrintRecursive(StringBuilder sb, TraverseType traverseType, string split = "; ");
 
+        public abstract void MakeCompleteRecursive();
+
         public abstract string SerializeRecursive(Func<V, string> serializer);
         public abstract void DeSerializeRecursive(string[] arr, Func<string, V> deserializer, Func<V, IBTreeNode<V>> CreateNode);
         public static IBTreeNode<V> DeSerializeRecursive(string s, Func<string, V> deserializer, Func<V, IBTreeNode<V>> CreateNode)
@@ -72,9 +74,12 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         IBTreeNode<V> GetLargestBst(Func<V, V, int> compare);
 
+        IBTree<V> MakeCompleteIterative();
+        IBTree<V> MakeCompleteRecursive();
 
-        string SerializeIt(Func<V, string> serializeEl);
-        string SerializeRecursive(Func<V, string> serializeEl);
+
+        string SerializeIt(Func<V, string> serializeEl = null);
+        string SerializeRecursive(Func<V, string> serializeEl = null);
         IBTree<V> DeSerializeIt(string s, Func<string, V> DeSerializeEl);
         IBTree<V> DeSerializeRecursive(string s, Func<string, V> DeSerializeEl);
 
@@ -86,5 +91,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         //TEST ENUMERABLES
         IEnumerable<V> GetIEnumerable(TraverseType traverseType, IBTreeNode<V> node = null);
+
+        IBTree<V> CopyIt();
     }
 }

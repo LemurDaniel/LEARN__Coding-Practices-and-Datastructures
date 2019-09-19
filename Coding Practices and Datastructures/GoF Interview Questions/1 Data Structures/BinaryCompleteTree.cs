@@ -22,6 +22,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         public override void Append(V val) => Append(new Node(val));
         public override IBTreeNode<V> CreateNode(V val) => new Node(val);
+        protected override IBTree<V> TreeGetNewInstance() => new BinaryCompleteTree<V>();
         public override void Append(Node insert)
         {
             nodes.Enqueue(insert);
@@ -29,6 +30,6 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             if (root == null) root = insert;
             else nodes.Dequeue().Insert(insert);
         }
-
+      
     }
 }

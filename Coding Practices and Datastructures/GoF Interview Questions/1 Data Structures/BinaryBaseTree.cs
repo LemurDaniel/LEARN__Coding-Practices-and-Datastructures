@@ -256,14 +256,29 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             public BTreeNode<V> node;
         }
 
+        public override void MakeCompleteRecursive()
+        {
+            int nodeCount = 0;
+            if (Left != null) { Left.MakeCompleteRecursive(); nodeCount++; };
+            if (Right != null) { Right.MakeCompleteRecursive(); nodeCount++; };
+
+            if(nodeCount == 1)
+            {
+                IBTreeNode<V> node = left != null ? Left : Right;
+                this.left = node.Left;
+                this.right = node.Right;
+                val = node.Val;
+            }
+        }
 
 
-
-        public override string SerializeRecursive(Func<V, string> serializer) => SerializeRecursive(new StringBuilder(), serializer).ToString().Trim('|');
+        public override string SerializeRecursive(Func<V, string> serializer = null) => SerializeRecursive(new StringBuilder(), serializer).ToString().Trim('|');
 
         //Does Preorder => Null = <NULL>, Seperator = "|";
         private StringBuilder SerializeRecursive(StringBuilder sb, Func<V, string> serializer)
         {
+            if (serializer == null) serializer = arg => arg.ToString();
+
             sb.Append(serializer(val) + "|");
             if (Left == null) sb.Append("<NULL>|");
             else (Left as BTreeNode<V>).SerializeRecursive(sb, serializer);
@@ -361,6 +376,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         public override string ToString()
         {
+            return SerializeIt();
             if (root == null) return "";
             StringBuilder sb = Root.GenerateStringIt();
             return sb.ToString();
@@ -617,10 +633,50 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             return sb;
         }
 
-
-        public string SerializeRecursive(Func<V, string> serializeEl) => root == null ? "<NULL>" : root.SerializeRecursive(serializeEl);
-        public string SerializeIt(Func<V, string> serializeEl)
+        public IBTree<V> MakeCompleteRecursive()
         {
+            root?.MakeCompleteRecursive();
+            return this;
+        }
+
+        public IBTree<V> MakeCompleteIterative()
+        {
+            if (root == null) return this;
+            if (root.Left == null && root.Right == null) return this;
+            Stack<IBTreeNode<V>> nodes = new Stack<IBTreeNode<V>>();
+            IBTreeNode<V> node = root;
+            while (nodes.Count > 0 || node != null)
+            {
+                if(node == null)
+                {
+                    node = nodes.Pop().Right;
+                    continue;
+                }
+
+                int nodeCount = 0;
+                if (node.Left != null) nodeCount++;
+                if (node.Right != null) nodeCount++;
+                IBTreeNode<V> tmp = node.Left != null ? node.Left : node.Right;
+                if (nodeCount == 1)
+                {                  
+                    node.Left = tmp.Left;
+                    node.Right = tmp.Right;
+                    node.Val = tmp.Val;
+                    continue;
+                }
+
+                nodes.Push(node);
+                node = node.Left;
+            }
+            return this;
+        }
+
+
+        public string SerializeRecursive(Func<V, string> serializeEl = null) => root == null ? "<NULL>" : root.SerializeRecursive(serializeEl);
+        public string SerializeIt(Func<V, string> serializeEl = null)
+        {
+            if (serializeEl == null) serializeEl = arg => arg.ToString();
+
             if (root == null) return "<NULL>";
             StringBuilder sb = new StringBuilder();
             Stack<IBTreeNode<V>> stack = new Stack<IBTreeNode<V>>();
@@ -739,6 +795,40 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             }
         }
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+
+        public IBTree<V> CopyIt()
+        {
+            IBTree<V> copy = TreeGetNewInstance();
+            IBTreeNode<V> node = copy.CreateNode(root.Val);
+            IBTreeNode<V> baseTreeNode = root;
+            copy.Append(node);
+
+            Stack<IBTreeNode<V>> nodes = new Stack<IBTreeNode<V>>();
+            Stack<IBTreeNode<V>> nodesBaseTree = new Stack<IBTreeNode<V>>();
+            while(nodesBaseTree.Count > 0 || baseTreeNode != null)
+            {
+                if(baseTreeNode == null)
+                {
+                    baseTreeNode = nodesBaseTree.Pop().Right;
+                    node = nodes.Pop().Right;
+                    continue;
+                }
+
+                node.Left = baseTreeNode.Left == null ? null :  copy.CreateNode(baseTreeNode.Left.Val);
+                node.Right = baseTreeNode.Right == null ? null : copy.CreateNode(baseTreeNode.Right.Val);
+
+                nodes.Push(node);
+                nodesBaseTree.Push(baseTreeNode);
+
+                node = node.Left;
+                baseTreeNode = baseTreeNode.Left;
+            }
+
+            return copy;
+        }
+
+        protected abstract IBTree<V> TreeGetNewInstance();
 
         //static Methods
     }

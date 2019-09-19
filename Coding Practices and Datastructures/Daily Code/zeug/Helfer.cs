@@ -460,7 +460,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             Stack<IBTreeNode<int>> stack = new Stack<IBTreeNode<int>>();
             do
             {
-                if ((s[i] == ',' || s[i] == ';') && i++ == i) continue;
+                if ((arr[i] == "," || arr[i] == ";") && i++ == i) continue;
                 if (node != null)
                 {
                     stack.Push(node);
