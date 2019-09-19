@@ -199,8 +199,20 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
 
         // ARRAY
+        public static V[] ArrayShuffle<V>(V[] arr)
+        {
+            List<V> list = new List<V>(arr);
+            for(int i=0;i<arr.Length; i++)
+            {
+                int pos = random.Next(0, list.Count);
+                arr[i] = list[pos];
+                list.RemoveAt(pos);
+            }
+            return arr;
+        }
+
         public static String Arrayausgabe<V>(V[] arr) => Arrayausgabe<V>("", arr);
-        public static String Arrayausgabe<V>(string s, V[] arr, bool len = false, string concat = ", ")
+        public static String Arrayausgabe<V>(string s, V[] arr, bool len = false, string concat = ", ", int maxLen = 1_000_000)
         {
             if (arr == null) return "{ <NULL> }";
             if (arr.Length == 0) return s;
@@ -209,7 +221,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             for (int i = 1; i < arr.Length; i++)
             {
                 sb.Append(concat + arr[i]);
-                if (i > 25)
+                if (i > maxLen)
                 {
                     sb.Append(concat+"...");
                     break;

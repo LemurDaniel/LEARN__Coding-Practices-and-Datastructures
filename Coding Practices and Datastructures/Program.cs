@@ -20,6 +20,7 @@ using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Tries;
 using Coding_Practices_and_Datastructures.DS_HANDBOOK.Test;
 using _2019 = Coding_Practices_and_Datastructures.Daily_Coding_Problem._2019;
 using Coding_Practices_and_Datastructures.Other.Own;
+using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Bit_Manipulations;
 
 namespace GoF_Coding_Interview_Algos
 {
@@ -128,6 +129,11 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Implement_Square_Root();
             //  aufgabe = new Implement_Sqrt_Double();
 
+            //------>BIT MANIPULATION - EXCERCISES
+            aufgabe = new Single_Number();
+            aufgabe = new Power_of_Two();
+            aufgabe = new Hamming_Distance();
+
             //------>BREADTH FIRST - EXCERCISES
             //  aufgabe = new Symmetric_Tree();
 
@@ -197,10 +203,10 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Distribute_Bonuses();
             //  aufgabe = new Min_Range_Needed_to_Sort();
             //  aufgabe = new Reverse_Integer();
-            aufgabe = new Min_Stack_DailyCode();
+            //  aufgabe = new Min_Stack_DailyCode();
 
             //----------------------------------------------
-            /* Daily Coding Problemt */
+            /* Daily Coding Problem */
             //2019
             // aufgabe = new _2019.Daily_Coding_Problem_157___Easy();
 
