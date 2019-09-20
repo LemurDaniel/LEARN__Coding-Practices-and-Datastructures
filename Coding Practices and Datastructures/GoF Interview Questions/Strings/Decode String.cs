@@ -10,20 +10,25 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Strings
     class Decode_String : Testable
 
     {
-        private class InOut : InOutBase<string, string>
+        public class InOut : InOutBase<string, string>
         {
             public InOut(string s, string s2) : base(s, s2, true)
             {
                 AddSolver((arg, erg) => erg.Setze(DecodeRecurse(arg)), "Rekursiv");
+                AddSolver((arg, erg) => erg.Setze(DecodeRecurse_another_Way(arg)), "Rekursiv2");
                 AddSolver((arg, erg) => erg.Setze(DecodeStack(arg)), "StackDecode");
+
+                HasMaxDur = false;
             }
         }
 
         public Decode_String()
         {
-            testcases.Add(new InOut("3[a]2[bc]", "aaabcbc"));
+            testcases.Add(new InOut("3[a2[c]g]", "accgaccgaccg"));
             testcases.Add(new InOut("3[a2[c]]", "accaccacc"));
+            testcases.Add(new InOut("3[a]2[bc]", "aaabcbc"));
             testcases.Add(new InOut("2[abc]3[cd]ef", "abcabccdcdcdef"));
+
         }
 
 
@@ -34,11 +39,18 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Strings
             for(int i=0; i<s.Length; i++)
             {
                 if (Char.IsDigit(s[i])) num += int.Parse(s[i] + "") + num * 10;
-                else if (s[i] != '[') sb.Append(s[i] + "");
+                else if (s[i] != '[') sb.Append(s[i] + ""); //Append all to Current Sequence
                 else
                 {
+                    // Start of Subsequence
                     int i2 = i;
-                    while (s[i2] != ']') i2++;
+                    int brackets = 1;
+                    while (brackets > 0) // When 3[a2[c2[b]] => then subsequence is 2[c2[b]]
+                    {
+                        i2++;
+                        if (s[i2] == '[') brackets++;
+                        else if (s[i2] == ']') brackets--;
+                    }
                     string s2 = DecodeRecurse(s.Substring(i + 1, i2 - i - 1));
                     while (num-- > 0) sb.Append(s2);
                     i = i2;
@@ -47,6 +59,32 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Strings
             }
             return sb.ToString();
         }
+
+        private static string DecodeRecurse_another_Way(string s)
+        {
+            int i = -1;
+            return DecodeRecurse_another_Way(s, ref i);
+        }
+        private static string DecodeRecurse_another_Way(string s, ref int i)
+        {
+            StringBuilder sb = new StringBuilder();
+            string sub = "";
+            int num = 0;
+            i++;
+            for (; i < s.Length; i++)
+            {
+                if (Char.IsDigit(s[i])) num = num * 10 + int.Parse(s[i] + "");
+                else if (s[i] == ']') break;
+                else if (s[i] != '[') sb.Append(s[i]);
+                else
+                {
+                    sub = DecodeRecurse_another_Way(s, ref i);
+                    while (num-- > 0) sb.Append(sub);
+                };
+            }
+            return sb.ToString();
+        }
+
         private static string DecodeStack(string s)
         {
             Stack<int> nums = new Stack<int>();
@@ -57,13 +95,13 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Strings
             for (int i = 0; i < s.Length; i++)
             {
                 if (Char.IsDigit(s[i])) num += int.Parse(s[i] + "") + num * 10;
-                else if (s[i] == '[')
+                else if (s[i] == '[') // If Seq Start => Push "repeat number" to stack
                 {
                     nums.Push(num);
                     num = 0;
                     decodes.Push("");
                 }
-                else if (s[i] == ']')
+                else if (s[i] == ']') // If Seq End =>  Take num from Stack an Resolve Sequence, Push bak to Stack
                 {
                     string sTemp = "";
                     num = nums.Pop()+1;
@@ -71,7 +109,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Strings
                     decodes.Pop();
                     decodes.Push(decodes.Pop() + sTemp);
                 }else
-                    decodes.Push(decodes.Pop() + s[i]);
+                    decodes.Push(decodes.Pop() + s[i]); // If In Seq => Push Elements to current Sequence
             }
             return decodes.Pop();
         }

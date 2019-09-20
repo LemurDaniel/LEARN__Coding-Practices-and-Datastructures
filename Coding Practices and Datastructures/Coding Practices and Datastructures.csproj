@@ -55,6 +55,7 @@
     <Compile Include="Daily Code\Count Number of Unival Subtrees.cs" />
     <Compile Include="Daily Code\Course Prerequisites.cs" />
     <Compile Include="Daily Code\Create a balanced binary search tree from a sorted list.cs" />
+    <Compile Include="Daily Code\Decode String Daily Code.cs" />
     <Compile Include="Daily Code\Deepest Node in a Binary Tree.cs" />
     <Compile Include="Daily Code\Distribute Bonuses.cs" />
     <Compile Include="Daily Code\Falling Dominoes.cs" />

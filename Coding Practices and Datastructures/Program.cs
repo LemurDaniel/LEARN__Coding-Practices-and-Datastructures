@@ -204,7 +204,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Min_Range_Needed_to_Sort();
             //  aufgabe = new Reverse_Integer();
             //  aufgabe = new Min_Stack_DailyCode();
-            aufgabe = new Full_Binary_Tree();
+            //  aufgabe = new Full_Binary_Tree();
+            aufgabe = new Decode_String_Daily_Code();
 
             //----------------------------------------------
             /* Daily Coding Problem */
