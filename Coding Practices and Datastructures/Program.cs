@@ -100,6 +100,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Text_Justification();
             //  aufgabe = new Pascal_s_Triangle();
             //  aufgabe = new Pascal_s_Triangle2();
+            aufgabe = new Ransom_Note();
 
             //------>LINKED LIST - STRUCTURES
             //  aufgabe = new Add_Two_Numbers();
@@ -205,8 +206,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Reverse_Integer();
             //  aufgabe = new Min_Stack_DailyCode();
             //  aufgabe = new Full_Binary_Tree();
-            aufgabe = new Decode_String_Daily_Code();
-
+            //  aufgabe = new Decode_String_Daily_Code();
+            
             //----------------------------------------------
             /* Daily Coding Problem */
             //2019
