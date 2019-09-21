@@ -207,6 +207,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Min_Stack_DailyCode();
             //  aufgabe = new Full_Binary_Tree();
             //  aufgabe = new Decode_String_Daily_Code();
+            aufgabe = new Circle_of_Chained_Words();
             
             //----------------------------------------------
             /* Daily Coding Problem */
