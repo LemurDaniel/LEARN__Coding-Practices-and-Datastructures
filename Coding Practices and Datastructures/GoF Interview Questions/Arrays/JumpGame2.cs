@@ -9,7 +9,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
 {
     class JumpGame2 : Testable
     {
-        private class InOut : St_InOuts.IntArr_Primary<int>
+        public class InOut : St_InOuts.IntArr_Primary<int>
         {
             public InOut(string s, int b) : base(s, b)
             {
