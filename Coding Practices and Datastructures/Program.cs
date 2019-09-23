@@ -123,6 +123,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Move_Zeroes();
             //  aufgabe = new Implement_StrStr();
             //  aufgabe = new Trapping_Rainwater_GoF();
+            aufgabe = new Find_the_Duplicate_Number(); //*
+            // aufgabe = new Find_the_Duplicate_Number2(); //Not Finished;
 
             //------>MATH - EXCERCISES
             //  aufgabe = new Integer_to_English_Words();   //*
@@ -209,7 +211,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Decode_String_Daily_Code();
             //  aufgabe = new Circle_of_Chained_Words();
             //  aufgabe = new Jump_to__End();
-            aufgabe = new H_Index(); //*
+            //  aufgabe = new H_Index(); //*
 
             //----------------------------------------------
             /* Daily Coding Problem */

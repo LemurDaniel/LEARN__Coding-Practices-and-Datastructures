@@ -208,6 +208,8 @@
     <Compile Include="GoF Interview Questions\Tries\Add nad Search Word -Data Structure Design.cs" />
     <Compile Include="GoF Interview Questions\Tries\Implement Trie.cs" />
     <Compile Include="GoF Interview Questions\Two Pointers\Add Two Numbers II.cs" />
+    <Compile Include="GoF Interview Questions\Two Pointers\Find  the duplicate number 2.cs" />
+    <Compile Include="GoF Interview Questions\Two Pointers\Find the duplicate Number.cs" />
     <Compile Include="GoF Interview Questions\Two Pointers\Implement StrStr.cs" />
     <Compile Include="GoF Interview Questions\Two Pointers\Move Zeroes.cs" />
     <Compile Include="GoF Interview Questions\Two Pointers\Trapping Rainwater.cs" />
