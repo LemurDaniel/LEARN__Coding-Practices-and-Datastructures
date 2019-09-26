@@ -23,7 +23,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Two_Pointe
          */
         public class InOut : InOutBase<int[], int>
         {
-            public InOut(int n, int duplicate, int duplicates) : base(Convert(n, duplicate), duplicate, true)
+            public InOut(int n, int duplicate, int duplicates) : base(Convert(n, duplicate, duplicates), duplicate, true)
             {
                 inputStringConverter = arg => Helfer.Arrayausgabe("Eingabe: ", arg, true);
                 outputStringConverter = arg => "Duplikat: " + arg + " x "+duplicates;
@@ -48,7 +48,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Two_Pointe
             testcases.Add(new InOut(6, 4, 3));
             testcases.Add(new InOut(11, 9, 4));
             testcases.Add(new InOut(10, 1, 8));
-            testcases.Add(new InOut(14, 5));
+            testcases.Add(new InOut(14, 5, 8));
         }
         //SOL
 

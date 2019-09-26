@@ -15,12 +15,14 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public static readonly TraverseType PostOrder = new TraverseType("PostOrder", 2);   // Left, Right, Root
         public static readonly TraverseType LevelOrder = new TraverseType("LevelOrder", 3); // Print all on same Level Startig from Top
         public static readonly TraverseType ZigZagLevelOrder = new TraverseType("ZigZagLevelOrder", 4);
+        public static readonly TraverseType BottomUpLevelOrder = new TraverseType("BottomUpLevelOrder", 5);
 
         public bool IsInorder { get => this.Equals(InOrder); }
         public bool IsPreOrder { get => this.Equals(PreOrder); }
         public bool IsPostOrder { get => this.Equals(PostOrder); }
         public bool IsLevelOrder { get => this.Equals(LevelOrder); }
         public bool IsZigZagLevelOrder { get => this.Equals(ZigZagLevelOrder); }
+        public bool IsBottomUpLevelOrder { get => this.Equals(BottomUpLevelOrder); }
 
         public readonly int typ;
         public readonly string desc;
@@ -567,7 +569,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             if (baseNode == null) baseNode = root;
             if (baseNode == null) return "";
             StringBuilder sb = new StringBuilder();
-            if (traverseType.IsZigZagLevelOrder || traverseType.IsLevelOrder) PrintLevelOrder(sb, traverseType, baseNode, split);
+            if (traverseType.IsZigZagLevelOrder || traverseType.IsLevelOrder || traverseType.IsBottomUpLevelOrder) PrintLevelOrder(sb, traverseType, baseNode, split);
             else baseNode.PrintRecursive(sb, traverseType, split);
             return sb.ToString().Substring(0, sb.Length - split.Length);
         }
@@ -577,7 +579,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             if (baseNode == null) baseNode = root;
             if (baseNode == null) return "";
             StringBuilder sb = new StringBuilder();
-            if(traverseType.IsZigZagLevelOrder || traverseType.IsLevelOrder) return PrintLevelOrder(sb, traverseType, baseNode, split).ToString().Substring(0, sb.Length - split.Length);
+            if(traverseType.IsZigZagLevelOrder || traverseType.IsLevelOrder || traverseType.IsBottomUpLevelOrder) return PrintLevelOrder(sb, traverseType, baseNode, split).ToString().Substring(0, sb.Length - split.Length);
 
             Stack<IBTreeNode<V>> stack = new Stack<IBTreeNode<V>>();
 
@@ -602,7 +604,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         {
             Queue<IBTreeNode<V>> queue = new Queue<IBTreeNode<V>>();
             queue.Enqueue(baseNode);
-            if(traverseType.IsZigZagLevelOrder) queue.Enqueue(null);    // To force an alternation from zig to zag after root
+            if(traverseType.IsZigZagLevelOrder || traverseType.IsBottomUpLevelOrder) queue.Enqueue(null);    // To force an alternation from zig to zag after root node
             bool Zig = true;
 
             StringBuilder subSb = new StringBuilder();
@@ -615,6 +617,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                     if (Zig) subSb.Append(node.Val + split);
                     else subSb.Insert(0, node.Val + split);
                 }
+                else if (traverseType.IsBottomUpLevelOrder) subSb.Append(node.Val + split);
                 else sb.Append(node.Val + split);
 
                 if (node.Left != null) queue.Enqueue(node.Left);
@@ -622,11 +625,12 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
                 if(queue.Count > 0 && queue.Peek() == null)
                 {
-                    queue.Dequeue();
-                    sb.Append(subSb);
+                    if(traverseType.IsBottomUpLevelOrder) sb.Insert(0, subSb);
+                    else if(traverseType.IsZigZagLevelOrder) sb.Append(subSb);
+
                     subSb.Clear();
-                    if (queue.Count == 0)   break;
-                    queue.Enqueue(null);
+                    if (queue.Count == 1)   break;
+                    queue.Enqueue(queue.Dequeue());
                     Zig = !Zig; //Alternate between Zig and Zag
                 }
             }
@@ -745,6 +749,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             if (node == null) node = root;
             if (traverseType.IsZigZagLevelOrder || traverseType.IsLevelOrder)
                 foreach (V val in GetIEnumerableLevelOrder(traverseType, node)) yield return val;
+            else if (traverseType.IsBottomUpLevelOrder)
+                foreach (V val in GetIEnumerableLevelOrderBottomUp(node)) yield return val;
             else
             {
                 Stack<IBTreeNode<V>> stack = new Stack<IBTreeNode<V>>();
@@ -765,6 +771,32 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                 }
                 if (traverseType.IsPostOrder) while (postorderStack.Count > 0) yield return postorderStack.Pop();
             }
+        }
+        private IEnumerable<V> GetIEnumerableLevelOrderBottomUp(IBTreeNode<V> node)
+        {
+            Queue<IBTreeNode<V>> queue = new Queue<IBTreeNode<V>>();
+            queue.Enqueue(node);
+            queue.Enqueue(null);
+
+            List<List<V>> nodes = new List<List<V>>();
+            List<V> list = new List<V>();
+            while (queue.Count != 0)
+            {
+                node = queue.Dequeue();
+                list.Add(node.Val);
+
+                if (node.Left != null) queue.Enqueue(node.Left);
+                if (node.Right != null) queue.Enqueue(node.Right);
+
+                if(queue.Peek() == null)
+                {
+                    nodes.Add(list);
+                    list = new List<V>();
+                    if (queue.Count == 1) break;
+                    queue.Enqueue(queue.Dequeue());
+                }
+            }
+            for (int i = nodes.Count - 1; i >= 0; i--) foreach (V val in nodes[i]) yield return val;
         }
         private IEnumerable<V> GetIEnumerableLevelOrder(TraverseType traverseType, IBTreeNode<V> node)
         {

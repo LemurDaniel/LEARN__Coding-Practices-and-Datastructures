@@ -32,23 +32,27 @@ namespace Coding_Practices_and_Datastructures.Other
                 AddSolver(TraverseTreeRecursive);
                 AddSolver(TraverseTreeIterative);
                 AddSolver(TraverseTreeIterator);
+
+                HasMaxDur = false;
             }
         }
 
 
         public TreeTraversal()
         {
-            testcases.Add(new InOut(new Input("4;5;2;1;3", TraverseType.InOrder),"1; 2; 3; 4; 5"));
             testcases.Add(new InOut(new Input("4;5;2;1;3", TraverseType.PreOrder), "4; 2; 1; 3; 5"));
+            testcases.Add(new InOut(new Input("4;5;2;1;3", TraverseType.InOrder),"1; 2; 3; 4; 5"));
             testcases.Add(new InOut(new Input("4;5;2;1;3", TraverseType.PostOrder), "1; 3; 2; 5; 4"));
             testcases.Add(new InOut(new Input("4;5;2;1;3", TraverseType.LevelOrder), "4; 2; 5; 1; 3"));
             testcases.Add(new InOut(new Input("4;5;2;1;3", TraverseType.ZigZagLevelOrder), "4; 5; 2; 1; 3"));
+            testcases.Add(new InOut(new Input("4;5;2;1;3", TraverseType.BottomUpLevelOrder), "1; 3; 2; 5; 4"));
 
             testcases.Add(new InOut(new Input("30;15;36;41;34;32;35;7;9", TraverseType.PreOrder), "30; 15; 7; 9; 36; 34; 32; 35; 41"));
             testcases.Add(new InOut(new Input("30;15;36;41;34;32;35;7;9", TraverseType.InOrder), "7; 9; 15; 30; 32; 34; 35; 36; 41"));
             testcases.Add(new InOut(new Input("30;15;36;41;34;32;35;7;9", TraverseType.PostOrder), "9; 7; 15; 32; 35; 34; 41; 36; 30"));
             testcases.Add(new InOut(new Input("30;15;36;41;34;32;35;7;9", TraverseType.LevelOrder), "30; 15; 36; 7; 34; 41; 9; 32; 35"));
             testcases.Add(new InOut(new Input("30;15;36;41;34;32;35;7;9", TraverseType.ZigZagLevelOrder), "30; 36; 15; 7; 34; 41; 35; 32; 9"));
+            testcases.Add(new InOut(new Input("30;15;36;41;34;32;35;7;9", TraverseType.BottomUpLevelOrder), "9; 32; 35; 7; 34; 41; 15; 36; 30"));
         }
 
 
