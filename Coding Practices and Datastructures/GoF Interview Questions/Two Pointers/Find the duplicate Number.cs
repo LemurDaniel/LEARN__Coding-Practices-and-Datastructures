@@ -29,6 +29,13 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Two_Pointe
 
                 AddSolver(Array_Solver_ConstantSpace);
             }
+            public InOut(string n, int duplicate) : base(Helfer.Assemble(n), duplicate, true)
+            {
+                inputStringConverter = arg => Helfer.Arrayausgabe("Eingabe: ", arg, true);
+                outputStringConverter = arg => "Duplikat: " + arg;
+
+                AddSolver(Array_Solver_ConstantSpace);
+            }
             public static int[] Convert(int n, int duplicate)
             {
                 duplicate = Math.Max(1,Math.Min(n, duplicate));

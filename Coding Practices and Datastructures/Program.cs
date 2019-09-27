@@ -101,6 +101,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Pascal_s_Triangle();
             //  aufgabe = new Pascal_s_Triangle2();
             //  aufgabe = new Ransom_Note();
+            //  aufgabe = new Super_Reduced_String();
 
             //------>LINKED LIST - STRUCTURES
             //  aufgabe = new Add_Two_Numbers();
@@ -212,7 +213,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Circle_of_Chained_Words();
             //  aufgabe = new Jump_to__End();
             //  aufgabe = new H_Index(); //*
-            aufgabe = new Nth_Fibonacci_Number();
+            //  aufgabe = new Nth_Fibonacci_Number();
+            aufgabe = new Find_the_Single_Element_in_an_Array_of_Duplicates();
 
             //----------------------------------------------
             /* Daily Coding Problem */

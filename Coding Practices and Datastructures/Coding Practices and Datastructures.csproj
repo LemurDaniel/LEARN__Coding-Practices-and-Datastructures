@@ -63,6 +63,7 @@
     <Compile Include="Daily Code\Find Number of Islands.cs" />
     <Compile Include="Daily Code\Find the k-th Largest Element in a List.cs" />
     <Compile Include="Daily Code\Find the non-duplicate number.cs" />
+    <Compile Include="Daily Code\Find the Single Element in an Array of Duplicates.cs" />
     <Compile Include="Daily Code\First and Last Indices of an Element in a Sorted Array.cs" />
     <Compile Include="Daily Code\First Missing Positive Integer.cs" />
     <Compile Include="Daily Code\Floor and Ceiling of a Binary Search Tree.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="GoF Interview Questions\Strings\Revers A String.cs" />
     <Compile Include="GoF Interview Questions\Strings\Reverse Vowels of a String.cs" />
     <Compile Include="GoF Interview Questions\Strings\String To Integer.cs" />
+    <Compile Include="GoF Interview Questions\Strings\Super Reduced String.cs" />
     <Compile Include="GoF Interview Questions\Strings\Text Justification.cs" />
     <Compile Include="GoF Interview Questions\Strings\ZigZag Conversion.cs" />
     <Compile Include="GoF Interview Questions\Tries\Add nad Search Word -Data Structure Design.cs" />
