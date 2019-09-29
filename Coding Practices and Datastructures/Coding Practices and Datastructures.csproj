@@ -104,6 +104,7 @@
     <Compile Include="Daily Code\Sort Colors.cs" />
     <Compile Include="Daily Code\Sorting a list with 3 unique numbers.cs" />
     <Compile Include="Daily Code\Spiral Traversal of Grid.cs" />
+    <Compile Include="Daily Code\String Compression.cs" />
     <Compile Include="Daily Code\Trapping Rainwater.cs" />
     <Compile Include="Daily Code\Tree Serialization.cs" />
     <Compile Include="Daily Code\Two-Sum.cs" />

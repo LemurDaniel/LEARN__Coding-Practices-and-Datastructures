@@ -214,7 +214,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Jump_to__End();
             //  aufgabe = new H_Index(); //*
             //  aufgabe = new Nth_Fibonacci_Number();
-            aufgabe = new Find_the_Single_Element_in_an_Array_of_Duplicates();
+            //  aufgabe = new Find_the_Single_Element_in_an_Array_of_Duplicates();
+            aufgabe = new String_Compression();
 
             //----------------------------------------------
             /* Daily Coding Problem */
