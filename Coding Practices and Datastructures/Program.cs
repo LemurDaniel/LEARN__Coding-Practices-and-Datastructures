@@ -140,7 +140,8 @@ namespace GoF_Coding_Interview_Algos
 
             //------>BREADTH FIRST - EXCERCISES
             //  aufgabe = new Symmetric_Tree();
-
+            aufgabe = new Binary_Tree_Right_Side_View();
+            
             //------>TRIE - EXCERCISES
             //  aufgabe = new Implement_Trie();
             //  aufgabe = new Add_nad_Search_Word__Data_Structure_Design();
@@ -215,7 +216,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new H_Index(); //*
             //  aufgabe = new Nth_Fibonacci_Number();
             //  aufgabe = new Find_the_Single_Element_in_an_Array_of_Duplicates();
-            aufgabe = new String_Compression();
+            //  aufgabe = new String_Compression();
 
             //----------------------------------------------
             /* Daily Coding Problem */

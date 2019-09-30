@@ -42,6 +42,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         private BTreeNode() { }
         public BTreeNode(V val) => this.val = val;
+
+        public override string ToString() => val.ToString();
         public override IBTreeNode<V> Insert(BTreeNode<V> n, object arg = null)
         {
             if (left == null) left = n;
@@ -312,7 +314,6 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             else count++;
             return count;
         }
-
 
         public override bool Equals(object obj)
         {
@@ -741,7 +742,57 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             return tree;
         }
 
+        public string RightSide_View_Stack()
+        {
+            if (root == null) return "<NULL>";
+            Stack<IBTreeNode<V>> stack = new Stack<IBTreeNode<V>>();
+            int currHeigt = 0, tHeight = 0;
+            IBTreeNode<V> node = Root;
+            StringBuilder sb = new StringBuilder();
+            while(node != null || stack.Count() > 0)
+            {
+                if (node != null)
+                {
+                    if (tHeight == currHeigt)
+                    {
+                        sb.Append(node.Val.ToString() + ", ");
+                        tHeight++;
+                    }
+                    stack.Push(node);
+                    node = node.Right;
+                    currHeigt++;
+                }
+                else
+                {
+                    node = stack.Pop().Left;
+                    currHeigt--;
+                }
+            }
+            return sb.ToString().Substring(0, sb.Length-2);
+        }
 
+        public string RightSide_View_Queue()
+        {
+            if (root == null) return "<NUll>";
+            Queue<IBTreeNode<V>> q = new Queue<IBTreeNode<V>>();
+            q.Enqueue(Root);
+            q.Enqueue(null);
+            IBTreeNode<V> node;
+            StringBuilder sb = new StringBuilder();
+            while (true)
+            {
+                node = q.Dequeue();
+                if (node.Left != null) q.Enqueue(node.Left);
+                if (node.Right != null) q.Enqueue(node.Right);
+
+                if(q.Peek() == null)
+                {
+                    sb.Append(node.Val+", ");
+                    if (q.Count == 1) return sb.ToString().Substring(0, sb.Length - 2);
+                    q.Enqueue(q.Dequeue());
+                }
+            }
+        }
         //TEST ENUMERABLES
         public IEnumerator<V> GetEnumerator() => GetIEnumerable(TraverseType.InOrder).GetEnumerator();
         public IEnumerable<V> GetIEnumerable(TraverseType traverseType, IBTreeNode<V> node = null)

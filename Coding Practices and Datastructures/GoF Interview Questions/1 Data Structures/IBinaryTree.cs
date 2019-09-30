@@ -77,6 +77,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         IBTree<V> MakeCompleteIterative();
         IBTree<V> MakeCompleteRecursive();
 
+        string RightSide_View_Queue();
+        string RightSide_View_Stack();
 
         string SerializeIt(Func<V, string> serializeEl = null);
         string SerializeRecursive(Func<V, string> serializeEl = null);

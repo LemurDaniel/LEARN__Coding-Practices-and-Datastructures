@@ -163,6 +163,7 @@
     <Compile Include="GoF Interview Questions\Bit Manipulations\Hamming Distance.cs" />
     <Compile Include="GoF Interview Questions\Bit Manipulations\Power of Two.cs" />
     <Compile Include="GoF Interview Questions\Bit Manipulations\Single Number.cs" />
+    <Compile Include="GoF Interview Questions\Breadth First Search\Binary Tree Right Side View.cs" />
     <Compile Include="GoF Interview Questions\MathEx\Implement Pow.cs" />
     <Compile Include="GoF Interview Questions\Strings\Add Numbers.cs" />
     <Compile Include="GoF Interview Questions\Arrays\Max Consecutive Ones.cs" />
