@@ -11,21 +11,13 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.LinkedList
     class Palindrom_Linked_List : Testable
     {
 
-        private class InOut : InOutBase<LinkedList<char>, bool>
+        public class InOut : InOutBase<LinkedList<char>, bool>
         {
             public InOut(string s, bool b) : base(LinkedList<char>.AssembleChar(s), b, true)
             {
                 inputStringConverter = null;
                 AddSolver((arg, erg) => erg.Setze(Solve(arg)));
             }
-        }
-
-
-        public Palindrom_Linked_List()
-        {
-            testcases.Add(new InOut("Radar", true));
-            testcases.Add(new InOut("Radara", false));
-            testcases.Add(new InOut("anna", true));
         }
 
         public static bool Solve(LinkedList<char> ll)
