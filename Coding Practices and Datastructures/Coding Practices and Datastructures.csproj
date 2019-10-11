@@ -50,6 +50,7 @@
     <Compile Include="Coding Train\Challenges\TicTacToe\TicTacToeSolver.cs" />
     <Compile Include="Daily Code\Angles of a Clock.cs" />
     <Compile Include="Daily Code\Arithmetic Binary Tree.cs" />
+    <Compile Include="Daily Code\Binary Tree with Minimum Level.cs" />
     <Compile Include="Daily Code\Buddy Strings.cs" />
     <Compile Include="Daily Code\Circle of Chained Words.cs" />
     <Compile Include="Daily Code\Contiguous Subarray with Maximum Sum.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Daily Code\Longest Sequence with Two Unique Numbers.cs" />
     <Compile Include="Daily Code\Longest Substring With K Distinct Characters.cs" />
     <Compile Include="Daily Code\Look and Say Sequence.cs" />
+    <Compile Include="Daily Code\Lowest Common Ancestor of 2 Nodes in Binary Tree.cs" />
     <Compile Include="Daily Code\Max Stack.cs" />
     <Compile Include="Daily Code\Maximum Profit From Stocks.cs" />
     <Compile Include="Daily Code\Merge K Sorted Linked Lists.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="Daily Code\Reverse_A_Linked_List.cs" />
     <Compile Include="Daily Code\Room Scheduling.cs" />
     <Compile Include="Daily Code\Running Median.cs" />
+    <Compile Include="Daily Code\Shifted String.cs" />
     <Compile Include="Daily Code\SimpleCalculator.cs" />
     <Compile Include="Daily Code\Sort Colors.cs" />
     <Compile Include="Daily Code\Sorting a list with 3 unique numbers.cs" />

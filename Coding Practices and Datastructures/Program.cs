@@ -140,11 +140,8 @@ namespace GoF_Coding_Interview_Algos
 
             //------>BREADTH FIRST - EXCERCISES
             //  aufgabe = new Symmetric_Tree();
-<<<<<<< HEAD
-            aufgabe = new Binary_Tree_Right_Side_View();
-=======
             //  aufgabe = new Binary_Tree_Right_Side_View();
->>>>>>> 452b1b5c326da48468c76cfe78b1fea3f7d5034b
+            //  aufgabe = new Binary_Tree_Right_Side_View();
 
             //------>TRIE - EXCERCISES
             //  aufgabe = new Implement_Trie();
@@ -222,7 +219,10 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Find_the_Single_Element_in_an_Array_of_Duplicates();
             //  aufgabe = new String_Compression();
             //  aufgabe = new No_Adjacent_Repeating_Characters();
-            aufgabe = new Determine_if_Linke_List_is_Palindrome();
+            //  aufgabe = new Determine_if_Linke_List_is_Palindrome();
+            //  aufgabe = new Shifted_String();
+            //  aufgabe = new Binary_Tree_with_Minimum_Level();
+            aufgabe = new Lowest_Common_Ancestor_of_2_Nodes_in_Binary_Tree();
 
             //----------------------------------------------
             /* Daily Coding Problem */

@@ -8,12 +8,19 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 {
     class St_InOuts
     {
-        public class IntArr_Primary<O> : InOutBase<int[], O>
+        public class Arr_Primary<O, N> : InOutBase<O[], N>
         {
-            public IntArr_Primary(string s, O o, bool len = false, bool shuffle = false) : base(shuffle ? Helfer.ArrayShuffle(Helfer.Assemble(s)) : Helfer.Assemble(s), o, true)
+            public Arr_Primary(O[] o, N n, bool len = false, bool shuffle = false) : base(shuffle ? Helfer.ArrayShuffle(o) : o, n, true)
             {
-                inputStringConverter = arg => Helfer.Arrayausgabe<int>("Eingabe: ", arg, len);
-                copiedInputProvider = Helfer.ArrayCopy<int>;
+                inputStringConverter = arg => Helfer.Arrayausgabe<O>("Eingabe: ", arg, len);
+                copiedInputProvider = Helfer.ArrayCopy<O>;
+            }
+        }
+
+        public class IntArr_Primary<O> : Arr_Primary<int, O>
+        {
+            public IntArr_Primary(string s, O o, bool len = false, bool shuffle = false) : base(Helfer.Assemble(s), o, len, shuffle)
+            {
             }
         }
 

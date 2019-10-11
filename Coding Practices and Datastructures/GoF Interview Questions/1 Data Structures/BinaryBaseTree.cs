@@ -315,6 +315,21 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             return count;
         }
 
+        public override int LowestCommonAncestorRecursive(IBTreeNode<V> n, IBTreeNode<V> n1, ref IBTreeNode<V> ancestor)
+        {
+            if (this == n || this == n1) return 1;
+            int l = 0, r = 0;
+            if(right != null) r =right.LowestCommonAncestorRecursive(n, n1, ref ancestor);
+            if(left != null) l = left.LowestCommonAncestorRecursive(n, n1, ref ancestor);
+            if(l == 1 && r == 1)
+            {
+                ancestor = this;
+                return -1;
+            }
+            return l == 1 ? l : r;
+
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null) return false;
@@ -785,14 +800,16 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                 if (node.Left != null) q.Enqueue(node.Left);
                 if (node.Right != null) q.Enqueue(node.Right);
 
-                if(q.Peek() == null)
+                if (q.Peek() == null)
                 {
-                    sb.Append(node.Val+", ");
+                    sb.Append(node.Val + ", ");
                     if (q.Count == 1) return sb.ToString().Substring(0, sb.Length - 2);
                     q.Enqueue(q.Dequeue());
                 }
             }
         }
+
+
         //TEST ENUMERABLES
         public IEnumerator<V> GetEnumerator() => GetIEnumerable(TraverseType.InOrder).GetEnumerator();
         public IEnumerable<V> GetIEnumerable(TraverseType traverseType, IBTreeNode<V> node = null)

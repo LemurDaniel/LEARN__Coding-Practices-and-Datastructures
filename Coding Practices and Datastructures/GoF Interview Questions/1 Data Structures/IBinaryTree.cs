@@ -46,7 +46,9 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             root.DeSerializeRecursive(arr, deserializer, CreateNode);
             return root;
         }
+        public abstract int LowestCommonAncestorRecursive(IBTreeNode<V> n, IBTreeNode<V> n1, ref IBTreeNode<V> ancestor);
     }
+
     public interface IBTree<V> : IEnumerable<V>{
 
         void Clear();
