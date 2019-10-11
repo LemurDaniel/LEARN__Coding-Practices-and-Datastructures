@@ -175,6 +175,49 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                     node.list = null;
                 });
             }
+
+               // k i l l i k
+               // k i l i k
+            public bool IsPalindromicStackSolve(Func<V, V, bool> eq = null)
+            {
+                if (eq == null) eq = (arg, arg1) => arg1.Equals(arg1);
+                Node runner = this, walker = this;
+                Stack<V> stack = new Stack<V>();
+                while (runner != null && runner.next != null)
+                {
+                    stack.Push(walker.Val);
+                    walker = walker.next;
+                    runner = runner.next.next;
+                }
+                if (runner != null) walker = walker.next;
+
+                while (stack.Count > 0)
+                {
+                    if (!eq(stack.Pop(),walker.val)) return false;
+                    else walker = walker.next;
+                }
+                return true;
+            }
+
+            public bool IsPalindromicConstantSpace()
+            {
+                Node runner = this, mid = this;
+                while (runner != null && runner.next != null)
+                {
+                    mid = mid.next;
+                    runner = runner.next.next;
+                }
+                if (runner != null) mid = mid.next;
+
+                Node start = this;
+                while (mid != null)
+                {
+                    if (!start.Val.Equals(mid.val)) return false;
+                    mid = mid.next;
+                    start = start.next;
+                }
+                return true;
+            }
         }
 
         /* LINKED LIST */
