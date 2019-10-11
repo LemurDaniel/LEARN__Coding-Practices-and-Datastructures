@@ -31,9 +31,9 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         //SOL
         public static void XOR_Solver(int[] arr, InOut.Ergebnis erg)
         {
-            int k = 0;
-            foreach (int i in arr) k ^= i;
-            erg.Setze(k ^ 0, Complexity.LINEAR, Complexity.CONSTANT);
+            int k = arr[0];
+            for (int i = 1; i < arr.Length; i++) k ^= arr[i];
+            erg.Setze(k, Complexity.LINEAR, Complexity.CONSTANT);
         }
     }
 }
