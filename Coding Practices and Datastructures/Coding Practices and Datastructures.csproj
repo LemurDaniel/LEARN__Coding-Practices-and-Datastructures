@@ -62,6 +62,7 @@
     <Compile Include="Daily Code\Determine if Linke List is Palindrome.cs" />
     <Compile Include="Daily Code\Distribute Bonuses.cs" />
     <Compile Include="Daily Code\Falling Dominoes.cs" />
+    <Compile Include="Daily Code\Find Missing Numbers in an Array.cs" />
     <Compile Include="Daily Code\Find Number of Islands.cs" />
     <Compile Include="Daily Code\Find the k-th Largest Element in a List.cs" />
     <Compile Include="Daily Code\Find the non-duplicate number.cs" />

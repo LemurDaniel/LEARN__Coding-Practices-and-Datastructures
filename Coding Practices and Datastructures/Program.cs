@@ -222,7 +222,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Determine_if_Linke_List_is_Palindrome();
             //  aufgabe = new Shifted_String();
             //  aufgabe = new Binary_Tree_with_Minimum_Level();
-            aufgabe = new Lowest_Common_Ancestor_of_2_Nodes_in_Binary_Tree();
+            //  aufgabe = new Lowest_Common_Ancestor_of_2_Nodes_in_Binary_Tree();
+            aufgabe = new Find_Missing_Numbers_in_an_Array();
 
             //----------------------------------------------
             /* Daily Coding Problem */

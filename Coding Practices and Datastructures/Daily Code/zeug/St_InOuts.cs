@@ -26,25 +26,26 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
         public class TwoArr<O, N> : InOutBase<O[], N[]>
         {
-            public TwoArr(O[] o, N[] n, bool len = false, bool shuffle = false) : base(shuffle ? Helfer.ArrayShuffle(o) : o, shuffle ? Helfer.ArrayShuffle(n) : n)
+            public TwoArr(O[] o, N[] n, bool len = false, bool shuffle = false, bool checkOrder = true) : base(shuffle ? Helfer.ArrayShuffle(o) : o, shuffle ? Helfer.ArrayShuffle(n) : n)
             {
                 inputStringConverter = arg => Helfer.Arrayausgabe("Eingabe: ", arg, len);
                 outputStringConverter = arg => Helfer.Arrayausgabe("Erwartet: ", arg, len);
                 ergStringConverter = arg => Helfer.Arrayausgabe("Ausgabe: ", arg, len);
-                CompareOutErg = Helfer.ArrayVergleich;
+                if (checkOrder) CompareOutErg = Helfer.ArrayVergleich;
+                else CompareOutErg = Helfer.ArrayVergleichAnyOrder;
                 copiedInputProvider = Helfer.ArrayCopy;
             }
         }
         public class SameArr<O> : TwoArr<O, O>
         {
-            public SameArr(O[] o, O[] n, bool len = false, bool shuffle = false) : base(o, n, len, shuffle)
+            public SameArr(O[] o, O[] n, bool len = false, bool shuffle = false, bool checkOrder = true) : base(o, n, len, shuffle, checkOrder)
             {
             }
         }
 
         public class TwoIntArr: SameArr<int>
         {
-            public TwoIntArr(string arr, string arr1, bool len = false, bool shuffle = false) : base(Helfer.Assemble(arr), Helfer.Assemble(arr1), len, shuffle)
+            public TwoIntArr(string arr, string arr1, bool len = false, bool shuffle = false, bool checkOrder = true) : base(Helfer.Assemble(arr), Helfer.Assemble(arr1), len, shuffle, checkOrder)
             {
             }
         }
