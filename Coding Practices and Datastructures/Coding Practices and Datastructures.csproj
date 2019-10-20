@@ -53,6 +53,7 @@
     <Compile Include="Daily Code\Binary Tree with Minimum Level.cs" />
     <Compile Include="Daily Code\Buddy Strings.cs" />
     <Compile Include="Daily Code\Circle of Chained Words.cs" />
+    <Compile Include="Daily Code\Compare Version Numbers.cs" />
     <Compile Include="Daily Code\Contiguous Subarray with Maximum Sum.cs" />
     <Compile Include="Daily Code\Count Number of Unival Subtrees.cs" />
     <Compile Include="Daily Code\Course Prerequisites.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Daily Code\Sort Colors.cs" />
     <Compile Include="Daily Code\Sorting a list with 3 unique numbers.cs" />
     <Compile Include="Daily Code\Spiral Traversal of Grid.cs" />
+    <Compile Include="Daily Code\Spread Sheet Column Title.cs" />
     <Compile Include="Daily Code\String Compression.cs" />
     <Compile Include="Daily Code\Trapping Rainwater.cs" />
     <Compile Include="Daily Code\Tree Serialization.cs" />
