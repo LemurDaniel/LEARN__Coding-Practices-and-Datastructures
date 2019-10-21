@@ -20,6 +20,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Bit_Manipu
                 inputStringConverter = arg => "Num: " + arg[0] + "\nNum2: " + arg[1];
 
                 AddSolver((arg, erg) => erg.Setze(XOR_Solve(arg[0], arg[1])), "XOR_Solver");
+                AddSolver((arg, erg) => erg.Setze(XOR_Solve2(arg[0], arg[1])), "XOR_Solver");
             }
         }
 
@@ -35,5 +36,6 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Bit_Manipu
 
         //SOL
         public static int XOR_Solve(int num, int num2) => BIT.SparseBitcount(num^num2);
+        public static int XOR_Solve2(int num, int num2) => BIT.MyBitcount(num ^ num2);
     }
 }

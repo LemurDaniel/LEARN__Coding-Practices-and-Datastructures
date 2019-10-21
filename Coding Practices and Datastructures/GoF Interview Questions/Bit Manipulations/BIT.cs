@@ -18,5 +18,16 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Bit_Manipu
             }
             return count;
         }
+
+        public static int MyBitcount(int n)
+        {
+            int count = 0;
+            while(n > 0)
+            {
+                count += n % 2;
+                n /= 2;
+            }
+            return count;
+        }
     }
 }

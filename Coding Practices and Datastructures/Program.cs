@@ -225,7 +225,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Lowest_Common_Ancestor_of_2_Nodes_in_Binary_Tree();
             //  aufgabe = new Find_Missing_Numbers_in_an_Array();
             //  aufgabe = new Spread_Sheet_Column_Title(); //Not Working**
-            aufgabe = new Compare_Version_Numbers();
+            //  aufgabe = new Compare_Version_Numbers();
+            aufgabe = new Consecutive_Ones();
 
             //----------------------------------------------
             /* Daily Coding Problem */
