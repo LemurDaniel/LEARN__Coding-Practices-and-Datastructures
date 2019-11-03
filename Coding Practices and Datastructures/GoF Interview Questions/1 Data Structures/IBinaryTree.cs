@@ -47,6 +47,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             return root;
         }
         public abstract int LowestCommonAncestorRecursive(IBTreeNode<V> n, IBTreeNode<V> n1, ref IBTreeNode<V> ancestor);
+        public abstract IBTreeNode<V> GetNodeByValue(V val);
     }
 
     public interface IBTree<V> : IEnumerable<V>{
@@ -92,6 +93,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         string PrintRecursive(TraverseType traverseType, IBTreeNode<V> baseNode = null, string split = "; ");
         string PrintIterative(TraverseType traverseType, IBTreeNode<V> baseNode = null, string split = "; ");
 
+        IBTreeNode<V> GetNodeByValue(V val);
+        List<V> GetCousins(IBTreeNode<V> node);
 
         //TEST ENUMERABLES
         IEnumerable<V> GetIEnumerable(TraverseType traverseType, IBTreeNode<V> node = null);

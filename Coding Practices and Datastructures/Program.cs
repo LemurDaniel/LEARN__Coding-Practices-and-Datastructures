@@ -226,7 +226,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Find_Missing_Numbers_in_an_Array();
             //  aufgabe = new Spread_Sheet_Column_Title(); //Not Working**
             //  aufgabe = new Compare_Version_Numbers();
-            aufgabe = new Consecutive_Ones();
+            //  aufgabe = new Consecutive_Ones();
+            aufgabe = new Number_of_Cousins();
 
             //----------------------------------------------
             /* Daily Coding Problem */

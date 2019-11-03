@@ -330,6 +330,21 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         }
 
+        public override IBTreeNode<V> GetNodeByValue(V val){
+            if (this.val.Equals(val)) return this;
+            if (this.left != null)
+            {
+                IBTreeNode<V> l = this.left.GetNodeByValue(val);
+                if (l != null) return l;
+            }
+            if(this.right != null)
+            {
+                IBTreeNode<V> r = this.right.GetNodeByValue(val);
+                if (r != null) return r;
+            }
+            return null;
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null) return false;
@@ -804,6 +819,38 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                 {
                     sb.Append(node.Val + ", ");
                     if (q.Count == 1) return sb.ToString().Substring(0, sb.Length - 2);
+                    q.Enqueue(q.Dequeue());
+                }
+            }
+        }
+
+        public IBTreeNode<V> GetNodeByValue(V val) => root.GetNodeByValue(val);
+        public List<V> GetCousins (IBTreeNode<V> node)
+        {
+            List<V> list = new List<V>();
+            if (node == null || root == null) return list;
+            Queue<IBTreeNode<V>> q = new Queue<IBTreeNode<V>>();
+            q.Enqueue(root);
+            q.Enqueue(null);
+            bool switcher = false, switcher2 = false;
+            while (true)
+            {
+                IBTreeNode<V> curr = q.Dequeue();
+                if (switcher == false && switcher2 == false)
+                {
+                    if (curr.Left != null && curr.Left == node || curr.Right != null && curr.Right == node) switcher = true;
+                    else
+                    {
+                        if (curr.Left != null) q.Enqueue(curr.Left);
+                        if (curr.Right != null) q.Enqueue(curr.Right);
+                    }
+                }
+                else list.Add(curr.Val);
+                
+                if(q.Peek() == null)
+                {
+                    if (switcher2 || q.Count == 0) return list;
+                    switcher2 = switcher;
                     q.Enqueue(q.Dequeue());
                 }
             }

@@ -97,6 +97,7 @@
     <Compile Include="Daily Code\No Adjacent Repeating Characters.cs" />
     <Compile Include="Daily Code\Non-decreasing Array with Single Modification.cs" />
     <Compile Include="Daily Code\Nth Fibonacci Number.cs" />
+    <Compile Include="Daily Code\Number of Cousins.cs" />
     <Compile Include="Daily Code\Number of Ways to Climb Stairs.cs" />
     <Compile Include="Daily Code\Product of Array Except Self.cs" />
     <Compile Include="Daily Code\Queue Using Two Stacks.cs" />
