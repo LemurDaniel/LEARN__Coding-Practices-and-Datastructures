@@ -227,7 +227,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Spread_Sheet_Column_Title(); //Not Working**
             //  aufgabe = new Compare_Version_Numbers();
             //  aufgabe = new Consecutive_Ones();
-            aufgabe = new Number_of_Cousins();
+            //  aufgabe = new Number_of_Cousins();
+            aufgabe = new Character_Map();
 
             //----------------------------------------------
             /* Daily Coding Problem */

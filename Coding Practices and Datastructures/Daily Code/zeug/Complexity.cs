@@ -51,6 +51,6 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             return this;
         }
 
-        public override string ToString() => (time != null ? "---> Time: " + time + "\n" : "") + (space != null ? "---> Space: " + space : "") + (detail != null ? "\n---> "+detail:"");
+        public override string ToString() => ""+(time != null ? "---> Time: " + time + "\n" : "") + (space != null ? "---> Space: " + space : "") + (detail != null ? "\n---> "+detail:"");
     }
 }

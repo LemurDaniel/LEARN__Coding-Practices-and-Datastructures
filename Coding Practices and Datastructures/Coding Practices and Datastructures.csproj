@@ -52,6 +52,7 @@
     <Compile Include="Daily Code\Arithmetic Binary Tree.cs" />
     <Compile Include="Daily Code\Binary Tree with Minimum Level.cs" />
     <Compile Include="Daily Code\Buddy Strings.cs" />
+    <Compile Include="Daily Code\Character Map.cs" />
     <Compile Include="Daily Code\Circle of Chained Words.cs" />
     <Compile Include="Daily Code\Compare Version Numbers.cs" />
     <Compile Include="Daily Code\Consecutive Ones.cs" />

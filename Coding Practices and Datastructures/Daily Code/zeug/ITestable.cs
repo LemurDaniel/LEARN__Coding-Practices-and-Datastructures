@@ -71,6 +71,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 this.baseClass = baseClass;
                 this.description = description;
                 this.success = false;
+                this.complexity = new Complexity(null, null);
             }
 
             public void Reset()
