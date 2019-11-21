@@ -72,6 +72,8 @@
     <Compile Include="Daily Code\Find the Single Element in an Array of Duplicates.cs" />
     <Compile Include="Daily Code\First and Last Indices of an Element in a Sorted Array.cs" />
     <Compile Include="Daily Code\First Missing Positive Integer.cs" />
+    <Compile Include="Daily Code\First Recurring Character.cs" />
+    <Compile Include="Daily Code\Flatten Dictionary.cs" />
     <Compile Include="Daily Code\Floor and Ceiling of a Binary Search Tree.cs" />
     <Compile Include="Daily Code\Full Binary Tree.cs" />
     <Compile Include="Daily Code\Get all Values at a Certain Height in a Binary Tree.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Daily Code\Min Stack DailyCode.cs" />
     <Compile Include="Daily Code\Minimal Removals for Valid Parenthesises.cs" />
     <Compile Include="Daily Code\Minimum Size Subarray Sum.cs" />
+    <Compile Include="Daily Code\Nearest Points.cs" />
     <Compile Include="Daily Code\No Adjacent Repeating Characters.cs" />
     <Compile Include="Daily Code\Non-decreasing Array with Single Modification.cs" />
     <Compile Include="Daily Code\Nth Fibonacci Number.cs" />

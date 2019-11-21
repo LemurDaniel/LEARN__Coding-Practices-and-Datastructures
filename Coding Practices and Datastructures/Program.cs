@@ -228,7 +228,9 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Compare_Version_Numbers();
             //  aufgabe = new Consecutive_Ones();
             //  aufgabe = new Number_of_Cousins();
-            aufgabe = new Character_Map();
+            //  aufgabe = new Character_Map();
+            //  aufgabe = new Nearest_Points();
+            aufgabe = new First_Recurring_Character();
 
             //----------------------------------------------
             /* Daily Coding Problem */
