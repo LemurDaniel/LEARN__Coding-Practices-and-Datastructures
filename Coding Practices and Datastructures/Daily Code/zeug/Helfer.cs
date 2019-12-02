@@ -79,8 +79,8 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             public static int IndexAddCols(int index, int add, V[,] mat) => EncodePos(GetRow(index, mat), Math.Min(Math.Max(GetCol(index, mat) + add, mat.GetLength(1) - 1), 0), mat);
             public static int IndexAddRows(int index, int add, V[,] mat) => EncodePos(Math.Min(Math.Max(GetRow(index, mat) + add, mat.GetLength(0) - 1), 0), GetCol(index, mat), mat);
 
-            public String MatrixAusgabe(string s="", int spacing = 2) => MatrixAusgabe(s, mat, spacing);
-            public static String MatrixAusgabe(string s, V[,] mat, int spacing = 2)
+            public String MatrixAusgabe(string s="", int spacing = 4) => MatrixAusgabe(s, mat, spacing);
+            public static String MatrixAusgabe(string s, V[,] mat, int spacing = 4)
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append(s+"\n");
@@ -161,7 +161,6 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 }
                 return matrix;
             }
-
             public override string ToString() => MatrixAusgabe();
         }
 
