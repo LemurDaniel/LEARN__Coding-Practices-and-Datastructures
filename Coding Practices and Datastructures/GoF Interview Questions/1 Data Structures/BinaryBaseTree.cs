@@ -588,6 +588,35 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             return vals;
         }
 
+        public int GetLevelOfTreeSum() // root == 1
+        {
+            if (root == null) throw new InvalidOperationException("No values Present");
+
+            IBTreeNode<V> node;
+            Queue<IBTreeNode<V>> q = new Queue<IBTreeNode<V>>();
+            q.Enqueue(root);
+            q.Enqueue(null);
+
+            int currSum = 0, sum = 0, level = -1;
+            while (true)
+            {
+                node = q.Dequeue();
+                currSum += node.Val.GetHashCode();
+                if (node.Left != null) q.Enqueue(node.Left);
+                if (node.Right != null) q.Enqueue(node.Right);
+
+
+                if (q.Peek() == null)
+                {
+                    q.Dequeue();
+                    if (currSum > sum)  sum = currSum;
+                    if (q.Count == 0) return level;
+                    else q.Enqueue(null);   //Seperates Levels
+                    level++;
+                }
+            }
+        }
+
         public int GetNumberOfUnivalSubtreesRecursive() => root == null ? 0 : root.GetNumberOfUnvialSubtreesRecursiveStart();
         public int GetNumberOfUnivalSubtreesRecursiveMethod2() => root == null ? 0 : Math.Abs(root.GetNumberOfUnvialSubtreesRecursiveMethod2());
         public void RemoveNodeVals(V val) => root?.RemoveNodeValsRecursive(val);
