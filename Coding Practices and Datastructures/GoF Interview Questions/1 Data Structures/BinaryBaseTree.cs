@@ -330,6 +330,14 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         }
 
+        public override bool CheckForSubtree(IBTree<V> tree)
+        {
+            if (this.val.Equals(tree.GetRoot().Val) && this.ContainsSubtree(tree.GetRoot())) return true;
+            if (this.left != null) return this.Left.CheckForSubtree(tree);
+            if (this.right != null) return this.Right.CheckForSubtree(tree);
+            return false;
+        }
+
         public override IBTreeNode<V> GetNodeByValue(V val){
             if (this.val.Equals(val)) return this;
             if (this.left != null)
@@ -410,9 +418,9 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public override string ToString()
         {
             return SerializeIt();
-            if (root == null) return "";
-            StringBuilder sb = Root.GenerateStringIt();
-            return sb.ToString();
+            //if (root == null) return "";
+          //  StringBuilder sb = Root.GenerateStringIt();
+           // return sb.ToString();
         }
         public override bool Equals(object obj)
         {
@@ -543,7 +551,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             return list;
         }
 
-        public IBTreeNode<V> GetDeepestNodeRecursive() => root == null ? null : root.GetDeepestNodeRecursive();
+        public IBTreeNode<V> GetDeepestNodeRecursive() => root?.GetDeepestNodeRecursive();
         public IBTreeNode<V> GetDeepestNodeIt()
         {
             Queue<IBTreeNode<V>> q = new Queue<IBTreeNode<V>>();
@@ -591,7 +599,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public int GetNumberOfUnivalSubtreesRecursive() => root == null ? 0 : root.GetNumberOfUnvialSubtreesRecursiveStart();
         public int GetNumberOfUnivalSubtreesRecursiveMethod2() => root == null ? 0 : Math.Abs(root.GetNumberOfUnvialSubtreesRecursiveMethod2());
         public void RemoveNodeVals(V val) => root?.RemoveNodeValsRecursive(val);
-        public IBTreeNode<V> GetLargestBst(Func<V, V, int> compare) => root == null ? null : root.GetLargestBst(compare);
+        public IBTreeNode<V> GetLargestBst(Func<V, V, int> compare) => root?.GetLargestBst(compare);
 
         // TRAVERSAL
         // Depth First
@@ -691,7 +699,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                 int nodeCount = 0;
                 if (node.Left != null) nodeCount++;
                 if (node.Right != null) nodeCount++;
-                IBTreeNode<V> tmp = node.Left != null ? node.Left : node.Right;
+                IBTreeNode<V> tmp = node.Left ?? node.Right;
                 if (nodeCount == 1)
                 {                  
                     node.Left = tmp.Left;
