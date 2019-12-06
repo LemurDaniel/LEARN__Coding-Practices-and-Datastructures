@@ -35,6 +35,15 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         public abstract void MakeCompleteRecursive();
 
+        public abstract bool CheckForSubtree(IBTree<V> tree);
+        protected bool ContainsSubtree(IBTreeNode<V> tree)
+        {
+            if (!this.Val.Equals(tree.Val)) return false;
+            if (tree.Right != null && this.Right != null && !this.Right.ContainsSubtree(tree.Right)) return false;
+            if (tree.Left != null && this.Left != null && !this.Left.ContainsSubtree(tree.Left)) return false;
+            return true;
+        }
+
         public abstract string SerializeRecursive(Func<V, string> serializer);
         public abstract void DeSerializeRecursive(string[] arr, Func<string, V> deserializer, Func<V, IBTreeNode<V>> CreateNode);
         public static IBTreeNode<V> DeSerializeRecursive(string s, Func<string, V> deserializer, Func<V, IBTreeNode<V>> CreateNode)
@@ -79,6 +88,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         IBTree<V> MakeCompleteIterative();
         IBTree<V> MakeCompleteRecursive();
+
+        int GetLevelOfTreeSum();
 
         string RightSide_View_Queue();
         string RightSide_View_Stack();
