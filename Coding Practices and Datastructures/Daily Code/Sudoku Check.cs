@@ -103,10 +103,10 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
         public static void ValidateSudoku(Helfer.Matrix<int> mat, InOut.Ergebnis erg) => erg.Setze(ValidateSudoku(mat));
 
-        public static bool ValidateSudoku(Helfer.Matrix<int> mat)
+        protected static bool ValidateSudoku(Helfer.Matrix<int> mat, Stack<int> last = null, int debug = 1)
         {
-            Stack<int> last = new Stack<int>();
-            for(int i=0; i<mat.Length; i++)
+            last = last ?? new Stack<int>();
+            for(int i = last.Count > 0 ? last.Pop() : 0; i<mat.Length; i++)
             {
                 //while (mat.GetElementAtIndex(i) > 0) if (++i >= mat.Length) return true;
                 if (mat.GetElementAtIndex(i) > 0) {
@@ -119,10 +119,12 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                     if (Find_fitting_value(mat, i)) last.Push(i);
                     else if (last.Count == 0) return false;
                     else i = last.Pop()-1; //-1 Compensates for i++
-                    Console.WriteLine("index: " + i + "\n" + mat);
-                    Console.WriteLine(Helfer.Arrayausgabe(last.ToArray()));
+                    
+                    if(debug > 0) Console.WriteLine("index: " + i + "\n" + mat);
+                    if(debug > 0) Console.WriteLine(Helfer.Arrayausgabe(last.ToArray()));
                 }
             }
+            if (debug == 0) Console.WriteLine(mat);
             return true;
         }
 
