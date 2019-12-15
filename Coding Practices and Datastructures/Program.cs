@@ -235,7 +235,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Picking_Up_Change();
             //  aufgabe = new Reverse_Words();
             //  aufgabe = new Level_of_tree_with_Maximum_Sum();
-            aufgabe = new Find_Subtree();
+            //  aufgabe = new Find_Subtree();
+            aufgabe = new Sudoku_Check();
 
             //----------------------------------------------
             /* Daily Coding Problem */

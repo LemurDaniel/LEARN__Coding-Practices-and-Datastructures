@@ -124,6 +124,7 @@
     <Compile Include="Daily Code\Spiral Traversal of Grid.cs" />
     <Compile Include="Daily Code\Spread Sheet Column Title.cs" />
     <Compile Include="Daily Code\String Compression.cs" />
+    <Compile Include="Daily Code\Sudoku Check.cs" />
     <Compile Include="Daily Code\Trapping Rainwater.cs" />
     <Compile Include="Daily Code\Tree Serialization.cs" />
     <Compile Include="Daily Code\Two-Sum.cs" />
