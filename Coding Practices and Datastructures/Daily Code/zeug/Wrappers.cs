@@ -11,9 +11,10 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         //private bool isNull;
         private V val;
         public bool IsNull { get; set; }
-        public V Val { get => val; }
+        public V Val { get { if (IsNull) throw new InvalidOperationException("Value is Null"); else return val; } set => Value(value); }
         public void Value(object obj)
         {
+            IsNull = false;
             if (obj == null) IsNull = true;
             else if (!obj.GetType().Equals(typeof(V))) IsNull = true;
             else val = (V)obj;
@@ -21,6 +22,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
         //KONSTRUKTOR
         public Wrapper(V val) => Value(val);
+        public Wrapper() => IsNull = true;
 
         public override string ToString() => IsNull ? "<NULL>" : val.ToString();
         public override bool Equals(object obj)

@@ -118,6 +118,7 @@
     <Compile Include="Daily Code\Reverse_A_Linked_List.cs" />
     <Compile Include="Daily Code\Room Scheduling.cs" />
     <Compile Include="Daily Code\Running Median.cs" />
+    <Compile Include="Daily Code\Schedule Tasks.cs" />
     <Compile Include="Daily Code\Shifted String.cs" />
     <Compile Include="Daily Code\SimpleCalculator.cs" />
     <Compile Include="Daily Code\Sort Colors.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Daily Code\Spread Sheet Column Title.cs" />
     <Compile Include="Daily Code\String Compression.cs" />
     <Compile Include="Daily Code\Sudoku Check.cs" />
+    <Compile Include="Daily Code\Sudoku Get All Solutions.cs" />
     <Compile Include="Daily Code\Trapping Rainwater.cs" />
     <Compile Include="Daily Code\Tree Serialization.cs" />
     <Compile Include="Daily Code\Two-Sum.cs" />

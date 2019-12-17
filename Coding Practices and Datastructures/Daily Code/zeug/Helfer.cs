@@ -161,6 +161,19 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 }
                 return matrix;
             }
+
+            public Matrix<V> GetCopy(Func<V, V> copyProvider = null)
+            {
+                V[,] copy = new V[this.RowNum, this.ColNum];
+                for(int i=0; i<copy.GetLength(0); i++)
+                {
+                    for(int j=0; j<copy.GetLength(1); j++)
+                    {
+                        copy[i, j] = copyProvider != null ? copyProvider(this.mat[i, j]) : this.mat[i,j];
+                    }
+                }
+                return new Matrix<V>(copy);
+            }
             public override string ToString() => MatrixAusgabe();
         }
 
@@ -211,15 +224,21 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         }
 
         public static String Arrayausgabe<V>(V[] arr) => Arrayausgabe<V>("", arr);
-        public static String Arrayausgabe<V>(string s, V[] arr, bool len = false, string concat = ", ", int maxLen = 1_000_000)
+        public static String Arrayausgabe<V>(string s, V[] arr, bool len = false, string concat = ", ", V[] replace = null, string[] replacements = null, int maxLen = 1_000_000)
         {
             if (arr == null) return "{ <NULL> }";
             if (arr.Length == 0) return s;
+
+            Dictionary<V, string> repMap = new Dictionary<V, string>();
+            if (replace != null && replacements != null)
+                for (int i = (replace.Length <= replacements.Length ? replace.Length : replacements.Length) - 1; i>=0; i--) repMap.Add(replace[i], replacements[i]);
+
             StringBuilder sb = new StringBuilder();
             sb.Append(s + " { " + arr[0]);
             for (int i = 1; i < arr.Length; i++)
             {
-                sb.Append(concat + arr[i]);
+                string placement = repMap.ContainsKey(arr[i]) ? repMap[arr[i]] : arr[i].ToString();
+                sb.Append(concat + placement);
                 if (i > maxLen)
                 {
                     sb.Append(concat+"...");

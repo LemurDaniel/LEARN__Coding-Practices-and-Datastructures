@@ -50,6 +50,11 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Queue
             return data;
         }
 
+        public virtual V Peek()
+        {
+            if (IsEmpty()) throw new InvalidOperationException("Die Queue ist Leer");
+            return queue[ausgabe];
+        }
 
 
         public void AddStringConverter(Func<V, string> converter) => this.stringConverter = converter;

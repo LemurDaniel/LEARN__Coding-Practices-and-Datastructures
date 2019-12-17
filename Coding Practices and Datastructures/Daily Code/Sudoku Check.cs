@@ -53,7 +53,8 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             public InOut(string s, bool b) : base(Helfer.Matrix<int>.GetIntMatrix(s), b, true)
             {
                 AddSolver(ValidateSudoku);
-                //HasMaxDur = false;
+                copiedInputProvider = arg => arg.GetCopy();
+                HasMaxDur = false;
             }
         }
 
@@ -119,7 +120,6 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                     if (Find_fitting_value(mat, i)) last.Push(i);
                     else if (last.Count == 0) return false;
                     else i = last.Pop()-1; //-1 Compensates for i++
-                    
                     if(debug > 0) Console.WriteLine("index: " + i + "\n" + mat);
                     if(debug > 0) Console.WriteLine(Helfer.Arrayausgabe(last.ToArray()));
                 }
