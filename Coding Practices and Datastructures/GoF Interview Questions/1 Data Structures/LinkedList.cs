@@ -176,6 +176,21 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                 });
             }
 
+            public LinkedList<V> RemoveDuplicatesRecursive() => RemoveDuplicatesRecursive(new HashSet<V>(new V[] { Root.val }));
+            private LinkedList<V> RemoveDuplicatesRecursive(HashSet<V> set = null)
+            {
+                if(this.next == null) return this.List;
+                if(set.Contains(this.next.val))
+                {
+                    this.RemoveNext();
+                    return this.RemoveDuplicatesRecursive(set);
+                }else
+                {
+                    set.Add(this.next.val);
+                    return this.next.RemoveDuplicatesRecursive(set);
+                }
+            }
+
                // k i l l i k
                // k i l i k
             public bool IsPalindromicStackSolve(Func<V, V, bool> eq = null)
@@ -308,6 +323,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             return list;
         }
 
+
+
         /* METHODS */
         public override string ToString() => root != null ? root.PrintFromNode():"<NULL>";
         public override int GetHashCode() => base.GetHashCode();
@@ -357,6 +374,19 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             return this;
         }
 
+        public LinkedList<V> RemoveDuplicatesIterative()
+        {
+            HashSet<V> set = new HashSet<V>();
+            set.Add(Root.Val);
+            LinkedList<V>.Node.Operator exec = node =>
+            {
+                if (node.Next == null) return;
+                else if (set.Contains(node.Next.Val)) node.RemoveNext();
+                else set.Add(node.Next.Val);
+            };
+            Root.OperateOnNodes(exec);
+            return this;
+        }
 
 
         // Remove K-th Element

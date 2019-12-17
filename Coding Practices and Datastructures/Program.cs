@@ -239,7 +239,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Sudoku_Check();
             //  aufgabe = new Check_Sudoku_has_only_one_Solution();
             //  aufgabe = new Sudoku_Get_All_Solutions();
-            aufgabe = new Schedule_Tasks();
+            //  aufgabe = new Schedule_Tasks(); // Not Working
+            aufgabe = new Remove_Duplicate_From_Linked_List();
 
             //----------------------------------------------
             /* Daily Coding Problem */
