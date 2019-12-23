@@ -16,13 +16,19 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             public int Y;
             public int X;
 
+            public Point(string s)
+            {
+                string[] xy = s.Split(',');
+                this.X = int.Parse(xy[0].Trim());
+                this.Y = int.Parse(xy[1].Trim());
+            }
             public Point(int Y, int X)
             {
                 this.Y = Y;
                 this.X = X;
             }
 
-            public override string ToString() => string.Format("({0}, {1})", Y, X);
+            public override string ToString() => string.Format("({0}, {1})", X, Y);
             public override bool Equals(object obj)
             {
                 if (obj == this) return true;
@@ -36,6 +42,14 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 hashCode = hashCode * -1521134295 + Y.GetHashCode();
                 hashCode = hashCode * -1521134295 + X.GetHashCode();
                 return hashCode;
+            }
+
+            public static Point[] GetPointArray(string s)
+            {
+                string[] pointsStr = s.Split(';');
+                Point[] points = new Point[pointsStr.Length];
+                for (int i = 0; i < points.Length; i++) points[i] = new Point(pointsStr[i]);
+                return points;
             }
         }
 
@@ -211,6 +225,13 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
 
         // ARRAY
+        public static V[] GenerateSubArray<V>(V[] arr, int max, int min = 0) // Inclusive Borders!!
+        {
+            if (min < 0 || min > max) return arr;
+            V[] arrNew = new V[max - min + 1];
+            for (int i = 0; i < arr.Length && i < arrNew.Length; i++) arrNew[i] = arr[i+min];
+            return arrNew;
+        }
         public static V[] ArrayShuffle<V>(V[] arr)
         {
             List<V> list = new List<V>(arr);
@@ -224,7 +245,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         }
 
         public static String Arrayausgabe<V>(V[] arr) => Arrayausgabe<V>("", arr);
-        public static String Arrayausgabe<V>(string s, V[] arr, bool len = false, string concat = ", ", V[] replace = null, string[] replacements = null, int maxLen = 1_000_000)
+        public static String Arrayausgabe<V>(string s, V[] arr, bool len = false, string concat = ", ", V[] replace = null, string[] replacements = null, int[] range = null, int maxLen = 1_000_000)
         {
             if (arr == null) return "{ <NULL> }";
             if (arr.Length == 0) return s;
@@ -235,7 +256,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
             StringBuilder sb = new StringBuilder();
             sb.Append(s + " { " + arr[0]);
-            for (int i = 1; i < arr.Length; i++)
+            for (int i = range == null ? 1 : Math.Max(range[0],1); i < (range == null ? arr.Length : range[1]); i++)
             {
                 string placement = repMap.ContainsKey(arr[i]) ? repMap[arr[i]] : arr[i].ToString();
                 sb.Append(concat + placement);

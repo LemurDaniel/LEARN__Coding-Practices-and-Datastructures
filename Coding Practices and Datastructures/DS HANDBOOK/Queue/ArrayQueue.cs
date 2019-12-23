@@ -15,15 +15,21 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Queue
 
         protected V[] queue;
         protected int eingabe = 0, ausgabe = 0;
+        protected bool overrideOnFull = false;
         private bool isFull = false;
         private Func<V, string> stringConverter = s => s.ToString()+" "; 
 
         public ArrayQueue() => queue = new V[DEFAULT_SIZE];
-        public ArrayQueue(int size) => queue = new V[Math.Max(1, size)];
+        public ArrayQueue(int size, bool overrideOnFull = false)
+        {
+            queue = new V[Math.Max(1, size)];
+            this.overrideOnFull = overrideOnFull;
+        }
 
 
         public bool IsFull { get => isFull; }
         protected int AbsPosEingabe { get => eingabe >= ausgabe && !isFull ? eingabe : eingabe + queue.Length; }
+        protected int LastElement { get => (AbsPosEingabe - 1) % queue.Length; }
         public bool IsEmpty() => !isFull && ausgabe == eingabe;
 
 
@@ -35,9 +41,19 @@ namespace Coding_Practices_and_Datastructures.DS_HANDBOOK.Queue
 
         public virtual void Enqueue(V data)
         {
-            if (isFull) throw new InvalidOperationException("Die Queue ist Voll");   
+            if (isFull && !overrideOnFull) throw new InvalidOperationException("Die Queue ist Voll");
+            else if (isFull && overrideOnFull) PopLast();
             queue[eingabe] = data;
             Enqueued();          
+        }
+
+        protected virtual V PopLast()
+        {
+            if (IsEmpty()) throw new Exception("Queue is Empty");
+            V payload = queue[eingabe];
+            eingabe = LastElement;
+            isFull = false;
+            return payload;
         }
 
         public virtual V Dequeue()
