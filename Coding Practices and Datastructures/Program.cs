@@ -242,7 +242,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Schedule_Tasks(); // Not Working
             //  aufgabe = new Remove_Duplicate_From_Linked_List();
             //  aufgabe = new Remove_One_Layer_of_Parenthesis();
-            aufgabe = new Find_Closest_Points();
+            //  aufgabe = new Find_Closest_Points();
+            aufgabe = new Primes();
 
             //----------------------------------------------
             /* Daily Coding Problem */

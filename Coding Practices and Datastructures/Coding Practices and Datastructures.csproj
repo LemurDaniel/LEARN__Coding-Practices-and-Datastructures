@@ -109,6 +109,7 @@
     <Compile Include="Daily Code\Number of Ways to Climb Stairs.cs" />
     <Compile Include="Daily Code\Optimized Sum List.cs" />
     <Compile Include="Daily Code\Picking Up Change.cs" />
+    <Compile Include="Daily Code\Primes.cs" />
     <Compile Include="Daily Code\Product of Array Except Self.cs" />
     <Compile Include="Daily Code\Queue Using Two Stacks.cs" />
     <Compile Include="Daily Code\Remove Consecutive Nodes that Sum to 0.cs" />
