@@ -243,7 +243,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Remove_Duplicate_From_Linked_List();
             //  aufgabe = new Remove_One_Layer_of_Parenthesis();
             //  aufgabe = new Find_Closest_Points();
-            aufgabe = new Primes();
+            //  aufgabe = new Primes();
+            aufgabe = new Convert_To_Hex();
 
             //----------------------------------------------
             /* Daily Coding Problem */

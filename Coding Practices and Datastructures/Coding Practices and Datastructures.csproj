@@ -58,6 +58,7 @@
     <Compile Include="Daily Code\Compare Version Numbers.cs" />
     <Compile Include="Daily Code\Consecutive Ones.cs" />
     <Compile Include="Daily Code\Contiguous Subarray with Maximum Sum.cs" />
+    <Compile Include="Daily Code\Convert To Hex.cs" />
     <Compile Include="Daily Code\Count Number of Unival Subtrees.cs" />
     <Compile Include="Daily Code\Course Prerequisites.cs" />
     <Compile Include="Daily Code\Create a balanced binary search tree from a sorted list.cs" />

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.MathEx
 {
-    class Base_7 : Testable
+    public class Base_7 : Testable
     {
-        private class Input
+        protected class Input
         {
             public readonly int z;
             public readonly int b;
@@ -21,7 +21,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.MathEx
             public override string ToString() => "Zahl: "+z + "\nBase: " + b;
         }
 
-        private class Output
+        protected class Output
         {
             public readonly string z;
             public readonly int z2;
@@ -41,7 +41,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.MathEx
             public override int GetHashCode() => base.GetHashCode();
         }
 
-        private class InOut : InOutBase<Input, Output>
+        protected class InOut : InOutBase<Input, Output>
         {
             public InOut(Input i, Output s) : base (i, s)
             {
