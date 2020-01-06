@@ -374,6 +374,17 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             return carr;
         }
 
+        public static string[] AssembleString(string s)
+        {
+            string[] arr = null;
+            if (s.Contains(";")) arr = s.Split(';');
+            else if (s.Contains(",")) arr = s.Split(',');
+            else return arr;
+
+            for (int i = 0; i < arr.Length; i++) arr[i] = arr[i].Trim();
+            return arr;
+        }
+
         private static int[] Assemble2(string s) => Assemble2(s, ';');
         private static int[] Assemble2(string s, char spliter)
         {

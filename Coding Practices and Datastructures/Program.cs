@@ -245,7 +245,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Find_Closest_Points();
             //  aufgabe = new Primes();
             //  aufgabe = new Convert_To_Hex();
-            aufgabe = new Remove_Duplicate_Adjacent_Characters();
+            //  aufgabe = new Remove_Duplicate_Adjacent_Characters();
+            aufgabe = new Common_Characters();
 
             //----------------------------------------------
             /* Daily Coding Problem */
