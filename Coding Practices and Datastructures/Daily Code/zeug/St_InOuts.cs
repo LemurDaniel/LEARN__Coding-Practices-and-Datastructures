@@ -8,6 +8,25 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 {
     class St_InOuts
     {
+        public class Primary_Arr<O, N> : InOutBase<O, N[]>
+        {
+            public Primary_Arr(O o, N[] n, bool len = false, bool shuffle = false, bool checkOrder = true) : base(o, shuffle ? Helfer.ArrayShuffle(n) : n, true)
+            {
+                outputStringConverter = arg => Helfer.Arrayausgabe<N>("Erwartet: ", arg, len);
+                ergStringConverter = arg => Helfer.Arrayausgabe<N>("Ausgabe: ", arg, len);
+                if (checkOrder) CompareOutErg = Helfer.ArrayVergleich<N>;
+                else CompareOutErg = Helfer.ArrayVergleichAnyOrder<N>;
+            }
+        }
+
+        public class Primary_IntArr<O> : Primary_Arr<O, int>
+        {
+            public Primary_IntArr(O o, String s, bool len = false, bool shuffle = false, bool checkOrder = true) : base(o, Helfer.Assemble(s), len, shuffle, checkOrder)
+            {
+
+            }
+        }
+
         public class Arr_Primary<O, N> : InOutBase<O[], N>
         {
             public Arr_Primary(O[] o, N n, bool len = false, bool shuffle = false) : base(shuffle ? Helfer.ArrayShuffle(o) : o, n, true)

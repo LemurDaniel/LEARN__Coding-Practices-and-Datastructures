@@ -102,6 +102,7 @@
     <Compile Include="Daily Code\Min Range Needed to Sort.cs" />
     <Compile Include="Daily Code\Min Stack DailyCode.cs" />
     <Compile Include="Daily Code\Minimal Removals for Valid Parenthesises.cs" />
+    <Compile Include="Daily Code\Minimum Number of Operations.cs" />
     <Compile Include="Daily Code\Minimum Size Subarray Sum.cs" />
     <Compile Include="Daily Code\Nearest Points.cs" />
     <Compile Include="Daily Code\No Adjacent Repeating Characters.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Daily Code\Running Median.cs" />
     <Compile Include="Daily Code\Schedule Tasks.cs" />
     <Compile Include="Daily Code\Shifted String.cs" />
+    <Compile Include="Daily Code\Shortest Distance to Character.cs" />
     <Compile Include="Daily Code\SimpleCalculator.cs" />
     <Compile Include="Daily Code\Sort Colors.cs" />
     <Compile Include="Daily Code\Sorting a list with 3 unique numbers.cs" />

@@ -246,14 +246,19 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Primes();
             //  aufgabe = new Convert_To_Hex();
             //  aufgabe = new Remove_Duplicate_Adjacent_Characters();
-            aufgabe = new Common_Characters();
+            //  aufgabe = new Common_Characters();
+            //  aufgabe = new Shortest_Distance_to_Character();
+            aufgabe = new Minimum_Number_of_Operations();
 
             //----------------------------------------------
             /* Daily Coding Problem */
             //2019
             // aufgabe = new _2019.Daily_Coding_Problem_157___Easy();
 
-            while (true) { aufgabe.Test(); }
+            //for (char c = 'A'; c <= 'z'; c++) Console.WriteLine("Char: "+c+" ==> "+((int)c));
+            //while (true) ;
+
+             while (true) { aufgabe.Test(); }
         }
 
     }
