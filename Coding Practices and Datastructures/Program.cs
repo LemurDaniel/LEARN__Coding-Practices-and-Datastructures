@@ -249,7 +249,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Common_Characters();
             //  aufgabe = new Shortest_Distance_to_Character();
             //  aufgabe = new Minimum_Number_of_Operations();
-            aufgabe = new Pascals_Triangle();
+            //  aufgabe = new Pascals_Triangle();
+            aufgabe = new Sum_Binary_Numbers();
 
             //----------------------------------------------
             /* Daily Coding Problem */

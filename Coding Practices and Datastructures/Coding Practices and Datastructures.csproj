@@ -138,6 +138,7 @@
     <Compile Include="Daily Code\String Compression.cs" />
     <Compile Include="Daily Code\Sudoku Check.cs" />
     <Compile Include="Daily Code\Sudoku Get All Solutions.cs" />
+    <Compile Include="Daily Code\Sum Binary Numbers.cs" />
     <Compile Include="Daily Code\Trapping Rainwater.cs" />
     <Compile Include="Daily Code\Tree Serialization.cs" />
     <Compile Include="Daily Code\Two-Sum.cs" />
