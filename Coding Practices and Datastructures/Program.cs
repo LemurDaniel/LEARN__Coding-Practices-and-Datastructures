@@ -250,7 +250,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Shortest_Distance_to_Character();
             //  aufgabe = new Minimum_Number_of_Operations();
             //  aufgabe = new Pascals_Triangle();
-            aufgabe = new Sum_Binary_Numbers();
+            //  aufgabe = new Sum_Binary_Numbers();
+            aufgabe = new Reverse_Integer_2();
 
             //----------------------------------------------
             /* Daily Coding Problem */
