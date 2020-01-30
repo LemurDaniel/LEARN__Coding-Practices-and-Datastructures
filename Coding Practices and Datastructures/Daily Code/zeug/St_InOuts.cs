@@ -21,10 +21,8 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
         public class Primary_IntArr<O> : Primary_Arr<O, int>
         {
-            public Primary_IntArr(O o, String s, bool len = false, bool shuffle = false, bool checkOrder = true) : base(o, Helfer.Assemble(s), len, shuffle, checkOrder)
-            {
-
-            }
+            public Primary_IntArr(O o, int[] arr, bool len = false, bool shuffle = false, bool checkOrder = true) : base(o, arr, len, shuffle, checkOrder){}
+            public Primary_IntArr(O o, String s, bool len = false, bool shuffle = false, bool checkOrder = true) : this(o, Helfer.Assemble(s), len, shuffle, checkOrder){}
         }
 
         public class Arr_Primary<O, N> : InOutBase<O[], N>
@@ -38,9 +36,8 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
         public class IntArr_Primary<O> : Arr_Primary<int, O>
         {
-            public IntArr_Primary(string s, O o, bool len = false, bool shuffle = false) : base(Helfer.Assemble(s), o, len, shuffle)
-            {
-            }
+            public IntArr_Primary(int[] arr, O o, bool len = false, bool shuffle = false) : base(arr, o, len, shuffle){}
+            public IntArr_Primary(string s, O o, bool len = false, bool shuffle = false) : this(Helfer.Assemble(s), o, len, shuffle){}
         }
 
         public class TwoArr<O, N> : InOutBase<O[], N[]>
@@ -57,16 +54,12 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         }
         public class SameArr<O> : TwoArr<O, O>
         {
-            public SameArr(O[] o, O[] n, bool len = false, bool shuffle = false, bool checkOrder = true) : base(o, n, len, shuffle, checkOrder)
-            {
-            }
+            public SameArr(O[] o, O[] n, bool len = false, bool shuffle = false, bool checkOrder = true) : base(o, n, len, shuffle, checkOrder){}
         }
 
         public class TwoIntArr: SameArr<int>
         {
-            public TwoIntArr(string arr, string arr1, bool len = false, bool shuffle = false, bool checkOrder = true) : base(Helfer.Assemble(arr), Helfer.Assemble(arr1), len, shuffle, checkOrder)
-            {
-            }
+            public TwoIntArr(string arr, string arr1, bool len = false, bool shuffle = false, bool checkOrder = true) : base(Helfer.Assemble(arr), Helfer.Assemble(arr1), len, shuffle, checkOrder){}
         }
     }
 }

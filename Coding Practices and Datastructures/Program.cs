@@ -252,7 +252,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Pascals_Triangle();
             //  aufgabe = new Sum_Binary_Numbers();
             //  aufgabe = new Reverse_Integer_2();
-            aufgabe = new Longest_Common_Prefix();
+            //  aufgabe = new Longest_Common_Prefix();
+            aufgabe = new Remove_Duplicates_From_Sorted_List();
 
             //----------------------------------------------
             /* Daily Coding Problem */

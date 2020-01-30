@@ -245,6 +245,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         }
 
         public static String Arrayausgabe<V>(V[] arr) => Arrayausgabe<V>("", arr);
+        public static String Arrayausgabe<V>(V[] arr, int min, int max) => Arrayausgabe<V>("", arr, false, ", ", null, null, new int[] { min, max });
         public static String Arrayausgabe<V>(string s, V[] arr, bool len = false, string concat = ", ", V[] replace = null, string[] replacements = null, int[] range = null, int maxLen = 1_000_000)
         {
             if (arr == null) return "{ <NULL> }";

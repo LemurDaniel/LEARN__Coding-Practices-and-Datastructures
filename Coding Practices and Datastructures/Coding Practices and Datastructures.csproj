@@ -120,6 +120,7 @@
     <Compile Include="Daily Code\Remove Consecutive Nodes that Sum to 0.cs" />
     <Compile Include="Daily Code\Remove Duplicate Adjacent Characters.cs" />
     <Compile Include="Daily Code\Remove Duplicate From Linked List.cs" />
+    <Compile Include="Daily Code\Remove Duplicates From Sorted List.cs" />
     <Compile Include="Daily Code\Remove k-th Last Element From Linked List.cs" />
     <Compile Include="Daily Code\Remove One Layer of Parenthesis.cs" />
     <Compile Include="Daily Code\Reverse Integer 2.cs" />
