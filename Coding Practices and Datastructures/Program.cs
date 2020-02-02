@@ -253,7 +253,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Sum_Binary_Numbers();
             //  aufgabe = new Reverse_Integer_2();
             //  aufgabe = new Longest_Common_Prefix();
-            aufgabe = new Remove_Duplicates_From_Sorted_List();
+            //  aufgabe = new Remove_Duplicates_From_Sorted_List();
+            aufgabe = new Range_Searching_in_a_Sorted_List();
 
             //----------------------------------------------
             /* Daily Coding Problem */

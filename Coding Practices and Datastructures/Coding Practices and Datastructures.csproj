@@ -117,6 +117,7 @@
     <Compile Include="Daily Code\Primes.cs" />
     <Compile Include="Daily Code\Product of Array Except Self.cs" />
     <Compile Include="Daily Code\Queue Using Two Stacks.cs" />
+    <Compile Include="Daily Code\Range Searching in a Sorted List.cs" />
     <Compile Include="Daily Code\Remove Consecutive Nodes that Sum to 0.cs" />
     <Compile Include="Daily Code\Remove Duplicate Adjacent Characters.cs" />
     <Compile Include="Daily Code\Remove Duplicate From Linked List.cs" />
