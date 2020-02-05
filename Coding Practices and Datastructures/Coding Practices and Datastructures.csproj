@@ -103,6 +103,7 @@
     <Compile Include="Daily Code\Min Range Needed to Sort.cs" />
     <Compile Include="Daily Code\Min Stack DailyCode.cs" />
     <Compile Include="Daily Code\Minimal Removals for Valid Parenthesises.cs" />
+    <Compile Include="Daily Code\Minimum Depth of a Binary Tree.cs" />
     <Compile Include="Daily Code\Minimum Number of Operations.cs" />
     <Compile Include="Daily Code\Minimum Size Subarray Sum.cs" />
     <Compile Include="Daily Code\Nearest Points.cs" />
