@@ -172,7 +172,16 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             else if (rightW == null) return leftW;
             else return leftW.depth > rightW.depth ? leftW : rightW;
         }
+        public override int GetMinimumDepthRecursive() => GetMinimumDepthRecursive();
+        private  int GetMinimumDepthRecursive(int level = 1, int leftVal = int.MaxValue)
+        {
+            if (leftVal < level) return leftVal;
 
+            if (left != null) leftVal = (left as BTreeNode<V>).GetMinimumDepthRecursive(level+1);
+            else return level;
+            if (right != null) return (right as BTreeNode<V>).GetMinimumDepthRecursive(level+1, leftVal);
+            else return level;
+        }
 
         public override int GetNumberOfUnvialSubtreesRecursiveStart() => GetNumberOfUnvialSubtreesRecursive()[0];
         /*
@@ -564,6 +573,27 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                 if (node.Right != null) q.Enqueue(node.Right);
             }
             return node;
+        }
+
+        public int GetMinimumDepthRecursive() => root != null ? root.GetMinimumDepthRecursive() : 0;
+        public int GetMinimumDepthIt()
+        {
+            if (root == null) return 0;
+            Queue<IBTreeNode<V>> q = new Queue<IBTreeNode<V>>();
+            IBTreeNode<V> node = root;
+            q.Enqueue(root);
+            int level = 1;
+
+            while (q.Count > 0)
+            {
+                node = q.Dequeue();
+                if (node.Left != null) q.Enqueue(node.Left);
+                else return level;
+                if (node.Right != null) q.Enqueue(node.Right);
+                else return level;
+                level++;
+            }
+            return level;
         }
 
         public V[] GetValuesAtHeight(int h) // root == 1

@@ -29,6 +29,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public abstract IBTreeNode<V> GetLargestBst(Func<V, V, int> compare);
 
         public abstract IBTreeNode<V> GetDeepestNodeRecursive();
+        public abstract int GetMinimumDepthRecursive();
         public abstract StringBuilder GenerateStringRecursive(StringBuilder sb);
         public abstract StringBuilder GenerateStringIt(int lenEl = 4, int spacing = 4);
         public abstract StringBuilder PrintRecursive(StringBuilder sb, TraverseType traverseType, string split = "; ");
@@ -77,6 +78,10 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         IList<V> GetLeafsRecursiveVals();
         IBTreeNode<V> GetDeepestNodeRecursive();
         IBTreeNode<V> GetDeepestNodeIt();
+
+        int GetMinimumDepthRecursive();
+        int GetMinimumDepthIt();
+
         V[] GetValuesAtHeight(int h);
         int GetNumberOfUnivalSubtreesRecursive();
         int GetNumberOfUnivalSubtreesRecursiveMethod2();
