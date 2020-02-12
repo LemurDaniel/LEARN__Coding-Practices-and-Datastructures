@@ -96,6 +96,7 @@
     <Compile Include="Daily Code\Longest Substring With K Distinct Characters.cs" />
     <Compile Include="Daily Code\Look and Say Sequence.cs" />
     <Compile Include="Daily Code\Lowest Common Ancestor of 2 Nodes in Binary Tree.cs" />
+    <Compile Include="Daily Code\Majority Element.cs" />
     <Compile Include="Daily Code\Max Stack.cs" />
     <Compile Include="Daily Code\Maximum Profit From Stocks.cs" />
     <Compile Include="Daily Code\Merge K Sorted Linked Lists.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Daily Code\No Adjacent Repeating Characters.cs" />
     <Compile Include="Daily Code\Non-decreasing Array with Single Modification.cs" />
     <Compile Include="Daily Code\Nth Fibonacci Number.cs" />
+    <Compile Include="Daily Code\Number of 1 Bits.cs" />
     <Compile Include="Daily Code\Number of Cousins.cs" />
     <Compile Include="Daily Code\Number of Ways to Climb Stairs.cs" />
     <Compile Include="Daily Code\Optimized Sum List.cs" />
