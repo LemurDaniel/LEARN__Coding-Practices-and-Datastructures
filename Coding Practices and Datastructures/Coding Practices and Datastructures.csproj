@@ -97,6 +97,7 @@
     <Compile Include="Daily Code\Look and Say Sequence.cs" />
     <Compile Include="Daily Code\Lowest Common Ancestor of 2 Nodes in Binary Tree.cs" />
     <Compile Include="Daily Code\Max Stack.cs" />
+    <Compile Include="Daily Code\Maximum Non Adjacent Sum.cs" />
     <Compile Include="Daily Code\Maximum Profit From Stocks.cs" />
     <Compile Include="Daily Code\Merge K Sorted Linked Lists.cs" />
     <Compile Include="Daily Code\Merge List Of Number Into Ranges.cs" />

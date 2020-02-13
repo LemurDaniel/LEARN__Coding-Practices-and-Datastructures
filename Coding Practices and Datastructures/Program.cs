@@ -255,7 +255,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Longest_Common_Prefix();
             //  aufgabe = new Remove_Duplicates_From_Sorted_List();
             //  aufgabe = new Range_Searching_in_a_Sorted_List();
-            aufgabe = new Minimum_Depth_of_a_Binary_Tree();
+            //  aufgabe = new Minimum_Depth_of_a_Binary_Tree();
+            aufgabe = new Maximum_Non_Adjacent_Sum();
 
             //----------------------------------------------
             /* Daily Coding Problem */
