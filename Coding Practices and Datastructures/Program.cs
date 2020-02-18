@@ -258,7 +258,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Minimum_Depth_of_a_Binary_Tree();
             //  aufgabe = new Majority_Element();
             //  aufgabe = new Number_of_1_Bits();
-            aufgabe = new Maximum_Non_Adjacent_Sum();
+            //  aufgabe = new Maximum_Non_Adjacent_Sum();
+            aufgabe = new Flatten_Binary_Tree();
 
             //----------------------------------------------
             /* Daily Coding Problem */

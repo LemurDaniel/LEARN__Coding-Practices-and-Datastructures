@@ -18,6 +18,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public abstract IBTreeNode<V> Insert(BTreeNode<V> n, object arg = null);
         public abstract void SwapRecursive();
 
+        public abstract IBTreeNode<V> LevelBTreeRecurisve();
         public abstract void GetLeafsRecursive(IList<IBTreeNode<V>> list);
         public abstract void GetLeafsRecursive(IList<V> list);
         public abstract int GetNumberOfUnvialSubtreesRecursiveStart();

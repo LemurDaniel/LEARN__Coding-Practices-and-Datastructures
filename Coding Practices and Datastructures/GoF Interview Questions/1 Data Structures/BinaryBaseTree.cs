@@ -144,6 +144,20 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             */
         }
 
+        public override IBTreeNode<V> LevelBTreeRecurisve()
+        {
+            IBTreeNode<V> node = null;      // placeholder for existing right nodes
+            if (left != null) node = left.LevelBTreeRecurisve();  // return rightmost node of new list
+            if (node != null) node.Right = this.right; // append right node to the end
+            else node = right;
+
+            if (left != null) this.right = left; // move left to right
+            left = null;
+
+            if (node == null) return this;
+            else return node.LevelBTreeRecurisve(); // return rightmost node
+        }
+
         public override int GetHeightRecursive() => Math.Max(left == null ? 0 : left.GetHeightRecursive(), right == null ? 0 : right.GetHeightRecursive()) + 1;
         public override void GetLeafsRecursive(IList<IBTreeNode<V>> list)
         {
