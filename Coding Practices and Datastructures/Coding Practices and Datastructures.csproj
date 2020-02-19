@@ -135,6 +135,7 @@
     <Compile Include="Daily Code\Reverse Words.cs" />
     <Compile Include="Daily Code\Reverse_A_Linked_List.cs" />
     <Compile Include="Daily Code\Room Scheduling.cs" />
+    <Compile Include="Daily Code\Root to Leaf numbers summed.cs" />
     <Compile Include="Daily Code\Running Median.cs" />
     <Compile Include="Daily Code\Schedule Tasks.cs" />
     <Compile Include="Daily Code\Shifted String.cs" />

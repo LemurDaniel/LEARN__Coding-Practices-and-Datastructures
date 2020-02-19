@@ -144,6 +144,18 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             */
         }
 
+        public override int SumRootToLeafRecursive(Func<V, int> intConverter = null, int num = 0)
+        {
+            num = num * 10 + intConverter(this.val);
+            if (left == null && right == null) return num;
+
+            int sum = 0;
+            if (left != null) sum += left.SumRootToLeafRecursive(intConverter, num);
+            if (right != null) sum += right.SumRootToLeafRecursive(intConverter, num);
+
+            return sum;
+        }
+
         public override IBTreeNode<V> LevelBTreeRecurisve()
         {
             IBTreeNode<V> node = null;      // placeholder for existing right nodes
