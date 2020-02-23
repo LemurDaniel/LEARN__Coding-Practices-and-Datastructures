@@ -94,11 +94,12 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 this.erg = erg;
                 complexity = new Complexity(time, space).AddDetail(detail);
                 if (baseClass.output != null) success = baseClass.CompareOutErg(baseClass.output, erg);
+                if (baseClass.output == null && erg == null) success = true;
             }
 
             public override string ToString()
             {
-                string s = "Solver ----> " + description + ": " +  (baseClass.output!=null ? Success:"I dunno ????") +"\n";
+                string s = "Solver ----> " + description + ": " +  Success +"\n";
                 if (exception != null) return s += "   --> " + exception.GetType().Name + ": " + exception.Message + "\n   --> METHODE: " + exception.TargetSite + "\n\n";
 
                 if (erg != null) s += (baseClass.ergStringConverter?.Invoke(erg) ?? erg.ToString()) + "\n";

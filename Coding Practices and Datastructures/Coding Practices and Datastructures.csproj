@@ -63,6 +63,8 @@
     <Compile Include="Daily Code\Count Number of Unival Subtrees.cs" />
     <Compile Include="Daily Code\Course Prerequisites.cs" />
     <Compile Include="Daily Code\Create a balanced binary search tree from a sorted list.cs" />
+    <Compile Include="Daily Code\Datastructs\Cache.cs" />
+    <Compile Include="Daily Code\Datastructs\LRU List.cs" />
     <Compile Include="Daily Code\Decode String Daily Code.cs" />
     <Compile Include="Daily Code\Deepest Node in a Binary Tree.cs" />
     <Compile Include="Daily Code\Determine if Linke List is Palindrome.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="Daily Code\Longest Substring With K Distinct Characters.cs" />
     <Compile Include="Daily Code\Look and Say Sequence.cs" />
     <Compile Include="Daily Code\Lowest Common Ancestor of 2 Nodes in Binary Tree.cs" />
+    <Compile Include="Daily Code\LRU Cache.cs" />
     <Compile Include="Daily Code\Majority Element.cs" />
     <Compile Include="Daily Code\Max Stack.cs" />
     <Compile Include="Daily Code\Maximum Non Adjacent Sum.cs" />
