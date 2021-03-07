@@ -153,6 +153,9 @@ namespace Basic_Calc.Code.V2
                 Operator.GetOperator<int>("%", OPtype.OPERATOR, ag => ag[1] % ag[0], 2);
                 Operator.GetOperator<int>("#", OPtype.OPERATOR, ag => -ag[0], MAX_PRE, 1);
 
+                Operator.GetOperator<double>("add", OPtype.OPERATOR, ag => ag[1] + ag[0], 1);
+                Operator.GetOperator<double>("div", OPtype.OPERATOR, ag => ag[1] / ag[0], 2);
+                Operator.GetOperator<double>("com", OPtype.OPERATOR, ag => ag[1].CompareTo(ag[0]), 3);
 
                 //FUNC
                 Operator.GetOperator<int>("Max", OPtype.FUNCTION, ag => Math.Max(ag[0], ag[1]));
@@ -168,7 +171,8 @@ namespace Basic_Calc.Code.V2
                 Operator.GetOperator("Size", OPtype.VAR, (st, c) => st.Push(st.Count));
                 Operator.GetOperator("Peek", OPtype.PROCEDURE, (st, c) => st.Push(st.Peek()));
                 Operator.GetOperator("Pop", OPtype.PROCEDURE, (st, c) => { if (st.Count > 0) st.Pop(); });
-                Operator.GetOperator("PopN", OPtype.OPERATOR, (st, c) => { int anz = st.Pop<int>(); c.Eval("[LOOPS]="+anz+"; while{LOOPS > 0} { Pop; [LOOPS] = (LOOPS-1); }"); }, MAX_PRE, 1, false);
+                Operator.GetOperator("Clear", OPtype.OPERATOR, (st, c) => { c.Eval("Popn size"); }, MAX_PRE, 1, false );
+                Operator.GetOperator("PopN", OPtype.OPERATOR, (st, c) => { int anz = st.Pop<int>(); c.Eval("[LOOPS]="+anz+"; while(LOOPS > 0) { Pop; LOOPS = (LOOPS + #1); }"); }, MAX_PRE, 1, false);
                 Operator.GetOperator("While", OPtype.BOOLEVAL, (st, c) =>
                 {
                     c.Eval("(");
@@ -203,6 +207,9 @@ namespace Basic_Calc.Code.V2
                 Operator.GetOperator<IComparable>("<", OPtype.OPERATOR, ag => ag[1].CompareTo(ag[0]) == -1, 3);
                 Operator.GetOperator<IComparable>(">=", OPtype.OPERATOR, ag => ag[1].CompareTo(ag[0]) > -1, 3);
                 Operator.GetOperator<IComparable>("<=", OPtype.OPERATOR, ag => ag[1].CompareTo(ag[0]) < 1, 3);
+
+                Operator.GetOperator<int>("double", OPtype.OPERATOR, ag => (double) ag[0], 4, 1);
+                Operator.GetOperator<double>("int", OPtype.OPERATOR, ag => (int)ag[0], 4, 1);
 
 
                 //Constants

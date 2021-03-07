@@ -116,7 +116,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Implement_Queue_Using_Stack();
             //  aufgabe = new Simplify_File_Path();
 
-            //aufgabe = new Basic_Calculator(); //Nicht fertig
+            //aufgabe = new Basic_Calculator(); // Nicht fertig
 
             //------>TWO POINTERS - EXCERCISES
             //  aufgabe = new Valid_Palindrom();
@@ -125,10 +125,10 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Implement_StrStr();
             //  aufgabe = new Trapping_Rainwater_GoF();
             //  aufgabe = new Find_the_Duplicate_Number(); //*
-            // aufgabe = new Find_the_Duplicate_Number2(); //Not Finished;
+            // aufgabe = new Find_the_Duplicate_Number2(); // Not Finished;
 
             //------>MATH - EXCERCISES
-            //  aufgabe = new Integer_to_English_Words();   //*
+            //  aufgabe = new Integer_to_English_Words();  //*
             //  aufgabe = new Base_7(); //*
             //  aufgabe = new Implement_Square_Root();
             //  aufgabe = new Implement_Sqrt_Double();
@@ -201,8 +201,8 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Merge_List_Of_Number_Into_Ranges();
             //  aufgabe = new Product_of_Array_Except_Self();
             //  aufgabe = new Given_two_arrays_write_a_function_to_compute_their_intersection();
-            //  aufgabe = new Longest_Increasing_Subsequence(); // NOT WORKING
             //  aufgabe = new Given_two_arrays_write_a_function_to_compute_their_intersection();
+            //  aufgabe = new Longest_Increasing_Subsequence(); // NOT WORKING
             //  aufgabe = new Angles_of_a_Clock();
             //  aufgabe = new Arithmetic_Binary_Tree_DailyCode();
             //  aufgabe = new Tree_Serialization();
@@ -261,7 +261,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Maximum_Non_Adjacent_Sum();
             //  aufgabe = new Flatten_Binary_Tree();
             //  aufgabe = new Root_to_Leaf_numbers_summed();
-            aufgabe = new LRU_Cache();
+            //  aufgabe = new LRU_Cache();
 
             //----------------------------------------------
             /* Daily Coding Problem */
@@ -271,7 +271,7 @@ namespace GoF_Coding_Interview_Algos
             //for (char c = 'A'; c <= 'z'; c++) Console.WriteLine("Char: "+c+" ==> "+((int)c));
             //while (true) ;
 
-             while (true) { aufgabe.Test(); }
+            while (true) { aufgabe.Test(); }
         }
 
     }

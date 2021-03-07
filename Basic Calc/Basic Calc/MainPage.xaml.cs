@@ -29,7 +29,15 @@ namespace Basic_Calc
         private ICalc calc = new Code.V2.Calc();
         private int mode = 1;
 
-        public MainPage() => this.InitializeComponent();
+        public MainPage()
+        {
+            this.InitializeComponent();
+            InputBox.Text = "while(size < 100) {size.}";
+            // InputBox.Text = "[tmp];[var1] = 0;[var2]= 1; while (var1 >= 0) { var1.; tmp = var2.; var2 = (var1 + var2); var1 = tmp. }";
+            // InputBox.Text  = "[var1] = 4; [var2] = 5; var1 + var2";
+            // InputBox.Text = "[var1] = E; var1; var1.; var1..";
+            calc.SetMode(mode);
+        }
 
         private void Click(object sender, RoutedEventArgs e)
         {
@@ -51,13 +59,15 @@ namespace Basic_Calc
             }
             else if (sender == BTNpush)
             {
-                //try
-                //{
+                try
+                {
                     calc.Eval(InputBox.Text);
-                //}catch (Exception ex)
-                //{
-                //    Console.WriteLine(ex);
-                //}
+                }catch (Exception ex)
+                {
+                    ((Box2.Child as ScrollViewer).Content as TextBlock).Text = ex.ToString();
+                    Box1.Visibility = Visibility.Collapsed;
+                    Box2.Visibility = Visibility.Visible;
+                }
                 InputBox.Text = "";
                 Click(BTNprintStack, e);
             }

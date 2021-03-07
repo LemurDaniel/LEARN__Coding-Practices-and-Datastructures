@@ -25,7 +25,7 @@
 
                     <Border CornerRadius="5" Background="White" Padding="10,10,10,10" x:Name="Box1">
                         <ScrollViewer HorizontalScrollBarVisibility="Auto" Height="550">
-                            <TextBlock TextWrapping="Wrap" FontSize="35" Text="aaaaa\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nna" MinHeight="550" />
+                            <TextBlock TextWrapping="Wrap" FontSize="35" Text="" MinHeight="550" />
                         </ScrollViewer>
                     </Border>
                 <Border CornerRadius="5" Background="White" Padding="10,10,10,10" Visibility="Collapsed" x:Name="Box2">
