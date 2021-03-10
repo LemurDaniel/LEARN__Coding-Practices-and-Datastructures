@@ -43,6 +43,10 @@ namespace Coding_Practices_and_Datastructures.Other
             desc = "Save 2 in var1, var1 in var2, 4 in var2, then add var2 to var3";
             calc = "2 var1 =   var1 var2 =   4 var3 =    var1 var3 + ";
             testcases.Add(new InOut(desc, calc, 6));
+
+            desc = "Save 2 in var1, var1 in var2, 4 in var2 \n --- Then reassign existing var1 with value 6 \n --- Finally add var2 to var3 \n--- since var2 references var1 it should use the new value of 6";
+            calc = "2 var1 =   var1 var2 =   4 var3 =   6 var1 =   var1 var3 + ";
+            testcases.Add(new InOut(desc, calc, 10));
         }
 
 
@@ -69,20 +73,20 @@ namespace Coding_Practices_and_Datastructures.Other
         // Main Solving Method
         private static void EvalRPN(string[] inp, InOut.Ergebnis erg)
         {
-            string input = inp[1];
+            string input = inp[1] + " ";
 
             // Create stack and map
             Stack<string> operands = new Stack<string>();
             IDictionary<string, string> var = new Dictionary<string, string>();
 
             // token and flag
-            string token = "";
-            bool flag_num = false;
+            string token = ""; // is either a number or a string
+            bool flag_num = false; // determines wether token gets interpreted as a number of a variable
   
             // loop through inputstring
             for(int i=0; i<input.Length+1; i++)
             {
-                // Make sure inputs always end with a whitespace, so that last char gets processed
+                // Make sure inputs always end with a whitespace without creating a new string, so that last char gets processed 
                 char c = (i < input.Length ? input[i]:' ');
 
                 if (c == VAR_INDICATOR)
@@ -92,25 +96,26 @@ namespace Coding_Practices_and_Datastructures.Other
                 bool isOpcode = isOperator(c);
                 bool isDigit = Char.IsDigit(c);
 
-                // vars can have numbers but must stat with a non-numeric-value
+                // vars can have numbers but must start with a non-numeric-value
                 if (token.Length == 0)
                     flag_num = isDigit;
 
                 // determine if token ends (when token has a value ==> len > 0)
                 // (isDigit && flag_num) checks if a digits ends due to a new variable
-                // (isOpcode || isWhitespace) checks if token ends due to whitespace or digit
+                // (isOpcode || isWhitespace) checks if token ends due to whitespace or opcode
                 bool isNewToken = token.Length > 0 && (isOpcode || Char.IsWhiteSpace(c) || (!isDigit && flag_num)); 
 
 
 
                 // Push vars and numbers
-                if (isNewToken && !isOpcode)
+                if (isNewToken)
                 {
                     if (flag_num) operands.Push(token);
                     else operands.Push(VAR_INDICATOR + token);
                     token = "";
                     continue;
                 }
+                // else add char to current token (as long as its not an opcode or a whitespace)
                 else if (!isOpcode && !Char.IsWhiteSpace(c))
                 {
                     token += c;
@@ -122,7 +127,8 @@ namespace Coding_Practices_and_Datastructures.Other
                 if (c == '=')
                 {
                     if (operands.Peek()[0] != VAR_INDICATOR) throw new InvalidOperationException("'" + operands.Peek() + "' is not a variable");
-                    var.Add(operands.Pop(), operands.Pop());
+                    if (!var.Keys.Contains(operands.Peek())) var.Add(operands.Pop(), operands.Pop());
+                    else var[operands.Pop()] = operands.Pop();
                 }
                 else if (isOpcode)
                 {
