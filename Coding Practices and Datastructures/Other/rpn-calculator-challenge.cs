@@ -81,12 +81,12 @@ namespace Coding_Practices_and_Datastructures.Other
 
             // token and flag
             string token = ""; // is either a number or a string
-            bool flag_num = false; // determines wether token gets interpreted as a number of a variable
+            bool flag_num = false; // determines wether token gets interpreted as a number or a variable || Only Integers work
   
             // loop through inputstring
             for(int i=0; i<input.Length+1; i++)
             {
-                // Make sure inputs always end with a whitespace without creating a new string, so that last char gets processed 
+                // Make sure input always end with a whitespace without creating a new string, so that last char gets processed 
                 char c = (i < input.Length ? input[i]:' ');
 
                 if (c == VAR_INDICATOR)
@@ -96,7 +96,7 @@ namespace Coding_Practices_and_Datastructures.Other
                 bool isOpcode = isOperator(c);
                 bool isDigit = Char.IsDigit(c);
 
-                // vars can have numbers but must start with a non-numeric-value
+                // vars can have numbers but must start with a non-numeric-value else it gets interpreted as a number
                 if (token.Length == 0)
                     flag_num = isDigit;
 
