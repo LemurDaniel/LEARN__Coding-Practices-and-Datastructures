@@ -44,6 +44,7 @@ namespace GoF_Coding_Interview_Algos
             /* OTHER */
             // aufgabe = new TreeTraversal();  //*
             // aufgabe = new MazeSolver();
+            aufgabe = new rpn_calculator_challenge();
 
 
             /* Daily Coding Problems  */

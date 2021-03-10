@@ -269,6 +269,7 @@
     <Compile Include="Other\Daily Coding Problem\Infinite 2D Grid [Easy].cs" />
     <Compile Include="Other\MazeSolver.cs" />
     <Compile Include="Other\Own\Something with Strings.cs" />
+    <Compile Include="Other\rpn-calculator-challenge.cs" />
     <Compile Include="Other\Tower of Hanoi\Hanoi.cs" />
     <Compile Include="Other\TreeTraversal.cs" />
     <Compile Include="Program.cs" />
