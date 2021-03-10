@@ -73,7 +73,7 @@ namespace Coding_Practices_and_Datastructures.Other
         // Main Solving Method
         private static void EvalRPN(string[] inp, InOut.Ergebnis erg)
         {
-            string input = inp[1] + " ";
+            string input = inp[1];
 
             // Create stack and map
             Stack<string> operands = new Stack<string>();
