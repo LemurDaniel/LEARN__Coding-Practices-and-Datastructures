@@ -22,6 +22,7 @@ using _2019 = Coding_Practices_and_Datastructures.Daily_Coding_Problem._2019;
 using Coding_Practices_and_Datastructures.Other.Own;
 using Coding_Practices_and_Datastructures.GoF_Interview_Questions.Bit_Manipulations;
 
+
 namespace GoF_Coding_Interview_Algos
 {
     class Program
@@ -29,11 +30,9 @@ namespace GoF_Coding_Interview_Algos
         static void Main(string[] args)
         {
             //new Design_Twitter.TwitterTest();
-
             //Hanoi.TowerAsync(10);
-
-
-            // new Konsolenbedinung();
+            //new Konsolenbedinung();
+            //Farey_Algorithmus algo = new Farey_Algorithmus(); while (true);
 
             ITestable aufgabe;
 
@@ -126,7 +125,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Implement_StrStr();
             //  aufgabe = new Trapping_Rainwater_GoF();
             //  aufgabe = new Find_the_Duplicate_Number(); //*
-            // aufgabe = new Find_the_Duplicate_Number2(); // Not Finished;
+            //     aufgabe = new Find_the_Duplicate_Number2(); // Not Finished;
 
             //------>MATH - EXCERCISES
             //  aufgabe = new Integer_to_English_Words();  //*

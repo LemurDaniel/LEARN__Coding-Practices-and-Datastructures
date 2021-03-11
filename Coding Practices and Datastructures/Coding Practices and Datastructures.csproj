@@ -267,6 +267,7 @@
     <Compile Include="GoF Interview Questions\Two Pointers\Trapping Rainwater.cs" />
     <Compile Include="GoF Interview Questions\Two Pointers\Valid Palindrom.cs" />
     <Compile Include="Other\Daily Coding Problem\Infinite 2D Grid [Easy].cs" />
+    <Compile Include="Other\Farey Algorithmus.cs" />
     <Compile Include="Other\MazeSolver.cs" />
     <Compile Include="Other\Own\Something with Strings.cs" />
     <Compile Include="Other\rpn-calculator-challenge.cs" />

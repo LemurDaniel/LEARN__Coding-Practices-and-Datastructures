@@ -207,22 +207,31 @@ namespace Coding_Practices_and_Datastructures.Coding_Train.Challenges.TicTacToe
             TicTacToe game;
             TicTacToeSolver solver;
             Option data;
-            while (true)
-            {
-                data = Konsolenbedinung.MainLoop("Wähle eine Größe: ", "", false, true);
-                if (data.IsExit) return;
-                else {
-                    try { game = new TicTacToe(int.Parse(data.DataContainer)); break; } catch {
-                        Console.WriteLine("Bitte geben sie eine gültige Zahl ein");
-                        Konsolenbedinung.Wait();                       
-                    }
-                }
-            }
 
             ISet<Option> opts = new HashSet<Option>();
             opts.Add(Option.GetOption("Ja", 'J', () => { }, () => false));
             opts.Add(Option.GetOption("Nein", 'N', () => { }, () => false));
             data = Konsolenbedinung.MainLoop("Zwei Spieler?[J/N]: ", "", false, false, false, opts);
+
+            if (data.kurz == 'J')
+            {
+                while (true)
+                {
+                    data = Konsolenbedinung.MainLoop("Wähle eine Größe: ", "", false, true);
+                    if (data.IsExit) return;
+                    else
+                    {
+                        try { game = new TicTacToe(int.Parse(data.DataContainer)); break; }
+                        catch
+                        {
+                            Console.WriteLine("Bitte geben sie eine gültige Zahl ein");
+                            Konsolenbedinung.Wait();
+                        }
+                    }
+                }
+            }
+            else
+                game = new TicTacToe(3);
 
             if (data.IsExit) return;
             if (data.kurz == 'N') solver = new TicTacToeSolver(game);

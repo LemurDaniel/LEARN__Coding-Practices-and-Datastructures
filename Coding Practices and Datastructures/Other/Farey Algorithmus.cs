@@ -4,7 +4,7 @@ using System.Text;
 
 
 // https://www.youtube.com/watch?v=7LKy3lrkTRA
-namespace Random_Coding.Maths
+namespace Coding_Practices_and_Datastructures.Other
 {
     class Farey_Algorithmus
     {

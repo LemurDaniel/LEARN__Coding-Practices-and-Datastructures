@@ -41,12 +41,16 @@ namespace Coding_Practices_and_Datastructures.Other
             testcases.Add(new InOut(desc, calc, 6));
 
             desc = "Save 2 in var1, var1 in var2, 4 in var2, then add var2 to var3";
-            calc = "2 var1 =   var1 var2 =   4 var3 =    var1 var3 + ";
+            calc = "2 var1 =   var1 var2 =   4 var3 =    var2 var3 + ";
             testcases.Add(new InOut(desc, calc, 6));
 
-            desc = "Save 2 in var1, var1 in var2, 4 in var2 \n --- Then reassign existing var1 with value 6 \n --- Finally add var2 to var3 \n--- since var2 references var1 it should use the new value of 6";
-            calc = "2 var1 =   var1 var2 =   4 var3 =   6 var1 =   var1 var3 + ";
+            desc = "Save 2 in var1, var1 in var2, 4 in var2 \n --- Then reassign existing var1 with value 6 \n --- Finally add var2 to var3 \n --- since var2 references var1 it should use the new value of 6";
+            calc = "2 var1 =   var1 var2 =   4 var3 =   6 var1 =   var2 var3 + ";
             testcases.Add(new InOut(desc, calc, 10));
+
+            desc = "Save (2 + 4)*6 in var1 \n --- save var1 * 2 in var2 \n --- add var1 and var2";
+            calc = "2 4 + 6 * var1 =    var1 2 * var2 =   var1 var2 +";
+            testcases.Add(new InOut(desc, calc, 108));
         }
 
 
