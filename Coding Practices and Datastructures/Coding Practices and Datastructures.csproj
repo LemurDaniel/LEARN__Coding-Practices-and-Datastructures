@@ -48,6 +48,7 @@
     <Compile Include="Coding Train\Challenges\TicTacToe\Konsolenbedinung.cs" />
     <Compile Include="Coding Train\Challenges\TicTacToe\TicTacToe.cs" />
     <Compile Include="Coding Train\Challenges\TicTacToe\TicTacToeSolver.cs" />
+    <Compile Include="Daily Code\Filter Binary Tree Leaves.cs" />
     <Compile Include="Daily Code\Angles of a Clock.cs" />
     <Compile Include="Daily Code\Arithmetic Binary Tree.cs" />
     <Compile Include="Daily Code\Binary Tree with Minimum Level.cs" />

@@ -39,9 +39,10 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         private class Node : BTreeNode<V> { }
         public static readonly BTreeNode<V> EMPTY = new Node();
         public bool IsEMPTY { get => this == EMPTY;  }
-
+  
         private BTreeNode() { }
         public BTreeNode(V val) => this.val = val;
+
 
         public override string ToString() => val.ToString();
         public override IBTreeNode<V> Insert(BTreeNode<V> n, object arg = null)
@@ -267,6 +268,20 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                 else left.RemoveNodeValsRecursive(val);
             }
         }
+        public override void RemoveLeavesK_Recursive(V val)
+        {
+            if (left != null)
+            {
+                left.RemoveLeavesK_Recursive(val);
+                if (left.IsLeaf && left.Val.Equals(val)) left = null;
+            }
+            if (right != null)
+            {
+                right.RemoveLeavesK_Recursive(val);
+                if (right.IsLeaf && right.Val.Equals(val)) right = null;
+            }
+        }
+
 
         //negative == false && int == node count
         public override IBTreeNode<V> GetLargestBst(Func<V, V, int> compare)
@@ -684,6 +699,13 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public int GetNumberOfUnivalSubtreesRecursive() => root == null ? 0 : root.GetNumberOfUnvialSubtreesRecursiveStart();
         public int GetNumberOfUnivalSubtreesRecursiveMethod2() => root == null ? 0 : Math.Abs(root.GetNumberOfUnvialSubtreesRecursiveMethod2());
         public void RemoveNodeVals(V val) => root?.RemoveNodeValsRecursive(val);
+
+        public IBTree<V> RemoveLeavesK_Recursive(V val)
+        {
+            root?.RemoveLeavesK_Recursive(val);
+            if (root.IsLeaf && root.Val.Equals(val)) root = null;
+            return this;
+        }
         public IBTreeNode<V> GetLargestBst(Func<V, V, int> compare) => root?.GetLargestBst(compare);
 
         // TRAVERSAL

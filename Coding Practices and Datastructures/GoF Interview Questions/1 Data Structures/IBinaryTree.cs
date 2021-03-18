@@ -14,6 +14,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public IBTreeNode<V> Left { get => left; set => left = value; }
         public IBTreeNode<V> Right { get => right; set => right = value; }
         public V Val { get => val; set => val = value; }
+        public bool IsLeaf { get => left == null && right == null; }
 
         public abstract IBTreeNode<V> Insert(BTreeNode<V> n, object arg = null);
         public abstract void SwapRecursive();
@@ -26,6 +27,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
         public abstract int[] GetNumberOfUnvialSubtreesRecursive();
         public abstract int GetNumberOfUnvialSubtreesRecursiveMethod2();
         public abstract void RemoveNodeValsRecursive(V val);
+        public abstract void RemoveLeavesK_Recursive(V val);
         public abstract int GetHeightRecursive();
 
         public abstract IBTreeNode<V> GetLargestBst(Func<V, V, int> compare);
@@ -90,6 +92,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
 
         void RemoveNodeVals(V val);
+        IBTree<V> RemoveLeavesK_Recursive(V val);
 
         IBTreeNode<V> GetLargestBst(Func<V, V, int> compare);
 

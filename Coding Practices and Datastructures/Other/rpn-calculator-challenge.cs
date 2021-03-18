@@ -83,9 +83,10 @@ namespace Coding_Practices_and_Datastructures.Other
             Stack<string> operands = new Stack<string>();
             IDictionary<string, string> var = new Dictionary<string, string>();
 
-            // token and flag
-            string token = ""; // is either a number or a string
-            bool flag_num = false; // determines wether token gets interpreted as a number or a variable || Only Integers work
+            // token is either a number or a string
+            string token = "";
+            // determines whether token gets interpreted as a number or a variable || Only Integers
+            bool flag_num = false; 
   
             // loop through inputstring
             for(int i=0; i<input.Length+1; i++)
@@ -108,7 +109,6 @@ namespace Coding_Practices_and_Datastructures.Other
                 // (isDigit && flag_num) checks if a digits ends due to a new variable
                 // (isOpcode || isWhitespace) checks if token ends due to whitespace or opcode
                 bool isNewToken = token.Length > 0 && (isOpcode || Char.IsWhiteSpace(c) || (!isDigit && flag_num)); 
-
 
 
                 // Push vars and numbers

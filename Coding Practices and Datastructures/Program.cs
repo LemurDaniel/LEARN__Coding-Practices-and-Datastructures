@@ -43,7 +43,7 @@ namespace GoF_Coding_Interview_Algos
             /* OTHER */
             // aufgabe = new TreeTraversal();  //*
             // aufgabe = new MazeSolver();
-            aufgabe = new rpn_calculator_challenge();
+            // aufgabe = new rpn_calculator_challenge();
 
 
             /* Daily Coding Problems  */
@@ -262,6 +262,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Flatten_Binary_Tree();
             //  aufgabe = new Root_to_Leaf_numbers_summed();
             //  aufgabe = new LRU_Cache();
+            aufgabe = new Filter_Binary_Tree_Leaves();
 
             //----------------------------------------------
             /* Daily Coding Problem */
