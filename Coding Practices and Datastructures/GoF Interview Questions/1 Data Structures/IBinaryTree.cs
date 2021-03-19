@@ -93,6 +93,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
 
         void RemoveNodeVals(V val);
         IBTree<V> RemoveLeavesK_Recursive(V val);
+        IBTree<V> RemoveLeavesK_Iterative(V val);
 
         IBTreeNode<V> GetLargestBst(Func<V, V, int> compare);
 

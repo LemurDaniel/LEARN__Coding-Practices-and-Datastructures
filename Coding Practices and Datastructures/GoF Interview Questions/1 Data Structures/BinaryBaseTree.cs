@@ -706,6 +706,36 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             if (root.IsLeaf && root.Val.Equals(val)) root = null;
             return this;
         }
+        public IBTree<V> RemoveLeavesK_Iterative(V val)
+        {
+            // Postorder (LRW) Traversal with two stacks 
+            IBTreeNode<V> node;
+            Stack<IBTreeNode<V>> stack = new Stack<IBTreeNode<V>>();
+            Stack<IBTreeNode<V>> postorder = new Stack<IBTreeNode<V>>();
+            stack.Push(root);
+
+            while(stack.Count > 0)
+            {
+                node = stack.Pop();
+
+                // Do WRL / Poping all values from postorder stack will later result in reverse / WRL ==> LRW
+                postorder.Push(node);
+                if (node.Right != null) stack.Push(node.Right);
+                if (node.Left != null) stack.Push(node.Left);
+            }
+
+            // Stack is stacked like WRL, poping all values will result in postorder (LRW)
+            while(postorder.Count > 0)
+            {
+                node = postorder.Pop();
+                if (node.Left != null && node.Left.IsLeaf && node.Left.Val.Equals(val)) node.Left = null;
+                if (node.Right != null && node.Right.IsLeaf && node.Right.Val.Equals(val)) node.Right = null;
+            }
+
+            // Check whether root is Leaf and equals to value or not
+            if (root.IsLeaf && root.Val.Equals(val)) root = null;
+            return this;
+        }
         public IBTreeNode<V> GetLargestBst(Func<V, V, int> compare) => root?.GetLargestBst(compare);
 
         // TRAVERSAL

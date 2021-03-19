@@ -494,6 +494,51 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             return tree;
         }
 
+        // Create an Binary<int> tree from a string
+        public static IBTree<int> AssembleBTreePreOrder(string s, IBTree<int> tree = null, string rem ="/")
+        {
+            if (tree == null) tree = new BinarySearchTree<int>();
+            if (s == null | s.Length == 0) return tree; // node nodes, empty tree
+
+            // split string into nodes
+            bool reverse = s[0] == '*';
+
+            if (reverse) s = s.Substring(1);
+            string[] arr = s.Split(s.Contains(';') ? ';' : ',');
+
+            // Create root node from integer in array
+            IBTreeNode<int> node = tree.CreateNode(int.Parse(arr[0]));
+            Stack<IBTreeNode<int>> stack = new Stack<IBTreeNode<int>>();
+            tree.Append(node);
+            stack.Push(node);
+
+            for(int i = 1; i < arr.Length; i++)
+            {
+                // node is always left node of previous
+                // if its null, jump back to parent and create its right node
+                // from there on again create all left nodes of that node
+                if (node == null)
+                {
+                    node = stack.Pop();
+                    if (arr[i] == rem) node.Right = null;
+                    else node.Right = tree.CreateNode(int.Parse(arr[i]));
+                    node = node.Right;
+                }
+                else
+                {
+                    if (arr[i] == rem) node.Left = null;
+                    else node.Left = tree.CreateNode(int.Parse(arr[i]));
+                    node = node.Left;
+                }
+
+                if(node != null) stack.Push(node);
+            }
+
+            return tree;
+        }
+
+        /* *************OLD
+        ///        
         public static IBTree<int> AssembleBTreePreOrder(string s, IBTree<int> tree = null, string rem ="/")
         {
             if (tree == null) tree = new BinarySearchTree<int>();
@@ -527,11 +572,11 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 else node.Right = tree.CreateNode(int.Parse(arr[i]));
                 i++;
                 node = node.Right;
-            } while (i < arr.Length);
-            return tree;
-        }
+              } while (i < arr.Length) ;
+              return tree;
+         }
 
-
+        ///****************** */
 
         public static bool BinarySearch(int lowBound, int upBound, ref int current, ref int iterations, Func<int,int> compare)
         {

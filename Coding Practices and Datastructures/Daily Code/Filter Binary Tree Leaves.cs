@@ -48,12 +48,55 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
         # 2
         # value: 1, left: (value: 1, left: (value: 2, left: (None), right: (None)), right: (None)), right: (None)
         .
+
+     /////
+        ///Testcase 2:
+                5,4,4,null,null,4,null,null,4,null,7
+
+                    5
+                  /  \
+                 4    4
+                / \    \
+               4   4    7
+          
+            Result:
+                 5,null,4,null,7
+
+                    5
+                   / \
+                  n   4
+                     / \
+                    n   7
+
+        /////
+        ///Testcase 3:
+        
+                    5
+                  /  \
+                 4    4
+                / \    \
+               4   4    4
+
+            Result:
+                    5
+
+    ///Testcase 4:
+        
+                    4
+                  /  \
+                 4    4
+                / \    \
+               4   4    4
+
+            Result: 
+                   root == null
         */
     class Filter_Binary_Tree_Leaves : Testable
     {
         public class Input
         {
-            public IBTree<int> tree;
+            private IBTree<int> tree;
+            public IBTree<int> Tree { get => tree.CopyIt(); }
             public int k;
             public Input(string s, int k)
             {
@@ -66,13 +109,17 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             public class InOut : InOutBase<Input, IBTree<int>>{
             public InOut(string s, int k, string s2) : base(new Input(s, k), Helfer.AssembleBTreePreOrder(s2), true)
             {
-                AddSolver((arg, erg) => erg.Setze(arg.tree.RemoveLeavesK_Recursive(arg.k)), "Recursive" );
+                AddSolver((arg, erg) => erg.Setze(arg.Tree.RemoveLeavesK_Recursive(arg.k)), "Recursive" );
+                AddSolver((arg, erg) => erg.Setze(arg.Tree.RemoveLeavesK_Iterative(arg.k)), "Iterative");
             }
         }
 
         public Filter_Binary_Tree_Leaves()
         {
             testcases.Add(new InOut("1,1,2,/,/,/,1,1", 1, "1,1,2"));
+            testcases.Add(new InOut("5,4,4,/,/,4,/,/,4,/,7", 4, "5,/,4,/,7"));
+            testcases.Add(new InOut("5,4,4,/,/,4,/,/,4,/,4", 4, "5"));
+            testcases.Add(new InOut(" 4,4,4,/,/,4,/,/,4,/,4", 4, ""));
         }
 
 
