@@ -534,6 +534,8 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
                 if(node != null) stack.Push(node);
             }
 
+            if (reverse) tree.InvertRecursive();
+
             return tree;
         }
 

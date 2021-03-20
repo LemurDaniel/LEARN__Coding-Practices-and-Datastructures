@@ -106,13 +106,16 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             public override string ToString() => "\n  --Element K: " + k + "\n  --Tree: " + tree;
             public override bool Equals(object obj) => (obj as IBTree<int>).Equals(tree); 
         }
-            public class InOut : InOutBase<Input, IBTree<int>>{
+
+
+        public class InOut : InOutBase<Input, IBTree<int>>{
             public InOut(string s, int k, string s2) : base(new Input(s, k), Helfer.AssembleBTreePreOrder(s2), true)
             {
                 AddSolver((arg, erg) => erg.Setze(arg.Tree.RemoveLeavesK_Recursive(arg.k)), "Recursive" );
                 AddSolver((arg, erg) => erg.Setze(arg.Tree.RemoveLeavesK_Iterative(arg.k)), "Iterative");
             }
         }
+
 
         public Filter_Binary_Tree_Leaves()
         {
