@@ -83,6 +83,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Search_Insert_Position();
             //  aufgabe = new Maximum_Subarray();  // Not Working
             //  aufgabe = new Implement_Pow();
+            aufgabe = new Missing_Number();
 
 
             //------>STRING - STRUCTURES
@@ -232,7 +233,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Nearest_Points();
             //  aufgabe = new First_Recurring_Character();
             //  aufgabe = new Optimized_Sum_List();
-            aufgabe = new Picking_Up_Change();
+            //  aufgabe = new Picking_Up_Change();
             //  aufgabe = new Reverse_Words();
             //  aufgabe = new Level_of_tree_with_Maximum_Sum();
             //  aufgabe = new Find_Subtree();

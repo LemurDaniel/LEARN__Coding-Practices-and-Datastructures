@@ -83,10 +83,10 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
 
         /*
             Der Algorithmus startet bei [0,0] und ruft sich selbst rekursiv einmal auf den pfad nach unten und 
-            nach rechts auf und addiert dabei den Wert den Inhalt des momentanten Feldes. Die rekursive Aufrufe machen dasselbe. 
+            nach rechts auf und addiert dabei den Inhalt des momentanten Feldes. Die rekursiven Aufrufe machen dasselbe. 
             Ist das untere rechte Feld erreicht, endet die Rekursion und der errechnete Wert 'num' wird mit dem Wert
             im letzten Feld addiert zurückgegeben. Alle rekusiven Methodenaufrufe geben schließlich den Wert
-            des Pfade, links oder unten, der größer ist zurück.
+            des Pfade mit dem größeren Wert, links oder unten, zurück.
          */
         public static int max_change_recursive(int[,] mat, int row, int col, int num)
         {
