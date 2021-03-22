@@ -676,7 +676,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
             q.Enqueue(root);
             q.Enqueue(null);
 
-            int currSum = 0, sum = 0, level = -1;
+            int currSum = 0, sum = 0, level_max_sum = -1, level = -1;
             while (true)
             {
                 node = q.Dequeue();
@@ -688,14 +688,20 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions._1_Data_St
                 if (q.Peek() == null)
                 {
                     q.Dequeue();
-                    if (currSum > sum)  sum = currSum;
-                    if (q.Count == 0) return level;
+                    if (currSum > sum)
+                    {
+                        sum = currSum;
+                        level_max_sum = level;
+                    }
+
+                    if (q.Count == 0) return level_max_sum;
                     else q.Enqueue(null);   //Seperates Levels
                     level++;
                 }
             }
         }
 
+  
         public int GetNumberOfUnivalSubtreesRecursive() => root == null ? 0 : root.GetNumberOfUnvialSubtreesRecursiveStart();
         public int GetNumberOfUnivalSubtreesRecursiveMethod2() => root == null ? 0 : Math.Abs(root.GetNumberOfUnvialSubtreesRecursiveMethod2());
         public void RemoveNodeVals(V val) => root?.RemoveNodeValsRecursive(val);

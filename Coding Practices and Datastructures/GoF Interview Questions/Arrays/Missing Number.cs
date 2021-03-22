@@ -26,8 +26,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
             {
                 AddSolver((arg, erg) => erg.Setze(TwoArrays(arg), Complexity.LINEAR, Complexity.LINEAR), "TwoArrays");
                 AddSolver((arg, erg) => erg.Setze(Xor_array(arg), Complexity.LINEAR, Complexity.CONSTANT), "XOR");
-                AddSolver((arg, erg) => erg.Setze(sum_array(arg), Complexity.LINEAR, Complexity.CONSTANT), "Addition");
-                AddSolver((arg, erg) => erg.Setze(sub_array(arg), Complexity.LINEAR, Complexity.CONSTANT), "Subtraction");
+                AddSolver((arg, erg) => erg.Setze(Sum_array(arg), Complexity.LINEAR, Complexity.CONSTANT), "Addition");
+                AddSolver((arg, erg) => erg.Setze(Sub_array(arg), Complexity.LINEAR, Complexity.CONSTANT), "Subtraction");
             }
         }
 
@@ -55,7 +55,7 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
             Array has 1 ... n values. Create second array and map all values of the first array to index of the second array
             Parse second array and find missing index
 
-            Linear time complexity => 2n for two parses through array
+            Linear time complexity => 2n for two passes through array
             Linear space complexity => a second array of size n is created
          */
 
@@ -84,8 +84,8 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
             and eventually cancel those operations out. The number left will be the missing number since one
             index doesn't have a corresponding value and therefore its XOR-Operation won't be cancelled out.
 
-            linear time complexity ==> only parsing once through whole array
-            constant space complexity ==> regardless of input size only one variable get created
+            linear time complexity ==> only one pass through array
+            constant space complexity ==> regardless of input size only one variable is created
          */
         public static int Xor_array(int[] arr)
         {
@@ -107,10 +107,10 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
             Sum up all elements in array.
             The Difference between the two sums is the missing number.
 
-            linear time complexity ==> only parsing once through whole array
+            linear time complexity ==> only one pass through array
             constant space complexity ==> regardless of input size only two variables are created
          */
-        public static int sum_array(int[] arr)
+        public static int Sum_array(int[] arr)
         {
             int target_sum = arr.Length * (arr.Length + 1) / 2;
             int sum = arr[0];
@@ -129,10 +129,10 @@ namespace Coding_Practices_and_Datastructures.GoF_Interview_Questions.Arrays
             When each value has a corresponding index, the addition of the index will cancel the subtraction.
             Whats left is the missing number.
 
-            linear time complexity ==> only parsing once through whole array
+            linear time complexity ==> only one pass through array
             constant space complexity ==> regardless of input size only one variable is created
          */
-        public static int sub_array(int[] arr)
+        public static int Sub_array(int[] arr)
         {
             int result = arr.Length;
             for (int i = 0; i < arr.Length; i++)
