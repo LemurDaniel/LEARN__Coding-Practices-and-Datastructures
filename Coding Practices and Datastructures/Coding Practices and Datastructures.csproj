@@ -48,6 +48,7 @@
     <Compile Include="Coding Train\Challenges\TicTacToe\Konsolenbedinung.cs" />
     <Compile Include="Coding Train\Challenges\TicTacToe\TicTacToe.cs" />
     <Compile Include="Coding Train\Challenges\TicTacToe\TicTacToeSolver.cs" />
+    <Compile Include="Daily Code\Datastructs\BasicLinkedList.cs" />
     <Compile Include="Daily Code\Filter Binary Tree Leaves.cs" />
     <Compile Include="Daily Code\Angles of a Clock.cs" />
     <Compile Include="Daily Code\Arithmetic Binary Tree.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Daily Code\Sudoku Check.cs" />
     <Compile Include="Daily Code\Sudoku Get All Solutions.cs" />
     <Compile Include="Daily Code\Sum Binary Numbers.cs" />
+    <Compile Include="Daily Code\Swap Every Two Nodes in a Linked List.cs" />
     <Compile Include="Daily Code\Trapping Rainwater.cs" />
     <Compile Include="Daily Code\Tree Serialization.cs" />
     <Compile Include="Daily Code\Two-Sum.cs" />
