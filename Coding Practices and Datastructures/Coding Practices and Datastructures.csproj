@@ -137,6 +137,7 @@
     <Compile Include="Daily Code\Remove One Layer of Parenthesis.cs" />
     <Compile Include="Daily Code\Reverse Integer 2.cs" />
     <Compile Include="Daily Code\Reverse Integer.cs" />
+    <Compile Include="Daily Code\Reverse Polish Notation Calculator.cs" />
     <Compile Include="Daily Code\Reverse Words in a Tring.cs" />
     <Compile Include="Daily Code\Reverse Words.cs" />
     <Compile Include="Daily Code\Reverse_A_Linked_List.cs" />

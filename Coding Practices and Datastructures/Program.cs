@@ -83,7 +83,7 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new Search_Insert_Position();
             //  aufgabe = new Maximum_Subarray();  // Not Working
             //  aufgabe = new Implement_Pow();
-            aufgabe = new Missing_Number();
+            //  aufgabe = new Missing_Number();
 
 
             //------>STRING - STRUCTURES
@@ -265,7 +265,9 @@ namespace GoF_Coding_Interview_Algos
             //  aufgabe = new LRU_Cache();
             //  aufgabe = new Filter_Binary_Tree_Leaves();
             //  aufgabe = new Largest_Path_Sum_from_Root_To_Leaf();
-            aufgabe = new Swap_Every_Two_Nodes_in_a_Linked_List();
+            //  aufgabe = new Swap_Every_Two_Nodes_in_a_Linked_List();
+            aufgabe = new Reverse_Polish_Notation_Calculator();
+
 
             //----------------------------------------------
             /* Daily Coding Problem */
