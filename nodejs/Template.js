@@ -3,12 +3,17 @@
 const Inout = new (require ('./Inout'))('Blablabla');
 
 // Optional
-Inout.map_input = (input, solver) => solver(input[0], input[1]) 
-Inout.input_string_converter = arg => 'Input: '+arg;
-Inout.output_string_converter = arg => 'Output: '+arg;
-Inout.result_string_converter = arg => 'Result: '+arg;
-Inout.result_comparer = (arg1, arg2) => arg1 == arg2;
-Inout.input_copy_method = (arg) => arg;
+this.map_input = (input, solver) => solver(input);
+this.convert_input = inp => inp;
+this.convert_output = oup => oup;
+this.convert_result = res => res;
+
+this.input_string_converter = arg => arg;
+this.output_string_converter = arg => arg;
+this.result_string_converter = arg => arg;
+
+this.input_copy_method = (arg) => JSON.parse(JSON.stringify(arg));
+this.result_comparer = (arg1, arg2) => JSON.stringify(arg1) == JSON.stringify(arg2);
 
 // testcase + solvers
 Inout.testcases.push({input: input, output: output});

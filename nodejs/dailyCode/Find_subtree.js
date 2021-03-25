@@ -70,7 +70,7 @@ function inp(tree, subtree){
     }
 }
 
-Inout.map_input = (input, solver) => solver(input.tree, input.subtree)
+Inout.map_input = (input, solver) => solver(input.tree, input.subtree);
 Inout.input_string_converter = input => '\n   Tree: '+input.tree.toString()+'\n   Subtree: '+input.subtree;
 
 // Testcases

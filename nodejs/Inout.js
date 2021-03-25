@@ -11,8 +11,10 @@ class Inout {
         this.testcases = []
         this.solvers = []
 
-        this.map_input = (input, solver) => solver(input) 
-        this.map_result = res => res;
+        this.map_input = (input, solver) => solver(input);
+        this.convert_input = inp => inp;
+        this.convert_output = oup => oup;
+        this.convert_result = res => res;
 
         this.input_string_converter = arg => arg;
         this.output_string_converter = arg => arg;
@@ -22,12 +24,15 @@ class Inout {
         this.result_comparer = (arg1, arg2) => JSON.stringify(arg1) == JSON.stringify(arg2);
     }
 
+
     solve (i){
         
         if(!i) i = 0;
         if(i == 0) console.log(' ===> ' + this.description + ' <=== ');
 
         const test = this.testcases[i];
+        test.input = this.convert_input(test.input);
+        test.output = this.convert_output(test.output);
 
         console.log('\n--------------------------------')
         console.log('Testcase '+i+':\n');
@@ -51,10 +56,11 @@ class Inout {
         for(let solver of this.solvers){
 
             let result;
+            const input = this.input_copy_method(test.input);
 
             try{
-                result = this.map_input(test.input, solver); 
-                result = this.map_result(result);
+                result = this.map_input(input, solver); 
+                result = this.convert_result(result ?? input);
             }catch(exp){
                 result = exp;
             }
