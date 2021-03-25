@@ -1,7 +1,7 @@
 
 
 // Stack implementation using nodes
-class Stack {
+class NodeStack {
 
     constructor(){
         this.root = null;
@@ -24,5 +24,4 @@ class Stack {
     }
 }
 
-
-module.exports = Stack;
+module.exports = { Stack };
