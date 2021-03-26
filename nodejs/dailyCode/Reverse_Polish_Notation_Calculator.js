@@ -50,8 +50,7 @@ function evaluate (expression)  {
     }
 
     for(let token of expression){
-        
-    
+
         if(Object.keys(operations).includes(token)) 
             stack.push( operations[token](stack.pop(), stack.pop()) );
         else stack.push(token);

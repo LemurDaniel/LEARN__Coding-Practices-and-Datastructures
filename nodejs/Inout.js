@@ -10,6 +10,16 @@ class Inout {
         this.description = description ?? 'No Description';
         this.testcases = []
         this.solvers = []
+
+        this.map_input = (input, solver) => solver(input) 
+        this.map_result = res => res;
+
+        this.input_string_converter = arg => arg;
+        this.output_string_converter = arg => arg;
+        this.result_string_converter = arg => arg;
+
+        this.input_copy_method = (arg) => JSON.parse(JSON.stringify(arg));
+        this.result_comparer = (arg1, arg2) => JSON.stringify(arg1) == JSON.stringify(arg2);
     }
 
     solve (i){
@@ -22,16 +32,13 @@ class Inout {
         console.log('\n--------------------------------')
         console.log('Testcase '+i+':\n');
 
-        if(this.input_string_converter)     console.log('  '+this.input_string_converter(test.input));
-        else    console.log('  Input: '+test.input);
-
-        if(this.output_string_converter)     console.log('  '+this.output_string_converter(test.output));
-        else    console.log('  Output: '+test.output);
-
+        console.log('  Input:  '+this.input_string_converter(test.input));
+        console.log('  Output: '+this.output_string_converter(test.output));
 
         this.Apply_solvers(test)
         
         console.log('--------------------------------\n')
+
 
         if(i+1 >= this.testcases.length) process.exit(1);
         rl.question('///', (userInput) => {
@@ -44,21 +51,17 @@ class Inout {
         for(let solver of this.solvers){
 
             let result;
-            let success = false;
+
             try{
-                if(this.map_input) result = this.map_input(test.input, solver); 
-                else result = solver(test.input);
+                result = this.map_input(test.input, solver); 
+                result = this.map_result(result);
             }catch(exp){
                 result = exp;
             }
 
-            if(this.result_comparer) success = this.result_comparer(test.output, result)
-            else success = test.output == result;
-
+            const success = this.result_comparer(test.output, result)
             console.log('\nSolver: '+ solver.name + '  ---  '+  (success ? 'Success':'Failure') );
-
-            if(this.result_string_converter)     console.log('  '+this.result_string_converter(result));
-            else    console.log('  Result: '+result);
+            console.log('  Result: '+this.result_string_converter(result));
         }
     }
 }

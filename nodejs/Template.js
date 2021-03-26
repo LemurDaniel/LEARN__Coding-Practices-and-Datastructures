@@ -8,7 +8,7 @@ Inout.input_string_converter = arg => 'Input: '+arg;
 Inout.output_string_converter = arg => 'Output: '+arg;
 Inout.result_string_converter = arg => 'Result: '+arg;
 Inout.result_comparer = (arg1, arg2) => arg1 == arg2;
-
+Inout.input_copy_method = (arg) => arg;
 
 // testcase + solvers
 Inout.testcases.push({input: input, output: output});
