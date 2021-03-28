@@ -1,4 +1,4 @@
-
+// Note https://www.geeksforgeeks.org/binary-tree-set-3-types-of-binary-tree/
 
 class Node {
 
@@ -11,14 +11,14 @@ class Node {
     isLeaf = () => this.left == null && this.right == null;
 }
 
-class BTree {
+class BinaryTree {
+
+    static Node = Node;
 
     constructor(val, print_null){
-        this.root = new Node(val);
+        this.root = val == null ? null : new Node(val);
         this.print_null = print_null ?? true;
     }
-
-
 
 
     toString() {
@@ -55,7 +55,7 @@ class BTree {
         // switches toString method to shorter version
         const flag_null = str[0] == '%'; 
         const arr = (flag_null ? str.substr(1):str).split(splitter);
-        const tree = new BTree(parseInt(arr[0]), !flag_null);
+        const tree = new BinaryTree(parseInt(arr[0]), !flag_null);
 
         const stack = [];
         let node = tree.root;
@@ -95,4 +95,77 @@ class BTree {
 }
 
 
-module.exports = BTree;
+class BinarySearchTree extends BinaryTree {
+
+    static Insert_static (tree, val) {
+        if(!tree.root) return tree.root = new BinarySearchTree.Node(val);
+        BinarySearchTree.Node.Insert_static(tree.root, val);
+    }
+
+    constructor(val) {
+        super(val, false)
+    }
+
+    Insert(val) {
+        if(this.root) this.root.Insert(val);
+        else this.root = new BinarySearchTree.Node(val);
+    }
+
+    Search(val) {
+        if(this.root) return this.root.Search(val);
+        else return null;
+    }
+
+    Insert_iterative(val){
+        if(!this.root) return this.root = new BinarySearchTree.Node(val);
+        
+        let node = this.root;
+        while(true){
+
+            if(val >= node.val) {
+                if(node.right) node = node.right;
+                else return node.right = new BinarySearchTree.Node(val);
+            } else {
+                if(node.left) node = node.left;
+                else return node.left = new BinarySearchTree.Node(val);
+            }
+        }
+    }
+}
+
+BinarySearchTree.Node.prototype.Insert = function (val) {
+    if(val >= this.val) {
+        if(this.right) this.right.Insert(val);
+        else this.right = new BinarySearchTree.Node(val);
+    } else {
+        if(this.left) this.left.Insert(val);
+        else this.left = new BinarySearchTree.Node(val);
+    }
+}
+
+BinarySearchTree.Node.prototype.Search = function (val) {
+    const comp = val.compare(this.val);
+    if(comp == 0) return this;
+    else if(comp >= 0 && this.right) return this.right.Search(val);
+    else if(comp < 0 && this.left) return this.left.Search(val);
+    else return null; 
+}
+
+BinarySearchTree.Node.Insert_static = function (node, val){
+    
+    // create a new node to insert, when node is null
+    if(node == null) 
+        return new BinarySearchTree.Node(val);
+
+    // change right or left pointer depending on value of val
+    // the left or right node is passed down to the method and
+    // 1. either returned unchanged if not null
+    // 2. a new node with the to be inserted value is returned if node is null
+    if(val >= node.val) node.right = BinarySearchTree.Node.Insert_static(node.right, val);
+    else node.left = BinarySearchTree.Node.Insert_static(node.left, val);
+
+    // unchanged pointer
+    return node;
+}
+
+module.exports = { BinaryTree, BinarySearchTree};

@@ -1,5 +1,5 @@
 const Inout = new (require ('../Inout'))('DailyCode --- Level of Tree with Maximum Sum');
-const BTree = new require('../datastructures/bTree');
+const Tree = new require('../datastructures/bTree');
 const Queue = new require('../datastructures/queue');
 
 /*
@@ -49,7 +49,7 @@ const Queue = new require('../datastructures/queue');
     """
 */
 
-Inout.convert_input = BTree.GenerateIntPreorderFromString;
+Inout.convert_input = Tree.BinaryTree.GenerateIntPreorderFromString;
 Inout.output_string_converter = arg => '\n  -- Level: '+arg[0]+' Sum: '+arg[1];
 Inout.result_string_converter = Inout.output_string_converter;
 
@@ -71,10 +71,10 @@ Inout.solve();
 function find_level_with_maximum_sum(tree) {
 
     // Levelorder traversal of tree with a queue
-    const q = new Queue();
+    const q = new Queue.ArrayQueue();
     q.enqueue(tree.root);
     q.enqueue(null);
-
+ 
     // initialize variables
     let curr_sum = 0;
     let curr_level = 0;
@@ -91,7 +91,7 @@ function find_level_with_maximum_sum(tree) {
 
         // null encounter in queue marks the end of a level in the tree
         if(q.peek() == null){
-
+            
             // compare levelsum with current maximum sum
             if(curr_sum > max_sum){
                 max_sum = curr_sum;
@@ -104,7 +104,7 @@ function find_level_with_maximum_sum(tree) {
             curr_sum = 0;
 
             // return if no more element in queue, (except for null)
-            if(q.count == 1) return [level_max_sum, max_sum];
+            if(q.count() == 1) return [level_max_sum, max_sum];
         }
     }
 }

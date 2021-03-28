@@ -25,7 +25,7 @@ class Inout {
     }
 
 
-    solve (i){
+    solve (i) {
         
         if(!i) i = 0;
         if(i == 0) console.log(' ===> ' + this.description + ' <=== ');
@@ -56,34 +56,23 @@ class Inout {
         for(let solver of this.solvers){
 
             let result;
+            let exception;
             const input = this.input_copy_method(test.input);
 
             try{
                 result = this.map_input(input, solver); 
                 result = this.convert_result(result ?? input);
             }catch(exp){
-                result = exp;
+                exception = exp;
             }
 
             const success = this.result_comparer(test.output, result)
             console.log('\nSolver: '+ solver.name + '  ---  '+  (success ? 'Success':'Failure') );
-            console.log('  Result: '+this.result_string_converter(result));
+            if(exception) console.log('   Exception: '+exception);
+            else console.log('  Result: '+this.result_string_converter(result));
         }
     }
 }
 
 
 module.exports = Inout;
-
-
-
-
-
-
-
-
-
-
-
-
-

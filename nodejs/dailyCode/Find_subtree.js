@@ -1,5 +1,5 @@
 const Inout = new (require ('../Inout'))('DailyCode --- Find Subtree');
-const BTree = new require('../datastructures/bTree')
+const Tree = new require('../datastructures/bTree')
 
 /*
 
@@ -65,8 +65,8 @@ const BTree = new require('../datastructures/bTree')
 
 function inp(tree, subtree){
     return {
-        tree: BTree.GenerateIntPreorderFromString(tree), 
-        subtree: BTree.GenerateIntPreorderFromString(subtree)
+        tree: Tree.BinaryTree.GenerateIntPreorderFromString(tree), 
+        subtree: Tree.BinaryTree.GenerateIntPreorderFromString(subtree)
     }
 }
 
