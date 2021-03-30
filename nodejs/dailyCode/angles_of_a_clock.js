@@ -19,8 +19,8 @@ Inout.map_input = (input, solver) => solver(input[0], input[1]);
 Inout.input_string_converter = arg => arg[0] + 'h ' + arg[1] + 'min';
 Inout.output_string_converter = Inout.result_string_converter = arg => arg+'°';
 
-Inout.testcases.push({  input: [3, 30], output: 75});
-Inout.testcases.push({  input: [12, 30], output: 165});
+Inout.testcases.push({  input: [3, 30], output: 75 });
+Inout.testcases.push({  input: [12, 30], output: 165 });
 
 Inout.solvers = [calc_angle_between_hour_and_minute_hand];
 Inout.solve();
