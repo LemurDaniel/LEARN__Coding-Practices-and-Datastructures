@@ -50,6 +50,7 @@ Inout.result_string_converter = arg => {
     let str = '\n    -- ';
     if(arg.val == 0) str += 'No solutions';
     else if(arg.val == 1) str += 'Exactly one solution';
+    else if(arg.val > 2500) str += 'More than 2.500 Solutions';
     else str += 'Multiple Solutions: (The following and ' + (arg.val-1) + ' more )';
     return str + '\n' + Helper.matrix_toString(arg.board);
 }
@@ -78,15 +79,39 @@ board = '5, /, 4, 6, 7, 8, 9, 1, 2 | '+
 
 Inout.testcases.push( { input: board, output: false } );
 
-board = '5, /, 4, 6, 7, 8, 9, 1, 2 | '+
-        '6, /, 2, 1, 9, 5, 3, 4, 8 | '+
-        '1, /, 8, 3, 4, 2, 5, 6, 7 | '+
-        '8, /, 9, 7, 6, 1, 4, 2, 3 | '+
-        '4, /, 6, 8, 5, 3, 7, 9, 1 | '+
-        '7, /, 3, 9, 2, 4, 8, 5, 6 | '+
-        '9, /, 1, 5, 3, 7, 2, 8, 4 | '+
-        '2, /, 7, 4, 1, 9, 6, 3, 5 | '+
-        '3, /, /, /, /, /, /, /, / '
+board = '/, /, 4, 3, /, 8, 5, /, / | '+
+        '/, 8, /, /, /, /, /, 4, / | '+
+        '/, /, 6, 5, /, 7, 1, /, / | '+
+        '6, /, 7, /, /, /, 2, /, 5 | '+
+        '/, /, /, /, 2, /, /, /, / | '+
+        '5, /, 9, /, /, /, 8, /, 1 | '+
+        '/, /, 8, 9, 3, 4, 6, /, / | '+
+        '/, 3, /, /, /, /, /, 9, / | '+
+        '/, /, 2, 7, /, 1, 3, /, / '
+
+Inout.testcases.push( { input: board, output: true } );
+
+board = '/, /, /, /, /, /, /, /, / | '+
+        '/, 8, /, /, /, /, /, 4, / | '+
+        '/, /, 6, 5, /, 7, 1, /, / | '+
+        '6, /, 7, /, /, /, 2, /, 5 | '+
+        '/, /, /, /, 2, /, /, /, / | '+
+        '5, /, 9, /, /, /, 8, /, 1 | '+
+        '/, /, 8, 9, 3, 4, 6, /, / | '+
+        '/, 3, /, /, /, /, /, 9, / | '+
+        '/, /, 2, 7, /, 1, 3, /, / '
+
+Inout.testcases.push( { input: board, output: false } );
+
+board = '/, /, /, /, /, /, /, /, / | '+
+        '/, /, /, /, /, /, /, /, / | '+
+        '/, /, /, /, /, /, /, /, / | '+
+        '/, /, /, /, /, /, /, /, / | '+
+        '/, /, /, /, /, /, /, /, / | '+
+        '/, /, /, /, /, /, /, /, / | '+
+        '/, /, /, /, /, /, /, /, / | '+
+        '/, /, /, /, /, /, /, /, / | '+
+        '/, /, /, /, /, /, /, /, / '
 
 Inout.testcases.push( { input: board, output: false } );
 
@@ -108,25 +133,23 @@ function Check_cell_valid(grid, row, col) {
     // Check vertical
     for(let i = 0; i < grid.length; i++) {
         if(i == col) continue;
-        else if(grid[row][i] == element) return false; 
+        else if(Math.abs(grid[row][i]) == element) return false; 
     }
 
     // Check horizontal
     for(let i = 0; i < grid.length; i++) {
         if(i == row) continue;
-        else if(grid[i][col] == element) return false; 
+        else if(Math.abs(grid[i][col]) == element) return false; 
     }
 
     // Check 3x3 grid
-    let grid_col = 0;
-    let grid_row = 0;
     for(let i=0; i < 3; i++) {
         for(let j=0; j<3; j++) {
             const curr_row = i + 3*Math.floor(row / 3);
             const curr_col = j + 3*Math.floor(col / 3);
 
             if(curr_col == col && curr_row == row) continue;
-            else if(grid[curr_row][curr_col] == element) return false;
+            else if(Math.abs(grid[curr_row][curr_col]) == element) return false;
         }
     }
 
@@ -155,6 +178,7 @@ function Validate_sudoku_iterative(grid) {
             //if(solutions_count++ > 0) break;
             solutions_count++;
             if(!solved_board) solved_board = Inout.input_copy_method(grid);
+            if(solutions_count > 2500) break;
         } 
 
         // initially empty cells hold values from -1 to -9
