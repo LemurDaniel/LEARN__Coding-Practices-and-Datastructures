@@ -52,13 +52,11 @@ function find_missing_ranges(arr, range) {
         // skip all numbers until start of range
         if( arr[i] < range[0] ) continue;
         // return when end of range is reached
-        else if ( arr[i] > range[1 ] ) return;
+        else if ( arr[i] > range[1] ) return;
         
         // add missing range as tuplet
         if( arr[i] - arr[i-1] != 1 )
             missing.push( [ arr[i-1]+1, arr[i]-1 ] );
-
     }
-
     return missing;
 }

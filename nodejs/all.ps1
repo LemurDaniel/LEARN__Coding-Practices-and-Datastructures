@@ -16,4 +16,7 @@ Clear-Host
 # node ./dailyCode/Level_of_tree_with_maximum_sum
 # node ./dailyCode/Reverse_words.js
 # node ./dailyCode/angles_of_a_clock.js
-node ./dailyCode/Rotate_Matrix_90.js
+# node ./dailyCode/Rotate_Matrix_90.js
+# node ./dailyCode/Rotate_Matrix_180.js
+# node ./dailyCode/Missing_Ranges.js
+node ./dailyCode/Validate_Sudoku.js

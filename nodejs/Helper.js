@@ -1,9 +1,17 @@
 const Helper = {};
 
-Helper.matrix_toString = function(mat) {
+Helper.uniform_string = function(str, len){
+    while(str.length < len) str = ' '+str;
+    return str;
+}
+
+Helper.matrix_toString = function(mat, len = 4) {
     let str = '\n';
     for(let row = 0; row<mat.length; row++) {
-        str += '         ' + mat[row].toString() + '\n';
+        str += '    ';
+        for(let col = 0; col<mat[row].length; col++) 
+            str += Helper.uniform_string(mat[row][col].toString(), len);
+        str += '\n';
     }
     return str;
 }
@@ -20,8 +28,10 @@ Helper.string_toIntArray = function(str) {
         else if(sub_strs[i].includes(' ')) split = ' ';
 
         const sub_arr = [];
-        for(let el of sub_strs[i].split(split))
-            sub_arr.push( parseInt(el) );
+        for(let el of sub_strs[i].split(split)){
+            if(el.trim() == '/') sub_arr.push('/');
+            else sub_arr.push( parseInt(el) );
+        }
 
         if(sub_strs.length == 1) return sub_arr
         else arr.push(sub_arr);
