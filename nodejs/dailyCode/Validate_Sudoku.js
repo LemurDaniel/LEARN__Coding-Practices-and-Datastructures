@@ -51,7 +51,7 @@ Inout.result_string_converter = arg => {
     if(arg.val == 0) str += 'No solutions';
     else if(arg.val == 1) str += 'Exactly one solution';
     else if(arg.val > 2500) str += 'More than 2.500 Solutions';
-    else str += 'Multiple Solutions: (The following and ' + (arg.val-1) + ' more )';
+    else str += 'Multiple Solutions: (The following and ' + (arg.val-1) + ' more)';
     return str + '\n' + Helper.matrix_toString(arg.board);
 }
 
@@ -194,10 +194,10 @@ function Validate_sudoku_iterative(grid) {
             else stack.push( { row: row, col: col } );
         }
 
-        // if cell has predefined value check if its valid
+        // if cell has static value check if its valid
         else if(!Check_cell_valid(grid, row, col)) jump_back = true;
         
-        // jump back to cell with changeable value
+        // jump back to cell without static value
         // or move forward by one cell
         if(jump_back) {
             if(stack.length == 0) break;

@@ -1,3 +1,5 @@
+const Helper = require('./Helper');
+
 const rl = require('readline').createInterface({
   input: process.stdin,
   output: process.stdout
@@ -16,9 +18,15 @@ class Inout {
         this.convert_output = oup => oup;
         this.convert_result = res => res;
 
-        this.input_string_converter = arg => arg;
-        this.output_string_converter = arg => arg;
-        this.result_string_converter = arg => arg;
+        const default_converter = arg => {
+            if(Array.isArray(arg)) return Helper.print_Array(arg);
+            else if(Object(arg)) return Helper.print_map(arg);
+            else return arg.toString();
+        }
+
+        this.input_string_converter = default_converter
+        this.output_string_converter = default_converter;
+        this.result_string_converter = default_converter;
 
         this.input_copy_method = (arg) => JSON.parse(JSON.stringify(arg));
         this.result_comparer = (arg1, arg2) => JSON.stringify(arg1) == JSON.stringify(arg2);

@@ -39,16 +39,30 @@ Helper.string_toIntArray = function(str) {
     return arr;
 }
 
-Helper.print_Array = function(arr) {
+Helper.print_Array = function(arr, open = '[ ', close = ' ]') {
     str = '';
-    for(let sub_arr of arr) {
-        let sub_str = '';
-        for(let el of sub_arr)
-            sub_str += el + ', ';
+    for(let el of arr) {
 
-        str += '(' + sub_str.substr(0, sub_str.length-2) + '), '
+        if(Array.isArray(el)) 
+            str += Helper.print_Array(el, '( ', ' ), ');
+        else
+            str += el + ', ';
     }
-    return '[ ' + str.substr(0, str.length-2) + ' ]';
+    return open + str.substr(0, str.length-2) + close;
+}
+
+Helper.print_map = function(map) {
+    const keys = Object.keys(map);
+
+    let str = '    ';
+    keys.forEach( k => {
+        let val = map[k];
+        if(Array.isArray(val)) val = Helper.print_Array(val)
+        str += '\n     ' + k + ': ' + val
+
+    });
+
+    return str;
 }
 
 
