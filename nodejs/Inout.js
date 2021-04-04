@@ -28,7 +28,7 @@ class Inout {
         this.output_string_converter = default_converter;
         this.result_string_converter = default_converter;
 
-        this.input_copy_method = (arg) => JSON.parse(JSON.stringify(arg));
+        this.input_copy_method = (arg) => arg.copy ? arg.copy() : JSON.parse(JSON.stringify(arg));
         this.result_comparer = (arg1, arg2) => JSON.stringify(arg1) == JSON.stringify(arg2);
     }
 

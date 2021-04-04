@@ -16,6 +16,7 @@ class LinkedList {
         this.last = this.root;
     }
 
+    copy = () => LinkedList.Copy(this)
 }
 
 
