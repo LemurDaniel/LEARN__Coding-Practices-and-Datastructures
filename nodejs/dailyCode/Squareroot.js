@@ -31,7 +31,7 @@ add_testcase([5, 16, 25, 32, 77, 99, 100, 125, 132, 348], 3)
 add_testcase([5, 16, 25, 32, 77, 99, 100, 125, 132, 348], 4)
 add_testcase([5, 16, 25, 32, 77, 99, 100, 125, 132, 348], 5)
 
-Inout.solvers = [heron_aproximation_squareroot];
+Inout.solvers = [geometric_aproximation_squareroot];
 Inout.solve();
 
 
@@ -54,6 +54,7 @@ Inout.solve();
     Eventually both sides converge to a square with sides equal to
     the squareroot of the number.
 */
+
 function geometric_aproximation_squareroot(num, decimals = 3, deviation = 10e-6) {
 
     let max_cycles = 10e3;

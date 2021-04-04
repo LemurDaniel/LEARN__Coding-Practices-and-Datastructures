@@ -19,4 +19,13 @@ Clear-Host
 # node ./dailyCode/Rotate_Matrix_90.js
 # node ./dailyCode/Rotate_Matrix_180.js
 # node ./dailyCode/Missing_Ranges.js
-node ./dailyCode/Validate_Sudoku.js
+# node ./dailyCode/Validate_Sudoku.js
+# node ./dailyCode/Squareroot.js
+
+
+
+    ##################################
+    ###### Daily Coding Problem ######
+    ##################################
+
+node ./dailyCodingProblem/Problem-#157-[Easy].js

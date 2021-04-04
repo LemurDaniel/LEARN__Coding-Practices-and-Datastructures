@@ -20,7 +20,7 @@ class Inout {
 
         const default_converter = arg => {
             if(Array.isArray(arg)) return Helper.print_Array(arg);
-            else if(Object(arg)) return Helper.print_map(arg);
+            else if(!typeof arg == 'string' && Object(arg)) return Helper.print_map(arg);
             else return arg.toString();
         }
 
@@ -32,6 +32,7 @@ class Inout {
         this.result_comparer = (arg1, arg2) => JSON.stringify(arg1) == JSON.stringify(arg2);
     }
 
+    push = (testcase) => this.testcases.push(testcase);
 
     solve (i) {
         
