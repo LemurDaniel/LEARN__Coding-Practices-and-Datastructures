@@ -20,7 +20,7 @@ class Inout {
 
         const default_converter = arg => {
             if(Array.isArray(arg)) return Helper.print_Array(arg);
-            else if(!typeof arg == 'string' && Object(arg)) return Helper.print_map(arg);
+            else if(typeof arg == 'object') return Helper.print_map(arg);
             else return arg.toString();
         }
 

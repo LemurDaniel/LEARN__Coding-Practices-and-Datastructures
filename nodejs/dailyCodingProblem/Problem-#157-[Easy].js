@@ -1,4 +1,4 @@
-const Inout = new (require ('../Inout'))('DailyCode --- Is any permutation a palindrom');
+const Inout = new (require ('../Inout'))('Daily Coding Problem --- Is any permutation a palindrom');
 const Helper = require('../Helper');
 
 /*

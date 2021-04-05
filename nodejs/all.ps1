@@ -21,11 +21,12 @@ Clear-Host
 # node ./dailyCode/Missing_Ranges.js
 # node ./dailyCode/Validate_Sudoku.js
 # node ./dailyCode/Squareroot.js
-node ./dailyCode/remove_duplicate_from_linked_list.js
+# node ./dailyCode/remove_duplicate_from_linked_list.js
 
 
     ##################################
     ###### Daily Coding Problem ######
     ##################################
 
-# node ./dailyCodingProblem/Problem-#157-[Easy].js
+# node ./dailyCodingProblem/Problem-#157-[Easy].js      # Is any permutation a palindrom
+node ./dailyCodingProblem/Problem-#158-[Medium].js      # Ways to to reach the bottom of a matrix'

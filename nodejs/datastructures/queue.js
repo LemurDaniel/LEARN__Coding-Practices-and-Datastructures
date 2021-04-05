@@ -2,10 +2,11 @@
 // Start <== val <== val <== val <== end
 class NodeQueue {
 
-    constructor(){
+    constructor(val){
         this.start = null;
         this.end = null;
         this.count = 0;
+        this.enqueue(val);
     }
 
     isEmpty = () => this.end == null;
@@ -27,6 +28,7 @@ class NodeQueue {
 
     dequeue() {
         const val = this.peek();
+        if(this.end == this.start) this.start = null;
         this.end = this.end.next;
         this.count--;
         return val;
