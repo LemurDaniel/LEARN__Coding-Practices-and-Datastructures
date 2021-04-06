@@ -1,4 +1,9 @@
 const Helper = require('./Helper');
+const LinkedList = require('./datastructures/linkedList');
+const BTree = require('./datastructures/bTree');
+const Queue = require('./datastructures/queue');
+
+const classes = [LinkedList, BTree.BinaryTree, Queue.NodeQueue, Queue.ArrayQueue];
 
 const rl = require('readline').createInterface({
   input: process.stdin,
@@ -19,9 +24,13 @@ class Inout {
         this.convert_result = res => res;
 
         const default_converter = arg => {
+            for(let c of classes)
+                if ( arg instanceof c ) return arg.toString();
+
             if(Array.isArray(arg)) return Helper.print_Array(arg);
             else if(typeof arg == 'object') return Helper.print_map(arg);
-            else return arg.toString();
+            
+            return arg.toString();
         }
 
         this.input_string_converter = default_converter

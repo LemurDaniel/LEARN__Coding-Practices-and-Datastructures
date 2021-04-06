@@ -31,8 +31,6 @@ const Helper = require('../Helper');
 Inout.convert_input = LinkedList.LinkedListFromString_Int;
 Inout.convert_output = LinkedList.LinkedListFromString_Int;
 
-//Inout.result_string_converter = LinkedList.toString;
-
 Inout.push( { input: '12233', output: '123' } );
 Inout.push( { input: '111223334444445555', output: '12345' } );
 
