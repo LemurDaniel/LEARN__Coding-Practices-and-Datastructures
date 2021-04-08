@@ -22,7 +22,7 @@ Clear-Host
 # node ./dailyCode/Validate_Sudoku.js
 # node ./dailyCode/Squareroot.js
 # node ./dailyCode/remove_duplicate_from_linked_list.js
-node .\dailyCode\remove_one_layer_of_parenthesis.js
+# node .\dailyCode\remove_one_layer_of_parenthesis.js
 
     ##################################
     ###### Daily Coding Problem ######
