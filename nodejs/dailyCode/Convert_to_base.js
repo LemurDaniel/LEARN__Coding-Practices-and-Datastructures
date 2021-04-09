@@ -21,6 +21,9 @@ const add_Testcase = (num, base) => Inout.push({  input: {num: num, base: base},
 Inout.map_input = (input, solver) => solver(input.num, input.base) 
 
 add_Testcase(123, 2);
+add_Testcase(32445, 2);
+add_Testcase(235234, 2);
+add_Testcase(255*4, 2);
 add_Testcase(123, 3);
 add_Testcase(123, 4);
 add_Testcase(123, 8);
@@ -29,7 +32,7 @@ add_Testcase(123, 16);
 add_Testcase(255*8, 16);
 add_Testcase(255*8, 2);
 
-Inout.solvers = [Convert_to_base];
+Inout.solvers = [Convert_to_base, Convert_only_to_base_2];
 Inout.solve();
 
 
@@ -55,4 +58,17 @@ function Convert_to_base (num, base)  {
     return converted
 }
 
+function Convert_only_to_base_2 (num, base)  {
+
+    if(base != 2) throw "Invalid base"
+
+    let converted = "";
+
+    while(num > 0) {
+        converted = (num % 2) + converted;
+        num = Math.floor(num / base);
+    }
+
+    return converted
+}
 

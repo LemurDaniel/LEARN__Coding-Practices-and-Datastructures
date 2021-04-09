@@ -23,7 +23,7 @@ Clear-Host
 # node ./dailyCode/Squareroot.js
 # node ./dailyCode/remove_duplicate_from_linked_list.js
 # node ./dailyCode/remove_one_layer_of_parenthesis.js
-node node .\dailyCode\Convert_to_base.js
+node ./dailyCode/Convert_to_base.js
 
     ##################################
     ###### Daily Coding Problem ######
