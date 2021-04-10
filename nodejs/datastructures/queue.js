@@ -101,6 +101,7 @@ class ArrayQueue {
 
 // Implementation of a priority Queue via a linked list / using nodes
 // Start <== val <== val <== val <== end
+
 class PriorityNodeQueue extends NodeQueue {
 
     constructor(val) {
@@ -108,18 +109,22 @@ class PriorityNodeQueue extends NodeQueue {
     }
 
     enqueue(val, priority = 0){
+
+        const insert = { val: val, prio: priority };
+
         if(!this.start) 
-            this.start = this.end = { val: val, prio: priority };
+            this.start = this.end = insert;
         else if(this.start.prio >= priority) {
-            this.start.next = { val: val, prio: priority };
+            this.start.next = insert;
             this.start = this.start.next;
         } else {
             let prev = null
             let curr = this.end;
             while(curr) {
                 if(curr.prio < priority) {
-                    if(prev == null) this.end = { val: val, prio: priority, next: curr };
-                    else prev.next = { val: val, prio: priority, next: curr };
+                    if(prev == null) this.end = insert;
+                    else prev.next = insert;
+                    insert.next = curr;
                     break;
                 } 
                 prev = curr;
