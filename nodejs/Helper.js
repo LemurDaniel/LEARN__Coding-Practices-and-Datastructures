@@ -67,5 +67,50 @@ Helper.print_map = function(map) {
     return str;
 }
 
+Helper.Array_equals = function(arr, arr1){
+
+
+    if(!Array.isArray(arr) || !Array.isArray(arr1)) return false;
+    if(arr.length != arr1.length) return false;
+
+    for(let i=0; i<arr.length; i++){
+
+        const el = arr[i];
+        const el1 = arr1[i];
+
+        if(Array.isArray(el)) {
+            if(!Helper.Array_equals(el, el1)) return false;
+        } else if(typeof el == 'object') {
+            if(!el.equals(el1)) return false;
+        }
+        else if(el != el1)
+            return false; 
+    }
+
+    return true;
+}
+
+Helper.Array_has_same_values = function(arr, arr1){
+
+    if(!Array.isArray(arr) || !Array.isArray(arr1)) return false;
+    if(arr.length != arr1.length) return false;
+
+    const dict = {};
+
+    for(let i=0; i<arr.length; i++){
+
+        const el = arr[i];
+        const el1 = arr1[i];
+
+        if(el in dict) delete dict[el];
+        else dict[el] = 0;
+
+        if(el1 in dict) delete dict[el1];
+        else dict[el1] = 0;
+
+    }
+
+    return Object.keys(dict).length == 0;
+}
 
 module.exports = Helper;

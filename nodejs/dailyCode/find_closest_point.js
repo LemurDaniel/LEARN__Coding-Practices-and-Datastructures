@@ -1,5 +1,6 @@
 const Inout = new (require ('../Inout'))('DailyCode --- Find Closest Points');
 const LinkedList = require('../datastructures/linkedList');
+const Queue = require('../datastructures/queue');
 const Helper = require('../Helper');
 
 /*
@@ -18,7 +19,8 @@ const Helper = require('../Helper');
 
 */
 
-Inout.map_input = (input, solver) => solver(input.points, input.k); 
+Inout.map_input = (input, solver) => solver(input.points, input.k);
+Inout.result_comparer = Helper.Array_has_same_values; 
 
 function add_testcase(str, k, out) {
     Inout.push( { 
@@ -33,8 +35,9 @@ function add_testcase(str, k, out) {
 add_testcase('0,0|1,2|-3,4|3,1', 2, '0,0|1,2');
 add_testcase('-3,4|3,1|0,0|1,2|', 2, '0,0|1,2');
 add_testcase('-3,4|3,1|0,0|1,2|', 3, '0,0|1,2|3,1');
+add_testcase('0,0|1,2|-3,4|3,1|1,1|-1,0|-1,-1|-1,-1|5,5', 5, '0,0|-1,0|1,1|-1,-1|-1,-1');
 
-Inout.solvers = [find_nearest_points];
+Inout.solvers = [find_nearest_points, find_nearest_points_prio_node_queue];
 Inout.solve();
 
 
@@ -97,4 +100,18 @@ function find_nearest_points(points, k){
     }
 
     return nearest_points.to_array( v => v.point );
+}
+
+function find_nearest_points_prio_node_queue(points, k){
+
+    const queue = new Queue.PriorityNodeQueue();
+
+    for(let p of points)
+        queue.enqueue(p, (p[0]*p[0] + p[1]*p[1]) * -1 )
+
+    const arr = [];
+    while(arr.length < k)
+        arr.push(queue.deleteHighestPriority())
+
+    return arr;
 }

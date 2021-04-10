@@ -6,7 +6,7 @@ class NodeQueue {
         this.start = null;
         this.end = null;
         this.count = 0;
-        this.enqueue(val);
+        if(val) this.enqueue(val);
     }
 
     isEmpty = () => this.end == null;
@@ -34,14 +34,14 @@ class NodeQueue {
         return val;
     }
 
-    toString(){
-        let str = 'End';
+    toString( converter = n => n.val ){
+        let str = '<OUT';
         let node = this.end;
         while(node){
-            str += ' | '+ node.val.toString();
+            str += ' | '+ converter(node).toString();
             node = node.next;
         }
-        return str + ' | Start';
+        return str + ' | <IN';
     }
 }
 
@@ -98,7 +98,56 @@ class ArrayQueue {
     }
 }
 
+
+// Implementation of a priority Queue via a linked list / using nodes
+// Start <== val <== val <== val <== end
+class PriorityNodeQueue extends NodeQueue {
+
+    constructor(val) {
+        super(val);
+    }
+
+    enqueue(val, priority = 0){
+        if(!this.start) 
+            this.start = this.end = { val: val, prio: priority };
+        else if(this.start.prio >= priority) {
+            this.start.next = { val: val, prio: priority };
+            this.start = this.start.next;
+        } else {
+            let prev = null
+            let curr = this.end;
+            while(curr) {
+                if(curr.prio < priority) {
+                    if(prev == null) this.end = { val: val, prio: priority, next: curr };
+                    else prev.next = { val: val, prio: priority, next: curr };
+                    break;
+                } 
+                prev = curr;
+                curr = curr.next;
+            }
+        }
+
+        this.count++;
+    }
+
+    getHighestPriority() {
+        return super.peek();
+    }
+
+    deleteHighestPriority() {
+        return super.dequeue();
+    }
+
+    toString(){
+        return super.toString( v => v.val.toString() + '/('+v.prio+')' );
+    }
+}
+
+// Note https://www.geeksforgeeks.org/binary-heap/
+// Note https://www.geeksforgeeks.org/priority-queue-set-1-introduction/
+
 module.exports = { 
     ArrayQueue,
-    NodeQueue 
+    NodeQueue,
+    PriorityNodeQueue 
 };
