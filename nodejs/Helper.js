@@ -44,9 +44,11 @@ Helper.print_Array = function(arr, bl = ', ', open = '[ ', close = ' ]') {
     for(let i=0; i<arr.length; i++) {
 
         if(Array.isArray(arr[i])) 
-            str += Helper.print_Array(arr[i], bl, '( ', ' ), ');
+            str += Helper.print_Array(arr[i], bl, '( ', ' )');
         else
-            str += arr[i] + (i != arr.length-1 ? bl : '');
+            str += arr[i];
+
+        str += (i != arr.length-1 ? bl : '');
     }
     return open + str + close;
 }

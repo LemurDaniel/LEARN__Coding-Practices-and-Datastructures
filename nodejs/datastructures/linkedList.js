@@ -58,12 +58,33 @@ LinkedList.prototype.Append = function (val) {
 
 }
 
-LinkedList.prototype.toString = function ( connector = ' ==> ') {
+LinkedList.prototype.Append_as_root = function (val) {
+    
+    const node = new LinkedList.Node(val, this.root);
+    if(this.root == null)
+        this.last = node;
+    this.root = node;
+
+}
+
+LinkedList.prototype.to_array = function ( value_converter = v => v ) {
+    
+    const arr = [];
+    let node = this.root;
+    while(node) {
+        arr.push(value_converter(node.val));
+        node = node.next;
+    }
+    
+    return arr;
+}
+
+LinkedList.prototype.toString = function ( value_converter = v => v , connector = ' ==> ') {
 
     let str = '';
     let node = this.root;
     while(node) {
-        str += node.val + connector;
+        str += value_converter(node.val) + connector;
         node = node.next;
     }
 
