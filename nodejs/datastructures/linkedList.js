@@ -92,6 +92,62 @@ LinkedList.prototype.toString = function ( value_converter = v => v , connector 
 }
 
 
-module.exports = LinkedList;
+/*
+###################################################################################################
+##### Circular Linked List
+###################################################################################################
+*/
 
 // NOTE https://www.geeksforgeeks.org/data-structures/linked-list/
+
+class CircularLinkedList {
+
+    static Node = Node;
+
+    constructor(val, next){
+        this.tail = val ? new CircularLinkedList.Node(val, next) : null;
+    }
+
+    copy = () => LinkedList.Copy(this)
+
+    Tail = () => this.tail;
+
+    Head = () => this.tail ? this.tail.next : null;
+}
+
+CircularLinkedList.prototype.Append = function (val) {
+
+    if(!this.tail) {
+        this.tail = new CircularLinkedList.Node(val);
+        this.tail.next = this.tail;
+    } else {
+        this.tail.next = new CircularLinkedList.Node(val, this.tail.next);
+        this.tail = this.tail.next;
+    } 
+
+}
+
+CircularLinkedList.prototype.toString = function ( converter = v => v , connector = ' ==> ') {
+
+    let str = '<HEAD>'+connector;
+    let node = this.tail;
+    do {
+        node = node.next;
+        str += converter(node.val) + connector;
+    } while(node != this.tail)
+
+    return str + '<TAIL>';
+}
+
+
+module.exports = LinkedList;
+
+/*
+const t = new CircularLinkedList();
+t.Append(1)
+t.Append(2)
+t.Append(3)
+console.log(t.Tail())
+console.log(t.Head())
+console.log(t.toString());
+*/

@@ -53,7 +53,7 @@ Inout.solve();
 
 /*
     Create a linked list which will store all points an their distance in ascending order.
-    The root of the list will be the point with the lowest distance increasing from there.
+    The head of the list will be the point with the lowest distance increasing from there.
 
     The main for-loop calculates the distance for each point in the array, then traverses all
     values from the start of the linked list until a maximal depth of k-1. This way it doesn't 
@@ -74,7 +74,7 @@ function find_nearest_points(points, k){
         const dist = Math.sqrt(point[0]*point[0] + point[1]*point[1]);
 
         let prev = null;
-        let node = nearest_points.root;
+        let node = nearest_points.head;
         let depth = 0;
 
         while(depth++ < k) {
@@ -83,9 +83,9 @@ function find_nearest_points(points, k){
             if(node == null || dist <= node.val.dist) {
                 // to be inserted object with the current point and its distance
                 const insert =  { point: point, dist: dist };
-                // insert as node in list or as root of the list
+                // insert as node in list or as head of the list
                 if(prev != null) prev.next = new LinkedList.Node(insert, node);
-                else nearest_points.Append_as_root(insert);
+                else nearest_points.Append_as_head(insert);
                 node = insert;
             }
 
