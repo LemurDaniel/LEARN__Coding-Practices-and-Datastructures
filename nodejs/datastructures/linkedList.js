@@ -58,7 +58,7 @@ LinkedList.prototype.Append = function (val) {
 
 }
 
-LinkedList.prototype.Append_as_root = function (val) {
+LinkedList.prototype.Append_as_head = function (val) {
     
     const node = new LinkedList.Node(val, this.head);
     if(this.head == null)
