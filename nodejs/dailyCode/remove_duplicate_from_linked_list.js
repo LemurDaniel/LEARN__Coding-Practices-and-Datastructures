@@ -48,7 +48,7 @@ Inout.solvers = [remove_duplicates_iterative, remove_duplicates_recursive];
 function remove_duplicates_iterative(list) {
 
     let prev = null;
-    let curr = list.root;
+    let curr = list.head;
 
     while(curr) {
 
@@ -82,7 +82,7 @@ LinkedList.Node.prototype.remove_duplicates_recursive = function(prev) {
 }
 
 function remove_duplicates_recursive(list) {
-    list.root.remove_duplicates_recursive();
+    list.head.remove_duplicates_recursive();
 }
 
 Inout.solve();

@@ -31,7 +31,7 @@ Inout.solvers = [Swap_values_iterative, Swap_nodes_iterative, Swap_values_recurs
 
 function Swap_values_iterative(list) {
 
-    let prev = list.root;
+    let prev = list.head;
     let curr = null;
 
     while(prev && prev.next) {
@@ -54,10 +54,10 @@ function Swap_nodes_iterative(list) {
     
     // pair of nodes that get swapped each iteration
     let prev = null;
-    let curr = list.root;
+    let curr = list.head;
     let next;
 
-    if(curr.next) list.root = curr.next;
+    if(curr.next) list.head = curr.next;
 
     while(curr && curr.next) {
 
@@ -76,12 +76,12 @@ function Swap_nodes_iterative(list) {
         curr = prev.next; // 5
     }
 
-    list.last = curr ?? prev;
+    list.tail = curr ?? prev;
 }
 
 
 function Swap_values_recursive(list) {
-    if(list.root) list.root.Swap_values_recursive();
+    if(list.head) list.head.Swap_values_recursive();
 }
 
 // recursive prototype method for all nodes of the linked list
@@ -101,7 +101,7 @@ LinkedList.Node.prototype.Swap_values_recursive = function(prev_node){
 
 // TODO
 function Swap_nodes_recursive(list) {
-    if(list.root) list.root.Swap_values_recursive();
+    if(list.head) list.head.Swap_values_recursive();
 }
 
 
