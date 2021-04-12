@@ -33,4 +33,5 @@ Clear-Host
 # node ./dailyCodingProblem/Problem-#157-[Easy].js      # Is any permutation a palindrom
 # node ./dailyCodingProblem/Problem-#158-[Medium].js    # Ways to to reach the bottom of a matrix'
 # node ./dailyCodingProblem/Problem-#159-[Easy].js      # Find first recurring Character
-node ./dailyCodingProblem/Problem-#145-[Easy].js        # Swap every two nodes in a linked list
+# node ./dailyCodingProblem/Problem-#145-[Easy].js      # Swap every two nodes in a linked list
+node ./dailyCodingProblem/Problem-#164-[Medium].js      # Find duplicate number in array

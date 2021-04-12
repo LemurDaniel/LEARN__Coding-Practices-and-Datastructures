@@ -113,4 +113,19 @@ Helper.Array_has_same_values = function(arr, arr1){
     return Object.keys(dict).length == 0;
 }
 
+Helper.scramble_Array = function (arr, cycles = 10e2) {
+
+    for(let i = 0; i<cycles; i++) {
+        const r1 = Math.floor(Math.random() * arr.length);
+        const r2 = Math.floor(Math.random() * arr.length);
+
+        const temp = arr[r1];
+        arr[r1] = arr[r2];
+        arr[r2] = temp;
+
+    }
+
+    return arr;
+}
+
 module.exports = Helper;
