@@ -31,11 +31,11 @@ Inout.solvers = [Reverse_iterative, Reverse_recursive]
 function Reverse_iterative(list) {
     
     let prev, next;
-    let curr = list.root;
+    let curr = list.head;
 
     // swap root and last pointer of linkend list
-    list.root = list.last;
-    list.last = curr;
+    list.head = list.tail;
+    list.tail = curr;
 
     while(curr){
 
@@ -50,7 +50,7 @@ function Reverse_iterative(list) {
         curr = next;
     }
 
-    list.last.next = null;
+    list.tail.next = null;
 }
 
 
@@ -58,14 +58,14 @@ function Reverse_iterative(list) {
 // Reverse linked list recursively
 function Reverse_recursive(list) {
 
-    const root = list.root;
+    const head = list.head;
 
     // swap root and last pointer of linkend list
-    list.root = list.last;
-    list.last = root;
+    list.head = list.tail;
+    list.tail = head;
 
     // there is no previous node and so it points to null
-    root.Reverse_recursive(null);
+    head.Reverse_recursive(null);
 }
 
 // recursive prototype method for all nodes of the linked list
