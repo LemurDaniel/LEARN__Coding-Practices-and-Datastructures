@@ -59,7 +59,6 @@ function find_number_of_smaller_elements(arr) {
     return nums;
 }
 
-n + n-1 + n-2 + n-3
 /*
     time  complexity: quadratic;
     space complexity: constant;
