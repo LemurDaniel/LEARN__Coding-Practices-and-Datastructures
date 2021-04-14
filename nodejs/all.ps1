@@ -25,12 +25,13 @@ Clear-Host
 # node ./dailyCode/remove_one_layer_of_parenthesis.js
 # node ./dailyCode/Convert_to_base.js
 # node ./dailyCode/find_closest_point.js
-node ./dailyCode/Fixed_point
+# node ./dailyCode/Fixed_point
 
 
     ##################################
     ###### Daily Coding Problem ######
     ##################################
+
 # node ./dailyCodingProblem/Problem-#117-[Easy].js      # Find level with minimum sum
 # node ./dailyCodingProblem/Problem-#157-[Easy].js      # Is any permutation a palindrom
 # node ./dailyCodingProblem/Problem-#158-[Medium].js    # Ways to to reach the bottom of a matrix'
@@ -38,3 +39,11 @@ node ./dailyCode/Fixed_point
 # node ./dailyCodingProblem/Problem-#145-[Easy].js      # Swap every two nodes in a linked list
 # node ./dailyCodingProblem/Problem-#164-[Medium].js    # Find duplicate number in array
 # node ./dailyCodingProblem/Problem-#165-[Medium].js    # count smaller elements on right side
+
+
+    ##############################
+    ###### Coding Questions ######
+    ##############################
+
+    ########### ARRAYS ###########
+node codingQuestions/arrays/simplify_path.js
