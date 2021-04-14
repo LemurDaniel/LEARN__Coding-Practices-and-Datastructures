@@ -43,20 +43,3 @@ function simplify_path (path)  {
 
     return stack.join('');
 }
-
-function simplify_path (path)  {
-
-    path = path.split('/')
-
-    for(let token of path.split('/')) {
-        if(token == '..' && stack.length != 0) stack.pop(); 
-        else if(' .'.includes(token)) continue;
-        else stack.push( '/' + token);
-    }
-
-    return stack.join('');
-}
-
-
-
-
