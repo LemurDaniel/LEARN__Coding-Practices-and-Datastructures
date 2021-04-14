@@ -37,8 +37,6 @@ Inout.solve();
 
 
 /*
-    (n is the length of the array)
-
     time  complexity: quadratic;
     space complexity: linear;
 */
@@ -46,9 +44,8 @@ Inout.solve();
 function find_number_of_smaller_elements(arr) {
 
     const nums = new Array(arr.length);
-    nums[nums.length - 1] = 0;
 
-    for(let idx=0; idx<arr.length-1; idx++) {
+    for(let idx=0; idx<arr.length; idx++) {
         
         nums[idx] = 0;
         for(let i=idx+1; i<arr.length; i++)
@@ -66,7 +63,7 @@ function find_number_of_smaller_elements(arr) {
 
 function find_number_of_smaller_elements_2(arr) {
 
-    for(let idx=0; idx<arr.length-1; idx++) {
+    for(let idx=0; idx<arr.length; idx++) {
         
         const num = arr[idx];
         arr[idx] = 0;
@@ -76,5 +73,4 @@ function find_number_of_smaller_elements_2(arr) {
 
     }
 
-    arr[arr.length-1] = 0;
 }

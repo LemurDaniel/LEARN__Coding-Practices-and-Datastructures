@@ -47,8 +47,8 @@ Inout.solve();
     can be mapped to one number in the array. Using the XOR Operation
     two times with the same operand will nullify the operation. If each
     value in the array has a corresponding index and each value and index
-    get XOR all the operations will eventually cancel out except for
-    the duplicate number in the array
+    get XORed all the operations will eventually cancel out except for
+    the duplicate number in the array.
 
     time  complexity: linear;
     space complexity: constant;
