@@ -22,12 +22,13 @@ Helper.string_toIntArray = function(str) {
 
     if(typeof str == 'object') {
         for(let key of Object.keys(str)){
+
             if( keywords.includes(key) )
                 str[key] = Helper.string_toIntArray(str[key]);
-            else if( str[key] == 'string' && str[key][0] == '&' )
-                str[key] = Helper.string_toIntArray(str[key].substr(1,str[key.length]));
-            else if( typeof key == 'object' )
-                str[key] = Helper.string_toIntArray(str[key]); 
+            else if( typeof str[key] == 'string' && str[key][0] == '&' )
+                str[key] = Helper.string_toIntArray(str[key].substr(1, str[key].length));
+            else if( typeof str[key] == 'object' )
+                str[key] = Helper.string_toIntArray(str[key]);
         }
 
         return str;
@@ -68,14 +69,16 @@ Helper.print_Array = function(arr, bl = ', ', open = '[ ', close = ' ]') {
     return open + str + close;
 }
 
-Helper.print_map = function(map) {
+Helper.print_map = function(map, depth = 0) {
     const keys = Object.keys(map);
 
-    let str = '    ';
+    let str = '';
     keys.forEach( k => {
         let val = map[k];
-        if(Array.isArray(val)) val = Helper.print_Array(val)
-        str += '\n     ' + k + ': ' + val
+        if(Array.isArray(val)) val = Helper.print_Array(val);
+        else if(typeof val == 'object') val = Helper.print_map(val, depth+1);
+
+        str += '\n     ' + Helper.uniform_string('  ', depth*4) + k + ': ' + val
 
     });
 
@@ -141,6 +144,26 @@ Helper.scramble_Array = function (arr, cycles = 10e2) {
     }
 
     return arr;
+}
+
+
+
+
+
+Helper.binary_search = function(nums, target, lower, upper)  {
+
+    upper = upper ?? nums.length-1;
+    lower = lower ?? 0;
+
+    while(upper > lower) {
+        const mid = Math.round( (upper + lower) / 2 );
+
+        if( nums[mid] < target ) lower = mid + 1;
+        else if( nums[mid] > target ) upper = mid - 1;
+        else return mid;
+    }
+
+    return -1;
 }
 
 module.exports = Helper;

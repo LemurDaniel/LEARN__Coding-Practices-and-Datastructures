@@ -60,8 +60,8 @@ function find_fixed_point_binary_search(arr) {
         const mid = Math.floor( (upper + lower) / 2 );
         
         if(mid == arr[mid]) return mid;
-        else if(mid > arr[mid]) lower = mid;
-        else upper = mid;
+        else if(mid > arr[mid]) lower = mid + 1;
+        else upper = mid - 1;
     }
 }
 

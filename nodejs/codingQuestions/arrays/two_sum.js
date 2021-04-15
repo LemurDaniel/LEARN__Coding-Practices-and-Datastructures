@@ -1,6 +1,5 @@
-const Helper = require('../../Helper');
-
 const Inout = new (require ('../../Inout'))('DailyCode --- Simplify Unix-style path');
+const Helper = require('../../Helper');
 
 /*
     Given an array of integers, return indices of the two numbers such that they add up to a specific target.
