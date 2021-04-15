@@ -18,6 +18,21 @@ Helper.matrix_toString = function(mat, len = 4) {
 
 Helper.string_toIntArray = function(str) {
 
+    const keywords = ['nums', 'arr'];
+
+    if(typeof str == 'object') {
+        for(let key of Object.keys(str)){
+            if( keywords.includes(key) )
+                str[key] = Helper.string_toIntArray(str[key]);
+            else if( str[key] == 'string' && str[key][0] == '&' )
+                str[key] = Helper.string_toIntArray(str[key].substr(1,str[key.length]));
+            else if( typeof key == 'object' )
+                str[key] = Helper.string_toIntArray(str[key]); 
+        }
+
+        return str;
+    }
+
     const arr = [];
     const sub_strs = str.split('|');
 

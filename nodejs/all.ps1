@@ -45,5 +45,8 @@ Clear-Host
     ###### Coding Questions ######
     ##############################
 
+    ########### STRINGS ###########
+# node codingQuestions/strings/simplify_path.js
+
     ########### ARRAYS ###########
-node codingQuestions/arrays/simplify_path.js
+node codingQuestions/arrays/two_sum.js
