@@ -2,7 +2,6 @@ const Helper = require('./Helper');
 const LinkedList = require('./datastructures/linkedList');
 const BTree = require('./datastructures/bTree');
 const Queue = require('./datastructures/queue');
-const { copyFile } = require('fs');
 
 const classes = [LinkedList, BTree.BinaryTree, Queue.NodeQueue, Queue.ArrayQueue];
 

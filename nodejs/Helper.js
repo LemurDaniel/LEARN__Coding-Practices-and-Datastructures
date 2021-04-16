@@ -169,4 +169,44 @@ Helper.binary_search = function(nums, target, lower, upper)  {
     return -1;
 }
 
+
+// Note: https://medium.com/@CalvinChankf/how-to-deal-with-lower-upper-bound-binary-search-b9ce744673df
+
+Helper.binary_search_lower_bound = function(nums, target, lower, upper)  {
+
+    upper = upper ?? nums.length-1;
+    lower = lower ?? 0;
+
+    while(upper > lower) {
+        const mid = Math.floor( (upper + lower) / 2 );
+
+        // console.log( '  Upper: ' + upper + '    Lower: ' + lower + '    Mid: ' + mid + '    Element: ' + nums[mid])
+        if( nums[mid] >= target ) upper = mid;
+        else lower = mid + 1;
+       
+        if( nums[lower] == target )
+            return lower;
+    }
+
+    return -1;
+}
+
+Helper.binary_search_upper_bound = function(nums, target, lower, upper)  {
+
+    upper = upper ?? nums.length-1;
+    lower = lower ?? 0;
+
+    while(upper > lower) {
+        const mid = Math.ceil( (upper + lower) / 2 );
+
+        if( nums[mid] <= target ) lower = mid;
+        else upper = mid - 1;
+       
+        if( nums[upper] == target )
+            return upper;
+    }
+
+    return -1;
+}
+
 module.exports = Helper;

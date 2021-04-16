@@ -50,6 +50,7 @@ Clear-Host
 
     ########### ARRAYS ###########
 # node codingQuestions/arrays/two_sum.js
+node codingQuestions/arrays/search_for_range.js
 
     ########### LINKED LISTS ###########
-node codingQuestions/linked_lists/remove_linked_list_element.js
+# node codingQuestions/linked_lists/remove_linked_list_element.js
