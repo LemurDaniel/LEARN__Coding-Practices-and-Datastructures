@@ -35,6 +35,25 @@ LinkedList.Copy = function (list) {
 
 LinkedList.LinkedListFromString_Int = function (str) {
     
+    const keywords = ['list'];
+
+    if(typeof str == 'object') {
+
+        for(let key of Object.keys(str)){
+
+            if( keywords.includes(key) )
+                str[key] = LinkedList.LinkedListFromString_Int(str[key]);
+            else if( typeof str[key] == 'string' && str[key][0] == '&' )
+                str[key] = LinkedList.LinkedListFromString_Int(str[key].substr(1, str[key].length));
+            else if( typeof str[key] == 'object' )
+                str[key] = LinkedList.LinkedListFromString_Int(str[key]);
+
+        }
+
+        console.log(str)
+        return str;
+    }
+
     const list = new LinkedList();
 
     if(str.includes(','))

@@ -1,4 +1,4 @@
-const Inout = new (require ('../../Inout'))('DailyCode --- Simplify Unix-style path');
+const Inout = new (require ('../../Inout'))('DailyCode --- Two sum');
 const Helper = require('../../Helper');
 
 /*

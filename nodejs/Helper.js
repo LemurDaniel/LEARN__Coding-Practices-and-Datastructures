@@ -1,3 +1,5 @@
+const LinkedList = require("./datastructures/linkedList");
+
 const Helper = {};
 
 Helper.uniform_string = function(str, len){
@@ -76,6 +78,7 @@ Helper.print_map = function(map, depth = 0) {
     keys.forEach( k => {
         let val = map[k];
         if(Array.isArray(val)) val = Helper.print_Array(val);
+        else if(val instanceof LinkedList) val = val.toString();
         else if(typeof val == 'object') val = Helper.print_map(val, depth+1);
 
         str += '\n     ' + Helper.uniform_string('  ', depth*4) + k + ': ' + val

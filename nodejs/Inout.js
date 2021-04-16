@@ -2,6 +2,7 @@ const Helper = require('./Helper');
 const LinkedList = require('./datastructures/linkedList');
 const BTree = require('./datastructures/bTree');
 const Queue = require('./datastructures/queue');
+const { copyFile } = require('fs');
 
 const classes = [LinkedList, BTree.BinaryTree, Queue.NodeQueue, Queue.ArrayQueue];
 
@@ -37,7 +38,19 @@ class Inout {
         this.output_string_converter = default_converter;
         this.result_string_converter = default_converter;
 
-        this.input_copy_method = (arg) => arg.copy ? arg.copy() : JSON.parse(JSON.stringify(arg));
+        const input_copy_method = (arg) => {
+           if(typeof arg == 'object') {
+               const copy = {};
+               for(let key of Object.keys(arg)) {
+                   if(typeof arg == Object) copy[key] = input_copy_method(arg[key]);
+                   else copy[key] = arg[key].copy ? arg[key].copy() : JSON.parse(JSON.stringify(arg[key]));
+               }
+               return copy;
+           }
+           return arg.copy ? arg.copy() : JSON.parse(JSON.stringify(arg));
+        }
+
+        this.input_copy_method = input_copy_method;
         this.result_comparer = (arg1, arg2) => JSON.stringify(arg1) == JSON.stringify(arg2);
     }
 

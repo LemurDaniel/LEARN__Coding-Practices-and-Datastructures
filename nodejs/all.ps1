@@ -49,4 +49,7 @@ Clear-Host
 # node codingQuestions/strings/simplify_path.js
 
     ########### ARRAYS ###########
-node codingQuestions/arrays/two_sum.js
+# node codingQuestions/arrays/two_sum.js
+
+    ########### LINKED LISTS ###########
+node codingQuestions/linked_lists/remove_linked_list_element.js
