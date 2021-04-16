@@ -49,18 +49,16 @@ const Queue = new require('../datastructures/queue');
     """
 */
 
-Inout.convert_input = Tree.BinaryTree.GenerateIntPreorderFromString;
-Inout.output_string_converter = arg => '\n  -- Level: '+arg[0]+' Sum: '+arg[1];
-Inout.result_string_converter = Inout.output_string_converter;
+Inout.map_input = (i, s) => s(i)
 
 Inout.testcases.push({
-    input: '%1,4,3,/,/,2,/,/,5,4,/,/,-1',
-    output: [1,9]
+    input: '&BT' + '%1,4,3,/,/,2,/,/,5,4,/,/,-1',
+    output: { level: 1, sum: 9 }
 })
 
 Inout.testcases.push({
-    input: '%1,4,$3,$2,5,$4,2',
-    output: [2,11]
+    input: '&BT' + '%1,4,$3,$2,5,$4,2',
+    output: { level: 2, sum: 11 }
 })
 
 Inout.solvers = [find_level_with_maximum_sum];
@@ -104,7 +102,7 @@ function find_level_with_maximum_sum(tree) {
             curr_sum = 0;
 
             // return if no more element in queue, (except for null)
-            if(q.count() == 1) return [level_max_sum, max_sum];
+            if(q.count() == 1) return { level: level_max_sum, sum: max_sum };
         }
     }
 }

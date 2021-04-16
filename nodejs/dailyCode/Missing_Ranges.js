@@ -21,8 +21,7 @@ const Helper = require('../Helper')
 
 Inout.convert_input = Helper.string_toIntArray;
 Inout.convert_output = Helper.string_toIntArray;
-Inout.output_string_converter = Helper.print_Array;
-Inout.result_string_converter = Helper.print_Array;
+
 Inout.map_input = (arg, solver) => solver(arg[0], arg[1]);
 
 Inout.input_string_converter = arr => '\n   --- Array: '+arr[0] + '\n   --- Range: '+arr[1];

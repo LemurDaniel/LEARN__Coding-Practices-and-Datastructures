@@ -13,9 +13,9 @@ class Inout {
         this.testcases = []
         this.solvers = []
 
-        this.map_input = (input, solver) => solver(input);
-        this.convert_input = Helper.string_toObject;
-        this.convert_output = oup => oup;
+        this.map_input = Helper.default_mapper;
+        this.convert_input = Helper.convert_strings_in_object;
+        this.convert_output = Helper.convert_strings_in_object;
         this.convert_result = res => res;
 
         this.input_string_converter = Helper.default_converter;
@@ -67,6 +67,7 @@ class Inout {
                 result = this.convert_result(result ?? input);
             }catch(exp){
                 exception = exp;
+                console.log(exp)
             }
 
             const success = this.result_comparer(test.output, result)

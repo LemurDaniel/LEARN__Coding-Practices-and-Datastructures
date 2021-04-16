@@ -11,9 +11,6 @@ const Helper = require('../../Helper');
     return [0, 1]
 */
 
-Inout.convert_input = Helper.string_toIntArray;
-Inout.map_input = inp => two_sum(inp.nums, inp.target);
-
 Inout.push( { input: { nums: '2,7,11,15', target: 9 }, output: [0,1] } );
 
 Inout.solvers = [two_sum, two_sum_2];

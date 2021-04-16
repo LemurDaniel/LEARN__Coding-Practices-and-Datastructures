@@ -9,11 +9,7 @@ const Helper = require('../../Helper');
     Return: 1 ==> 2 ==> 3 ==> 4 ==> 5
 */
 
-Inout.convert_input = LinkedList.LinkedListFromString_Int;
-Inout.convert_output = LinkedList.LinkedListFromString_Int;
-Inout.map_input = (inp, solver) => solver(inp.list, inp.val);
-
-Inout.push( { input: { list: '12443143324', val: 3 } , output: '12441424' } );
+Inout.push( { input: { list: '12443143324', val: 3 } , output: '&LL'+'12441424' } );
 
 Inout.solvers = [remove_elements_iterative, remove_elements_recursive];
 

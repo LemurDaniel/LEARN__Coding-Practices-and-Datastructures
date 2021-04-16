@@ -19,16 +19,12 @@ const Helper = require('../Helper');
 
 */
 
-Inout.map_input = (input, solver) => solver(input.points, input.k);
 Inout.result_comparer = Helper.Array_has_same_values; 
 
 function add_testcase(str, k, out) {
     Inout.push( { 
-        input: { 
-            points: Helper.string_toIntArray(str),
-            k: k 
-        },
-        output: Helper.string_toIntArray(out)
+        input: { points: '&AR'+str, k: k },
+        output: '&AR' + out
     } );
 }
 

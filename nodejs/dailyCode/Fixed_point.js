@@ -16,9 +16,7 @@ const Helper = require('../Helper');
     # 1
 */
 
-Inout.convert_input = Helper.string_toIntArray;
-
-Inout.push( { input: '-5,1,3,4', output: 1 } );
+Inout.push( { input: '&AR'+'-5,1,3,4', output: 1 } );
 
 
 /*

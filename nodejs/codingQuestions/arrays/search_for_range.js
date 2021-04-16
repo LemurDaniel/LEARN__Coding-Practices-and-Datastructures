@@ -9,8 +9,6 @@ const Helper = require('../../Helper');
 
 */
 
-Inout.map_input = (inp, solver) => solver(inp.nums, inp.target);
-
 Inout.push( { input: { nums: '1,1,1,2,2,2,3,3', target: 2 },  output: [3,5] } );
 Inout.push( { input: { nums: '1,1,1,2,2,2,3,3', target: 0 }, output: [-1,-1] } );
 

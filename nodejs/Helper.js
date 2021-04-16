@@ -2,6 +2,8 @@ const LinkedList = require('./datastructures/linkedList');
 const BTree = require('./datastructures/bTree');
 const Queue = require('./datastructures/queue');
 
+const classes = [LinkedList, BTree.BinaryTree, Queue.NodeQueue, Queue.ArrayQueue];
+
 const Helper = {};
 
 Helper.uniform_string = function(str, len){
@@ -172,41 +174,48 @@ Helper.string_toIntArray = function(str) {
     return arr;
 }
 
-Helper.string_toObject = function(obj) {
+// converts all strings in an object to the desired object
+Helper.convert_strings_in_object = function(obj) {
 
     const keywords_arr = ['nums', 'arr'];
     const keywords_list = ['list'];
     const keywords_tree = ['tree','subtree'];
 
-    const keychars_arr = 'AR&';
-    const keychars_list = 'LL&';
-    const keychars_tree = 'BT&';
-
-    if(typeof obj == 'object') {
+    if (typeof obj == 'string') return convert_string(obj);
+    else if(typeof obj == 'object') {
         for(let key of Object.keys(obj)) {
 
             if( typeof obj[key] == 'string' ){
 
-                if(obj[key][2] == '&') {
-                    const chars = obj[key].substr(0,3);
-                    const substr = obj[key].substr(3, obj[key].length);
-
-                    if( chars == keychars_arr ) obj[key] = Helper.string_toIntArray(substr);
-                    else if( chars == keychars_list ) obj[key] = LinkedList.LinkedListFromString_Int(substr);
-                    else if( chars == keychars_tree ) obj[key] = BTree.BinaryTree.GenerateIntPreorderFromString(substr);
-                }
-
+                if(obj[key][0] == '&') obj[key] = convert_string(obj[key]);
                 else if( keywords_arr.includes(key) ) obj[key] = Helper.string_toIntArray(obj[key]);
                 else if( keywords_list.includes(key) ) obj[key] = LinkedList.LinkedListFromString_Int(obj[key]);
                 else if( keywords_tree.includes(key) ) obj[key] = BTree.BinaryTree.GenerateIntPreorderFromString(obj[key]);
             }
 
-            else if( typeof obj[key] == 'object' ) obj[key] = Helper.string_toObject(obj[key]);
+            else if( typeof obj[key] == 'object' ) obj[key] = Helper.convert_strings_in_object(obj[key]);
         }
-
     }
 
     return obj;
+}
+
+// converts string to the desired object
+function convert_string(str) {
+
+    const keychars_arr = '&AR';
+    const keychars_list = '&LL';
+    const keychars_tree = '&BT';
+
+    if(str[0] == '&') {
+        const chars = str.substr(0,3);
+        const substr = str.substr(3, str.length);
+
+        if( chars == keychars_arr ) return Helper.string_toIntArray(substr);
+        else if( chars == keychars_list ) return LinkedList.LinkedListFromString_Int(substr);
+        else if( chars == keychars_tree ) return BTree.BinaryTree.GenerateIntPreorderFromString(substr);
+    }
+    else return str;
 }
 
 
@@ -216,7 +225,9 @@ Helper.string_toObject = function(obj) {
 
 Helper.default_copy = function(arg) {
 
-    if(typeof arg == 'object') {
+    if(arg.copy) return arg.copy();
+
+    if(typeof arg == 'object' && !Array.isArray(arg)) {
         const copy = {};
         for(let key of Object.keys(arg)) {
             if(typeof arg == Object) copy[key] = input_copy_method(arg[key]);
@@ -224,13 +235,12 @@ Helper.default_copy = function(arg) {
         }
         return copy;
     }
-    return arg.copy ? arg.copy() : JSON.parse(JSON.stringify(arg));
+
+    return JSON.parse(JSON.stringify(arg));
 
 }
 
 Helper.default_converter = function(arg) {
-
-    const classes = [LinkedList, BTree.BinaryTree, Queue.NodeQueue, Queue.ArrayQueue];
 
     for(let c of classes)
         if ( arg instanceof c ) return arg.toString();
@@ -241,6 +251,16 @@ Helper.default_converter = function(arg) {
 
 }
 
+Helper.default_mapper = function(arg, solver) {
+
+    for(let c of classes)
+        if ( arg instanceof c ) return solver(arg);
+
+    if(Array.isArray(arg) || typeof arg != 'object')
+        return solver(arg);
+    else
+        return solver(...Object.values(arg));
+}
 
 
 // ############################################################################

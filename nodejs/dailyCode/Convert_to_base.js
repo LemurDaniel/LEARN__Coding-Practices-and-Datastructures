@@ -18,8 +18,6 @@ const Inout = new (require ('../Inout'))('DailyCode --- Convert decimal to other
 
 const add_Testcase = (num, base) => Inout.push({  input: {num: num, base: base}, output: num.toString(base).toUpperCase() });
 
-Inout.map_input = (input, solver) => solver(input.num, input.base) 
-
 add_Testcase(123, 2);
 add_Testcase(32445, 2);
 add_Testcase(235234, 2);

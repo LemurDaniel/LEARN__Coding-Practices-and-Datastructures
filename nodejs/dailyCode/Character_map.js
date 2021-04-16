@@ -22,8 +22,6 @@ const Inout = new (require ('../Inout'))('DailyCode --- Character Map');
     # False
 */
 
-Inout.map_input = (input, solver) => solver(input[0], input[1]) 
-
 Inout.testcases.push({  input: ['abc', 'def'], output: true});
 Inout.testcases.push({  input: ['aac', 'def'], output: true});
 

@@ -9,6 +9,7 @@ class Node {
     }
 
     isLeaf = () => this.left == null && this.right == null;
+
 }
 
 class BinaryTree {
@@ -20,29 +21,32 @@ class BinaryTree {
         this.print_null = print_null ?? true;
     }
 
+    copy = () => BinaryTree.GenerateIntPreorderFromString(this.toString(true, '/'));
 
-    toString() {
-        if(!this.root)  return '<NUll>';
-
+    toString(print_null = null, null_str = '<NULL>') {
+        if(!this.root)  return null_str;
+        
         // Printing string in preorder fashion (Root, Left, Right)
         let str = '';
         let stack = [this.root];
         let node = this.root;
+
+        print_null = print_null ?? this.print_null;
 
         while(stack.length > 0){
                    
             // when 'print_null' is false the method switches to the shorter version
             // instead of printing two <NULL> behind every leaf, Leaves are marked with '<value>/L'
             if(node) {
-                str +=  node.val +  (!this.print_null && node.isLeaf() ? '/L':'')  + ', ';
-                if(!this.print_null && node.isLeaf())
+                str +=  node.val +  (!print_null && node.isLeaf() ? '/L':'')  + ', ';
+                if(!print_null && node.isLeaf())
                     node = stack.pop().right;
                 else {
                     stack.push(node);
                     node = node.left;
                 }
             }else{
-                str += '<NULL>, ';
+                str += null_str+', ';
                 node = stack.pop().right;
             }
         }
