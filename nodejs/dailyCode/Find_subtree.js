@@ -63,28 +63,23 @@ const Tree = new require('../datastructures/bTree')
          3   2 
 */
 
-function inp(tree, subtree){
-    return {
-        tree: Tree.BinaryTree.GenerateIntPreorderFromString(tree), 
-        subtree: Tree.BinaryTree.GenerateIntPreorderFromString(subtree)
-    }
-}
+const inp = (tree, subtree) => { tree = tree, subtree = subtree }
 
 Inout.map_input = (input, solver) => solver(input.tree, input.subtree);
-Inout.input_string_converter = input => '\n   Tree: '+input.tree.toString()+'\n   Subtree: '+input.subtree;
+//Inout.input_string_converter = input => '\n   Tree: '+input.tree.toString()+'\n   Subtree: '+input.subtree;
 
 // Testcases
 Inout.testcases.push({
-    input: inp('1,4,3,/,/,2,/,/,5,4,/,/,-1', '4,3,/,/,2'),
+    input: { tree: '%1,4,3,/,/,2,/,/,5,4,/,/,-1', subtree: '%4,3,/,/,2' },
     output: true
 });
 Inout.testcases.push({
-    input: inp('1,4,3,5,/,/,/,2,/,/,5,4,/,/,-1', '4,3,/,/,2'),
+    input: { tree: '%1,4,3,5,/,/,/,2,/,/,5,4,/,/,-1', subtree: '%4,3,/,/,2' },
     output: true
 });
 Inout.testcases.push({
-    input: inp('1,4,5,/,/,2,/,/,5,4,/,/,-1', '4,3,/,/,2'),
-    output: false
+    input: { tree: '%1,4,5,/,/,2,/,/,5,4,/,/,-1', subtree: '%4,3,/,/,2' },
+    output: true
 });
 
 Inout.solvers = [find_subtree];

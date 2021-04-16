@@ -40,9 +40,7 @@ const Inout = new (require ('../Inout'))('DailyCode --- Flatten Dictionary');
         # {'a': 1, 'b.c': 2, 'b.d.e': 3}
 */
 
-Inout.input_string_converter = JSON.stringify;
-Inout.output_string_converter = JSON.stringify;
-Inout.result_string_converter = JSON.stringify;
+
 
 // Testcases
 Inout.testcases.push({

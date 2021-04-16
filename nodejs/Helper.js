@@ -1,4 +1,6 @@
-const LinkedList = require("./datastructures/linkedList");
+const LinkedList = require('./datastructures/linkedList');
+const BTree = require('./datastructures/bTree');
+const Queue = require('./datastructures/queue');
 
 const Helper = {};
 
@@ -7,7 +9,12 @@ Helper.uniform_string = function(str, len){
     return str;
 }
 
+// ############################################################################
+// ######### PRINT METHODS
+// ############################################################################
+
 Helper.matrix_toString = function(mat, len = 4) {
+
     let str = '\n';
     for(let row = 0; row<mat.length; row++) {
         str += '    ';
@@ -16,77 +23,49 @@ Helper.matrix_toString = function(mat, len = 4) {
         str += '\n';
     }
     return str;
-}
 
-Helper.string_toIntArray = function(str) {
-
-    const keywords = ['nums', 'arr'];
-
-    if(typeof str == 'object') {
-        for(let key of Object.keys(str)){
-
-            if( keywords.includes(key) )
-                str[key] = Helper.string_toIntArray(str[key]);
-            else if( typeof str[key] == 'string' && str[key][0] == '&' )
-                str[key] = Helper.string_toIntArray(str[key].substr(1, str[key].length));
-            else if( typeof str[key] == 'object' )
-                str[key] = Helper.string_toIntArray(str[key]);
-        }
-
-        return str;
-    }
-
-    const arr = [];
-    const sub_strs = str.split('|');
-
-    for(let i=0; i<sub_strs.length; i++) {
-        
-        let split = '';
-        if(sub_strs[i].includes(',')) split = ',';
-        else if(sub_strs[i].includes(' ')) split = ' ';
-
-        const sub_arr = [];
-        for(let el of sub_strs[i].split(split)){
-            if(el.trim() == '/') sub_arr.push('/');
-            else sub_arr.push( parseInt(el) );
-        }
-
-        if(sub_strs.length == 1) return sub_arr
-        else arr.push(sub_arr);
-    }
-    return arr;
 }
 
 Helper.print_Array = function(arr, bl = ', ', open = '[ ', close = ' ]') {
+
     str = '';
     for(let i=0; i<arr.length; i++) {
 
-        if(Array.isArray(arr[i])) 
-            str += Helper.print_Array(arr[i], bl, '( ', ' )');
-        else
-            str += arr[i];
+        if(Array.isArray(arr[i]))   str += Helper.print_Array(arr[i], bl, '( ', ' )');
+        else    str += arr[i];
 
         str += (i != arr.length-1 ? bl : '');
     }
     return open + str + close;
 }
 
-Helper.print_map = function(map, depth = 0) {
+Helper.print_map = function(map, depth = 5) {
+    
+    if(!map) return '';
+
     const keys = Object.keys(map);
 
     let str = '';
     keys.forEach( k => {
         let val = map[k];
-        if(Array.isArray(val)) val = Helper.print_Array(val);
-        else if(val instanceof LinkedList) val = val.toString();
-        else if(typeof val == 'object') val = Helper.print_map(val, depth+1);
 
-        str += '\n     ' + Helper.uniform_string('  ', depth*4) + k + ': ' + val
+        if(Array.isArray(val)) val = Helper.print_Array(val);
+
+        else if(val instanceof LinkedList) val = val.toString();
+        else if(val instanceof BTree.BinaryTree) val = val.toString();
+
+        else if(typeof val == 'object') val = Helper.print_map(val, depth+2);
+
+        str += '\n' + Helper.uniform_string('  ', depth) + k + ': ' + val
 
     });
 
     return str;
 }
+
+// ############################################################################
+// ######### EUQALS METHODS
+// ############################################################################
 
 Helper.Array_equals = function(arr, arr1){
 
@@ -150,8 +129,123 @@ Helper.scramble_Array = function (arr, cycles = 10e2) {
 }
 
 
+// ############################################################################
+// ######### CONVERT STRINGS TO OBJECTS
+// ############################################################################
+
+Helper.string_toIntArray = function(str) {
+
+    const keywords = ['nums', 'arr'];
+
+    if(typeof str == 'object') {
+        for(let key of Object.keys(str)){
+
+            if( keywords.includes(key) )
+                str[key] = Helper.string_toIntArray(str[key]);
+            else if( typeof str[key] == 'string' && str[key][0] == '&' )
+                str[key] = Helper.string_toIntArray(str[key].substr(1, str[key].length));
+            else if( typeof str[key] == 'object' )
+                str[key] = Helper.string_toIntArray(str[key]);
+        }
+
+        return str;
+    }
+
+    const arr = [];
+    const sub_strs = str.split('|');
+
+    for(let i=0; i<sub_strs.length; i++) {
+        
+        let split = '';
+        if(sub_strs[i].includes(',')) split = ',';
+        else if(sub_strs[i].includes(' ')) split = ' ';
+
+        const sub_arr = [];
+        for(let el of sub_strs[i].split(split)){
+            if(el.trim() == '/') sub_arr.push('/');
+            else sub_arr.push( parseInt(el) );
+        }
+
+        if(sub_strs.length == 1) return sub_arr
+        else arr.push(sub_arr);
+    }
+    return arr;
+}
+
+Helper.string_toObject = function(obj) {
+
+    const keywords_arr = ['nums', 'arr'];
+    const keywords_list = ['list'];
+    const keywords_tree = ['tree','subtree'];
+
+    const keychars_arr = 'AR&';
+    const keychars_list = 'LL&';
+    const keychars_tree = 'BT&';
+
+    if(typeof obj == 'object') {
+        for(let key of Object.keys(obj)) {
+
+            if( typeof obj[key] == 'string' ){
+
+                if(obj[key][2] == '&') {
+                    const chars = obj[key].substr(0,3);
+                    const substr = obj[key].substr(3, obj[key].length);
+
+                    if( chars == keychars_arr ) obj[key] = Helper.string_toIntArray(substr);
+                    else if( chars == keychars_list ) obj[key] = LinkedList.LinkedListFromString_Int(substr);
+                    else if( chars == keychars_tree ) obj[key] = BTree.BinaryTree.GenerateIntPreorderFromString(substr);
+                }
+
+                else if( keywords_arr.includes(key) ) obj[key] = Helper.string_toIntArray(obj[key]);
+                else if( keywords_list.includes(key) ) obj[key] = LinkedList.LinkedListFromString_Int(obj[key]);
+                else if( keywords_tree.includes(key) ) obj[key] = BTree.BinaryTree.GenerateIntPreorderFromString(obj[key]);
+            }
+
+            else if( typeof obj[key] == 'object' ) obj[key] = Helper.string_toObject(obj[key]);
+        }
+
+    }
+
+    return obj;
+}
 
 
+// ############################################################################
+// ######### DEFAULT METHODS
+// ############################################################################
+
+Helper.default_copy = function(arg) {
+
+    if(typeof arg == 'object') {
+        const copy = {};
+        for(let key of Object.keys(arg)) {
+            if(typeof arg == Object) copy[key] = input_copy_method(arg[key]);
+            else copy[key] = arg[key].copy ? arg[key].copy() : JSON.parse(JSON.stringify(arg[key]));
+        }
+        return copy;
+    }
+    return arg.copy ? arg.copy() : JSON.parse(JSON.stringify(arg));
+
+}
+
+Helper.default_converter = function(arg) {
+
+    const classes = [LinkedList, BTree.BinaryTree, Queue.NodeQueue, Queue.ArrayQueue];
+
+    for(let c of classes)
+        if ( arg instanceof c ) return arg.toString();
+
+    if(Array.isArray(arg)) return Helper.print_Array(arg);
+    else if(typeof arg == 'object') return Helper.print_map(arg);
+    else return arg.toString();
+
+}
+
+
+
+// ############################################################################
+// ######### BINARY SEARCH
+// ############################################################################
 
 Helper.binary_search = function(nums, target, lower, upper)  {
 

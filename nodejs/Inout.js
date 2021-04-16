@@ -1,9 +1,4 @@
 const Helper = require('./Helper');
-const LinkedList = require('./datastructures/linkedList');
-const BTree = require('./datastructures/bTree');
-const Queue = require('./datastructures/queue');
-
-const classes = [LinkedList, BTree.BinaryTree, Queue.NodeQueue, Queue.ArrayQueue];
 
 const rl = require('readline').createInterface({
   input: process.stdin,
@@ -19,37 +14,15 @@ class Inout {
         this.solvers = []
 
         this.map_input = (input, solver) => solver(input);
-        this.convert_input = inp => inp;
+        this.convert_input = Helper.string_toObject;
         this.convert_output = oup => oup;
         this.convert_result = res => res;
 
-        const default_converter = arg => {
-            for(let c of classes)
-                if ( arg instanceof c ) return arg.toString();
+        this.input_string_converter = Helper.default_converter;
+        this.output_string_converter = Helper.default_converter;
+        this.result_string_converter = Helper.default_converter;
 
-            if(Array.isArray(arg)) return Helper.print_Array(arg);
-            else if(typeof arg == 'object') return Helper.print_map(arg);
-            
-            return arg.toString();
-        }
-
-        this.input_string_converter = default_converter
-        this.output_string_converter = default_converter;
-        this.result_string_converter = default_converter;
-
-        const input_copy_method = (arg) => {
-           if(typeof arg == 'object') {
-               const copy = {};
-               for(let key of Object.keys(arg)) {
-                   if(typeof arg == Object) copy[key] = input_copy_method(arg[key]);
-                   else copy[key] = arg[key].copy ? arg[key].copy() : JSON.parse(JSON.stringify(arg[key]));
-               }
-               return copy;
-           }
-           return arg.copy ? arg.copy() : JSON.parse(JSON.stringify(arg));
-        }
-
-        this.input_copy_method = input_copy_method;
+        this.input_copy_method = Helper.default_copy;
         this.result_comparer = (arg1, arg2) => JSON.stringify(arg1) == JSON.stringify(arg2);
     }
 

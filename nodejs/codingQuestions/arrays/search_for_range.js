@@ -9,7 +9,6 @@ const Helper = require('../../Helper');
 
 */
 
-Inout.convert_input = Helper.string_toIntArray;
 Inout.map_input = (inp, solver) => solver(inp.nums, inp.target);
 
 Inout.push( { input: { nums: '1,1,1,2,2,2,3,3', target: 2 },  output: [3,5] } );
@@ -31,6 +30,6 @@ Inout.solve();
 
 function search_range (nums, target) {
     const start = Helper.binary_search_lower_bound(nums, target);
-    const end = Helper.binary_search_upper_bound(nums, target, start);
-    return [start, end];
+    if(start == -1) return [-1, -1];
+    else return [start, Helper.binary_search_upper_bound(nums, target, start)];
 }
