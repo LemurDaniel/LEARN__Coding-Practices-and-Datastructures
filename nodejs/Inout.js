@@ -26,7 +26,10 @@ class Inout {
         this.result_comparer = (arg1, arg2) => JSON.stringify(arg1) == JSON.stringify(arg2);
     }
 
-    push = (testcase) => this.testcases.push(testcase);
+    push(arg, arg1) {
+        if(arg1) this.testcases.push( { input: arg, output: arg1 } );
+        else this.testcases.push(arg);
+    }
 
     solve (i) {
         
