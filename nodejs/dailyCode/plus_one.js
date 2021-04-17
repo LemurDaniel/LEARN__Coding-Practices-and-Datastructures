@@ -17,9 +17,10 @@ const Inout = new (require ('../Inout'))('DailyCode --- Plus One');
     # [3, 0, 0]
 */
 
+
 Inout.push('&AR'+'2,3,4', '&AR'+'2,3,5');
 Inout.push('&AR'+'2,9,9', '&AR'+'3,0,0');
-Inout.push('&LL'+'9,9,9', '&AR'+'1,0,0,0');
+Inout.push('&AR'+'9,9,9', '&AR'+'1,0,0,0');
 
 Inout.solvers = [plus_one];
 Inout.solve();
