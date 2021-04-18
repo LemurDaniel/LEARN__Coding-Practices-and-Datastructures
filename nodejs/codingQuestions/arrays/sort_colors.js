@@ -55,7 +55,9 @@ Inout.solve();
     
     The value at ptr_start will always be a one. It can't be a two, because the loop
     would have already checked the value at that index and moved it to the end. Can't
-    be a zero either since it would already been moved too at this point.
+    be a zero either since it would have already been moved too at this point. 
+    The value at ptr_start can only be a one when the current index i in the loop
+    euqals ptr_start which has no effect at all.
 
 */
 
