@@ -30,7 +30,7 @@ for(let i=0; i<20; i++)
     Inout.push(arr, Helper.default_copy(arr).sort() )
 }
 
-Inout.solvers = [sort_colors_one_pass];
+Inout.solvers = [sort_colors_one_pass, sort_colors_two_passes_counting];
 Inout.solve();
 
 /*
@@ -82,3 +82,26 @@ function sort_colors_one_pass (colors)  {
         // console.log(Helper.print_Array(colors) + '  Start: ' + ptr_start + '  I: ' + i + '  End: ' + ptr_end);
    }
 }
+
+/*
+    space complexity: O(1)  - constant
+    time  complexity: O(2n) => O(n)  - linear (Two passes)
+*/
+
+function sort_colors_two_passes_counting (colors)  {
+
+    let zeros = 0;
+    let ones  = 0;
+ 
+    for(let color of colors) {
+        if(color == 0) zeros++;
+        else if(color == 1) ones++;
+    }
+
+    for(let idx in colors) {
+        if(zeros-- > 0) colors[idx] = 0;
+        else if(ones-- > 0) colors[idx] = 1;
+        else colors[idx] = 2;
+    }
+
+ }
