@@ -26,7 +26,8 @@ Clear-Host
 # node ./dailyCode/Convert_to_base.js
 # node ./dailyCode/find_closest_point.js
 # node ./dailyCode/Fixed_point
-node ./dailyCode/plus_one.js
+# node ./dailyCode/plus_one.js
+
 
     ##################################
     ###### Daily Coding Problem ######
@@ -51,6 +52,7 @@ node ./dailyCode/plus_one.js
     ########### ARRAYS ###########
 # node codingQuestions/arrays/two_sum.js
 # node codingQuestions/arrays/search_for_range.js
+node codingQuestions/arrays/sort_colors.js
 
     ########### LINKED LISTS ###########
 # node codingQuestions/linked_lists/remove_linked_list_element.js
