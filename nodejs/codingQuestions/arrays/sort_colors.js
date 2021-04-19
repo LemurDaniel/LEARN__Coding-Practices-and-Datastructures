@@ -30,7 +30,7 @@ for(let i=0; i<20; i++)
     Inout.push(arr, Helper.default_copy(arr).sort() )
 }
 
-Inout.solvers = [sort_colors_one_pass, sort_colors_two_passes_counting];
+Inout.solvers = [sort_colors_one_pass, sort_colors_two_passes_counting, sort_colors_two_passes_counting_variant_2];
 Inout.solve();
 
 /*
@@ -102,6 +102,25 @@ function sort_colors_two_passes_counting (colors)  {
         if(zeros-- > 0) colors[idx] = 0;
         else if(ones-- > 0) colors[idx] = 1;
         else colors[idx] = 2;
+    }
+
+ }
+
+ function sort_colors_two_passes_counting_variant_2 (colors)  {
+
+    let zeros = 0;
+    let ones  = 0;
+ 
+    for(let idx in colors) {
+        if(colors[idx] == 0) zeros++;
+        else if(colors[idx] == 1) ones++;
+        colors[idx] = 2;
+    }
+
+    for(let idx in colors) {
+        if(zeros-- > 0) colors[idx] = 0;
+        else if(ones-- > 0) colors[idx] = 1;
+        else return;
     }
 
  }
