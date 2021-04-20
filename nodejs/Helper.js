@@ -209,7 +209,7 @@ function convert_string(str) {
 
     if(str[0] == '&') {
         const chars = str.substr(0,3);
-        const substr = str.substr((str[4] == ' ' ? 4 : 3), str.length);
+        const substr = str.substr((str[3] == ' ' ? 4 : 3), str.length);
 
         if( chars == keychars_arr ) return Helper.string_toIntArray(substr);
         else if( chars == keychars_list ) return LinkedList.LinkedListFromString_Int(substr);

@@ -27,7 +27,7 @@ Clear-Host
 # node ./dailyCode/find_closest_point.js
 # node ./dailyCode/Fixed_point
 # node ./dailyCode/plus_one.js
-node ./dailyCode/convert_to_hex.jss
+# node ./dailyCode/convert_to_hex.jss
 
 
     ##################################
@@ -35,6 +35,7 @@ node ./dailyCode/convert_to_hex.jss
     ##################################
 
 # node ./dailyCodingProblem/Problem-#117-[Easy].js      # Find level with minimum sum
+node ./dailyCodingProblem/Problem-#135-[Easy].js      # Find path with minimum sum from root to leaf
 # node ./dailyCodingProblem/Problem-#157-[Easy].js      # Is any permutation a palindrom
 # node ./dailyCodingProblem/Problem-#158-[Medium].js    # Ways to to reach the bottom of a matrix'
 # node ./dailyCodingProblem/Problem-#159-[Easy].js      # Find first recurring Character
