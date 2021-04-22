@@ -48,7 +48,6 @@ function find_common_characters(words){
                     common.push(char);
             }
         }
-        // console.log(dict)
     }    
 
     return common;
