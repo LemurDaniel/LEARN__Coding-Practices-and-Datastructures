@@ -135,6 +135,30 @@ Helper.scramble_Array = function (arr, cycles = 10e2) {
 // ######### CONVERT STRINGS TO OBJECTS
 // ############################################################################
 
+Helper.string_toArray = function(str) {
+
+    const arr = [];
+    const sub_strs = str.split('|');
+
+    for(let i=0; i<sub_strs.length; i++) {
+        
+        let split = '';
+        if(sub_strs[i].includes(',')) split = ',';
+        else if(sub_strs[i].includes(' ')) split = ' ';
+
+        const sub_arr = [];
+        for(let el of sub_strs[i].split(split)){
+            if(el.trim() == '/') sub_arr.push('/');
+            else sub_arr.push( el.trim() );
+        }
+
+        if(sub_strs.length == 1) return sub_arr
+        else arr.push(sub_arr);
+    }
+    return arr;
+
+}
+
 Helper.string_toIntArray = function(str) {
 
     const keywords = ['nums', 'arr'];
@@ -203,7 +227,8 @@ Helper.convert_strings_in_object = function(obj) {
 // converts string to the desired object
 function convert_string(str) {
 
-    const keychars_arr = '&AR';
+    const keychars_normal_arr = '&NA';
+    const keychars_int_arr = '&AR';
     const keychars_list = '&LL';
     const keychars_tree = '&BT';
 
@@ -211,7 +236,8 @@ function convert_string(str) {
         const chars = str.substr(0,3);
         const substr = str.substr((str[3] == ' ' ? 4 : 3), str.length);
 
-        if( chars == keychars_arr ) return Helper.string_toIntArray(substr);
+        if( chars == keychars_normal_arr ) return Helper.string_toArray(substr);
+        else if( chars == keychars_int_arr ) return Helper.string_toIntArray(substr);
         else if( chars == keychars_list ) return LinkedList.LinkedListFromString_Int(substr);
         else if( chars == keychars_tree ) return BTree.BinaryTree.GenerateIntPreorderFromString(substr);
     }
