@@ -27,7 +27,7 @@ class Inout {
     }
 
     push(arg, arg1) {
-        if(arg1) this.testcases.push( { input: arg, output: arg1 } );
+        if(arguments.length == 2) this.testcases.push( { input: arg, output: arg1 } );
         else this.testcases.push(arg);
     }
 

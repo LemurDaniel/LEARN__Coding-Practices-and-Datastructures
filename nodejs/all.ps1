@@ -28,7 +28,7 @@ Clear-Host
 # node ./dailyCode/Fixed_point
 # node ./dailyCode/plus_one.js
 # node ./dailyCode/convert_to_hex.js
-node ./dailyCode/common_characters.js
+# node ./dailyCode/common_characters.js
 
 
     ##################################
@@ -59,3 +59,6 @@ node ./dailyCode/common_characters.js
 
     ########### LINKED LISTS ###########
 # node codingQuestions/linked_lists/remove_linked_list_element.js
+
+    ########### TREES ###########
+node codingQuestions/trees/same_tree.js
