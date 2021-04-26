@@ -56,6 +56,18 @@ Inout.push({
     '&AR 0,0|1,1')
 
 Inout.push({
+    points: '0,0|1,1|2,2|3,3',
+    origin: [1, 2], k: 2
+},
+    '&AR 2,2|1,1')
+
+Inout.push({
+    points: '0,0|1,1|2,2|3,3',
+    origin: [0, 1], k: 2
+},
+    '&AR 0,0|1,1')
+
+Inout.push({
     points: '0,0|1,2|-3,4|3,1',
     origin: [0, 0], k: 2
 },
