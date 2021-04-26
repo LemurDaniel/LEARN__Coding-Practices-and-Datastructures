@@ -1,4 +1,4 @@
-const Inout = new (require ('../../Inout'))('DailyCode --- Simplify Unix-style path');
+const Inout = new (require ('../../Inout'))('Coding Questions --- Simplify Unix-style path - [difficulty: Easy]');
 
 /*
     Given an absolute path for a file (Unix-Style), simplify it.

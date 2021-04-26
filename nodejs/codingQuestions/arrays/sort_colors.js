@@ -1,5 +1,5 @@
 
-const Inout = new (require ('../../Inout'))('DailyCode --- Sort Colors');
+const Inout = new (require ('../../Inout'))('Coding Questions --- Sort Colors - [difficulty: Medium]');
 const Helper = require('../../Helper');
 
 /*

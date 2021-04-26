@@ -1,4 +1,4 @@
-const Inout = new (require ('../../Inout'))('DailyCode --- Remove Linked List elements');
+const Inout = new (require ('../../Inout'))('Coding Questions --- Remove Linked List elements - [difficulty: Easy]');
 const LinkedList = require('../../datastructures/linkedList');
 const Helper = require('../../Helper');
 

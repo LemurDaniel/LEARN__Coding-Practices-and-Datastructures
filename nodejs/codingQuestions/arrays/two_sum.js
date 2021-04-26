@@ -1,4 +1,4 @@
-const Inout = new (require ('../../Inout'))('DailyCode --- Two sum');
+const Inout = new (require ('../../Inout'))('Coding Questions --- Two sum - [difficulty: Easy]');
 const Helper = require('../../Helper');
 
 /*

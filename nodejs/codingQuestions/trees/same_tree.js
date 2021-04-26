@@ -1,6 +1,5 @@
+const Inout = new (require ('../../Inout'))('Coding Questions --- Same Tree - [difficulty: Easy]');
 const { BinaryTree } = require('../../datastructures/bTree');
-
-const Inout = new (require ('../../Inout'))('DailyCode --- Same Tree - [difficulty: Easy]');
 
 /*
     Given two binary trees, write a function to check if they are equal or not.
