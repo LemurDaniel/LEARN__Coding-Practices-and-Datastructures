@@ -201,7 +201,7 @@ Helper.string_toIntArray = function(str) {
 // converts all strings in an object to the desired object
 Helper.convert_strings_in_object = function(obj) {
 
-    const keywords_arr = ['nums', 'arr'];
+    const keywords_arr = ['nums', 'arr', 'points'];
     const keywords_list = ['list'];
     const keywords_tree = ['tree','subtree'];
 
