@@ -29,7 +29,9 @@ Clear-Host
 # node ./dailyCode/plus_one.js
 # node ./dailyCode/convert_to_hex.js
 # node ./dailyCode/common_characters.js
-node ./dailyCode/transpose_matrix.js
+# node ./dailyCode/transpose_matrix.js
+node ./dailyCode/remove_adjacent_duplicate_character.js
+
 
     ##################################
     ###### Daily Coding Problem ######
