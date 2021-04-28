@@ -30,7 +30,7 @@ Clear-Host
 # node ./dailyCode/convert_to_hex.js
 # node ./dailyCode/common_characters.js
 # node ./dailyCode/transpose_matrix.js
-node ./dailyCode/remove_adjacent_duplicate_character.js
+# node ./dailyCode/remove_adjacent_duplicate_character.js
 
 
     ##################################
@@ -61,6 +61,7 @@ node ./dailyCode/remove_adjacent_duplicate_character.js
 
     ########### LINKED LISTS ###########
 # node codingQuestions/linked_lists/remove_linked_list_element.js
+node .\codingQuestions\linked_lists\add_two_numbers_I.js
 
     ########### TREES ###########
 # node codingQuestions/trees/same_tree.js
