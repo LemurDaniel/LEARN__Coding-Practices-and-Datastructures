@@ -8,6 +8,10 @@ const Helper = require('../../Helper');
     Add the two numbers and return it as a linked list.
 
     You may assume the two numbers do no contain any leading zero, except the number 0  itself.
+
+    Example:
+        Input:  (2 => 4 => 3) + (5 => 6 => 4)
+        Output: 7 => 0 => 8
 */
 
 Inout.input_string_converter = arg => '(' + arg.list.toString() + ') + (' + arg.list_2.toString() + ')';
@@ -41,8 +45,7 @@ function add_two_numbers (num, num2)  {
         carry = Math.floor(sum / 10)
 
         if(carry && !node_1.next) {
-            node_1.next = new LinkedList.Node(1);
-            num.tail = node_1.next;
+            num.Append(1);
             carry = 0;
         }
 
@@ -52,8 +55,7 @@ function add_two_numbers (num, num2)  {
 
     // handle additional nodes if num2 is bigger than num 
     while(node_2) {
-        num.tail.next = new LinkedList.Node(node_2.val);
-        num.tail = num.tail.next;
+        num.Append(node_2.val);
         node_2 = node_2.next;
     }
 
