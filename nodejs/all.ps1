@@ -58,10 +58,11 @@ Clear-Host
 # node codingQuestions/arrays/two_sum.js
 # node codingQuestions/arrays/search_for_range.js
 # node codingQuestions/arrays/sort_colors.js
+node .\codingQuestions\arrays\move_zeroes.js
 
     ########### LINKED LISTS ###########
 # node codingQuestions/linked_lists/remove_linked_list_element.js
-node .\codingQuestions\linked_lists\add_two_numbers_I.js
+# node .\codingQuestions\linked_lists\add_two_numbers_I.js
 
     ########### TREES ###########
 # node codingQuestions/trees/same_tree.js
