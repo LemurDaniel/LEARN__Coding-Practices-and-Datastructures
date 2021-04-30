@@ -31,7 +31,7 @@ Clear-Host
 # node ./dailyCode/common_characters.js
 # node ./dailyCode/transpose_matrix.js
 # node ./dailyCode/remove_adjacent_duplicate_character.js
-
+node ./dailyCode/sum_binary_numbers.js
 
     ##################################
     ###### Daily Coding Problem ######
