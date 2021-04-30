@@ -8,30 +8,30 @@ Clear-Host
     ###### DailyCode ######
     #######################
 
-# node ./dailyCode/Reverse_Polish_Notation_Calculator
-# node ./dailyCode/Character_map
-# node ./dailyCode/Find_subtree
-# node ./dailyCode/Flatten_dictionary
-# node ./dailyCode/Reverse_LinkedList.js
-# node ./dailyCode/Level_of_tree_with_maximum_sum
-# node ./dailyCode/Reverse_words.js
-# node ./dailyCode/angles_of_a_clock.js
-# node ./dailyCode/Rotate_Matrix_90.js
-# node ./dailyCode/Rotate_Matrix_180.js
-# node ./dailyCode/Missing_Ranges.js
-# node ./dailyCode/Validate_Sudoku.js
-# node ./dailyCode/Squareroot.js
-# node ./dailyCode/remove_duplicate_from_linked_list.js
-# node ./dailyCode/remove_one_layer_of_parenthesis.js
-# node ./dailyCode/Convert_to_base.js
-# node ./dailyCode/find_closest_point.js
-# node ./dailyCode/Fixed_point
-# node ./dailyCode/plus_one.js
-# node ./dailyCode/convert_to_hex.js
-# node ./dailyCode/common_characters.js
-# node ./dailyCode/transpose_matrix.js
-# node ./dailyCode/remove_adjacent_duplicate_character.js
-node ./dailyCode/sum_binary_numbers.js
+# node ./dailyCode/001_reverse_polish_notation_calculator
+# node ./dailyCode/002_character_map
+# node ./dailyCode/003_find_subtree
+# node ./dailyCode/004_flatten_dictionary
+# node ./dailyCode/005_reverse_linked_list.js
+# node ./dailyCode/006_level_of_tree_with_maximum_sum
+# node ./dailyCode/007_reverse_words.js
+# node ./dailyCode/008_angles_of_a_clock.js
+# node ./dailyCode/009_rotate_matrix_90.js
+# node ./dailyCode/010_rotate_matrix_180.js
+# node ./dailyCode/011_missing_ranges.js
+# node ./dailyCode/012_validate_sudoku.js
+# node ./dailyCode/013_squareroot.js
+# node ./dailyCode/014_remove_duplicate_from_linked_list.js
+# node ./dailyCode/015_remove_one_layer_of_parenthesis.js
+# node ./dailyCode/016_convert_to_base.js
+# node ./dailyCode/017_find_closest_point.js
+# node ./dailyCode/018_fixed_point
+# node ./dailyCode/019_plus_one.js
+# node ./dailyCode/020_convert_to_hex.js
+# node ./dailyCode/021_common_characters.js
+# node ./dailyCode/022_transpose_matrix.js
+# node ./dailyCode/023_remove_adjacent_duplicate_character.js
+node ./dailyCode/024_sum_binary_numbers.js
 
     ##################################
     ###### Daily Coding Problem ######

@@ -22,8 +22,8 @@ const Inout = new (require ('../Inout'))('DailyCode --- Character Map');
     # False
 */
 
-Inout.testcases.push({  input: ['abc', 'def'], output: true});
-Inout.testcases.push({  input: ['aac', 'def'], output: true});
+Inout.push({  str: 'abc', str2: 'def' }, true);
+Inout.push({  str: 'aac', str2: 'def' }, false);
 
 Inout.solvers = [solver1];
 Inout.solve();
@@ -43,7 +43,7 @@ function solver1 (str1, str2)  {
     const max_len = Math.min(str1.length, str2.length);
 
     // Always two entries required
-    // if 'a' maps to 'd', then 'd' can only map back to a
+    // if 'a' maps to 'd', then 'd' can only map back to 'a'
     const dict = {};
     for(let i=0; i<max_len; i++){
 
@@ -52,11 +52,11 @@ function solver1 (str1, str2)  {
 
         // if values are already mapped to something else, 
         //  then no one-to-one mapping is possible anymore ==> return false
-        if (c1 in dict && map[c1] != c2) return false
-        else if (c2 in dict && map[c2] != c1) return false;
+        if (c1 in dict && dict[c1] != c2) return false
+        else if (c2 in dict && dict[c2] != c1) return false;
 
         // enter new entries, when not present
-        else if(!c1 in dict && !c2 in dict){
+        else if(!(c1 in dict) && !(c2 in dict) ){
             dict[c1] = c2;
             dict[c2] = c1;
         }

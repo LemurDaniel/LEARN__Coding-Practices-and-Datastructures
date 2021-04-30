@@ -115,7 +115,7 @@ board = '/, /, /, /, /, /, /, /, / | '+
 
 Inout.testcases.push( { input: board, output: false } );
 
-Inout.solvers = [Validate_sudoku_iterative];
+Inout.solvers = [Validate_sudoku_brute_force_iterative];
 Inout.solve();
 
 
@@ -157,7 +157,7 @@ function Check_cell_valid(grid, row, col) {
 }
 
 
-function Validate_sudoku_iterative(grid) {
+function Validate_sudoku_brute_force_iterative(grid) {
 
     const stack = [];
     let col = 0;

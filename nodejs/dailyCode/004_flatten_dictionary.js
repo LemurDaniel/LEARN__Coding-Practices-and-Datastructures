@@ -42,15 +42,17 @@ const Inout = new (require ('../Inout'))('DailyCode --- Flatten Dictionary');
 
 
 
+Inout.map_input = (inp, solver) => solver(inp);
+
 // Testcases
-Inout.testcases.push({
-    input: { 'a': 1, 'b': {'c': 2,'d': { 'e': 3 } } },
-    output: {'a': 1, 'b.c': 2, 'b.d.e': 3}
-});
-Inout.testcases.push({
-    input: { 'a': 1, 'b': {'c': 2,'d': { 'e': 3, 'f': 2, 'd': 4 } } },
-    output: {'a': 1, 'b.c': 2, 'b.d.e': 3, 'b.d.f': 2, 'b.d.d': 4 }
-});
+Inout.push(
+    { 'a': 1, 'b': {'c': 2,'d': { 'e': 3 } } },
+    {'a': 1, 'b.c': 2, 'b.d.e': 3}
+);
+Inout.push(
+    {'a': 1, 'b': {'c': 2,'d': { 'e': 3, 'f': 2, 'd': 4 } } },
+    {'a': 1, 'b.c': 2, 'b.d.e': 3, 'b.d.f': 2, 'b.d.d': 4 }
+);
 
 Inout.solvers = [flatten_dictionary, flatten_dictionary_recursive];
 Inout.solve();
