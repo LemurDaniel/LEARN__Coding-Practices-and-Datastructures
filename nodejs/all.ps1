@@ -32,7 +32,6 @@ Clear-Host
 # node ./dailyCode/022_transpose_matrix.js
 # node ./dailyCode/023_remove_adjacent_duplicate_character.js
 # node ./dailyCode/024_sum_binary_numbers.js
-# node ./dailyCode/025_reverse_integer.js
 
     ##################################
     ###### Daily Coding Problem ######
