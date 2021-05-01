@@ -31,21 +31,22 @@ Clear-Host
 # node ./dailyCode/021_common_characters.js
 # node ./dailyCode/022_transpose_matrix.js
 # node ./dailyCode/023_remove_adjacent_duplicate_character.js
-node ./dailyCode/024_sum_binary_numbers.js
+# node ./dailyCode/024_sum_binary_numbers.js
+# node ./dailyCode/025_reverse_integer.js
 
     ##################################
     ###### Daily Coding Problem ######
     ##################################
 
-# node ./dailyCodingProblem/Problem-#117-[Easy].js      # Find level with minimum sum
-# node ./dailyCodingProblem/Problem-#135-[Easy].js      # Find path with minimum sum from root to leaf
-# node ./dailyCodingProblem/Problem-#157-[Easy].js      # Is any permutation a palindrom
-# node ./dailyCodingProblem/Problem-#158-[Medium].js    # Ways to to reach the bottom of a matrix'
-# node ./dailyCodingProblem/Problem-#159-[Easy].js      # Find first recurring Character
-# node ./dailyCodingProblem/Problem-#145-[Easy].js      # Swap every two nodes in a linked list
-# node ./dailyCodingProblem/Problem-#164-[Medium].js    # Find duplicate number in array
-# node ./dailyCodingProblem/Problem-#165-[Medium].js    # count smaller elements on right side
-
+# node ./dailyCodingProblem/117-[Easy].js      # Find level with minimum sum
+# node ./dailyCodingProblem/135-[Easy].js      # Find path with minimum sum from root to leaf
+# node ./dailyCodingProblem/157-[Easy].js      # Is any permutation a palindrom
+# node ./dailyCodingProblem/158-[Medium].js    # Ways to to reach the bottom of a matrix'
+# node ./dailyCodingProblem/159-[Easy].js      # Find first recurring Character
+# node ./dailyCodingProblem/145-[Easy].js      # Swap every two nodes in a linked list
+# node ./dailyCodingProblem/164-[Medium].js    # Find duplicate number in array
+# node ./dailyCodingProblem/165-[Medium].js    # count smaller elements on right side
+node ./dailyCodingProblem/181-[Hard].js    # Split string into fewest palindromes
 
     ##############################
     ###### Coding Questions ######
