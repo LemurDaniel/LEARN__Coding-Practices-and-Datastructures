@@ -32,6 +32,7 @@ Clear-Host
 # node ./dailyCode/022_transpose_matrix.js
 # node ./dailyCode/023_remove_adjacent_duplicate_character.js
 # node ./dailyCode/024_sum_binary_numbers.js
+node ./dailyCode/025_reverse_integer.js
 
     ##################################
     ###### Daily Coding Problem ######
@@ -45,7 +46,7 @@ Clear-Host
 # node ./dailyCodingProblem/145-[Easy].js      # Swap every two nodes in a linked list
 # node ./dailyCodingProblem/164-[Medium].js    # Find duplicate number in array
 # node ./dailyCodingProblem/165-[Medium].js    # count smaller elements on right side
-node ./dailyCodingProblem/181-[Hard].js    # Split string into fewest palindromes
+# node ./dailyCodingProblem/181-[Hard].js      # Split string into fewest palindromes
 
     ##############################
     ###### Coding Questions ######

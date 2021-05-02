@@ -64,9 +64,9 @@ function Split_into_palindromes(str) {
         } 
         // if the string isn't a palindrome then the end pointer won't be reset for the next iteration.
         // This means after the first found possibly start of a palindrome it will search for other possible palindromes.
-        // For Example in 'racecarrrranna', the loop will go through all r's starting from the back, until the valid palindrome 'racecar' is found. 
+        // For Example in 'racecarrrranna' the loop will go through all r's starting from the back until the valid palindrome 'racecar' is found. 
 
-        // the problem requires to cut into as littles string as possible. Searching from the end gurantess finding the longest possible palindromes.
+        // The problem requires to cut into as littles strings as possible. Searching from the end guarantees finding the longest possible palindromes.
     }
 
     return palindromes;
