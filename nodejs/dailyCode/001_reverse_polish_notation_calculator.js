@@ -5,10 +5,6 @@ Inout.push([5, 3, '+'], 8);
 Inout.push([1, 2, 3, '+', 2, '*', '-'], -9);
 Inout.push([15, 7, 1, 1, '+', '-', '/', 3, '*', 2, 1, 1, '+', '+', '-'], 5)
 
-Inout.solvers = [evaluate_2];
-Inout.solve();
-
-
 
 /*
     ###########################################################################################
@@ -38,7 +34,6 @@ function evaluate (expression)  {
     return stack.pop();
 }
 
-
 function evaluate_2 (exp, token)  {
     
     // Original array is simultaniously used as the stack.
@@ -57,3 +52,12 @@ function evaluate_2 (exp, token)  {
     
     return exp[stack_pointer];
 }
+
+const evaluate_oneliner = (exp, sp = -1) => exp.forEach( v => !('-+*/').includes(v) ? (exp[++sp] = v) : (exp[sp-1] = parseInt(eval( exp[sp-1] + v + exp[sp--] ))) ) == null ? exp[sp] : null; // ForEach has no return value and is always null. By using an inline if statement checking for null, the forEach can be evaluated and than on the same line the correct element in the array returned.
+
+// Another Version with the array.map function. The correct value always ends up on the last index of the map array.
+const evaluate_oneliner_2 = (exp, sp = -1) => exp.map( v => !('-+*/').includes(v) ? (exp[++sp] = v) : (exp[sp-1] = parseInt(eval( exp[sp-1] + v + exp[sp--] ))) )[exp.length-1];
+
+Inout.solvers = [evaluate, evaluate_2, evaluate_oneliner, evaluate_oneliner_2];
+Inout.solve();
+
