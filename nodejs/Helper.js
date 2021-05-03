@@ -11,6 +11,15 @@ Helper.uniform_string = function(str, len){
     return str;
 }
 
+Helper.random_Array = function(min, max, min_len, max_len) {
+    const arr = [];
+    const len = Math.round( Math.random() * (max_len - min_len) + min_len );
+    for(let i=0; i<len; i++){
+        arr.push( Math.floor( Math.random() * (max - min) + min ) );
+    }
+    return arr;
+}
+
 // ############################################################################
 // ######### PRINT METHODS
 // ############################################################################
@@ -205,7 +214,8 @@ Helper.convert_strings_in_object = function(obj) {
     const keywords_list = ['list'];
     const keywords_tree = ['tree','subtree'];
 
-    if (typeof obj == 'string') return convert_string(obj);
+    if (typeof obj == 'function') return obj;
+    else if (typeof obj == 'string') return convert_string(obj);
     else if(typeof obj == 'object') {
         for(let key of Object.keys(obj)) {
 
@@ -272,6 +282,7 @@ Helper.default_converter = function(arg) {
         if ( arg instanceof c ) return arg.toString();
 
     if(Array.isArray(arg)) return Helper.print_Array(arg);
+    else if(typeof arg == 'function') return '(function) ' + arg.name;
     else if(typeof arg == 'object') return Helper.print_map(arg);
     else return arg.toString();
 

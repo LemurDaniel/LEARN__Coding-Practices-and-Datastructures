@@ -73,7 +73,7 @@ class Inout {
                 console.log(exp)
             }
 
-            const success = this.result_comparer(test.output, result)
+            const success = (typeof test.output == 'function') ?  test.output(test, result) : this.result_comparer(test.output, result)
             console.log('\nSolver: '+ solver.name + '  ---  '+  (success ? 'Success':'Failure') );
             if(exception) console.log('   Exception: '+exception);
             else console.log('  Result: '+this.result_string_converter(result));
