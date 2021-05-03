@@ -67,7 +67,11 @@ const evaluate_oneliner_spointer_saved_in_array = exp => exp.concat(-1).map( (v,
 const evaluate_oneliner_pointer_and_functions_saved_in_array = exp => exp.concat( [{ '+': (a,b) => a+b, '-': (a,b) => a-b, '*': (a,b) => a*b, '/': (a,b) => a/b }, -1] ).map( (v,i,arr) => !Object.keys(arr[arr.length-2]).includes(v) ? (arr[++arr[arr.length-1]] = v) : (arr[arr[arr.length-1]-1] = ( arr[arr.length-2][v](arr[arr[arr.length-1]-1], arr[arr[arr.length-1]--]) ))).splice(-3,1)[0];
 
 
-Inout.solvers = [evaluate, evaluate_2, evaluate_oneliner, evaluate_oneliner_2, evaluate_oneliner_3, evaluate_oneliner_spointer_saved_in_array, evaluate_oneliner_pointer_and_functions_saved_in_array];
+const even_more_unecessary = exp => exp.concat( [ [(a,b) => a/b, null, (a,b) => a-b, null, (a,b) => a+b, (a,b) => a*b], -1] ).map( (v,i,arr) => !('+-/*'.includes(v)) ? (arr[++arr[arr.length-1]] = v) : (arr[arr[arr.length-1]-1] = ( arr[arr.length-2][47 - v.charCodeAt(0)](arr[arr[arr.length-1]-1], arr[arr[arr.length-1]--]) ))).splice(-3,1)[0];
+
+
+
+Inout.solvers = [evaluate, evaluate_2, evaluate_oneliner, evaluate_oneliner_2, evaluate_oneliner_3, evaluate_oneliner_spointer_saved_in_array, evaluate_oneliner_pointer_and_functions_saved_in_array, even_more_unecessary];
 Inout.solve();
 
 
@@ -88,4 +92,19 @@ Inout.solve();
     map( (v,i,arr) => !Object.keys(arr[arr.length-2]).includes(v) ? 
             (arr[++arr[arr.length-1]] = v) : 
             (arr[arr[arr.length-1]-1] = ( arr[arr.length-2][v](arr[arr[arr.length-1]-1], arr[arr[arr.length-1]--]) )
+            )).splice(-3,1)[0];
+
+
+/*
+    47 - * = 5
+    47 - + = 4
+    47 - - = 2
+    47 - / = 0
+*/
+// Without eval method by storing the functions to evaluate the expression also in the array.
+[15, 7, 1, 1, '+', '-', '/', 3, '*', 2, 1, 1, '+', '+', '-'].
+    concat( [ [(a,b) => a/b, null, (a,b) => a-b, null, (a,b) => a+b, (a,b) => a*b], -1] ).
+    map( (v,i,arr) => !('+-/*'.includes(v)) ? 
+            (arr[++arr[arr.length-1]] = v) : 
+            (arr[arr[arr.length-1]-1] = ( arr[arr.length-2][47 - v.charCodeAt(0)](arr[arr[arr.length-1]-1], arr[arr[arr.length-1]--]) )
             )).splice(-3,1)[0];
