@@ -27,6 +27,7 @@ function add_testcase(nums, accuray){
 
 Inout.map_input = (arg, solver) => arg.nums.map( v => solver(v, arg.accuray));
 
+add_testcase([9], 1)
 add_testcase([5, 16, 25, 32, 77, 99, 100, 125, 132, 348], 3)
 add_testcase([5, 16, 25, 32, 77, 99, 100, 125, 132, 348], 4)
 add_testcase([5, 16, 25, 32, 77, 99, 100, 125, 132, 348], 5)

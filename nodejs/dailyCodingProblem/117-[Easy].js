@@ -1,4 +1,4 @@
-require('../dailyCode/Level_of_tree_with_maximum_sum')
+require('../dailyCode/006_level_of_tree_with_maximum_sum')
 
 /*
     Good morning! Here's your coding interview problem for today.

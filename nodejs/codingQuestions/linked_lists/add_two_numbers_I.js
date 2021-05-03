@@ -19,6 +19,7 @@ const Helper = require('../../Helper');
 
 Inout.input_string_converter = arg => '(' + arg.list.toString() + ') + (' + arg.list_2.toString() + ')';
 
+Inout.push( { list: '99', list_2: '&LL 52' } , '&LL 421' );
 Inout.push( { list: '9999999', list_2: '&LL 1' } , '&LL 00000001' );
 Inout.push( { list: '243', list_2: '&LL 564' } , '&LL 708' );
 Inout.push( { list: '243', list_2: '&LL 566' } , '&LL 7001' );
