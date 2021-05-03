@@ -60,6 +60,22 @@ const evaluate_oneliner_2 = (exp, sp = -1) => exp.forEach( v => !('-+*/').includ
 // Another Version with the array.map function. The correct value always ends up on the last index of the map array.
 const evaluate_oneliner_3 = (exp, sp = -1) => exp.map( v => !('-+*/').includes(v) ? (exp[++sp] = v) : (exp[sp-1] = parseInt(eval( exp[sp-1] + v + exp[sp--] ))) )[exp.length-1];
 
-Inout.solvers = [evaluate, evaluate_2, evaluate_oneliner, evaluate_oneliner_2, evaluate_oneliner_3];
+// stack pointer is saved at the end of the array and the maping function uses it's arr reference.
+const evaluate_oneliner_spointer_saved_in_array = exp => (exp.join(',') + ',-1').split(',').map( (v,i,arr) => !('-+*/').includes(v) ? (arr[++arr[arr.length-1]] = v) : (arr[arr[arr.length-1]-1] = parseInt(eval( arr[arr[arr.length-1]-1] + v + arr[arr[arr.length-1]--] ))) ).splice(-2,1).reduce(v=>v);
+
+Inout.solvers = [evaluate, evaluate_2, evaluate_oneliner, evaluate_oneliner_2, evaluate_oneliner_3, evaluate_oneliner_spointer_saved_in_array];
 Inout.solve();
 
+
+
+
+// Improved oneliner, stack_pointer in array is saved as the last element of the array.
+// Joining to string, then adding ',-1' and spliting it again, initializes the stack_pointer at the end of the array to -1.
+([15, 7, 1, 1, '+', '-', '/', 3, '*', 2, 1, 1, '+', '+', '-'].
+    join(',') + ',-1').split(',').
+    map( (v,i,arr) => !('-+*/').includes(v) ? 
+            (arr[++arr[arr.length-1]] = v) : 
+            (arr[arr[arr.length-1]-1] = parseInt(eval( arr[arr[arr.length-1]-1] + v + arr[arr[arr.length-1]--] ))) ).
+            splice(-2,1).reduce( v => v );
+// splicing cuts out the secondlast to elements wich is the result
+// reduce, reduces the spliced array consisting of a single value to an integer with the result
