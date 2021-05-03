@@ -64,7 +64,7 @@ const evaluate_oneliner_3 = (exp, sp = -1) => exp.map( v => !('-+*/').includes(v
 const evaluate_oneliner_spointer_saved_in_array = exp => exp.concat(-1).map( (v,i,arr) => !('-+*/').includes(v) ? (arr[++arr[arr.length-1]] = v) : (arr[arr[arr.length-1]-1] = parseInt(eval( arr[arr[arr.length-1]-1] + v + arr[arr[arr.length-1]--] ))) ).splice(-2,1)[0];
 
 // stack pointer is saved at the end of the array and the maping function uses it's arr reference.
-const evaluate_oneliner_pointer_and_functions_saved_in_array = exp => exp.concat( [{ '+': (a,b) => a+b, '-': (a,b) => a-b, '*': (a,b) => a*b, '/': (a,b) => Math.floor(a/b) }, -1] ).map( (v,i,arr) => !Object.keys(arr[arr.length-2]).includes(v) ? (arr[++arr[arr.length-1]] = v) : (arr[arr[arr.length-1]-1] = ( arr[arr.length-2][v](arr[arr[arr.length-1]-1], arr[arr[arr.length-1]--]) ))).splice(-3,1)[0];
+const evaluate_oneliner_pointer_and_functions_saved_in_array = exp => exp.concat( [{ '+': (a,b) => a+b, '-': (a,b) => a-b, '*': (a,b) => a*b, '/': (a,b) => a/b }, -1] ).map( (v,i,arr) => !Object.keys(arr[arr.length-2]).includes(v) ? (arr[++arr[arr.length-1]] = v) : (arr[arr[arr.length-1]-1] = ( arr[arr.length-2][v](arr[arr[arr.length-1]-1], arr[arr[arr.length-1]--]) ))).splice(-3,1)[0];
 
 
 Inout.solvers = [evaluate, evaluate_2, evaluate_oneliner, evaluate_oneliner_2, evaluate_oneliner_3, evaluate_oneliner_spointer_saved_in_array, evaluate_oneliner_pointer_and_functions_saved_in_array];
@@ -81,11 +81,10 @@ Inout.solve();
             (arr[arr[arr.length-1]-1] = parseInt(eval( arr[arr[arr.length-1]-1] + v + arr[arr[arr.length-1]--] ))) ).
             splice(-2,1)[0];
 // splicing cuts out the secondlast to elements wich is the result
-// reduce, reduces the spliced array consisting of a single value to an integer with the result
 
 // Without eval method by storing the functions to evaluate the expression also in the array.
 [15, 7, 1, 1, '+', '-', '/', 3, '*', 2, 1, 1, '+', '+', '-'].
-    concat( [{ '+': (a,b) => a+b, '-': (a,b) => a-b, '*': (a,b) => a*b, '/': (a,b) => Math.floor(a/b) }, -1] ).
+    concat( [{ '+': (a,b) => a+b, '-': (a,b) => a-b, '*': (a,b) => a*b, '/': (a,b) => a/b }, -1] ).
     map( (v,i,arr) => !Object.keys(arr[arr.length-2]).includes(v) ? 
             (arr[++arr[arr.length-1]] = v) : 
             (arr[arr[arr.length-1]-1] = ( arr[arr.length-2][v](arr[arr[arr.length-1]-1], arr[arr[arr.length-1]--]) )
