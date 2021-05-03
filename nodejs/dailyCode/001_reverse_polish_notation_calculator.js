@@ -55,9 +55,11 @@ function evaluate_2 (exp, token)  {
 
 const evaluate_oneliner = (exp, sp = -1) => exp.forEach( v => !('-+*/').includes(v) ? (exp[++sp] = v) : (exp[sp-1] = parseInt(eval( exp[sp-1] + v + exp[sp--] ))) ) == null ? exp[sp] : null; // ForEach has no return value and is always null. By using an inline if statement checking for null, the forEach can be evaluated and than on the same line the correct element in the array returned.
 
-// Another Version with the array.map function. The correct value always ends up on the last index of the map array.
-const evaluate_oneliner_2 = (exp, sp = -1) => exp.map( v => !('-+*/').includes(v) ? (exp[++sp] = v) : (exp[sp-1] = parseInt(eval( exp[sp-1] + v + exp[sp--] ))) )[exp.length-1];
+const evaluate_oneliner_2 = (exp, sp = -1) => exp.forEach( v => !('-+*/').includes(v) ? (exp[++sp] = v) : (exp[sp-1] = parseInt(eval( exp[sp-1] + v + exp[sp--] ))) ) ?? exp[sp]; // instead of inline if, Nullish coalescing can also be used.
 
-Inout.solvers = [evaluate, evaluate_2, evaluate_oneliner, evaluate_oneliner_2];
+// Another Version with the array.map function. The correct value always ends up on the last index of the map array.
+const evaluate_oneliner_3 = (exp, sp = -1) => exp.map( v => !('-+*/').includes(v) ? (exp[++sp] = v) : (exp[sp-1] = parseInt(eval( exp[sp-1] + v + exp[sp--] ))) )[exp.length-1];
+
+Inout.solvers = [evaluate, evaluate_2, evaluate_oneliner, evaluate_oneliner_2, evaluate_oneliner_3];
 Inout.solve();
 
