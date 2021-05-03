@@ -45,9 +45,32 @@ const Helper = require('../Helper');
     print(closest_points(points, 2, Point(0, 2)))
     # [(0, 0), (1, 1)]
 
+
+    ------------------------------
+
+    ------ K Closest Elements ----
+    Similar Principle as previous two, but instead of points single numbers. (In this case 1D Vectors)
+
+    Hi, here's your problem today. This problem was recently asked by AirBNB:
+
+    Given a list of sorted numbers, and two integers k and x, find k closest numbers to the pivot x.
+
+    Here's an example and some starter code:
+
+    def closest_nums(nums, k, x):
+    # Fill this in.
+    
+    print(closest_nums([1, 3, 7, 8, 9], 3, 5))
+    # [7, 3, 8]
 */
 
 Inout.result_comparer = Helper.Array_has_same_values;
+
+Inout.push({
+    points: '1|3|7|8|9',
+    origin: [5], k: 3
+},
+    '&AR 7|3|8')
 
 Inout.push({
     points: '0,0|1,1|2,2|3,3',

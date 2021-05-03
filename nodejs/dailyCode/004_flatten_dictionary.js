@@ -54,6 +54,22 @@ Inout.push(
     {'a': 1, 'b.c': 2, 'b.d.e': 3, 'b.d.f': 2, 'b.d.d': 4 }
 );
 
+Inout.push(    {
+    "key": 3,
+    "foo": {
+        "a": 5,
+        "bar": {
+            "baz": 8
+        }
+    }
+},
+{
+    "key": 3,
+    "foo.a": 5,
+    "foo.bar.baz": 8
+}
+)
+
 Inout.solvers = [flatten_dictionary, flatten_dictionary_recursive];
 Inout.solve();
 

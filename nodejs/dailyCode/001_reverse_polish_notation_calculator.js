@@ -1,32 +1,11 @@
 const Inout = new (require ('../Inout'))('DailyCode --- Reverse Polish Notation Calculator');
 
-/*
 
-        Hi, here's your problem today. This problem was recently asked by Google:
+Inout.push([5, 3, '+'], 8);
+Inout.push([1, 2, 3, '+', 2, '*', '-'], -9);
+Inout.push([15, 7, 1, 1, '+', '-', '/', 3, '*', 2, 1, 1, '+', '+', '-'], 5)
 
-        Given two strings, find if there is a one-to-one mapping of characters between the two strings.
-
-        Example
-        Input: abc, def
-        Output: True # a -> d, b -> e, c -> f
-
-        Input: aab, def
-        Ouput: False # a can't map to d and e 
-        Here's some starter code:
-
-        def has_character_map(str1, str2):
-        # Fill this in.
-
-        print(has_character_map('abc', 'def'))
-        # True
-        print(has_character_map('aac', 'def'))
-        # False
-
-*/
-
-Inout.testcases.push({input: [1, 2, 3, '+', 2, '*', '-'], output: -9});
-Inout.solvers = [evaluate];
-
+Inout.solvers = [evaluate_2];
 Inout.solve();
 
 
@@ -38,8 +17,8 @@ Inout.solve();
     ###########################################################################################
 */
 
-
 function evaluate (expression)  {
+    
     stack = [];
 
     operations = {
@@ -57,4 +36,24 @@ function evaluate (expression)  {
     }
 
     return stack.pop();
+}
+
+
+function evaluate_2 (exp, token)  {
+    
+    // Original array is simultaniously used as the stack.
+    // Eval is NodeJs built-In method to evaluate expressions like eval( 5 + 3 ) = 8.
+    let stack_pointer = -1;
+
+    for(let i=0; i<exp.length; i++) {
+
+        // Push num to stack when it's not an operand.
+        if(!('-+*/'.includes(exp[i]))) exp[++stack_pointer] = exp[i];
+        // Bulit an expression for eval function out of top two elements of the stack and decrement the stack pointer by one.
+        else exp[stack_pointer-1] = parseInt(eval( exp[stack_pointer-1] + exp[i] + exp[stack_pointer--] ));
+ 
+        // console.log('Stack_pointer: ' + stack_pointer + '  |  Element: ' + exp[stack_pointer] + '  |  Exp: ' + exp)
+    }
+    
+    return exp[stack_pointer];
 }

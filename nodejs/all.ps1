@@ -32,7 +32,7 @@ Clear-Host
 # node ./dailyCode/022_transpose_matrix.js
 # node ./dailyCode/023_remove_adjacent_duplicate_character.js
 # node ./dailyCode/024_sum_binary_numbers.js
-node ./dailyCode/025_reverse_integer.js
+# node ./dailyCode/025_reverse_integer.js
 
     ##################################
     ###### Daily Coding Problem ######
@@ -44,8 +44,11 @@ node ./dailyCode/025_reverse_integer.js
 # node ./dailyCodingProblem/158-[Medium].js    # Ways to to reach the bottom of a matrix'
 # node ./dailyCodingProblem/159-[Easy].js      # Find first recurring Character
 # node ./dailyCodingProblem/145-[Easy].js      # Swap every two nodes in a linked list
+# node ./dailyCodingProblem/163-[Hard].js      # Evaluate reverse polish notation
 # node ./dailyCodingProblem/164-[Medium].js    # Find duplicate number in array
-# node ./dailyCodingProblem/165-[Medium].js    # count smaller elements on right side
+# node ./dailyCodingProblem/165-[Medium].js    # Count smaller elements on right side
+# node ./dailyCodingProblem/168-[Medium].js    # Rotate matrix by 90°
+# node ./dailyCodingProblem/173-[Medium].js    # Flatten dictionary
 # node ./dailyCodingProblem/181-[Hard].js      # Split string into fewest palindromes
 
     ##############################
@@ -64,6 +67,7 @@ node ./dailyCode/025_reverse_integer.js
     ########### LINKED LISTS ###########
 # node ./codingQuestions/linked_lists/remove_linked_list_element.js
 # node ./codingQuestions/linked_lists/add_two_numbers_I.js
+node ./codingQuestions/linked_lists/add_two_numbers_II.js
 
     ########### TREES ###########
 # node ./codingQuestions/trees/same_tree.js
