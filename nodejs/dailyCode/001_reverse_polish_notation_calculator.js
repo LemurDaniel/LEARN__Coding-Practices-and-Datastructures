@@ -108,3 +108,12 @@ Inout.solve();
             (arr[++arr[arr.length-1]] = v) : 
             (arr[arr[arr.length-1]-1] = ( arr[arr.length-2][47 - v.charCodeAt(0)](arr[arr[arr.length-1]-1], arr[arr[arr.length-1]--]) )
             )).splice(-3,1)[0];
+
+
+
+[15, 7, 1, 1, '+', '-', '/', 3, '*', 2, 1, 1, '+', '+', '-'].
+        concat( [ [(a,b) => a/b, null, (a,b) => a-b, null, (a,b) => a+b, (a,b) => a*b], -1] ).
+        map( (v,i,arr) => ( !('+-/*'.includes(v)) ? 
+                (arr[++arr[arr.length-1]] = v) : 
+                (arr[arr[arr.length-1]-1] = ( arr[arr.length-2][47 - v.charCodeAt(0)](arr[arr[arr.length-1]-1], arr[arr[arr.length-1]--]) )
+                ) ) == null ? null : arr[arr[arr.length-1]] ).reverse()[2];

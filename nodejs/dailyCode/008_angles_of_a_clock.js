@@ -47,3 +47,5 @@ function calc_angle_between_hour_and_minute_hand(h, m){
 
     return difference > 180 ? 360 - difference : difference;
 }
+
+//const one_line = (h, m) => Math.min( Math.abs( (30 * h + Math.round(m * 0.5)) - 6*m ), 360 - Math.abs( (30 * h + Math.round(m * 0.5)) - 6*m ) );
