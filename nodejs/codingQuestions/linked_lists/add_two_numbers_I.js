@@ -27,8 +27,8 @@ Inout.push( { list: '243', list_2: '&LL 5669' } , '&LL 70001' );
 Inout.push( { list: '24333', list_2: '&LL 564' } , '&LL 70833' );
 Inout.push( { list: '243', list_2: '&LL 56444' } , '&LL 70844' );
 
-Inout.solvers = [add_two_numbers, add_two_numbers_in_new_list];
-Inout.solve();
+Inout.solvers = [add_two_numbers, add_two_numbers_in_new_list, add_number_recursive];
+
 
 /*
     ###########################################################################################
@@ -93,3 +93,23 @@ function add_two_numbers_in_new_list (num, num2)  {
 
     return summed;
 }
+
+
+
+function add_number_recursive(num, num2) {
+    return num.head.add_number_recursive(num, num2.head);
+}
+
+LinkedList.Node.prototype.add_number_recursive = function(list, node, carry = 0) {
+
+    const sum   = this.val + (node ? node.val : 0) + carry;
+    this.val    = sum % 10;
+    carry       = Math.floor(sum / 10);
+
+    // If neither a carry nor another node of the second num is present then the addition is completed.
+    if( !carry && (!node || !node.next) ) return list;
+    else if(!this.next) list.Append(0);
+
+    return this.next.add_number_recursive(list, node ? node.next : null, carry );
+}
+Inout.solve();
