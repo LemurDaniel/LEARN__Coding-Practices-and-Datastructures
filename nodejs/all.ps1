@@ -33,7 +33,8 @@ Clear-Host
 # node ./dailyCode/023_remove_adjacent_duplicate_character.js
 # node ./dailyCode/024_sum_binary_numbers.js
 # node ./dailyCode/025_reverse_integer.js
-node ./dailyCode/026_remove_duplicates_from_sorted_list.js
+# node ./dailyCode/026_remove_duplicates_from_sorted_list.js
+node ./dailyCode/027_decimal_to_roman.js
 
     ##################################
     ###### Daily Coding Problem ######
