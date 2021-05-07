@@ -33,6 +33,7 @@ Clear-Host
 # node ./dailyCode/023_remove_adjacent_duplicate_character.js
 # node ./dailyCode/024_sum_binary_numbers.js
 # node ./dailyCode/025_reverse_integer.js
+node ./dailyCode/026_remove_duplicates_from_sorted_list.js
 
     ##################################
     ###### Daily Coding Problem ######
@@ -70,7 +71,7 @@ Clear-Host
     ########### LINKED LISTS ###########
 # node ./codingQuestions/linked_lists/remove_linked_list_element.js
 # node ./codingQuestions/linked_lists/add_two_numbers_I.js
-node ./codingQuestions/linked_lists/add_two_numbers_II.js
+# node ./codingQuestions/linked_lists/add_two_numbers_II.js
 
     ########### TREES ###########
 # node ./codingQuestions/trees/same_tree.js
