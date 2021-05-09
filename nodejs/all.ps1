@@ -35,7 +35,8 @@ Clear-Host
 # node ./dailyCode/025_reverse_integer.js
 # node ./dailyCode/026_remove_duplicates_from_sorted_list.js
 # node ./dailyCode/027_decimal_to_roman.js
-node ./dailyCode/028_reshape_matrix.js
+# node ./dailyCode/028_reshape_matrix.js
+node ./dailyCode/029_range_searching_in_a_sorted_list.js
 
     ##################################
     ###### Daily Coding Problem ######
