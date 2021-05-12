@@ -34,7 +34,7 @@ Inout.push(-1, 32);
 
 const one_line_to_string = num => (num >>> 0).toString(2).split('').filter( v => v == 1 ).length;
 
-Inout.solvers = [one_line_to_string, number_of_1_bits_math];
+Inout.solvers = [one_line_to_string, number_of_1_bits_math, number_of_1_bits_bitshift];
 Inout.solve();
 
 function number_of_1_bits_math(num) {
@@ -45,6 +45,18 @@ function number_of_1_bits_math(num) {
     while(num) {
         count += num % 2;
         num    = Math.floor( num / 2 );
+    }
+
+    return count;
+}
+
+
+function number_of_1_bits_bitshift(num) {
+
+    let count = 0;
+    while(num) {
+        count += num & 0b1;
+        num >>>= 0b1;
     }
 
     return count;
