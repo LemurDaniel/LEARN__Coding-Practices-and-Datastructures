@@ -31,9 +31,8 @@ class Inout {
         else this.testcases.push(arg);
     }
 
-    solve (i) {
+    solve (i = 0) {
         
-        if(!i) i = 0;
         if(i == 0) console.log(' ===> ' + this.description + ' <=== ');
 
         const test = this.testcases[i];

@@ -39,7 +39,8 @@ Clear-Host
 # node ./dailyCode/029_range_searching_in_a_sorted_list.js
 # node ./dailyCode/030_picking_up_change.js
 # node ./dailyCode/031_majority_element.js
-node ./dailyCode/032_number_of_1_bits.js
+# node ./dailyCode/032_number_of_1_bits.js
+node ./dailyCode/033_searching_a_matrix.js
 
     ##################################
     ###### Daily Coding Problem ######
