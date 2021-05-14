@@ -1,4 +1,4 @@
-const Inout = new (require("../Inout"))("DailyCode --- Picking up Change");
+const Inout = new (require("../Inout"))("DailyCode --- Majority Element");
 const Helper = require('../Helper');
 
 /*

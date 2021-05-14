@@ -31,7 +31,7 @@ Inout.input_string_converter  = Helper.matrix_toString;
 
 Inout.push('&AR 0,3,0,2|1,2,3,3|6,0,3,2', 13);
 
-Inout.solvers = [picking_up_change];
+Inout.solvers = [picking_up_change, picking_up_change_recursive];
 Inout.solve();
 
 /*
@@ -55,4 +55,14 @@ function picking_up_change(mat) {
     }
 
     return mat[0][0];
+}
+
+function picking_up_change_recursive(mat, row = 0, col = 0, val = 0) {
+
+    if( row >= mat.length || col >= mat[row].length) return val;
+
+    const down  = val + mat[row][col] + picking_up_change_recursive(mat, row + 1, col);
+    const right = val + mat[row][col] + picking_up_change_recursive(mat, row , col + 1);
+
+    return down > right ? down : right;
 }
