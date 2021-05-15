@@ -19,10 +19,7 @@ const Helper = require('../Helper');
 
 */
 
-Inout.convert_input = Helper.string_toIntArray;
-Inout.convert_output = Helper.string_toIntArray;
-
-Inout.push( { input: '34961', output: '11210' } )
+Inout.push( '&NI 34961', '&NI 11210' )
 
 Inout.solvers = [find_number_of_smaller_elements, find_number_of_smaller_elements_2];
 Inout.solve();

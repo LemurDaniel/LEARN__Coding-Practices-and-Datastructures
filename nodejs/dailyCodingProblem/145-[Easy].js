@@ -13,11 +13,8 @@ const LinkedList = require('../datastructures/linkedList');
 
 */
 
-Inout.convert_input = LinkedList.LinkedListFromString_Int;
-Inout.convert_output = LinkedList.LinkedListFromString_Int;
-
-Inout.testcases.push( { input: '1234', output: '2143' } );
-Inout.testcases.push( { input: '12345', output: '21435' } );
+Inout.push( '&LL 1234', '&LL 2143' );
+Inout.push( '&LL 12345', '&LL 21435' );
 
 Inout.solvers = [Swap_values_iterative, Swap_nodes_iterative, Swap_values_recursive]
 

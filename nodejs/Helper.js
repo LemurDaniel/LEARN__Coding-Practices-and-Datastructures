@@ -1,6 +1,7 @@
 const LinkedList = require('./datastructures/linkedList');
 const BTree = require('./datastructures/bTree');
 const Queue = require('./datastructures/queue');
+const { LinkedListFromString_Int } = require('./datastructures/linkedList');
 
 const classes = [LinkedList, BTree.BinaryTree, Queue.NodeQueue, Queue.ArrayQueue];
 
@@ -51,24 +52,33 @@ Helper.print_Array = function(arr, bl = ', ', open = '[ ', close = ' ]') {
 }
 
 Helper.print_map = function(map, depth = 5) {
-    
+
+    // return nothing if map is null
     if(!map) return '';
 
+    // Get all keys of the map an loop though them.
     const keys = Object.keys(map);
 
     let str = '';
     keys.forEach( k => {
+
+        // Get value for the corresponding key.
         let val = map[k];
 
+        // If the value of the key is an array, then call the specific function for printing arrays.
         if(Array.isArray(val)) val = Helper.print_Array(val);
 
+        // Call toString funtions if the type is a LinkedList or BinaryTree or Queue
         else if(val instanceof LinkedList) val = val.toString();
         else if(val instanceof BTree.BinaryTree) val = val.toString();
+        else if(val instanceof Queue.NodeQueue)  val = val.toString();
+        else if(val instanceof Queue.ArrayQueue) val = val.toString();
 
+        // If the value is itself an object, then print its content recursivley.
         else if(typeof val == 'object') val = Helper.print_map(val, depth+2);
 
+        // Create a string with correct indentations and the key and value.
         str += '\n' + Helper.uniform_string('  ', depth) + k + ': ' + val
-
     });
 
     return str;
@@ -146,65 +156,54 @@ Helper.scramble_Array = function (arr, cycles = 10e2) {
 
 Helper.string_toArray = function(str) {
 
-    const arr = [];
+    // Define variables.
+    const matrix = [];
     const sub_strs = str.split('|');
 
     for(let i=0; i<sub_strs.length; i++) {
         
+        // Define char for splitting array.
         let split = '';
         if(sub_strs[i].includes(',')) split = ',';
         else if(sub_strs[i].includes(' ')) split = ' ';
 
-        const sub_arr = [];
-        for(let el of sub_strs[i].split(split)){
-            if(el.trim() == '/') sub_arr.push('/');
-            else sub_arr.push( el.trim() );
-        }
+        // Split array and trim its contents.
+        const array = sub_strs[i].split(split);
+        for(let i in array) array[i] = array[i].trim();
 
-        if(sub_strs.length == 1) return sub_arr
-        else arr.push(sub_arr);
+        // return 1D array or generate matrix depending on input string.
+        if(sub_strs.length == 1) return array
+        else matrix.push(array);
     }
-    return arr;
+    return matrix;
 
 }
 
-Helper.string_toIntArray = function(str) {
+Helper.string_toIntArray = function(str, split = ' ') {
 
-    const keywords = ['nums', 'arr'];
-
-    if(typeof str == 'object') {
-        for(let key of Object.keys(str)){
-
-            if( keywords.includes(key) )
-                str[key] = Helper.string_toIntArray(str[key]);
-            else if( typeof str[key] == 'string' && str[key][0] == '&' )
-                str[key] = Helper.string_toIntArray(str[key].substr(1, str[key].length));
-            else if( typeof str[key] == 'object' )
-                str[key] = Helper.string_toIntArray(str[key]);
-        }
-
-        return str;
-    }
-
-    const arr = [];
+    // Define variables.
+    const matrix = [];
     const sub_strs = str.split('|');
 
     for(let i=0; i<sub_strs.length; i++) {
-        
-        let split = '';
-        if(sub_strs[i].includes(',')) split = ',';
-        else if(sub_strs[i].includes(' ')) split = ' ';
 
-        const sub_arr = [];
-        for(let el of sub_strs[i].split(split)){
-            if(el.trim() == '/') sub_arr.push('/');
-            else sub_arr.push( parseInt(el) );
+        // Split the curren substring according to chosen split char.
+        if(sub_strs[i].includes(',')) split = ',';
+        const array = sub_strs[i].split(split);
+
+        // Loop through the array and convert its contents to numbers.
+        for(let i in array){
+            array[i]    = array[i].trim();
+            const num   = parseInt( array[i] );
+            if( !isNaN(num) ) array[i] = num;
         }
 
-        if(sub_strs.length == 1) return sub_arr
-        else arr.push(sub_arr);
+        // If there is only one substring in 'str' then return a 1D array.
+        if(sub_strs.length == 1) return array;
+        // else push the array into a matrix.
+        else matrix.push(array);
     }
-    return arr;
+    return matrix;
 }
 
 // converts all strings in an object to the desired object
@@ -216,8 +215,8 @@ Helper.convert_strings_in_object = function(obj) {
 
     if (typeof obj == 'function') return obj;
     else if (typeof obj == 'string') return convert_string(obj);
-    else if(typeof obj == 'object') {
-        for(let key of Object.keys(obj)) {
+    else if (typeof obj == 'object') {
+        for (let key of Object.keys(obj)) {
 
             if( typeof obj[key] == 'string' ){
 
@@ -238,6 +237,7 @@ Helper.convert_strings_in_object = function(obj) {
 function convert_string(str) {
 
     const keychars_normal_arr = '&NA';
+    const keychars_normal_int_arr = '&NI';
     const keychars_int_arr = '&AR';
     const keychars_list = '&LL';
     const keychars_tree = '&BT';
@@ -248,6 +248,7 @@ function convert_string(str) {
 
         if( chars == keychars_normal_arr ) return Helper.string_toArray(substr);
         else if( chars == keychars_int_arr ) return Helper.string_toIntArray(substr);
+        else if( chars == keychars_normal_int_arr ) return Helper.string_toIntArray(substr, '');
         else if( chars == keychars_list ) return LinkedList.LinkedListFromString_Int(substr);
         else if( chars == keychars_tree ) return BTree.BinaryTree.GenerateIntPreorderFromString(substr);
     }
@@ -259,16 +260,18 @@ function convert_string(str) {
 // ######### DEFAULT METHODS
 // ############################################################################
 
+// Copys 
 Helper.default_copy = function(arg) {
 
+    // If object has a copy method, then use it.
     if(arg.copy) return arg.copy();
 
+    // If arg is an object then copy all keys and their values.
     if(typeof arg == 'object' && !Array.isArray(arg)) {
         const copy = {};
-        for(let key of Object.keys(arg)) {
-            if(typeof arg == Object) copy[key] = input_copy_method(arg[key]);
-            else copy[key] = arg[key].copy ? arg[key].copy() : JSON.parse(JSON.stringify(arg[key]));
-        }
+        for(let key of Object.keys(arg))
+            copy[key]   = Helper.default_copy(arg[key]);
+
         return copy;
     }
 
@@ -276,6 +279,7 @@ Helper.default_copy = function(arg) {
 
 }
 
+// Standard converter to convert arguments into string for display in console.
 Helper.default_converter = function(arg) {
 
     for(let c of classes)
@@ -288,15 +292,14 @@ Helper.default_converter = function(arg) {
 
 }
 
+// Standard mapper to map arguments to the solver functions
 Helper.default_mapper = function(arg, solver) {
 
     for(let c of classes)
         if ( arg instanceof c ) return solver(arg);
 
-    if(Array.isArray(arg) || typeof arg != 'object')
-        return solver(arg);
-    else
-        return solver(...Object.values(arg));
+    if(Array.isArray(arg) || typeof arg != 'object')    return solver(arg);
+    else    return solver(...Object.values(arg));
 }
 
 

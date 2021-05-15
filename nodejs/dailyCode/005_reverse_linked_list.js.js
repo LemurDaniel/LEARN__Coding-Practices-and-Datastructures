@@ -2,19 +2,8 @@ const Inout = new (require ('../Inout'))('DailyCode --- Reverse Linked List');
 const LinkedList = require('../datastructures/linkedList');
 
 
-
-Inout.convert_input = LinkedList.LinkedListFromString_Int;
-Inout.convert_output = LinkedList.LinkedListFromString_Int;
-Inout.input_copy_method = LinkedList.Copy;
-
-Inout.testcases.push({
-    input: '1234567',
-    output: '7654321'
-})
-Inout.testcases.push({
-    input: '12, 34, 8, 9',
-    output: '9, 8, 34, 12'
-})
+Inout.push( '&LL 1234567', '&LL 7654321');
+Inout.push( '&LL 12, 34, 8, 9', '&LL 9, 8, 34, 12');
 
 Inout.solvers = [Reverse_iterative, Reverse_recursive]
 

@@ -25,18 +25,16 @@ const Helper = require('../Helper');
 
 */
 
-Inout.convert_input = Helper.string_toIntArray;
-Inout.input_string_converter = Helper.matrix_toString;
 Inout.result_comparer = (arg, arg2) => (typeof arg2 == 'number' ? arg2 : arg2.ways) == arg
 Inout.result_string_converter = arg => {
     if(typeof arg == 'number') return  arg + ' Ways';;
     return arg.ways + ' Ways\n       ' + Helper.print_Array(arg.paths, ',\n         ');
 }
 
-Inout.push( { input: '001|001|100', output: 2 } );
-Inout.push( { input: '011|001|100', output: 1 } );
-Inout.push( { input: '000|000|000', output: 6 } );
-Inout.push( { input: '00111|10011|11001|11100|11110', output: 1 } );
+Inout.push( '&NA 001|001|100', 2 );
+Inout.push( '&NA 011|001|100', 1 );
+Inout.push( '&NA 000|000|000', 6 );
+Inout.push( '&NA 00111|10011|11001|11100|11110', 1 );
 
 Inout.solvers = [brute_force_recursive, brute_force_iterative, brute_force_iterative2];
 Inout.solve();

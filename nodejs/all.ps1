@@ -40,7 +40,9 @@ Clear-Host
 # node ./dailyCode/030_picking_up_change.js
 # node ./dailyCode/031_majority_element.js
 # node ./dailyCode/032_number_of_1_bits.js
-node ./dailyCode/033_searching_a_matrix.js
+# node ./dailyCode/033_searching_a_matrix.js
+node ./dailyCode/034_generate_all_subsets.js
+
 
     ##################################
     ###### Daily Coding Problem ######

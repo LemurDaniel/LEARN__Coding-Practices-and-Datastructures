@@ -28,11 +28,8 @@ const Helper = require('../Helper');
     # (1, (2, (3, None)))
 */
 
-Inout.convert_input = LinkedList.LinkedListFromString_Int;
-Inout.convert_output = LinkedList.LinkedListFromString_Int;
-
-Inout.push( { input: '12233', output: '123' } );
-Inout.push( { input: '111223334444445555', output: '12345' } );
+Inout.push( '&LL 12233', '&LL 123' );
+Inout.push( '&LL 111223334444445555', '&LL 12345' );
 
 Inout.solvers = [remove_duplicates_iterative, remove_duplicates_recursive];
 

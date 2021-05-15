@@ -28,9 +28,7 @@ Inout.input_string_converter = Helper.matrix_toString;
 Inout.output_string_converter = Helper.matrix_toString;
 Inout.result_string_converter = Helper.matrix_toString;
 
-Inout.testcases.push({  input: '&AR 123|456', 
-                        output: '&AR 14|25|36' 
-});
+Inout.push( '&NA 123|456', '&NA 14|25|36' );
 
 Inout.solvers = [transpose_matrix];
 Inout.solve();
