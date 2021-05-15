@@ -1,5 +1,4 @@
-const Inout = new (require("../Inout"))("DailyCode --- Word Ordering in different alphabetical orders");
-const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require("constants");
+const Inout = new (require("../Inout"))("DailyCode --- Generate all subsets");
 const Helper = require('../Helper');
 
 /*
@@ -23,7 +22,7 @@ Inout.result_comparer = Helper.Array_has_same_values;
 Inout.push( '&AR 1,2,3', '&AR |3|2|2,3|1|1,3|1,2|1,2,3');
 Inout.push( '&AR 12,4,8', '&AR |12|4|12,4|8|12,8|4,8|12,4,8');
 
-Inout.solvers = [generate_all_subsets];
+Inout.solvers = [generate_all_subsets, generate_subset_methods_combined_into_one];
 Inout.solve();
 
 /*
@@ -81,6 +80,27 @@ function generate_all_subsets(nums)  {
 
     while(binary_count--)
         subsets.push(binary_number_to_set(nums, binary_count));
+
+    return subsets;
+}
+
+
+function generate_subset_methods_combined_into_one(nums) {
+
+    let binary_count = 0b0;
+    const subsets    = [];
+
+    while(binary_count < Math.pow(2, nums.length)) {
+        let   b   = binary_count++;
+        const set = [];
+
+        for(let num of nums) {
+            if( b & 0b1 ) set.push(num) 
+            b >>= 1;
+        }
+    
+        subsets.push(set);
+    }
 
     return subsets;
 }
