@@ -41,7 +41,7 @@ Clear-Host
 # node ./dailyCode/031_majority_element.js
 # node ./dailyCode/032_number_of_1_bits.js
 # node ./dailyCode/033_searching_a_matrix.js
-node ./dailyCode/034_generate_all_subsets.js
+# node ./dailyCode/034_generate_all_subsets.js
 
 
     ##################################
@@ -69,18 +69,21 @@ node ./dailyCode/034_generate_all_subsets.js
     ##############################
 
     ########### STRINGS ###########
-# node ./codingQuestions/strings/simplify_path.js
+# node ./codingQuestions/strings/simplify_path-[Easy].js
+
+    ########### STACKS ###########
+node ./codingQuestions/stacks/min_stack-[Easy].js
 
     ########### ARRAYS ###########
-# node ./codingQuestions/arrays/two_sum.js
-# node ./codingQuestions/arrays/search_for_range.js
-# node ./codingQuestions/arrays/sort_colors.js
-# node ./codingQuestions/arrays/move_zeroes.js
+# node ./codingQuestions/arrays/two_sum-[Easy].js
+# node ./codingQuestions/arrays/search_for_range-[Medium].js
+# node ./codingQuestions/arrays/sort_colors-[Medium].js
+# node ./codingQuestions/arrays/move_zeroes-[Easy].js
 
     ########### LINKED LISTS ###########
-# node ./codingQuestions/linked_lists/remove_linked_list_element.js
-# node ./codingQuestions/linked_lists/add_two_numbers_I.js
-# node ./codingQuestions/linked_lists/add_two_numbers_II.js
+# node ./codingQuestions/linked_lists/remove_linked_list_element-[Easy].js
+# node ./codingQuestions/linked_lists/add_two_numbers_I-[Medium].js
+# node ./codingQuestions/linked_lists/add_two_numbers_II-[Medium].js
 
     ########### TREES ###########
-# node ./codingQuestions/trees/same_tree.js
+# node ./codingQuestions/trees/same_tree-[Easy].js

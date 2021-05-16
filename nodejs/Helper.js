@@ -43,8 +43,9 @@ Helper.print_Array = function(arr, bl = ', ', open = '[ ', close = ' ]') {
     str = '';
     for(let i=0; i<arr.length; i++) {
 
-        if(Array.isArray(arr[i]))   str += Helper.print_Array(arr[i], bl, '( ', ' )');
-        else    str += arr[i];
+        if(Array.isArray(arr[i]))          str += Helper.print_Array(arr[i], bl, '( ', ' )');
+        else if(typeof arr[i] == 'string') str += "'"+arr[i]+"'";
+        else                               str += arr[i]
 
         str += (i != arr.length-1 ? bl : '');
     }
@@ -287,7 +288,7 @@ Helper.default_converter = function(arg) {
 
     if(Array.isArray(arg)) return Helper.print_Array(arg);
     else if(typeof arg == 'function') return '(function) ' + arg.name;
-    else if(typeof arg == 'object') return Helper.print_map(arg);
+    else if(typeof arg == 'object')   return Helper.print_map(arg);
     else return arg.toString();
 
 }
