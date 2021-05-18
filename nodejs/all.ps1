@@ -42,6 +42,7 @@ Clear-Host
 # node ./dailyCode/032_number_of_1_bits.js
 # node ./dailyCode/033_searching_a_matrix.js
 # node ./dailyCode/034_generate_all_subsets.js
+node ./dailyCode/035_lru_cache.js
 
 
     ##################################
@@ -72,7 +73,7 @@ Clear-Host
 # node ./codingQuestions/strings/simplify_path-[Easy].js
 
     ########### STACKS ###########
-node ./codingQuestions/stacks/min_stack-[Easy].js
+# node ./codingQuestions/stacks/min_stack-[Easy].js
 
     ########### ARRAYS ###########
 # node ./codingQuestions/arrays/two_sum-[Easy].js
