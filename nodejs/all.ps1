@@ -42,7 +42,7 @@ Clear-Host
 # node ./dailyCode/032_number_of_1_bits.js
 # node ./dailyCode/033_searching_a_matrix.js
 # node ./dailyCode/034_generate_all_subsets.js
-node ./dailyCode/035_lru_cache.js
+# node ./dailyCode/035_lru_cache.js
 
 
     ##################################
@@ -64,6 +64,8 @@ node ./dailyCode/035_lru_cache.js
 # node ./dailyCodingProblem/168-[Medium].js    # Rotate matrix by 90°
 # node ./dailyCodingProblem/173-[Medium].js    # Flatten dictionary
 # node ./dailyCodingProblem/181-[Hard].js      # Split string into fewest palindromes
+node ./dailyCodingProblem/202-[Easy].js        # Check if an integer is a palindrome without converting it to a string
+
 
     ##############################
     ###### Coding Questions ######
