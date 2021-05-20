@@ -1,6 +1,4 @@
 const Inout = new (require ('../Inout'))('Daily Coding Problem --- Check if integer is a palindrome without converting it to a String');
-const { BinaryTree } = require('../datastructures/bTree');
-const { NodeQueue } = require('../datastructures/queue');
 const Helper = require('../Helper');
 
 /*
@@ -20,7 +18,7 @@ Inout.push(888, true);
 Inout.push(678, false);
 Inout.push(11222222222211, true);
 
-Inout.solvers = [is_Integer_a_palindrome_compare_digits];
+Inout.solvers = [is_Integer_a_palindrome_compare_digits, is_Integer_a_palindrome_reverse_integer];
 Inout.solve();
 
 /*
@@ -32,9 +30,6 @@ Inout.solve();
 
 
 function is_Integer_a_palindrome_compare_digits(num) {
-
-    const number = num;
-    let reversed = 0;
 
     while(num) {
 
@@ -52,4 +47,20 @@ function is_Integer_a_palindrome_compare_digits(num) {
     }
 
     return true;
+}
+
+
+function is_Integer_a_palindrome_reverse_integer(num) {
+
+    const number = num;
+    let reversed = 0;
+
+    while(num) {
+
+        reversed = reversed * 10   + (num % 10);
+        num      = Math.floor( num / 10 );
+
+    }
+
+    return number == reversed
 }
