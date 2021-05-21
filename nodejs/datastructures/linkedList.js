@@ -98,10 +98,16 @@ LinkedList.prototype.to_array = function ( value_converter = v => v ) {
     return arr;
 }
 
-LinkedList.prototype.toString = function ( value_converter = v => v , connector = ' ==> ') {
 
-    let str = '';
-    let node = this.head;
+LinkedList.prototype.toString = function ( value_converter = v => v, connector = ' ==> ') {
+    return LinkedList.toString(this.head, value_converter, connector);
+}
+
+
+LinkedList.toString = function (head, value_converter = v => v, connector = ' ==> ') {
+
+    let str  = '';
+    let node = head;
     while(node) {
         str += value_converter(node.val) + connector;
         node = node.next;
