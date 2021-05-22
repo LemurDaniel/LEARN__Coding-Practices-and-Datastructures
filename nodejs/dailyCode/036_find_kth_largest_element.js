@@ -1,4 +1,4 @@
-const Inout = new (require('../Inout'))('DailyCode --- Find Closest Points');
+const Inout = new (require('../Inout'))('DailyCode --- Find kth largest element in an unorderd list');
 const LinkedList = require('../datastructures/linkedList');
 const Queue = require('../datastructures/queue');
 const Helper = require('../Helper');
