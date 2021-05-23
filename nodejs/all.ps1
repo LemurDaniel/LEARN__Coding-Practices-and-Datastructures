@@ -44,7 +44,7 @@ Clear-Host
 # node ./dailyCode/034_generate_all_subsets.js
 # node ./dailyCode/035_lru_cache.js
 # node ./dailyCode/036_find_kth_largest_element.js
-node ./dailyCode/037_index_of_larger_next_number.js
+# node ./dailyCode/037_index_of_larger_next_number.js
 
 
     ##################################
@@ -75,6 +75,7 @@ node ./dailyCode/037_index_of_larger_next_number.js
 
     ########### STRINGS ###########
 # node ./codingQuestions/strings/simplify_path-[Easy].js
+node ./codingQuestions/strings/longest_common_prefix-[Easy].js
 
     ########### STACKS ###########
 # node ./codingQuestions/stacks/min_stack-[Easy].js
