@@ -27,6 +27,7 @@ const Helper = require('../Helper');
 Inout.push( { prefix: 'do', words: '&AR dog dark cat cat door dodge' }, '&AR dog door dodge' );
 Inout.push( { prefix: 'c', words: '&AR dog dark cat cat door dodge' }, '&AR cat' );
 Inout.push( { prefix: 'el', words: '&FS ./dailyCode/038_words.txt &AR' }, function for_testing () {return true} );
+Inout.push( { prefix: 'test', words: '&FS ./dailyCode/038_10.000_words.txt &AR' }, function for_testing () {return true} );
 
 Inout.solvers = [autocomplete_trie_implementation];
 Inout.solve();
