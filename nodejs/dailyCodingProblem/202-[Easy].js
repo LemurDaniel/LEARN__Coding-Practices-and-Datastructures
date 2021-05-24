@@ -18,6 +18,7 @@ Inout.push(121, true);
 Inout.push(888, true);
 Inout.push(678, false);
 Inout.push(10221, false);
+Inout.push(10022001, true);
 Inout.push(1122222211, true);
 
 const palindromes_lookup_dict = {}
@@ -52,16 +53,19 @@ function is_Integer_a_palindrome_compare_digits(num) {
 
         // To account for numbers like 10221. The leading zero gets removed when the most significant digit is removed: 0221 becomes 221
         leading_zero = Math.floor(num / order_of_magnitude * 10) % 10 == 0;
+        
+        // Replace the leading zero with a one to prevent deletion.
+        if(leading_zero) num += order_of_magnitude / 10; 
 
         // Remove most significant and least significant digit.
-        if(!leading_zero) num %= order_of_magnitude;
+        num %= order_of_magnitude;
         num = Math.floor( num / 10 );
 
     }
 
     return true;
 }
-
+console.log(is_Integer_a_palindrome_compare_digits(10022001))
 
 function is_Integer_a_palindrome_reverse_integer(num) {
 
