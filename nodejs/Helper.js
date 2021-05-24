@@ -2,6 +2,7 @@ const LinkedList = require('./datastructures/linkedList');
 const BTree = require('./datastructures/bTree');
 const Queue = require('./datastructures/queue');
 const { LinkedListFromString_Int } = require('./datastructures/linkedList');
+const fs = require('fs');
 
 const classes = [LinkedList, BTree.BinaryTree, Queue.NodeQueue, Queue.ArrayQueue];
 
@@ -44,8 +45,14 @@ Helper.print_Array = function(arr, bl = ', ', open = '[ ', close = ' ]') {
     for(let i=0; i<arr.length; i++) {
 
         if(Array.isArray(arr[i]))          str += Helper.print_Array(arr[i], bl, '( ', ' )');
+        else if(typeof arr[i] == 'object') str += Helper.print_map(arr[i], -1);
         else if(typeof arr[i] == 'string') str += "'"+arr[i]+"'";
         else                               str += arr[i]
+
+        if(i > 100) { 
+            str += ' >>> ' + (arr.length - i) + ' more items ';
+            break;
+        }
 
         str += (i != arr.length-1 ? bl : '');
     }
@@ -60,14 +67,15 @@ Helper.print_map = function(map, depth = 5) {
     // Get all keys of the map an loop though them.
     const keys = Object.keys(map);
 
-    let str = '';
+    let str = depth == -1 ? '\n     { ' : '';
     keys.forEach( k => {
 
         // Get value for the corresponding key.
         let val = map[k];
 
         // If the value of the key is an array, then call the specific function for printing arrays.
-        if(Array.isArray(val)) val = Helper.print_Array(val);
+        if ( k.includes('matrix') ) val = Helper.matrix_toString(val);
+        else if(Array.isArray(val)) val = Helper.print_Array(val);
 
         // Call toString funtions if the type is a LinkedList or BinaryTree or Queue
         else if(val instanceof LinkedList) val = val.toString();
@@ -78,11 +86,13 @@ Helper.print_map = function(map, depth = 5) {
         // If the value is itself an object, then print its content recursivley.
         else if(typeof val == 'object') val = Helper.print_map(val, depth+2);
 
+        if(depth == -1) str += k+': '+val + ', ';
         // Create a string with correct indentations and the key and value.
-        str += '\n' + Helper.uniform_string('  ', depth) + k + ': ' + val
+        else str += '\n' + Helper.uniform_string('  ', depth) + k + ': ' + val
     });
 
-    return str;
+    if(depth == -1) return str.substr(0,str.length-2) +  ' }';
+    else            return str;
 }
 
 // ############################################################################
@@ -155,7 +165,7 @@ Helper.scramble_Array = function (arr, cycles = 10e2) {
 // ######### CONVERT STRINGS TO OBJECTS
 // ############################################################################
 
-Helper.string_toArray = function(str) {
+Helper.string_toArray = function(str, split = '') {
 
     // Define variables.
     const matrix = [];
@@ -164,8 +174,8 @@ Helper.string_toArray = function(str) {
     for(let i=0; i<sub_strs.length; i++) {
         
         // Define char for splitting array.
-        let split = '';
         if(sub_strs[i].includes(',')) split = ',';
+        else if(sub_strs[i].includes('\r\n')) split = '\r\n';
         else if(sub_strs[i].includes(' ')) split = ' ';
 
         // Split array and trim its contents.
@@ -188,8 +198,12 @@ Helper.string_toIntArray = function(str, split = ' ') {
 
     for(let i=0; i<sub_strs.length; i++) {
 
+        console.log(sub_strs[i].includes('\r\n'))
         // Split the curren substring according to chosen split char.
         if(sub_strs[i].includes(',')) split = ',';
+        else if(sub_strs[i].includes('\r\n')) split = '\r\n';
+        else if(sub_strs[i].includes(' ')) split = ' ';
+
         const array = sub_strs[i].split(split);
 
         // Loop through the array and convert its contents to numbers.
@@ -237,23 +251,27 @@ Helper.convert_strings_in_object = function(obj) {
 // converts string to the desired object
 function convert_string(str) {
 
-    const keychars_normal_arr = '&NA';
-    const keychars_normal_int_arr = '&NI';
-    const keychars_int_arr = '&AR';
-    const keychars_list = '&LL';
-    const keychars_tree = '&BT';
+    const keychars = {
+        '&NA' : str => Helper.string_toArray(str),
+        '&NI' : str => Helper.string_toIntArray(str, ''),
+        '&AR' : str => Helper.string_toIntArray(str),
+        '&LL' : str => LinkedList.LinkedListFromString_Int(str),
+        '&BT' : str => BTree.BinaryTree.GenerateIntPreorderFromString(str),
+        '&FS' : str => {
+            const args = Helper.string_toArray(str);
+            const file = fs.readFileSync(args[0], 'utf-8');
+            return convert_string(args[1] + ' ' + file);
+        }
+    }
 
     if(str[0] == '&') {
         const chars = str.substr(0,3);
         const substr = str.substr((str[3] == ' ' ? 4 : 3), str.length);
 
-        if( chars == keychars_normal_arr ) return Helper.string_toArray(substr);
-        else if( chars == keychars_int_arr ) return Helper.string_toIntArray(substr);
-        else if( chars == keychars_normal_int_arr ) return Helper.string_toIntArray(substr, '');
-        else if( chars == keychars_list ) return LinkedList.LinkedListFromString_Int(substr);
-        else if( chars == keychars_tree ) return BTree.BinaryTree.GenerateIntPreorderFromString(substr);
+        if(chars in keychars) return keychars[chars](substr);
     }
-    else return str;
+    
+    return str;
 }
 
 

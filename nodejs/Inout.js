@@ -40,10 +40,10 @@ class Inout {
         test.output = this.convert_output(test.output);
 
         console.log('\n--------------------------------')
-        console.log('Testcase '+(i+1)+':\n');
+        console.log('Testcase '+(i+1)+':');
 
-        console.log('  Input:  '+this.input_string_converter(test.input));
-        console.log('  Output: '+this.output_string_converter(test.output));
+        console.log('\n---Input:  '+this.input_string_converter(test.input));
+        console.log('\n---Output: '+this.output_string_converter(test.output));
 
         this.Apply_solvers(test)
         

@@ -1,4 +1,4 @@
-const Inout = new (require("../Inout"))("DailyCode --- Index of larger next number");
+const Inout = new (require("../Inout"))("DailyCode --- Autocompletion");
 const { Trie }  = require('../datastructures/tree') 
 const Helper = require('../Helper');
 
@@ -24,7 +24,9 @@ const Helper = require('../Helper');
 
 */
 
-Inout.push( { words: '&AR dog dark cat door dodge', prefix: 'do' }, '&AR dog door dodge' );
+Inout.push( { prefix: 'do', words: '&AR dog dark cat cat door dodge' }, '&AR dog door dodge' );
+Inout.push( { prefix: 'c', words: '&AR dog dark cat cat door dodge' }, '&AR cat' );
+Inout.push( { prefix: 'el', words: '&FS ./dailyCode/038_words.txt &AR' }, function for_testing () {return true} );
 
 Inout.solvers = [autocomplete_trie_implementation];
 Inout.solve();
@@ -36,7 +38,7 @@ Inout.solve();
     ###########################################################################################
 */
 
-function autocomplete_trie_implementation(words, prefix) {
+function autocomplete_trie_implementation(prefix, words) {
 
     const trie = new Trie();
     trie.add_words(words);
