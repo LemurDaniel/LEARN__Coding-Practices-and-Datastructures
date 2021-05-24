@@ -1,4 +1,5 @@
 const Inout = new (require ('../Inout'))('Daily Coding Problem --- Check if integer is a palindrome without converting it to a String');
+const fs = require('fs');
 const Helper = require('../Helper');
 
 /*
@@ -16,9 +17,13 @@ const Helper = require('../Helper');
 Inout.push(121, true);
 Inout.push(888, true);
 Inout.push(678, false);
-Inout.push(11222222222211, true);
+Inout.push(10221, false);
+Inout.push(1122222211, true);
 
-Inout.solvers = [is_Integer_a_palindrome_compare_digits, is_Integer_a_palindrome_reverse_integer];
+const palindromes_lookup_dict = {}
+fs.readFileSync('./dailyCodingProblem/202-palindrome_integers.txt','utf-8').split('\r\n').forEach( i => palindromes_lookup_dict[i] = 1 );
+
+Inout.solvers = [is_Integer_a_palindrome_reverse_integer, is_Integer_a_palindrome_compare_digits, is_Integer_a_palindrome_lookup_table];
 Inout.solve();
 
 /*
@@ -28,20 +33,28 @@ Inout.solve();
     ###########################################################################################
 */
 
+function is_Integer_a_palindrome_lookup_table(num) {
+    return Math.abs(num) in palindromes_lookup_dict;
+}
 
 function is_Integer_a_palindrome_compare_digits(num) {
+
+    let leading_zero = false;
 
     while(num) {
 
         const order_of_magnitude = Math.pow(10, Math.floor(Math.log10(num)))
-        const most_significant_digit  = Math.floor( num / order_of_magnitude ); 
+        const most_significant_digit  = leading_zero ? 0 : Math.floor( num / order_of_magnitude ); 
         const least_significant_digit = num % 10;
 
         // console.log('Num: ' + num + '  --  highest_digit: ' + most_significant_digit + '   lowest_digit: ' + least_significant_digit);
         if( most_significant_digit != least_significant_digit ) return false;
 
+        // To account for numbers like 10221. The leading zero gets removed when the most significant digit is removed: 0221 becomes 221
+        leading_zero = Math.floor(num / order_of_magnitude * 10) % 10 == 0;
+
         // Remove most significant and least significant digit.
-        num %= order_of_magnitude;
+        if(!leading_zero) num %= order_of_magnitude;
         num = Math.floor( num / 10 );
 
     }
