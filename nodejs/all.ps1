@@ -12,6 +12,7 @@ Clear-Host
 # node ./dailyCode/002_character_map
 # node ./dailyCode/003_find_subtree
 # node ./dailyCode/004_flatten_dictionary
+# node ./dailyCode/004.1_unflatten_dictionary
 # node ./dailyCode/005_reverse_linked_list.js
 # node ./dailyCode/006_level_of_tree_with_maximum_sum
 # node ./dailyCode/007_reverse_words.js

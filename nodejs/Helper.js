@@ -198,7 +198,6 @@ Helper.string_toIntArray = function(str, split = ' ') {
 
     for(let i=0; i<sub_strs.length; i++) {
 
-        console.log(sub_strs[i].includes('\r\n'))
         // Split the curren substring according to chosen split char.
         if(sub_strs[i].includes(',')) split = ',';
         else if(sub_strs[i].includes('\r\n')) split = '\r\n';

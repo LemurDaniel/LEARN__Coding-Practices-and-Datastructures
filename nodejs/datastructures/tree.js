@@ -2,11 +2,8 @@ const { builtinModules } = require("module");
 
 class Node {
 
-    constructor(word_end) {
+    constructor() {
         this.branches = {};
-
-        // In case of combinated words => cat, catfood
-        this.mark_word_end = word_end;
     }
 
     get_words_recursive(prefix, idx = 0) {
@@ -25,11 +22,13 @@ class Node {
 
     get_all_words_of_node(word = '', list = []) {
 
+        // Loop through all branches and recursivley the method to get all words of those nodes.
         for(let key of Object.keys(this.branches)) {
             const node = this.branches[key];
             node.get_all_words_of_node(word + key, list);
         }
 
+        // If a node marks the end of a word then push it to the list.
         if(this.mark_word_end) list.push(word);
 
         return list;

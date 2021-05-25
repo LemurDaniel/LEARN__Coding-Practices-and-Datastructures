@@ -24,13 +24,15 @@ const Helper = require('../Helper');
 
 */
 
+const test = (test, res) => Helper.Array_has_same_values(test.input.words.filter( v => v.match('^'+test.input.prefix) != null), res);
+
 Inout.push( { prefix: 'do', words: '&AR dog dark cat cat door dodge' }, '&AR dog door dodge' );
 Inout.push( { prefix: 'c', words: '&AR dog dark cat cat door dodge' }, '&AR cat' );
-Inout.push( { prefix: 'el', words: '&FS ./dailyCode/038_words.txt &AR' }, function for_testing () {return true} );
-Inout.push( { prefix: 'test', words: '&FS ./dailyCode/038_10.000_words.txt &AR' }, function for_testing () {return true} );
+Inout.push( { prefix: 'el', words: '&FS ./dailyCode/038_words.txt &AR' }, test );
+Inout.push( { prefix: 'test', words: '&FS ./dailyCode/038_10.000_words.txt &AR' }, test );
 
 Inout.solvers = [autocomplete_trie_implementation];
-Inout.solve();
+Inout.solve(0);
 
 /*
     ###########################################################################################
