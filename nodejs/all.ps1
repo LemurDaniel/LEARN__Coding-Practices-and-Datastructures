@@ -8,13 +8,13 @@ Clear-Host
     ###### DailyCode ######
     #######################
 
-# node ./dailyCode/001_reverse_polish_notation_calculator
-# node ./dailyCode/002_character_map
-# node ./dailyCode/003_find_subtree
-# node ./dailyCode/004_flatten_dictionary
-# node ./dailyCode/004.1_unflatten_dictionary
+# node ./dailyCode/001_reverse_polish_notation_calculator.js
+# node ./dailyCode/002_character_map.js
+# node ./dailyCode/003_find_subtree.js
+# node ./dailyCode/004_flatten_dictionary.js
+# node ./dailyCode/004.1_unflatten_dictionary.js
 # node ./dailyCode/005_reverse_linked_list.js
-# node ./dailyCode/006_level_of_tree_with_maximum_sum
+# node ./dailyCode/006_level_of_tree_with_maximum_sum.js
 # node ./dailyCode/007_reverse_words.js
 # node ./dailyCode/008_angles_of_a_clock.js
 # node ./dailyCode/009_rotate_matrix_90.js
@@ -46,7 +46,7 @@ Clear-Host
 # node ./dailyCode/035_lru_cache.js
 # node ./dailyCode/036_find_kth_largest_element.js
 # node ./dailyCode/037_index_of_larger_next_number.js
-node ./dailyCode/038_autocompletion.js
+# node ./dailyCode/038_autocompletion.js
 
 
     ##################################
@@ -68,7 +68,7 @@ node ./dailyCode/038_autocompletion.js
 # node ./dailyCodingProblem/168-[Medium].js    # Rotate matrix by 90°
 # node ./dailyCodingProblem/173-[Medium].js    # Flatten dictionary
 # node ./dailyCodingProblem/181-[Hard].js      # Split string into fewest palindromes
-# node ./dailyCodingProblem/202-[Easy].js        # Check if an integer is a palindrome without converting it to a string
+# node ./dailyCodingProblem/202-[Easy].js      # Check if an integer is a palindrome without converting it to a string
 
 
     ##############################
@@ -78,6 +78,7 @@ node ./dailyCode/038_autocompletion.js
     ########### STRINGS ###########
 # node ./codingQuestions/strings/simplify_path-[Easy].js
 # node ./codingQuestions/strings/longest_common_prefix-[Easy].js
+node ./codingQuestions/strings/roman_to_integer-[Easy].js
 
     ########### STACKS ###########
 # node ./codingQuestions/stacks/min_stack-[Easy].js

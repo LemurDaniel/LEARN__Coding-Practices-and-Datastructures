@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Console;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,8 +14,15 @@ public class Main {
     
     public static void main(String[] args) throws Exception{
 		
-		String filename = "038_41284_words.txt";
-		String filepath = "C:\\Users\\Daniel Notebook\\Documents\\Git\\";
+		Console cnsl = System.console();
+
+		System.out.println("Enter Outputfile: ");
+        String tmp = cnsl.readLine();
+		String filename = tmp.length() == 0 ? "038_41.284_words.txt" : tmp;
+
+        System.out.println("Enter Outputpath: ");
+     	tmp = cnsl.readLine();
+		String filepath = tmp.length() == 0 ? "C:\\Users\\Daniel Notebook\\Documents\\Git\\" : tmp;
 		
 		new File(filepath).mkdirs();
 		File file = new File(filepath + filename); 
@@ -33,19 +41,20 @@ public class Main {
 			Elements words = doc.select("tbody tr");
 
 
-			int count = 0;
-			for (int i=1; i<words.size(); i++) {
-
-				Element word = words.get(i);
+			try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsolutePath(), true))) {
 			
-				try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsolutePath(), true))) {
+				for (int i=1; i<words.size(); i++) {
+
+					Element word = words.get(i);
+			
 					String str = word.childNode(2).childNode(0).attr("title").split(" ")[0];
 					bw.write(str+"\r\n");
 					bw.flush();
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
 				}
-	
+				
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
+				return;
 			}
 
 			System.out.println(String.format("Downloaded %d words", end));

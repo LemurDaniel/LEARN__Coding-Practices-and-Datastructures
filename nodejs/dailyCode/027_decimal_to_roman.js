@@ -48,11 +48,11 @@ const Helper = require('../Helper');
 Inout.push(1000, 'M');
 Inout.push(48, 'XLVIII');
 Inout.push(444, 'CDXLIV');
-Inout.push(2786, "MMDCCLXXXVI");
-Inout.push(141, "CXLI");
-Inout.push(234, "CCXXXIV");
-Inout.push(1242, "MCCXLII");
-Inout.push(3999, "MMMCMXCIX");
+Inout.push(2786, 'MMDCCLXXXVI');
+Inout.push(141, 'CXLI');
+Inout.push(234, 'CCXXXIV');
+Inout.push(1242, 'MCCXLII');
+Inout.push(3999, 'MMMCMXCIX');
 
 Inout.solvers = [integer_to_roman];
 Inout.solve();
