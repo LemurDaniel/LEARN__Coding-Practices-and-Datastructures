@@ -1,3 +1,21 @@
+class ID_Object {
+
+    static IDs = {}
+    static Get_Unique_ID(obj) {
+        
+        const id = Math.floor((Math.random() * 10e12)).toString(16);
+        if ( id in ID_Object.IDs ) return Helper.Get_Unique_Id();
+        else ID_Object.IDs[id] = obj; 
+
+        return id;
+    }
+
+    constructor(){
+        this.id = ID_Object.Get_Unique_ID(this);
+    }
+
+}
+
 class LRU_Node_Cache {
 
     constructor(max_len) {
@@ -62,5 +80,6 @@ class LRU_Node_Cache {
 
 
 module.exports = {
+    ID_Object,
     LRU_Node_Cache
 }

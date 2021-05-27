@@ -4,7 +4,7 @@ const Queue = require('./datastructures/queue');
 const { LinkedListFromString_Int } = require('./datastructures/linkedList');
 const fs = require('fs');
 
-const classes = [LinkedList, BTree.BinaryTree, Queue.NodeQueue, Queue.ArrayQueue];
+const classes = [LinkedList, BTree.BinaryTree, BTree.BinaryTree.Node, Queue.NodeQueue, Queue.ArrayQueue];
 
 const Helper = {};
 
@@ -80,6 +80,7 @@ Helper.print_map = function(map, depth = 5) {
         // Call toString funtions if the type is a LinkedList or BinaryTree or Queue
         else if(val instanceof LinkedList) val = val.toString();
         else if(val instanceof BTree.BinaryTree) val = val.toString();
+        else if(val instanceof BTree.BinaryTree.Node) val = val.toString();
         else if(val instanceof Queue.NodeQueue)  val = val.toString();
         else if(val instanceof Queue.ArrayQueue) val = val.toString();
 
@@ -221,26 +222,26 @@ Helper.string_toIntArray = function(str, split = ' ') {
 }
 
 // converts all strings in an object to the desired object
-Helper.convert_strings_in_object = function(obj) {
+Helper.convert_strings_in_object = function(obj, testcase) {
 
     const keywords_arr = ['nums', 'arr', 'points'];
     const keywords_list = ['list'];
     const keywords_tree = ['tree','subtree'];
 
     if (typeof obj == 'function') return obj;
-    else if (typeof obj == 'string') return convert_string(obj);
+    else if (typeof obj == 'string') return convert_string(obj, testcase);
     else if (typeof obj == 'object') {
         for (let key of Object.keys(obj)) {
 
             if( typeof obj[key] == 'string' ){
 
-                if(obj[key][0] == '&') obj[key] = convert_string(obj[key]);
+                if(obj[key][0] == '&') obj[key] = convert_string(obj[key], testcase);
                 else if( keywords_arr.includes(key) ) obj[key] = Helper.string_toIntArray(obj[key]);
                 else if( keywords_list.includes(key) ) obj[key] = LinkedList.LinkedListFromString_Int(obj[key]);
                 else if( keywords_tree.includes(key) ) obj[key] = BTree.BinaryTree.GenerateIntPreorderFromString(obj[key]);
             }
 
-            else if( typeof obj[key] == 'object' ) obj[key] = Helper.convert_strings_in_object(obj[key]);
+            else if( typeof obj[key] == 'object' ) obj[key] = Helper.convert_strings_in_object(obj[key], testcase);
         }
     }
 
@@ -248,7 +249,7 @@ Helper.convert_strings_in_object = function(obj) {
 }
 
 // converts string to the desired object
-function convert_string(str) {
+function convert_string(str, testcase) {
 
     const keychars = {
         '&NA' : str => Helper.string_toArray(str),
@@ -260,6 +261,11 @@ function convert_string(str) {
             const args = Helper.string_toArray(str);
             const file = fs.readFileSync(args[0], 'utf-8');
             return convert_string(args[1] + ' ' + file);
+        },
+        '&RF' : str => {
+            let obj = testcase;
+            for( ref of str.split('.') ) obj = obj[ref];
+            return obj;
         }
     }
 
@@ -282,7 +288,9 @@ function convert_string(str) {
 Helper.default_copy = function(arg) {
 
     // If object has a copy method, then use it.
-    if(arg.copy) return arg.copy();
+    if(!arg) return null;
+    else if(arg.copy) return arg.copy();
+    else if(typeof arg == 'function') return arg;
 
     // If arg is an object then copy all keys and their values.
     if(typeof arg == 'object' && !Array.isArray(arg)) {
@@ -294,11 +302,12 @@ Helper.default_copy = function(arg) {
     }
 
     return JSON.parse(JSON.stringify(arg));
-
 }
 
 // Standard converter to convert arguments into string for display in console.
 Helper.default_converter = function(arg) {
+
+    if(!arg)    return '(undefined)';
 
     for(let c of classes)
         if ( arg instanceof c ) return arg.toString();
@@ -380,5 +389,6 @@ Helper.binary_search_upper_bound = function(nums, target, lower, upper)  {
 
     return -1;
 }
+
 
 module.exports = Helper;

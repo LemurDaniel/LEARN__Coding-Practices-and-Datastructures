@@ -47,6 +47,7 @@ Clear-Host
 # node ./dailyCode/036_find_kth_largest_element.js
 # node ./dailyCode/037_index_of_larger_next_number.js
 # node ./dailyCode/038_autocompletion.js
+node ./dailyCode/039_clone_trees.js 
 
 
     ##################################
@@ -78,7 +79,7 @@ Clear-Host
     ########### STRINGS ###########
 # node ./codingQuestions/strings/simplify_path-[Easy].js
 # node ./codingQuestions/strings/longest_common_prefix-[Easy].js
-node ./codingQuestions/strings/roman_to_integer-[Easy].js
+# node ./codingQuestions/strings/roman_to_integer-[Easy].js
 
     ########### STACKS ###########
 # node ./codingQuestions/stacks/min_stack-[Easy].js

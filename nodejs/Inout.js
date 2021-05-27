@@ -36,8 +36,8 @@ class Inout {
         if(i == 0) console.log(' ===> ' + this.description + ' <=== ');
 
         const test = this.testcases[i];
-        test.input = this.convert_input(test.input);
-        test.output = this.convert_output(test.output);
+        test.input = this.convert_input(test.input, test);
+        test.output = this.convert_output(test.output, test);
 
         console.log('\n--------------------------------')
         console.log('Testcase '+(i+1)+':');
@@ -79,6 +79,5 @@ class Inout {
         }
     }
 }
-
 
 module.exports = Inout;

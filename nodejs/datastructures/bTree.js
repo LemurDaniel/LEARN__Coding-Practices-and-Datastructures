@@ -1,8 +1,10 @@
 // Note https://www.geeksforgeeks.org/binary-tree-set-3-types-of-binary-tree/
+const { ID_Object } = require("./other")
 
-class Node {
+class Node extends ID_Object {
 
     constructor(val, left, right){
+        super();
         this.val = val;
         this.left = left;
         this.right = right;
@@ -10,13 +12,16 @@ class Node {
 
     isLeaf = () => this.left == null && this.right == null;
 
+    toString = () => this.val + (this.isLeaf() ? '/L' : '') + ' (Node - ' + this.id +')';
 }
 
-class BinaryTree {
+
+class BinaryTree extends ID_Object {
 
     static Node = Node;
 
     constructor(val, print_null){
+        super();
         this.root = val == null ? null : new Node(val);
         this.print_null = print_null ?? true;
     }
@@ -38,6 +43,7 @@ class BinaryTree {
             // when 'print_null' is false the method switches to the shorter version
             // instead of printing two <NULL> behind every leaf, Leaves are marked with '<value>/L'
             if(node) {
+                if(this.nodes && this.nodes.includes(node)) str += '*';
                 str +=  node.val +  (!print_null && node.isLeaf() ? '/L':'')  + ', ';
                 if(!print_null && node.isLeaf())
                     node = stack.pop().right;
@@ -54,13 +60,14 @@ class BinaryTree {
         return str.substr(0, str.length-2);
     }
 
-    static GenerateIntPreorderFromString(str, splitter=',', rem='/', rem2='$'){
+    static GenerateIntPreorderFromString(str, splitter=',', rem='/', rem2='$', sav = '*'){
 
         // switches toString method to shorter version
         const flag_null = str[0] == '%'; 
         const arr = (flag_null ? str.substr(1):str).split(splitter);
         const tree = new BinaryTree(parseInt(arr[0]), !flag_null);
 
+        const nodes = [];
         const stack = [];
         let node = tree.root;
 
@@ -73,25 +80,36 @@ class BinaryTree {
             //             / \
             //            4   4
 
-            flag_leaf = arr[i][0] == rem2;
-            const num =  (!flag_leaf ? arr[i]:arr[i].substr(1)).trim();
+            // Determines if current number is treated as a leaf or not.
+            const flag_leaf = arr[i].includes(rem2);
+            // Determines of current node is to be returned.
+            const flag_save = arr[i].includes(sav);
 
+            const num = arr[i].replace(rem2, '').replace(sav, '').trim();
+
+            const new_node = num == rem ? null : new Node(parseInt(num));
+            if(flag_save && new_node) nodes.push(new_node);
+
+
+            // Right nodes.
             if(node == null) {
                 node = stack.pop();
-                if(num == rem) node.right = null;
-                else node.right = new Node(parseInt(num));
+                node.right =  new_node;
 
                 node = flag_leaf ? null : node.right;
 
-            } else {     
-                if(num == rem) node.left = null;
-                else node.left = new Node(parseInt(num));           
+            } else {  
+            // Left nodes.
                 stack.push(node);
+                node.left =  new_node;
 
                 node = flag_leaf ? null : node.left;
             }
 
         }
+
+        tree.node  = nodes[0];
+        tree.nodes = nodes;
 
         return tree;
     }
