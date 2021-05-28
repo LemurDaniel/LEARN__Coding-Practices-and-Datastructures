@@ -47,7 +47,8 @@ Clear-Host
 # node ./dailyCode/036_find_kth_largest_element.js
 # node ./dailyCode/037_index_of_larger_next_number.js
 # node ./dailyCode/038_autocompletion.js
-node ./dailyCode/039_clone_trees.js 
+# node ./dailyCode/039_clone_trees.js
+node ./dailyCode/040_perfect_number.js
 
 
     ##################################

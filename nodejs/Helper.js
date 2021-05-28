@@ -307,7 +307,7 @@ Helper.default_copy = function(arg) {
 // Standard converter to convert arguments into string for display in console.
 Helper.default_converter = function(arg) {
 
-    if(!arg)    return '(undefined)';
+    if(arg == null)    return '(undefined)';
 
     for(let c of classes)
         if ( arg instanceof c ) return arg.toString();
