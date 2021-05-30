@@ -1,4 +1,4 @@
-const Inout = new (require("../Inout"))("DailyCode --- Autocompletion");
+const Inout = new (require("../Inout"))("DailyCode --- Clone trees");
 const { BinaryTree } = require("../datastructures/bTree");
 const { Trie }  = require('../datastructures/tree') 
 const Helper = require('../Helper');
@@ -45,6 +45,17 @@ const Helper = require('../Helper');
     print(findNode(a, b, a.right.left))
     # 4
 
+
+           1
+          / \
+         2   3
+            / \
+           4   5
+          /
+         4
+        / \
+       4   4*
+
 */
 
 Inout.push( {
@@ -53,8 +64,14 @@ Inout.push( {
     node: '&RF input.tree.node'
 }, '&RF input.clone.node');
 
+Inout.push( {
+    tree:   '&BT% 1,$2,3,4,4,$4,*$4,/,5',
+    clone:  '&BT% 1,$2,3,4,4,$4,*$4,/,5',
+    node: '&RF input.tree.node'
+}, '&RF input.clone.node');
+
 Inout.input_copy_method = arg => arg;
-Inout.solvers = [find_node_recursive];
+Inout.solvers = [find_node_recursive, find_node_iterative];
 Inout.solve();
 
 /*
@@ -76,4 +93,30 @@ function find_node_recursive(tree, clone, node) {
     const node_left  = find_node_recursive(tree.left , clone.left , node);
 
     return node_right ?? node_left ?? null;
+}
+
+function find_node_iterative(tree, clone, searched) {
+    
+    let node = tree.root;
+    clone    = clone.root;
+    
+    stack_node  = [node];
+    stack_clone = [clone];
+
+    while(stack_node.length > 0) {
+
+        if( node == searched ) return clone;
+
+        if(!node) {
+            node  = stack_node.pop().right;
+            clone = stack_clone.pop().right;
+        } else {
+            stack_node.push(node);
+            stack_clone.push(clone);
+            node  = node.left;
+            clone = clone.left;
+        }
+
+    }
+
 }
