@@ -45,6 +45,7 @@ Helper.print_Array = function(arr, bl = ', ', open = '[ ', close = ' ]') {
     for(let i=0; i<arr.length; i++) {
 
         if(Array.isArray(arr[i]))          str += Helper.print_Array(arr[i], bl, '( ', ' )');
+        else if(arr[i].print)              str += "'"+arr[i]+"'";
         else if(typeof arr[i] == 'object') str += Helper.print_map(arr[i], -1);
         else if(typeof arr[i] == 'string') str += "'"+arr[i]+"'";
         else                               str += arr[i]

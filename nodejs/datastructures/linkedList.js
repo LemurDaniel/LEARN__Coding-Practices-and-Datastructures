@@ -86,6 +86,19 @@ LinkedList.prototype.Append_as_head = function (val) {
 
 }
 
+LinkedList.prototype.Remove_head = function () {
+    if(this.head == null) return null;
+
+    // Save node in variable and set head's next node as head
+    const node = this.head;
+    this.head  = this.head.next;
+
+    // If the head becomes null, the tail must be set null too.
+    if(this.head == null) this.tail = null;
+
+    return node;
+}
+
 LinkedList.prototype.to_array = function ( value_converter = v => v ) {
     
     const arr = [];

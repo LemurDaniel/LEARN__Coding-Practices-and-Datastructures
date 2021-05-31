@@ -13,6 +13,8 @@ class Node extends ID_Object {
     isLeaf = () => this.left == null && this.right == null;
 
     toString = () => this.val + (this.isLeaf() ? '/L' : '') + ' (Node - ' + this.id +')';
+
+    print    = this.toString;
 }
 
 
