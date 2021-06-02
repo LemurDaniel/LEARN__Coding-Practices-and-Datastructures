@@ -8,6 +8,7 @@ const Inout = new (require ('../../Inout'))('Coding Questions --- Decode Strings
 
 */
 
+Inout.push('XIV', 14)
 Inout.push('M', 1000);
 Inout.push('XLVIII', 48);
 Inout.push('CDXLIV', 444);

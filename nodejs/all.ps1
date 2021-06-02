@@ -73,7 +73,7 @@ Clear-Host
 # node ./dailyCodingProblem/181-[Hard].js      # Split string into fewest palindromes
 # node ./dailyCodingProblem/202-[Easy].js      # Check if an integer is a palindrome without converting it to a string
 # node ./dailyCodingProblem/210-[Easy].js      # Collatz Sequence
-node ./dailyCodingProblem/214-[Easy].js        # Find number consecutive set bits
+# node ./dailyCodingProblem/214-[Easy].js      # Find number consecutive set bits
 
     ##############################
     ###### Coding Questions ######
