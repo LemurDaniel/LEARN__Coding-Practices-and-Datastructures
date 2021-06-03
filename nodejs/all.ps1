@@ -50,7 +50,7 @@ Clear-Host
 # node ./dailyCode/039_clone_trees.js
 # node ./dailyCode/040_perfect_number.js
 # node ./dailyCode/041_leaf_similar.js
-
+node ./dailyCode/042_valid_mountain_array.js
 
     ##################################
     ###### Daily Coding Problem ######
