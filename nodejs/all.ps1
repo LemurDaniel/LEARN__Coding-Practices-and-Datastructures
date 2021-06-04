@@ -50,7 +50,8 @@ Clear-Host
 # node ./dailyCode/039_clone_trees.js
 # node ./dailyCode/040_perfect_number.js
 # node ./dailyCode/041_leaf_similar.js
-node ./dailyCode/042_valid_mountain_array.js
+# node ./dailyCode/042_valid_mountain_array.js
+node ./dailyCode/043_add_digits.js
 
     ##################################
     ###### Daily Coding Problem ######
@@ -74,6 +75,7 @@ node ./dailyCode/042_valid_mountain_array.js
 # node ./dailyCodingProblem/202-[Easy].js      # Check if an integer is a palindrome without converting it to a string
 # node ./dailyCodingProblem/210-[Easy].js      # Collatz Sequence
 # node ./dailyCodingProblem/214-[Easy].js      # Find number consecutive set bits
+# node ./dailyCodingProblem/216-[Medium].js    # Roman to decimal 
 
     ##############################
     ###### Coding Questions ######
