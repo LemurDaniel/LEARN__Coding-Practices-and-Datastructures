@@ -3,6 +3,7 @@ const BTree = require('./datastructures/bTree');
 const Queue = require('./datastructures/queue');
 const { LinkedListFromString_Int } = require('./datastructures/linkedList');
 const fs = require('fs');
+const { connected } = require('process');
 
 const classes = [LinkedList, BTree.BinaryTree, BTree.BinaryTree.Node, Queue.NodeQueue, Queue.ArrayQueue];
 
@@ -391,5 +392,70 @@ Helper.binary_search_upper_bound = function(nums, target, lower, upper)  {
     return -1;
 }
 
+// ############################################################################
+// ######### SORTING
+// ############################################################################
+
+Helper.MergeSort = {};
+
+Helper.MergeSort.sort = function(list) {
+    if( list instanceof LinkedList ) Helper.MergeSort.sortLinkedList( list );
+    else if( Array.isArray(list) ) Helper.MergeSort.sortArray( list );
+    else throw 'Datatype not supported';
+}
+
+Helper.MergeSort.sortLinkedList = function( list, lower, upper ) {
+
+}
+
+Helper.MergeSort.sortArray = function( arr, lower, upper) {
+    if (lower == null) lower = 0;
+    if (upper == null) upper = arr.length;
+
+    // Recursive divding of array into partitions until length of 1.
+    if (upper - lower == 1) return arr;
+
+    const middle = Math.floor(lower + (upper-lower) / 2);
+    //console.log( 'LOWER: ' + lower + '    UPPER: ' + upper + '  MIDDLE:  ' + middle)
+
+    Helper.MergeSort.sortArray(arr, lower, middle);
+    Helper.MergeSort.sortArray(arr, middle, upper);
+
+    // Sorting and merging each partition recursivley back.
+    Helper.MergeSort.mergeArray(arr, lower, middle, upper);
+}
+
+Helper.MergeSort.mergeArray = function( arr, lower, middle, upper) {
+
+    // Create temporary array containing the elements of the lower and upper parts.
+    const arr_lower = [];
+    const arr_upper = [];
+
+    for(let i=lower; i<middle; i++) arr_lower.push(arr[i]);
+    for(let i=middle; i<upper; i++) arr_upper.push(arr[i]);
+    /*
+        console.log( 'LOWER: ' + lower + '    UPPER: ' + upper + '  MIDDLE:  ' + middle)
+        console.log(arr_lower);
+        console.log(arr_upper);
+        console.log('---------------------------')
+    */
+   
+    // Merge temporary arrays into the original array.
+    let idx_lower = 0;
+    let idx_upper = 0;
+    let idx_target = lower;
+    
+    while(idx_lower < arr_lower.length && idx_upper < arr_upper.length) {
+
+        if(arr_lower[idx_lower] <= arr_upper[idx_upper])
+            arr[idx_target++] = arr_lower[idx_lower++];
+        else
+            arr[idx_target++] = arr_upper[idx_upper++];
+
+    }
+
+    while(idx_lower < arr_lower.length) arr[idx_target++] = arr_lower[idx_lower++];
+    while(idx_upper < arr_upper.length) arr[idx_target++] = arr_upper[idx_upper++];
+}
 
 module.exports = Helper;

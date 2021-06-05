@@ -1,4 +1,4 @@
-const Inout = new (require("../Inout"))("DailyCode --- Autocompletion");
+const Inout = new (require("../Inout"))("DailyCode --- Is Leaf similar");
 const LinkedList = require("../datastructures/linkedList");
 const Helper = require('../Helper');
 
@@ -160,11 +160,12 @@ function isLeafSimilar(tree_1, tree_2) {
         }
         
         if(leafs_1.head && leafs_2.head){
-            if(leafs_1.head.val.val != leafs_2.head.val.val) return { isSimilar: false, unmatchingLeafs: [leafs_1.head.val, leafs_2.head.val] };
+            if(leafs_1.head.val.val != leafs_2.head.val.val) 
+                return { isSimilar: false, unmatchingLeafs: [leafs_1.head.val, leafs_2.head.val] };
             leafs_1.Remove_head();
             leafs_2.Remove_head();
         } 
     }
 
-    return leafs_1.head == null && leafs_1.head == null;
+    return true;
 }

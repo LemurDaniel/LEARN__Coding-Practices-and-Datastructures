@@ -1,4 +1,4 @@
-const Inout = new (require("../Inout"))("DailyCode --- Autocompletion");
+const Inout = new (require("../Inout"))("DailyCode --- Perfect number");
 const Helper = require('../Helper');
 
 /*
