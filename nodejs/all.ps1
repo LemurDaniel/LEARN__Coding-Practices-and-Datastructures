@@ -51,7 +51,8 @@ Clear-Host
 # node ./dailyCode/040_perfect_number.js
 # node ./dailyCode/041_leaf_similar.js
 # node ./dailyCode/042_valid_mountain_array.js
-node ./dailyCode/043_add_digits.js
+# node ./dailyCode/043_add_digits.js
+node ./dailyCode/044_remove_duplicates_from_ll.js
 
     ##################################
     ###### Daily Coding Problem ######
