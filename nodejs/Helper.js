@@ -405,6 +405,74 @@ Helper.MergeSort.sort = function(list) {
 }
 
 Helper.MergeSort.sortLinkedList = function( list, lower, upper ) {
+    if (lower == null) lower = list.head;
+    if (upper == null) upper = list.tail;
+
+    // If partition is of size on then return.
+    if (lower == upper) return list;
+
+    // Find middle node via runner and walker pattern.
+    let walker = lower;
+    let runner = walker.next;
+
+    while(runner != upper) {
+        walker = walker.next;
+        runner = runner.next;
+        if(runner == upper) break;
+        else runner = runner.next;
+    }
+
+    // Partition list until it each partition is of size 1.
+    Helper.MergeSort.sortLinkedList(list, lower, walker);
+    Helper.MergeSort.sortLinkedList(list, walker.next, upper);
+
+    // Sort and Merge partitions recursivley.
+    Helper.MergeSort.mergeLinkedList(list, lower, walker, upper);
+}
+
+Helper.MergeSort.mergeLinkedList = function ( list, lower, middle, upper ) {
+
+    // Create temporary array containing the elements of the lower and upper parts.
+    const arr_lower = [];
+    const arr_upper = [];
+    
+    for(let i=lower; i != middle.next ; i = i.next) arr_lower.push(i.val);
+    for(let i=middle.next; i != upper.next ; i = i.next) arr_upper.push(i.val);
+
+    /*
+ 
+        console.log(list.toString());
+        console.log('LOWER: ' + lower.val + ' MID: ' + middle.val + ' UPPER: ' + upper.val)
+        console.log(arr_lower);
+        console.log(arr_upper);
+        console.log('--------------------------------')
+
+    */
+
+    // Merge temporary arrays into the original array.
+    let idx_lower = 0;
+    let idx_upper = 0;
+    let node = lower;
+     
+    while(idx_lower < arr_lower.length && idx_upper < arr_upper.length) {
+ 
+        if(arr_lower[idx_lower] <= arr_upper[idx_upper])
+            node.val = arr_lower[idx_lower++];
+        else
+            node.val = arr_upper[idx_upper++];
+ 
+        node = node.next;
+    }
+
+    // Merge remaining values.
+    while(idx_lower < arr_lower.length) {
+        node.val = arr_lower[idx_lower++];
+        node = node.next;
+    };
+    while(idx_upper < arr_upper.length) {
+        node.val = arr_upper[idx_upper++];
+        node = node.next;
+    };
 
 }
 

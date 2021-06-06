@@ -37,7 +37,7 @@ Inout.push( '&LL 12334', '&LL 124' );
 Inout.push( '&LL 12334355333', '&LL 124' );
 Inout.push( '&LL 33125334335', '&LL 124' );
 
-Inout.solvers = [remove_duplicates_two_passes];
+Inout.solvers = [remove_duplicates_merge_sort, remove_duplicates_two_passes];
 Inout.solve();
 
 
@@ -47,6 +47,40 @@ Inout.solve();
     ####################             Solving problem below              #######################
     ###########################################################################################
 */
+
+function remove_duplicates_merge_sort( list ) {
+
+    Helper.MergeSort.sort(list);
+
+    const head = new LinkedList.Node('HEAD', list.head);   
+    let prev = head;
+
+    while(prev.next) {
+
+        let node = prev.next;
+
+        // Check in sorted LL if there are two or more nodes with the same value in a row.
+        if(node.next != null && node.next.val == node.val) {
+    
+            // Cut out all nodes with the same value by moving forward until one with a different value is found.
+            prev.next = null;
+            const val = node.val;
+            while(node) {
+                if(node.val != val) break;
+                else node = node.next;
+            }
+            // Append the node with the different value to the previous node.
+            prev.next = node;
+        }
+
+        // If value only appears one time then move the previous pointer forward by one.
+        else prev = prev.next;
+    }
+
+    list.tail = prev;
+    list.head = head.next;
+
+}
 
 function remove_duplicates_two_passes( list ) {
 
