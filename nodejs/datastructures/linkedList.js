@@ -7,9 +7,23 @@ class Node {
 
 }
 
+
+
 class LinkedList {
 
     static Node = Node;
+
+    [Symbol.iterator]() {
+        return {
+            _node: this.head,
+            next: function () {
+                if (this._node == null) return { done: true };
+                const val = this._node.val;
+                this._node = this._node.next;
+                return { value: val, done: false };
+            }
+        }
+    }
 
     constructor(val, next){
         this.head = val ? new LinkedList.Node(val, next):null;
@@ -18,7 +32,6 @@ class LinkedList {
 
     copy = () => LinkedList.Copy(this)
 }
-
 
 LinkedList.Copy = function (list) {
 
@@ -128,7 +141,6 @@ LinkedList.toString = function (head, value_converter = v => v, connector = ' ==
 
     return str.substr(0, str.length-5);
 }
-
 
 /*
 ###################################################################################################
