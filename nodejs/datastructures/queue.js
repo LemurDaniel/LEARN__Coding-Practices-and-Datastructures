@@ -34,11 +34,11 @@ class NodeQueue {
         return val;
     }
 
-    toString( converter = n => n.val ){
+    toString( converter = v => (v != null ? v.toString() : '<NULL>') ){
         let str = '<OUT';
         let node = this.end;
         while(node){
-            str += ' | '+ converter(node).toString();
+            str += ' | '+ converter(node.val);
             node = node.next;
         }
         return str + ' | <IN';

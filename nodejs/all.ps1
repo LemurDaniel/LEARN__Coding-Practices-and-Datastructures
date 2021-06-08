@@ -75,9 +75,10 @@ Clear-Host
 # node ./dailyCodingProblem/181-[Hard].js      # Split string into fewest palindromes
 # node ./dailyCodingProblem/202-[Easy].js      # Check if an integer is a palindrome without converting it to a string
 # node ./dailyCodingProblem/210-[Easy].js      # Collatz Sequence
-node ./dailyCodingProblem/211-[Medium].js        # Get indices of all occurences of a pattern.
+# node ./dailyCodingProblem/211-[Medium].js    # Get indices of all occurences of a pattern.
 # node ./dailyCodingProblem/214-[Easy].js      # Find number consecutive set bits
 # node ./dailyCodingProblem/216-[Medium].js    # Roman to decimal 
+node ./dailyCodingProblem/219-[Hard].js        # Implement Connect Four
 
     ##############################
     ###### Coding Questions ######

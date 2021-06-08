@@ -27,17 +27,26 @@ Helper.random_Array = function(min, max, min_len, max_len) {
 // ######### PRINT METHODS
 // ############################################################################
 
-Helper.matrix_toString = function(mat, len = 4) {
+Helper.matrix_toString = function(mat, rows_vertical = true, len = 4) {
 
     let str = '\n';
-    for(let row = 0; row<mat.length; row++) {
-        str += '    ';
-        for(let col = 0; col<mat[row].length; col++) 
-            str += Helper.uniform_string(mat[row][col].toString(), len);
-        str += '\n';
+    if(!rows_vertical) {
+        for(let col = mat[0].length-1; col>=0; col--) {
+            str += '    ';
+            for(let row = 0; row<mat.length; row++) 
+                str += Helper.uniform_string(mat[row][col].toString(), len);
+            str += '\n';
+        }
+    }
+    else {
+        for(let row = 0; row<mat.length; row++) {
+            str += '    ';
+            for(let col = 0; col<mat[row].length; col++) 
+                str += Helper.uniform_string(mat[row][col].toString(), len);
+            str += '\n';
+        }
     }
     return str;
-
 }
 
 Helper.print_Array = function(arr, bl = ', ', open = '[ ', close = ' ]') {
@@ -464,7 +473,6 @@ Helper.MergeSort.mergeLinkedList = function ( list, lower, middle, upper ) {
         node = node.next;
     }
 
-    // Merge remaining values.
     while(idx_lower < arr_lower.length) {
         node.val = arr_lower[idx_lower++];
         node = node.next;
