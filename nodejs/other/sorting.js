@@ -7,7 +7,7 @@ Inout.push( arr, arr.map( v => v ).sort() );
 
 Inout.push( '&LL'+arr.join(','), '&LL'+arr.sort().join(','));
 
-Inout.solvers = [MergeSort];
+Inout.solvers = [MergeSort, CountingSort];
 Inout.solve();
 
 /*
@@ -19,4 +19,8 @@ Inout.solve();
 
 function MergeSort(list) {
     Helper.MergeSort.sort(list);
+}
+
+function CountingSort(list) {
+    Helper.CountingSort.sort(list)
 }

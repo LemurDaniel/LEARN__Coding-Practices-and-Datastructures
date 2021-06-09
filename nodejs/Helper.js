@@ -534,4 +534,56 @@ Helper.MergeSort.mergeArray = function( arr, lower, middle, upper) {
     while(idx_upper < arr_upper.length) arr[idx_target++] = arr_upper[idx_upper++];
 }
 
+
+Helper.CountingSort = {}
+Helper.CountingSort.Find_Bounds = function ( list ) {
+
+
+    let max;
+    let min;
+
+    for( let val of list ){
+        max = Math.max(val, max ?? val);
+        min = Math.min(val, min ?? val);
+    }
+
+    return [min, max];
+
+}
+
+Helper.CountingSort.sort = function ( list ) {
+
+    const bounds = Helper.CountingSort.Find_Bounds(list);
+
+    const min = bounds[0];
+    const max = bounds[1];
+
+    const offset = -min;
+    const size = max - min + 1;
+
+
+    const index_array = new Array(size).fill(0);
+
+    for(let val of list)
+        index_array[val + offset]++;
+
+
+    let node;
+    let pos = 0;
+    if(list instanceof LinkedList) node = list.head;
+
+    for(let i=0; i<index_array.length; i++) {
+        while(index_array[i]--) {
+            if(node) {
+                node.val = i - offset;
+                node = node.next;
+            }
+            else list[pos++] = i - offset;
+
+        }
+    }
+
+}
+
+
 module.exports = Helper;
