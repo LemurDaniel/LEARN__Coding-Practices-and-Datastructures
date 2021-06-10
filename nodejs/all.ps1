@@ -53,6 +53,8 @@ Clear-Host
 # node ./dailyCode/042_valid_mountain_array.js
 # node ./dailyCode/043_add_digits.js
 # node ./dailyCode/044_remove_duplicates_from_ll.js
+node ./dailyCode/045_binary_tree_zigZag.js
+
 
     ##################################
     ###### Daily Coding Problem ######
@@ -78,7 +80,7 @@ Clear-Host
 # node ./dailyCodingProblem/211-[Medium].js    # Get indices of all occurences of a pattern.
 # node ./dailyCodingProblem/214-[Easy].js      # Find number consecutive set bits
 # node ./dailyCodingProblem/216-[Medium].js    # Roman to decimal 
-node ./dailyCodingProblem/219-[Hard].js        # Implement Connect Four
+# node ./dailyCodingProblem/219-[Hard].js      # Implement Connect Four
 
     ##############################
     ###### Coding Questions ######
