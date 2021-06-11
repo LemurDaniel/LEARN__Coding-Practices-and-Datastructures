@@ -53,8 +53,8 @@ Clear-Host
 # node ./dailyCode/042_valid_mountain_array.js
 # node ./dailyCode/043_add_digits.js
 # node ./dailyCode/044_remove_duplicates_from_ll.js
-node ./dailyCode/045_binary_tree_zigZag.js
-
+# node ./dailyCode/045_binary_tree_zigZag.js
+node ./dailyCode/046_binary_tree_traversal.js
 
     ##################################
     ###### Daily Coding Problem ######
