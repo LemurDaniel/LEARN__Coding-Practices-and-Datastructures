@@ -59,7 +59,7 @@ function longest_substring ( str ) {
             const len = i - start;
             if(longest.length < len) longest = str.substr(start, len);
 
-            // Start the sequence one index after the double appeared index and keep the current index the same.
+            // Start the sequence one index after the doubley appeared character and keep the current index the same.
             // In case of: 'abrka' <== a appeared a second time ==> New Sequence is 'brka'.
             // This ensures that the new Sequence holds unique characters without iterating again from the start of the new sequence.
             start = dict[c] + 1;

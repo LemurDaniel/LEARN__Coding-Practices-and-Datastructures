@@ -55,7 +55,7 @@ Clear-Host
 # node ./dailyCode/044_remove_duplicates_from_ll.js
 # node ./dailyCode/045_binary_tree_zigZag.js
 # node ./dailyCode/046_binary_tree_traversal.js
-node ./dailyCode/047_longest_substring_without_reapeating_characters.js
+# node ./dailyCode/047_longest_substring_without_reapeating_characters.js
 
     ##################################
     ###### Daily Coding Problem ######
@@ -94,6 +94,7 @@ node ./dailyCode/047_longest_substring_without_reapeating_characters.js
 
     ########### STACKS ###########
 # node ./codingQuestions/stacks/min_stack-[Easy].js
+node ./codingQuestions/stacks/decode_string-[Medium].js
 
     ########### ARRAYS ###########
 # node ./codingQuestions/arrays/two_sum-[Easy].js
