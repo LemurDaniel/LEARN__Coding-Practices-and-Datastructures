@@ -56,6 +56,7 @@ Clear-Host
 # node ./dailyCode/045_binary_tree_zigZag.js
 # node ./dailyCode/046_binary_tree_traversal.js
 # node ./dailyCode/047_longest_substring_without_reapeating_characters.js
+node ./dailyCode/048_spiral_traversal_of_grid.js
 
     ##################################
     ###### Daily Coding Problem ######
@@ -94,7 +95,7 @@ Clear-Host
 
     ########### STACKS ###########
 # node ./codingQuestions/stacks/min_stack-[Easy].js
-node ./codingQuestions/stacks/decode_string-[Medium].js
+# node ./codingQuestions/stacks/decode_string-[Medium].js
 
     ########### ARRAYS ###########
 # node ./codingQuestions/arrays/two_sum-[Easy].js
