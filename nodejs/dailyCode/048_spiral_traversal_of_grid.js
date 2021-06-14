@@ -47,13 +47,6 @@ Inout.solve();
     ###########################################################################################
 */
 
-/*
-
-    time complexity: linear ==> one pass.
-    space complexity: linear
-
-*/
-
 function spiral_matrix ( mat ) {
 
     // The boundaries on each side.

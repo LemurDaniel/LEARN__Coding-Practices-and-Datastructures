@@ -56,7 +56,7 @@ BinaryTree.Node.prototype.inorder_recursive = function(list = []) {
 
     return list;
 }
-Inout.solvers = [inorder_recursive_static, inorder_recursive_prototype];
+Inout.solvers = [inorder_recursive_static, inorder_recursive_prototype, inorder_iteratvie, tree => tree.traverse(BinaryTree.TraverseType.IN_ORDER)];
 Inout.solve();
 
 
@@ -74,3 +74,25 @@ function inorder_recursive_static( node, list = [] ) {
     return list;
 }
 
+
+function inorder_iteratvie( tree ) {
+    
+    
+    const stack = [];
+    let node = tree.root;
+    const list = [];
+
+    while(node ||stack.length > 0) {
+
+        if(!node) {
+            node = stack.pop();
+            list.push(node.val);
+            node = node.right;
+        } else {
+            stack.push(node);
+            node = node.left;
+        }
+    }
+
+    return list;
+}
