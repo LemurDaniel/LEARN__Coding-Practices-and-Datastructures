@@ -56,7 +56,8 @@ Clear-Host
 # node ./dailyCode/045_binary_tree_zigZag.js
 # node ./dailyCode/046_binary_tree_traversal.js
 # node ./dailyCode/047_longest_substring_without_reapeating_characters.js
-node ./dailyCode/048_spiral_traversal_of_grid.js
+# node ./dailyCode/048_spiral_traversal_of_grid.js
+node ./dailyCode/049_compare_version_numbers.js
 
     ##################################
     ###### Daily Coding Problem ######
