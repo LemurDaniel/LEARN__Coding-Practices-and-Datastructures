@@ -5,6 +5,18 @@ class Node {
         this.next = next ?? null;
     }
 
+    [Symbol.iterator]() {
+        return {
+            _node: this,
+            next: function () {
+                if (this._node == null) return { done: true };
+                const val = this._node.val;
+                this._node = this._node.next;
+                return { value: val, done: false };
+            }
+        }
+    }
+
 }
 
 
