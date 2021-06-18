@@ -52,7 +52,7 @@ function burte_force_recursive(arr, num='') {
 
         // Get the maximum of both results and then the overall maximum.
         const local_max = Math.max(a_then_b, b_then_a);
-        maximum = Math.max(maximum, b_then_a)
+        maximum = Math.max(maximum, local_max)
     }
 
     return maximum;
