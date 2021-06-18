@@ -16,7 +16,7 @@ const Helper = require('../Helper');
 
 Inout.push( '&AR 10,7,76,415', 77641510 )
 
-Inout.solvers = [rearrange_numbers_1, rearrange_numbers_2];
+Inout.solvers = [burte_force_recursive, rearrange_numbers_1, rearrange_numbers_2];
 Inout.solve();
 
 /*
@@ -25,6 +25,38 @@ Inout.solve();
     ####################             Solving problem below              #######################
     ###########################################################################################
 */
+
+
+function burte_force_recursive(arr, num='') {
+
+
+    if(arr.length === 0) return parseInt(num);
+
+    let maximum = 0;
+
+    // For each value in the array make a copy of the array excluding the current value at the current index.
+    // Then pass the copied array recursivly to the function again, once with the current value appended at the front and once a the back of the recursivley build number.
+    // The recursion will cover all possible combinations and by comparing them return the maximum value.
+    // This is done until all numbers are appended and the array therefore is zero.
+    for(let i=0; i<arr.length; i++) {
+
+        const val = arr[i]
+   
+        // Remove current value from the arrray and remove the number at the specified index.
+        const copy = arr.join(';').split(';');
+        copy.splice(i,1);
+
+        // Call the function again once with the value at the front and once at the back of the current number.
+        const a_then_b = burte_force_recursive(copy, val + num);
+        const b_then_a = burte_force_recursive(copy, num + val);
+
+        // Get the maximum of both results and then the overall maximum.
+        const local_max = Math.max(a_then_b, b_then_a);
+        maximum = Math.max(maximum, b_then_a)
+    }
+
+    return maximum;
+}
 
 /*
 
@@ -83,11 +115,9 @@ function rearrange_numbers_1( list ) {
             else node = node.next; 
     
         }
-        //console.log(ll.toString())
-        //console.log('----------------------')
     }
 
-    console.log(ll.toString())
+    // console.log(ll.toString())
 
     let num = 0;
     for(let val of ll.head.next) 
