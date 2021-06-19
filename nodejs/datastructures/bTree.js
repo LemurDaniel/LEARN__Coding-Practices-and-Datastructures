@@ -34,7 +34,29 @@ class BinaryTree extends ID_Object {
         this.print_null = print_null ?? true;
     }
 
-    copy = () => BinaryTree.GenerateIntPreorderFromString(this.toString(true, '/'));
+    copy() {
+        const str = this.toString(true, '/');
+        const tree = BinaryTree.GenerateIntPreorderFromString(str);
+        tree.print_null = this.print_null;
+        return tree;
+    } 
+
+    compare(tree) {
+        return BinaryTree._areTreesSame( this.root, tree.root );
+    }
+
+    static _areTreesSame(node_1, node_2) {
+
+        if(node_1 == null && node_2 == null) return true;
+        if(node_1 == null && node_2 != null) return false;
+        if(node_1 != null && node_2 == null) return false;
+        if(node_1.val !== node_2.val) return false;
+        
+        const left = BinaryTree._areTreesSame(node_1.left, node_2.left);
+        const right = BinaryTree._areTreesSame(node_1.right, node_2.right);
+
+        return left && right;
+    }
 }
 
 BinaryTree.GenerateIntPreorderFromString = function(str, splitter=',', rem='/', rem2='$', sav = '*'){
@@ -42,7 +64,9 @@ BinaryTree.GenerateIntPreorderFromString = function(str, splitter=',', rem='/', 
     // switches toString method to shorter version
     const flag_null = str[0] == '%'; 
     const arr = (flag_null ? str.substr(1):str).split(splitter);
-    const tree = new BinaryTree(parseInt(arr[0]), !flag_null);
+
+    const temp = parseInt(arr[0]);
+    const tree = new BinaryTree( Number.isNaN(temp) ? arr[0] : temp , !flag_null);
 
     const nodes = [];
     const stack = [];
@@ -62,9 +86,10 @@ BinaryTree.GenerateIntPreorderFromString = function(str, splitter=',', rem='/', 
         // Determines of current node is to be returned.
         const flag_save = arr[i].includes(sav);
 
-        const num = arr[i].replace(rem2, '').replace(sav, '').trim();
+        const val = arr[i].replace(rem2, '').replace(sav, '').trim();
+        const num = parseInt(val);
 
-        const new_node = num == rem ? null : new Node(parseInt(num));
+        const new_node = val === rem ? null : new Node( Number.isNaN(num) ? val : num );
         if(flag_save && new_node) nodes.push(new_node);
 
 

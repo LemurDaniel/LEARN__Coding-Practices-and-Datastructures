@@ -23,7 +23,10 @@ class Inout {
         this.result_string_converter = Helper.default_converter;
 
         this.input_copy_method = Helper.default_copy;
-        this.result_comparer = (arg1, arg2) => JSON.stringify(arg1) == JSON.stringify(arg2);
+        this.result_comparer = (arg1, arg2) => {
+            if(arg1.compare) return arg1.compare(arg2);
+            return JSON.stringify(arg1) === JSON.stringify(arg2);
+        }
     }
 
     push(arg, arg1) {
