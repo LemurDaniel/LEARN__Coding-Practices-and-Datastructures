@@ -76,9 +76,7 @@ BinaryTree.Node.prototype.invert = function () {
     if(this.right) this.right.invert();
     if(this.left) this.left.invert();
 
-    const temp = this.left;
-    this.left = this.right;
-    this.right = temp;
+    [this.left, this.right] = [this.right, this.left]
 }
 Inout.solve();
 
