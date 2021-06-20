@@ -58,7 +58,8 @@ Clear-Host
 # node ./dailyCode/047_longest_substring_without_reapeating_characters.js
 # node ./dailyCode/048_spiral_traversal_of_grid.js
 # node ./dailyCode/049_compare_version_numbers.js
-node ./dailyCode/050_invert_a_binary_tree.js
+# node ./dailyCode/050_invert_a_binary_tree.js
+node ./dailyCode/051_find_missing_numbers.js
 
     ##################################
     ###### Daily Coding Problem ######
