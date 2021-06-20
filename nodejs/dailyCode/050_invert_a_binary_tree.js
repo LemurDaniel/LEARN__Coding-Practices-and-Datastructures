@@ -62,7 +62,7 @@ const Helper = require('../Helper');
 
 Inout.push('&BT% a,b,$d,$e,c,$f', '&BT% a,c,/,$f,b,$e,$d')
 
-Inout.solvers = [invert_recursive, invert_recursive_static];
+Inout.solvers = [invert_recursive, invert_recursive_static, invert_iterative];
 
 /*
     ###########################################################################################
@@ -95,4 +95,33 @@ function invert_recursive_static(node) {
 
     [node.right, node.left] = [node.left, node.right];
 
+}
+
+
+
+
+function invert_iterative(tree) {
+
+    const stack = [];
+    let node = tree.root
+
+    while(stack.length > 0 || node) {
+
+        if(!node) {
+            node = stack.pop();
+
+            // Swap child nodes with the fancy destructuring syntax.
+            [node.left, node.right] = [node.right, node.left];
+
+            // Since the left and right node have been swaped 
+            // it must now traverse down the left node, 
+            // which was previously the right one.
+            node = node.left;
+        }
+        else {
+            stack.push(node)
+            node = node.left;
+        }
+
+    }
 }
