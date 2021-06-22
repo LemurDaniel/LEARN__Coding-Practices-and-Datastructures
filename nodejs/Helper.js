@@ -94,7 +94,8 @@ Helper.print_map = function(map, depth = 5) {
         else if(val instanceof BTree.BinaryTree.Node) val = val.toString();
         else if(val instanceof Queue.NodeQueue)  val = val.toString();
         else if(val instanceof Queue.ArrayQueue) val = val.toString();
-
+        
+        else if(typeof val == 'function') val = '(function)';
         // If the value is itself an object, then print its content recursivley.
         else if(typeof val == 'object') val = Helper.print_map(val, depth+2);
 

@@ -59,7 +59,7 @@ Clear-Host
 # node ./dailyCode/048_spiral_traversal_of_grid.js
 # node ./dailyCode/049_compare_version_numbers.js
 # node ./dailyCode/050_invert_a_binary_tree.js
-node ./dailyCode/051_find_missing_numbers.js
+# node ./dailyCode/051_find_missing_numbers.js
 
     ##################################
     ###### Daily Coding Problem ######
@@ -87,6 +87,7 @@ node ./dailyCode/051_find_missing_numbers.js
 # node ./dailyCodingProblem/216-[Medium].js    # Roman to decimal 
 # node ./dailyCodingProblem/219-[Hard].js      # Implement Connect Four
 # node ./dailyCodingProblem/228-[Medium].js    # Arrange number into largest Integer
+node ./dailyCodingProblem/232-[Easy].js # Implement PrefixMapSum
 
     ##############################
     ###### Coding Questions ######
