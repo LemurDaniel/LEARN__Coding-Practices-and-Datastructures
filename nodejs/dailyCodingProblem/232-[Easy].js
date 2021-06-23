@@ -24,7 +24,7 @@ const Helper = require('../Helper');
 
 const PrefixMapSum = preInitialize();
 Inout.push('&AR INSERT, columnar, 3|SUM, col|INSERT, column, 2|SUM, col', [3, 5])
-Inout.solvers = [solver];
+Inout.solvers = [solver, solver_via_tree_structure];
 Inout.solve();
 
 /*
@@ -38,11 +38,38 @@ Inout.solve();
 function solver(instructions) {
 
     const res = [];
+
+    const dict = {};
+    for (const inst of instructions) {
+        const [op, param, param2] = inst;
+
+        if (op === 'INSERT') dict[param] = param2;
+        else if (op === 'SUM') {
+            res.push(
+                Object.keys(dict)
+                    .map(v => v.indexOf(param) == 0 ? dict[v] : 0)
+                    .reduce((a, b) => a + b)
+            )
+        }
+    }
+
+    return res;
+}
+
+function solver_via_tree_structure(instructions) {
+
+    const res = [];
     const pms = (new PrefixMapSum()).root;
 
     for (const inst of instructions) {
-        if (inst[0] === 'INSERT') pms.insert(inst[1], inst[2]);
-        else if (inst[0] === 'SUM') res.push(pms.sum(inst[1]));
+        const [op, ...params] = inst;
+
+        if (op === 'INSERT') pms.insert(...params);
+        else if (op === 'SUM') {
+            res.push(
+                pms.sum(params[0])
+            );
+        }
     }
 
     return res;

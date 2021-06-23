@@ -54,7 +54,9 @@ Helper.print_Array = function(arr, bl = ', ', open = '[ ', close = ' ]') {
     str = '';
     for(let i=0; i<arr.length; i++) {
 
-        if(Array.isArray(arr[i]))          str += Helper.print_Array(arr[i], bl, '( ', ' )');
+        if(arr[i] === null)                str += 'NULL'
+        else if(arr[i] === undefined)      str += 'undefined';
+        else if(Array.isArray(arr[i]))     str += Helper.print_Array(arr[i], bl, '( ', ' )');
         else if(arr[i].print)              str += "'"+arr[i]+"'";
         else if(typeof arr[i] == 'object') str += Helper.print_map(arr[i], -1);
         else if(typeof arr[i] == 'string') str += "'"+arr[i]+"'";
