@@ -15,17 +15,17 @@ const Helper = require('../../Helper');
 
 */
 
-
-
 Inout.push('3[a]2[bc]', 'aaabcbc');
 Inout.push('3[a2[c]]', 'accaccacc');
+Inout.push('3[a2[c],]', 'acc,acc,acc,');
 Inout.push('3[a2[c]d,]', 'accd,accd,accd,');
+Inout.push('abc3[de4[f],]', 'abcdeffff,deffff,deffff,')
 Inout.push('3[a2[c]-5-3[e],]', 'acc-5-eee,acc-5-eee,acc-5-eee,');
 Inout.push('10[a]', 'aaaaaaaaaa');
 Inout.push('3a', '3a');
 Inout.push('2[4]', '44');
 
-Inout.solvers = [decode_recursive];
+Inout.solvers = [decode_iterative, decode_recursive];
 Inout.solve(0);
 
 
@@ -36,6 +36,56 @@ Inout.solve(0);
     ###########################################################################################
 */
 
+
+function decode_iterative( encoded ) {
+
+    const stackNum    = [];
+    const stackDecode = [];
+    let decoded = '';
+    let num = '';
+
+    for(const c of encoded) {
+
+        // If a character is a digit then append it to the num-String.
+        if( '0123456789'.includes(c) ) num += c;
+        else if ( c === '[' ) {
+            // Push the parsed sequence of digits onto the numStack and reset the num-String to ''.
+            stackNum.push(parseInt(num));
+            // On every opening bracke the current decoded string gets pushed to the stackDecode in order to parse the sequence of chars inside the brackets.
+            // In case of abc3[de4[f],] on the first bracket, the sequence 'abc' gets pushed to the stack, then 'de'. 
+            // After that 'f' will be parsed and decoded into 'ffff' with sequence 'de' popped from the stack being prepended again, due to the following closing bracket. 
+            // Any following characters are appended until the next closing bracket leads to 'deffff,' being decoded into 'deffff,deffff,deffff,' and the value of stackDecode being appended again: 'abcdeffff,deffff,deffff,'
+            stackDecode.push(decoded);
+            decoded = '';
+            num = '';
+        }
+        else if ( c === ']' ) {
+            // Repeating the current sequence k-th times when a closing bracket is hit.
+            // The numString gets appended to. 
+            // (When a closing bracket had been encountered its content would have already been pushed to the stackNum and its value should be ''.
+            // if no closing bracket is hit, its content will be interpreted as part of the decoded sequence. )
+            let temp = decoded + num;
+            let repeats = stackNum.pop();
+            while(--repeats) temp += decoded + num;
+            
+            // Prepend the value of the decoded-String before hitting the opening bracket to the decoded string inbetween the now parsed opening and closing bracket.
+            decoded = stackDecode.pop() + temp;
+        }
+        else {
+            // If the character isn't a bracket or a number then append it to the decoded sequence.
+            // The num-String gets added to, because any sequence of digits gets only interpreted as a number for decoding,
+            // when it's directly followed by a opening-bracket, in which case it would have been already pushed to numStack and reset back to ''.
+            decoded += num + c;
+            num  = '';
+        }
+
+    }
+
+    console.log(decoded)
+    console.log(stackDecode);
+    console.log(stackNum)
+    return decoded;
+}
 
 function decode_recursive( str, repeat = 1 ) {
 

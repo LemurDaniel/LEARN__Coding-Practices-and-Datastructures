@@ -354,7 +354,7 @@ Helper.binary_search = function(nums, target, lower, upper)  {
     lower = lower ?? 0;
 
     while(upper > lower) {
-        const mid = Math.round( (upper + lower) / 2 );
+        const mid = lower + Math.round( (upper - lower) / 2 );
 
         if( nums[mid] < target ) lower = mid + 1;
         else if( nums[mid] > target ) upper = mid - 1;
@@ -373,7 +373,7 @@ Helper.binary_search_lower_bound = function(nums, target, lower, upper)  {
     lower = lower ?? 0;
 
     while(upper > lower) {
-        const mid = Math.floor( (upper + lower) / 2 );
+        const mid = lower + Math.floor( (upper - lower) / 2 );
 
         // console.log( '  Upper: ' + upper + '    Lower: ' + lower + '    Mid: ' + mid + '    Element: ' + nums[mid])
         if( nums[mid] >= target ) upper = mid;
@@ -392,7 +392,7 @@ Helper.binary_search_upper_bound = function(nums, target, lower, upper)  {
     lower = lower ?? 0;
 
     while(upper > lower) {
-        const mid = Math.ceil( (upper + lower) / 2 );
+        const mid = lower + Math.ceil( (upper - lower) / 2 );
 
         if( nums[mid] <= target ) lower = mid;
         else upper = mid - 1;
