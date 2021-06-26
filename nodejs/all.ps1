@@ -61,6 +61,7 @@ Clear-Host
 # node ./dailyCode/050_invert_a_binary_tree.js
 # node ./dailyCode/051_find_missing_numbers.js
 # node ./dailyCode/052_shift_string.js
+node ./dailyCode/053_reverse_words.js
 
     ##################################
     ###### Daily Coding Problem ######
@@ -101,7 +102,7 @@ Clear-Host
 
     ########### STACKS ###########
 # node ./codingQuestions/stacks/min_stack-[Easy].js
-node ./codingQuestions/stacks/decode_string-[Medium].js
+# node ./codingQuestions/stacks/decode_string-[Medium].js
 
     ########### ARRAYS ###########
 # node ./codingQuestions/arrays/two_sum-[Easy].js

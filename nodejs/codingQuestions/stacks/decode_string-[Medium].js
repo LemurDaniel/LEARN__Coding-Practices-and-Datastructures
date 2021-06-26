@@ -81,9 +81,6 @@ function decode_iterative( encoded ) {
 
     }
 
-    console.log(decoded)
-    console.log(stackDecode);
-    console.log(stackNum)
     return decoded;
 }
 
