@@ -27,7 +27,7 @@ const Helper = require('../Helper');
 Inout.push('The cat in the hat', 'ehT tac ni eht tah')
 Inout.push('The       cat in the hat', 'ehT       tac ni eht tah')
 
-Inout.solvers = [reverseWords];
+Inout.solvers = [reverseWords, reverseWords2];
 Inout.solve();
 
 /*
@@ -51,4 +51,24 @@ function reverseWords(str) {
     res.push(res.pop()[0]);
     return res.join('');
 
+}
+
+
+function reverseWords2(str) {
+
+    const arr = (str + ' ').split('');
+    for (let i = 0, start = -1; i < arr.length; i++) {
+
+        if (arr[i] !== ' ' && start === -1) start = i;
+        else if(arr[i] === ' ' && start !== -1) {
+            const len = Math.floor((i - start) / 2);
+            for (let j = 0; j < len; j++) 
+                [ arr[start + j], arr[i - j - 1] ] = [ arr[i - j - 1], arr[start + j] ]
+            start = -1;
+        }
+
+    }
+
+    arr.pop();
+    return arr.join('')
 }
