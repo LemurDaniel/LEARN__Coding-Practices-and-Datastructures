@@ -61,7 +61,8 @@ Clear-Host
 # node ./dailyCode/050_invert_a_binary_tree.js
 # node ./dailyCode/051_find_missing_numbers.js
 # node ./dailyCode/052_shift_string.js
-node ./dailyCode/053_reverse_words.js
+# node ./dailyCode/053_reverse_words.js
+node ./dailyCode/054_number_of_unival_subtrees.js
 
     ##################################
     ###### Daily Coding Problem ######
