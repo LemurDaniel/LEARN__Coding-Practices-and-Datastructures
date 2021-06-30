@@ -63,7 +63,8 @@ Clear-Host
 # node ./dailyCode/052_shift_string.js
 # node ./dailyCode/053_reverse_words.js
 # node ./dailyCode/054_number_of_unival_subtrees.js
-node ./dailyCode/055_distribute_bonuses.js
+# node ./dailyCode/055_distribute_bonuses.js
+node ./dailyCode/056_partition_list.js
 
 
     ##################################
