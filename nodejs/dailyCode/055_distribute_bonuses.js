@@ -61,3 +61,25 @@ function distributeBonuses( arr ) {
     return bonuses;
 }
 
+
+
+function distributeBonuses_variant2( arr ) {
+
+    const bonuses = [1];
+
+    for(let i=0; i<arr.length-1; i++) {
+
+        const curr = arr[i];
+        const next = arr[i+1];
+
+        // Initialize bonus for next worker at one.
+        bonuses[i+1] = 1;
+
+        // If the current performance is worse than the next one then apply bonus to next worker,
+        if(next > curr) bonuses[i+1]++;
+        else // else apply bonus to current worker.
+        if(curr > next) bonuses[i]++;
+    }
+
+    return bonuses;
+}
