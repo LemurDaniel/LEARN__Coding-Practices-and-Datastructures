@@ -66,3 +66,26 @@ function bruteForce_recursive(list, p1, p2) {
     return Array.isArray(left) ? left : right;
 
 }
+
+function variant1(list) {
+
+    const sum = list.reduce((a, b) => a + b);
+    if (sum % 3 !== 0) return false;
+    
+    const targetSum = sum / 3;
+
+    let p1 = 0;
+    for (let sum = 0; p1 < list.length && sum !== targetSum; p1++) {
+        sum += list[p1];
+    }
+
+    let p2 = p1;
+    for (let sum = 0; p2 < list.length && sum !== targetSum; p2++) {
+        sum += list[p2];
+    }
+
+    return [list.slice(0, p1),
+        list.slice(p1, p2),
+        list.slice(p2, list.length)];
+}
+
