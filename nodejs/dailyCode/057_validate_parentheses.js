@@ -75,3 +75,26 @@ function validateParentheses(str) {
 
     return stack.length === 0;
 }
+
+
+function validateParentheses2(str, brackets = '(),[],{}') {
+
+    const stack = [];
+    const open = brackets.split(',').map(v => v[0]);
+    const close = brackets.split(',').map(v => v[1]);
+
+    for (let c of str) {
+
+        if (open.includes(c)) stack.push(c);
+        else if (close.includes(c)) {
+            if (stack.length === 0) return false
+
+            const idx = close.indexOf(c);
+            if (stack.pop() !== open[idx]) return false;
+        }
+
+    }
+
+
+    return stack.length === 0;
+}
