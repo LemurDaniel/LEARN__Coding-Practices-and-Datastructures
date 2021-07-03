@@ -75,17 +75,33 @@ function variant1(list) {
     const targetSum = sum / 3;
 
     let p1 = 0;
-    for (let sum = 0; p1 < list.length && sum !== targetSum; p1++) {
-        sum += list[p1];
-    }
+    for (let sum = 0; p1 < list.length && sum !== targetSum; sum += list[p1++]) {}
 
     let p2 = p1;
-    for (let sum = 0; p2 < list.length && sum !== targetSum; p2++) {
-        sum += list[p2];
-    }
+    for (let sum = 0; p2 < list.length && sum !== targetSum; sum += list[p2++]) {}
 
     return [list.slice(0, p1),
         list.slice(p1, p2),
         list.slice(p2, list.length)];
 }
 
+function variant2(list) {
+
+    const listSummed = list.reduce((a, b) => a + b);
+    if (listSummed % 3 !== 0) return false;
+    
+    const targetSumP1 = listSummed / 3;
+    const targetSumP2 = targetSumP1 * 2;
+
+    const p = [0 , 0];
+
+    for(let i=0, sum = 0; i<list.length; i++) {
+        sum += list[i];
+        if(sum === targetSumP1) p[0] = i+1;
+        if(sum === targetSumP2) p[1] = i+1;
+    }
+
+    return [list.slice(0, p[0]),
+        list.slice(p[0], p[1]),
+        list.slice(p[1], list.length)];
+}
