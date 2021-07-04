@@ -16,12 +16,16 @@ const Helper = require('../Helper');
 
 
 
-const PrefixMapSum = preInitialize();
-Inout.push()
-Inout.solvers = [solver, solver_via_tree_structure];
+Inout.push( { 
+    shape: '&AR 1,1|-1,1|-1,-1|1,-1',
+    point: '&AR 0,0'
+},true);
+
+Inout.solvers = [isPointInShape];
 Inout.solve();
 
-// TODO
+// do later.
+// Tutorial: https://stackoverflow.com/questions/217578/how-can-i-determine-whether-a-2d-point-is-within-a-polygon
 
 
 /*
@@ -32,5 +36,9 @@ Inout.solve();
 */
 
 function isPointInShape( shape, point) {
+
+
+
+
 
 }
