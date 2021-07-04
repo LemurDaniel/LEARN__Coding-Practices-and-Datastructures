@@ -65,7 +65,8 @@ Clear-Host
 # node ./dailyCode/054_number_of_unival_subtrees.js
 # node ./dailyCode/055_distribute_bonuses.js
 # node ./dailyCode/056_partition_list.js
-node ./dailyCode/057_validate_parentheses.js
+# node ./dailyCode/057_validate_parentheses.js
+node ./dailyCode/058_find_non_duplicate_number.js
 
 
     ##################################
