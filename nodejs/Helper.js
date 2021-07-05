@@ -1,9 +1,8 @@
 const LinkedList = require('./datastructures/linkedList');
 const BTree = require('./datastructures/bTree');
 const Queue = require('./datastructures/queue');
-const { LinkedListFromString_Int } = require('./datastructures/linkedList');
+const { Vector } = require('./datastructures/other')
 const fs = require('fs');
-const { connected } = require('process');
 
 const classes = [LinkedList, BTree.BinaryTree, BTree.BinaryTree.Node, Queue.NodeQueue, Queue.ArrayQueue];
 
@@ -56,8 +55,8 @@ Helper.print_Array = function (arr, bl = ', ', open = '[ ', close = ' ]') {
 
         if (arr[i] === null) str += 'NULL'
         else if (arr[i] === undefined) str += 'undefined';
+        else if (arr[i].print) str += "'" + arr[i].print() + "'";
         else if (Array.isArray(arr[i])) str += Helper.print_Array(arr[i], bl, '( ', ' )');
-        else if (arr[i].print) str += "'" + arr[i] + "'";
         else if (typeof arr[i] == 'object') str += Helper.print_map(arr[i], -1);
         else if (typeof arr[i] == 'string') str += "'" + arr[i] + "'";
         else str += arr[i]
@@ -235,6 +234,7 @@ Helper.string_toIntArray = function (str, split = ' ') {
     return matrix;
 }
 
+
 // converts all strings in an object to the desired object
 Helper.convert_strings_in_object = function (obj, testcase) {
 
@@ -269,6 +269,7 @@ function convert_string(str, testcase) {
         '&NA': str => Helper.string_toArray(str),
         '&NI': str => Helper.string_toIntArray(str, ''),
         '&AR': str => Helper.string_toIntArray(str),
+        '&PT': str => Helper.string_toIntArray(str).map( v => new Vector(v[0], v[1])),
         '&LL': str => LinkedList.LinkedListFromString_Int(str),
         '&BT': str => BTree.BinaryTree.GenerateIntPreorderFromString(str),
         '&FS': str => {

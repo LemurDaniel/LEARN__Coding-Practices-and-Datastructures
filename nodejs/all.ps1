@@ -66,7 +66,7 @@ Clear-Host
 # node ./dailyCode/055_distribute_bonuses.js
 # node ./dailyCode/056_partition_list.js
 # node ./dailyCode/057_validate_parentheses.js
-node ./dailyCode/058_find_non_duplicate_number.js
+# node ./dailyCode/058_find_non_duplicate_number.js
 
 
     ##################################
@@ -96,6 +96,7 @@ node ./dailyCode/058_find_non_duplicate_number.js
 # node ./dailyCodingProblem/219-[Hard].js      # Implement Connect Four
 # node ./dailyCodingProblem/228-[Medium].js    # Arrange number into largest Integer
 # node ./dailyCodingProblem/232-[Easy].js      # Implement PrefixMapSum
+node ./dailyCodingProblem/236-[Medium].js  # Determine if point is inside of a shape
 
     ##############################
     ###### Coding Questions ######

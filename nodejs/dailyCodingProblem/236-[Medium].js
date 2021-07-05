@@ -1,4 +1,5 @@
-const Inout = new (require("../Inout"))("Daily Coding Problem --- Implement a PrefixMapsum");
+const Inout = new (require("../Inout"))("Daily Coding Problem --- Determine if point is in shape");
+const { Vector, Boundary, Ray } = require("../datastructures/other");
 const Helper = require('../Helper');
 
 /*
@@ -14,19 +15,41 @@ const Helper = require('../Helper');
 
 */
 
+Inout.convert_result = res => {
+    if(res === 0) return 'Point is on the boundary of the Polygon';
+    if(res === true) return 'Point is on the inside of the Polygon';
+    if(res === false || res === -1 ) return 'Point is outside of the Polygon';
+    return res;
+}
+Inout.convert_output = Inout.convert_result;
+
+Inout.push( { 
+    shape: '&PT 1,1|-1,1|-1,-1|1,-1',
+    point: new Vector(0, 0)
+},true);
+
+Inout.push( { 
+    shape: '&PT 1,1|-1,1|-1,-1|1,-1',
+    point: new Vector(2, 0),
+},false);
+
+Inout.push( { 
+    shape: '&PT 1,1|-1,1|-1,-1|1,-1',
+    point: new Vector(1, 1),
+},0);
 
 
 Inout.push( { 
-    shape: '&AR 1,1|-1,1|-1,-1|1,-1',
-    point: '&AR 0,0'
+    shape: '&PT 0,0|12,0|8,8|0,12',
+    point: new Vector(20, 20),
+},false);
+Inout.push( { 
+    shape: '&PT 0,0|12,0|8,8|0,12',
+    point: new Vector(4, 5),
 },true);
 
 Inout.solvers = [isPointInShape];
 Inout.solve();
-
-// do later.
-// Tutorial: https://stackoverflow.com/questions/217578/how-can-i-determine-whether-a-2d-point-is-within-a-polygon
-
 
 /*
     ###########################################################################################
@@ -37,8 +60,34 @@ Inout.solve();
 
 function isPointInShape( shape, point) {
 
+    if(shape.length < 3) throw new Error('Shape needs three points');
+
+    // Bounding Box check.
+    const min = new Vector(0, 0);
+    const max = new Vector(0, 0);
+    for(const p of shape) {
+        max.x = Math.max(max.x, p.x)
+        max.y = Math.max(max.y, p.y)
+        min.x = Math.min(min.x, p.x)
+        min.y = Math.min(min.y, p.y)
+    }
+
+    if ( point.x > max.x || point.y > max.y || point.x < min.x || point.y < min.y ) return -1;
 
 
+    // Note https://www.youtube.com/watch?v=TOEi6T2mtHo
+    const ray = new Ray(point.x, point.y);
 
+    for(let i=1; i<=shape.length; i++) {
+        const prev = shape[i-1];
+        const curr = i === shape.length ? shape[0] : shape[i];
+        const bound = new Boundary(prev.x, prev.y, curr.x, curr.y);
+ 
+        // Check if point is directly on boundary.
+        if(bound.isPointOnBoundary(point)) return 0;
+        else ray.cast(bound);
+    }
+
+    return ray.intersections > 0 && ray.intersections % 2 !== 0;
 
 }
