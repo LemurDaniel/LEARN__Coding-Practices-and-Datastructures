@@ -13,7 +13,7 @@ const Helper = require('../Helper');
 
 */
 
-Inout.convert_input = inp => inp.toLowerCase();
+Inout.input_Converter = inp => inp.toLowerCase();
 
 Inout.push( { input: 'acbbac', output: 'b' } );
 Inout.push( { input: 'abcdef', output: 'None' } );

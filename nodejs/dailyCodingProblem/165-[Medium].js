@@ -1,4 +1,4 @@
-const Inout = new (require ('../Inout'))('Daily Coding Problem --- Count smaller element on right side');
+const Inout = new (require('../Inout'))('Daily Coding Problem --- Count smaller element on right side');
 const Helper = require('../Helper');
 
 /*
@@ -19,7 +19,7 @@ const Helper = require('../Helper');
 
 */
 
-Inout.push( '&NI 34961', '&NI 11210' )
+Inout.push('&NI 34961', '&NI 11210')
 
 Inout.solvers = [find_number_of_smaller_elements, find_number_of_smaller_elements_2];
 Inout.solve();
@@ -42,11 +42,11 @@ function find_number_of_smaller_elements(arr) {
 
     const nums = new Array(arr.length);
 
-    for(let idx=0; idx<arr.length; idx++) {
-        
+    for (let idx = 0; idx < arr.length; idx++) {
+
         nums[idx] = 0;
-        for(let i=idx+1; i<arr.length; i++)
-            nums[idx] +=  (arr[i] < arr[idx] ? 1 : 0) 
+        for (let i = idx + 1; i < arr.length; i++)
+            nums[idx] += (arr[i] < arr[idx] ? 1 : 0)
 
     }
 
@@ -60,13 +60,13 @@ function find_number_of_smaller_elements(arr) {
 
 function find_number_of_smaller_elements_2(arr) {
 
-    for(let idx=0; idx<arr.length; idx++) {
-        
+    for (let idx = 0; idx < arr.length; idx++) {
+
         const num = arr[idx];
         arr[idx] = 0;
 
-        for(let i=idx+1; i<arr.length; i++)
-            arr[idx] += (arr[i] < num ? 1 : 0) 
+        for (let i = idx + 1; i < arr.length; i++)
+            arr[idx] += (arr[i] < num ? 1 : 0)
 
     }
 

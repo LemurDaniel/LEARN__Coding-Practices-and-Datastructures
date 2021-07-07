@@ -1,4 +1,4 @@
-const Inout = new (require ('../Inout'))('DailyCode --- Level of Tree with Maximum Sum');
+const Inout = new (require('../Inout'))('DailyCode --- Level of Tree with Maximum Sum');
 const Tree = new require('../datastructures/bTree');
 const Queue = new require('../datastructures/queue');
 
@@ -72,26 +72,26 @@ function find_level_with_maximum_sum(tree) {
     const q = new Queue.ArrayQueue();
     q.enqueue(tree.root);
     q.enqueue(null);
- 
+
     // initialize variables
     let curr_sum = 0;
     let curr_level = 0;
     let level_max_sum = 0;
     let max_sum = 0;
 
-    while(!q.isEmpty()){
+    while (!q.isEmpty()) {
 
         const node = q.dequeue();
         curr_sum += node.val;
 
-        if(node.right) q.enqueue(node.right);
-        if(node.left) q.enqueue(node.left);
+        if (node.right) q.enqueue(node.right);
+        if (node.left) q.enqueue(node.left);
 
         // null encounter in queue marks the end of a level in the tree
-        if(q.peek() == null){
-            
+        if (q.peek() == null) {
+
             // compare levelsum with current maximum sum
-            if(curr_sum > max_sum){
+            if (curr_sum > max_sum) {
                 max_sum = curr_sum;
                 level_max_sum = curr_level;
             }
@@ -102,7 +102,7 @@ function find_level_with_maximum_sum(tree) {
             curr_sum = 0;
 
             // return if no more element in queue, (except for null)
-            if(q.count() == 1) return { level: level_max_sum, sum: max_sum };
+            if (q.count() == 1) return { level: level_max_sum, sum: max_sum };
         }
     }
 }

@@ -1,4 +1,4 @@
-const Inout = new (require ('../Inout'))('DailyCode --- Rotate a 2D Matrix by 180° clockwise');
+const Inout = new (require('../Inout'))('DailyCode --- Rotate a 2D Matrix by 180° clockwise');
 const Helper = require('../Helper');
 
 /*
@@ -27,15 +27,13 @@ const Helper = require('../Helper');
 
 */
 
-Inout.input_string_converter =  Helper.matrix_toString;
-Inout.output_string_converter =  Helper.matrix_toString;
-Inout.result_string_converter =  Helper.matrix_toString;
+Inout.input_stringConverter = Helper.printMatrix;
+Inout.output_stringConverter = Helper.printMatrix;
+Inout.result_stringConverter = Helper.printMatrix;
 
-Inout.testcases.push({  input: [[1, 2, 3], [4, 5, 6], [7, 8, 9]], 
-                        output:  [[9, 8, 7], [6, 5, 4], [3, 2, 1]] 
-});
+Inout.push('&AR 1,2,3|4,5,6|7,8,9', '&AR 9,8,7|6,5,4|3,2,1');
 
-Inout.solvers = [Rotate_Matrix_in_place];
+Inout.solvers = [RotateMatrix_inPlace, RotateMatrix_inPlace_onePass];
 Inout.solve();
 
 
@@ -47,12 +45,12 @@ Inout.solve();
     ###########################################################################################
 */
 
-function Rotate_Matrix_in_place(mat){
+function RotateMatrix_inPlace(mat) {
 
     // reverse all columns in all rows
-    for(let row=0; row<mat.length; row++){
-        for(let col=0; col<mat[row].length/2; col++){
-            const op = mat[row].length-1-col;
+    for (let row = 0; row < mat.length; row++) {
+        for (let col = 0; col < mat[row].length / 2; col++) {
+            const op = mat[row].length - 1 - col;
             const temp = mat[row][op];
             mat[row][op] = mat[row][col];
             mat[row][col] = temp;
@@ -60,9 +58,9 @@ function Rotate_Matrix_in_place(mat){
     }
 
     // swap top and bottom rows
-    for(let row=0; row<mat.length/2; row++){
-        const temp = mat[mat.length-row-1];
-        mat[mat.length-row-1] = mat[row];
+    for (let row = 0; row < mat.length / 2; row++) {
+        const temp = mat[mat.length - row - 1];
+        mat[mat.length - row - 1] = mat[row];
         mat[row] = temp;
     }
 }

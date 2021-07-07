@@ -97,7 +97,7 @@ const Helper = require('../Helper');
 
 */
 
-Inout.result_comparer = (arg, arg2) => typeof arg2 == 'object' ? arg2.isSimilar == arg : arg2 == arg; 
+Inout.result_Comparer = (arg, arg2) => typeof arg2 == 'object' ? arg2.isSimilar == arg : arg2 == arg;
 
 Inout.push({
     tree_1: '&BT% 7,2,/,$2,1',
@@ -140,31 +140,31 @@ function isLeafSimilar(tree_1, tree_2) {
     const leafs_1 = new LinkedList();
     const leafs_2 = new LinkedList();
 
-    while(stack_1.length > 0 && stack_2.length > 0) {
+    while (stack_1.length > 0 && stack_2.length > 0) {
 
-        if( stack_1.length > 0 ) node_1 = stack_1.pop();
-        if( stack_2.length > 0 ) node_2 = stack_2.pop();
+        if (stack_1.length > 0) node_1 = stack_1.pop();
+        if (stack_2.length > 0) node_2 = stack_2.pop();
 
-        if(node_1) {
-            if(node_1.isLeaf()) leafs_1.Append(node_1);
- 
-            if(node_1.right) stack_1.push(node_1.right);
-            if(node_1.left)  stack_1.push(node_1.left);
+        if (node_1) {
+            if (node_1.isLeaf()) leafs_1.Append(node_1);
+
+            if (node_1.right) stack_1.push(node_1.right);
+            if (node_1.left) stack_1.push(node_1.left);
         }
 
-        if(node_2) {
-            if(node_2.isLeaf()) leafs_2.Append(node_2);
- 
-            if(node_2.right) stack_2.push(node_2.right);
-            if(node_2.left)  stack_2.push(node_2.left);
+        if (node_2) {
+            if (node_2.isLeaf()) leafs_2.Append(node_2);
+
+            if (node_2.right) stack_2.push(node_2.right);
+            if (node_2.left) stack_2.push(node_2.left);
         }
-        
-        if(leafs_1.head && leafs_2.head){
-            if(leafs_1.head.val.val != leafs_2.head.val.val) 
+
+        if (leafs_1.head && leafs_2.head) {
+            if (leafs_1.head.val.val != leafs_2.head.val.val)
                 return { isSimilar: false, unmatchingLeafs: [leafs_1.head.val, leafs_2.head.val] };
             leafs_1.Remove_head();
             leafs_2.Remove_head();
-        } 
+        }
     }
 
     return true;

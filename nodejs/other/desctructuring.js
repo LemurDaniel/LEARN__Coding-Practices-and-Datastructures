@@ -45,8 +45,8 @@ console.log()
 
 const arr2 = [10, 11, 12, 13]
 
-console.log('Not spreaded: ' + Helper.print_Array([arr, arr2]))
-console.log('Spreaded: ' + Helper.print_Array([...arr, ...arr2]))
+console.log('Not spreaded: ' + Helper.printArray([arr, arr2]))
+console.log('Spreaded: ' + Helper.printArray([...arr, ...arr2]))
 
 
 
@@ -82,7 +82,7 @@ const { key1: first, key4: fourth, key5: fifth = 'default', ...rest3 } = obj;
 console.log('first  contains the value of key1 value (1): ' + first)
 console.log('fourth contains the value of key4 value (4): ' + fourth)
 console.log('fifth defaults to (default) since no key5 is present on the object: ' + fifth)
-console.log('Object with all the remaining key/value pairs  {key2: 2, key3: 3} :'+ Helper.print_map(rest3))
+console.log('Object with all the remaining key/value pairs  {key2: 2, key3: 3} :'+ Helper.printMap(rest3))
 
 
 console.log()
@@ -94,8 +94,8 @@ console.log()
 function objectDestructuring({ key1, key4: fourth, key5: fifth = { obj: 'default' }, ...rest} = { key: 1 }) {
     console.log('key1  contains the value of key1 value (1): ' + key1)
     console.log('fourth contains the value of key4 value (4): ' + fourth)
-    console.log('fifth defaults to ({ obj: \'default\' }) since no key5 is present on the object: ' +  Helper.print_map(fifth))
-    console.log('Object with all the remaining key/value pairs  {key2: 2, key3: 3} :'+ Helper.print_map(rest))
+    console.log('fifth defaults to ({ obj: \'default\' }) since no key5 is present on the object: ' +  Helper.printMap(fifth))
+    console.log('Object with all the remaining key/value pairs  {key2: 2, key3: 3} :'+ Helper.printMap(rest))
 }
 
 objectDestructuring(obj)
@@ -108,7 +108,7 @@ console.log()
 
 function objectDestructuring2({ key1, ...rest} = { key2: 1, key3: 3 }) {
     console.log('key1  is undefined: ' + key1)
-    console.log('Object with all the remaining key/value pairs  {key2: 2, key3: 3} :'+ Helper.print_map(rest))
+    console.log('Object with all the remaining key/value pairs  {key2: 2, key3: 3} :'+ Helper.printMap(rest))
 }
 
 objectDestructuring2()

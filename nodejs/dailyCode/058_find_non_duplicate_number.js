@@ -33,16 +33,16 @@ Inout.solve();
     ###########################################################################################
 */
 
-function findNumber( arr ) {
+function findNumber(arr) {
 
     let num = arr[0];
-    for(let i=1; i<arr.length; i++) num ^= arr[i]
+    for (let i = 1; i < arr.length; i++) num ^= arr[i]
 
     return num;
 }
 
-function one_liner( arr ) {
+function one_liner(arr) {
 
-    return arr.reduce( (a,b) => a ^ b );
+    return arr.reduce((a, b) => a ^ b);
 
 }

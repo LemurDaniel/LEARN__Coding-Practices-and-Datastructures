@@ -19,7 +19,7 @@ class TicTacToe {
     }
 
     print() {
-        return Helper.matrix_toString(this.arr);
+        return Helper.printMatrix(this.arr);
     }
 
 }

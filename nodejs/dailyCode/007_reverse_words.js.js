@@ -1,9 +1,10 @@
-const Inout = new (require ('../Inout'))('DailyCode --- Reverse Words');
+const Inout = new (require('../Inout'))('DailyCode --- Reverse Words');
 
 /*
     Hi, here's your problem today. This problem was recently asked by Apple:
 
-        Given a list of words in a string, reverse the words in-place (ie don't create a new string and reverse the words). Since python strings are not mutable, you can assume the input will be a mutable sequence (like list).
+        Given a list of words in a string, reverse the words in-place (ie don't create a new string and reverse the words). 
+        Since python strings are not mutable, you can assume the input will be a mutable sequence (like list).
 
         Here's an example and some starting code:
 
@@ -16,17 +17,16 @@ const Inout = new (require ('../Inout'))('DailyCode --- Reverse Words');
         # this read you can
 */
 
-Inout.input_string_converter = inp => inp.join('');
 
-Inout.convert_input = inp => inp.split('');
-Inout.convert_result = res => res.join('');
+Inout.input_Converter = arg => arg.split('')
+Inout.result_Converter = res => res.join('');
 
 // Testcases
-Inout.testcases.push({  input: 'can you read this', output: 'this read you can' });
-Inout.testcases.push({  input: 'can    you read this', output: 'this read you    can' });
+Inout.push('can you read this', 'this read you can');
+Inout.push('can    you read this', 'this read you    can');
 
 
-Inout.solvers = [reverse_words_in_place];
+Inout.solvers = [reverseWords_inPlace];
 Inout.solve();
 
 
@@ -38,35 +38,36 @@ Inout.solve();
 */
 
 
-function reverse_words_in_place (list)  {
+function reverseWords_inPlace(list) {
 
-    // reverts all characters in sequence
-    reverse_sequence = (start, end) =>{
-        while(start < end){
-            const temp = list[end];
-            list[end] = list[start];
-            list[start] = temp;
-            start++;
-            end--;
-        }
-    }
+    // Reverse all characters in the list.
+    let [st, en] = [0, list.length];
+    do[list[en], list[st]] = [list[st], list[en]]
+    while (++st < --en)
 
-    // first pass to revert all characters in place
-    reverse_sequence(0, list.length);
 
-    // second pass to revert individual words
-    for(let start=0, i=0; i<list.length; i++){
+    // Second pass to revert individual words.
+    for (let start = 0, i = 0; i <= list.length; i++) {
 
-        // whitespace marks the end of the previous word
-        if(list[i] != ' ' && i != list.length-1 ) continue;
+        // Ensure that last character of the list is always a whitespace.
+        const c = i !== list.length ? list[i] : ' ';
 
-        // if i points to whitespace, use previous character else not
-        let end = (list[i] != ' ' ? i:i-1);
+        // If a whitespace is encountered then a word has ended,
+        // which subsequently gets reversed in the following code.
+        if (c !== ' ') continue;
 
-        // reverse word in place
-        reverse_sequence(start, end)
+        // Determine end index of the word and move it back by one
+        // when the current character is a whitespace.
+        let end = i;
+        if (c === ' ') end--;
 
-        // increase start pointer
-        start = i+1;
+        // Reverse word in place
+        let [st, en] = [start, end]
+        do[list[en], list[st]] = [list[st], list[en]]
+        while (++st < --en)
+
+        // Determine the StartPointer of the next word.
+        // Incremented by one to account for one whitespace between words.
+        start = i + 1;
     }
 }

@@ -17,9 +17,9 @@ const Helper = require('../Helper');
 
 */
 
-Inout.push( { nums: '8,7,2,3,4,1,5,6,9,0', k: 3 } , 7 )
+Inout.push({ nums: '8,7,2,3,4,1,5,6,9,0', k: 3 }, 7)
 
-Inout.solvers = [find_nearest_points, find_nearest_points_prio_node_queue];
+Inout.solvers = [findNearestPoints, findNearestPoints_prioNodeQueue];
 Inout.solve();
 
 /*
@@ -35,23 +35,23 @@ Inout.solve();
 
 */
 
-function find_nearest_points(nums, k) {
+function findNearestPoints(nums, k) {
 
-    const largest_elements    = new LinkedList.Node('Head');
-    let   kth_largest_element = null;
+    const largest_elements = new LinkedList.Node('Head');
+    let kth_largest_element = null;
 
     for (let num of nums) {
 
-        let prev     = largest_elements;
-        let node     = largest_elements.next;
+        let prev = largest_elements;
+        let node = largest_elements.next;
         let inserted = false;
-        let depth    = 0;
+        let depth = 0;
 
 
         while (depth++ < k) {
             // If no node is present or the element is bigger than the one of the current node
             // then insert the current point at this place in the Linked List
-            if (!inserted && (node == null || num >= node.val) ) {
+            if (!inserted && (node == null || num >= node.val)) {
 
                 inserted = true;
                 prev.next = new LinkedList.Node(num, node);
@@ -81,11 +81,11 @@ function find_nearest_points(nums, k) {
 
 
 
-function find_nearest_points_prio_node_queue(nums, k) {
+function findNearestPoints_prioNodeQueue(nums, k) {
 
     const queue = new Queue.PriorityNodeQueue();
 
-    for (let num of nums)   queue.enqueue(num, num)
+    for (let num of nums) queue.enqueue(num, num)
 
     while (--k) queue.deleteHighestPriority();
 

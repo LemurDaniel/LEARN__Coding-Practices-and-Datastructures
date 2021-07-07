@@ -45,7 +45,7 @@ function reverseWords(str) {
         if (word === '') res.push(' ');
         else {
             for (let i = word.length - 1; i >= 0; i--)
-            res.push(word[i] + (i === 0 ? ' ' : ''));
+                res.push(word[i] + (i === 0 ? ' ' : ''));
         }
     });
     res.push(res.pop()[0]);
@@ -60,10 +60,10 @@ function reverseWords2(str) {
     for (let i = 0, start = -1; i < arr.length; i++) {
 
         if (arr[i] !== ' ' && start === -1) start = i;
-        else if(arr[i] === ' ' && start !== -1) {
+        else if (arr[i] === ' ' && start !== -1) {
             const len = Math.floor((i - start) / 2);
-            for (let j = 0; j < len; j++) 
-                [ arr[start + j], arr[i - j - 1] ] = [ arr[i - j - 1], arr[start + j] ]
+            for (let j = 0; j < len; j++)
+                [arr[start + j], arr[i - j - 1]] = [arr[i - j - 1], arr[start + j]]
             start = -1;
         }
 

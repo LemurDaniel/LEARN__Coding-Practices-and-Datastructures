@@ -43,14 +43,14 @@ Inout.solve();
 */
 
 
-function distributeBonuses( arr ) {
+function distributeBonuses(arr) {
 
     const bonuses = [];
 
-    for(let i=0; i<arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
 
-        const left = i === 0 ? arr[i] : arr[i-1];
-        const right = i === arr.length - 1 ? arr[i] : arr[i+1];
+        const left = i === 0 ? arr[i] : arr[i - 1];
+        const right = i === arr.length - 1 ? arr[i] : arr[i + 1];
 
         const rightBonus = right < arr[i] ? 1 : 0;
         const leftBonus = left < arr[i] ? 1 : 0;
@@ -63,22 +63,22 @@ function distributeBonuses( arr ) {
 
 
 
-function distributeBonuses_variant2( arr ) {
+function distributeBonuses_variant2(arr) {
 
     const bonuses = [1];
 
-    for(let i=0; i<arr.length-1; i++) {
+    for (let i = 0; i < arr.length - 1; i++) {
 
         const curr = arr[i];
-        const next = arr[i+1];
+        const next = arr[i + 1];
 
         // Initialize bonus for next worker at one.
-        bonuses[i+1] = 1;
+        bonuses[i + 1] = 1;
 
         // If the current performance is worse than the next one then apply bonus to next worker,
-        if(next > curr) bonuses[i+1]++;
+        if (next > curr) bonuses[i + 1]++;
         else // else apply bonus to current worker.
-        if(curr > next) bonuses[i]++;
+        if (curr > next) bonuses[i]++;
     }
 
     return bonuses;

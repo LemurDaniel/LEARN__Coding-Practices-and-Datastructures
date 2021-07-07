@@ -1,5 +1,5 @@
 
-const Inout = new (require ('../Inout'))('Coding Questions --- Partition list into three parts');
+const Inout = new (require('../Inout'))('Coding Questions --- Partition list into three parts');
 const Helper = require('../Helper');
 
 /*
@@ -19,20 +19,20 @@ const Helper = require('../Helper');
     Similar Principle as 'node .\codingQuestions\arrays\sort_colors.js'
 */
 
-function Check_output (testcase, result) {
+function Check_output(testcase, result) {
     const num = testcase.input.num;
-    
+
     let mark_part = 0;
-    for(let i=0; i<result.length; i++) {
+    for (let i = 0; i < result.length; i++) {
         const el = result[i];
 
-        if(mark_part == 0 && el == num) mark_part = 1;
-        else if(mark_part == 1 && el > num) mark_part = 2;
+        if (mark_part == 0 && el == num) mark_part = 1;
+        else if (mark_part == 1 && el > num) mark_part = 2;
 
-        if( el < num && mark_part != 0 ) return false;
-        else if( el == num && mark_part != 1) return false;
-        else if( el > num && mark_part != 2) return false;
-  
+        if (el < num && mark_part != 0) return false;
+        else if (el == num && mark_part != 1) return false;
+        else if (el > num && mark_part != 2) return false;
+
     }
 
     return true;
@@ -56,26 +56,26 @@ Inout.solve();
 
 */
 
-function partition_list_one_pass (list, num = 10)  {
+function partition_list_one_pass(list, num = 10) {
 
-   let ptr_end = list.length-1;
-   let ptr_start = 0; 
+    let ptr_end = list.length - 1;
+    let ptr_start = 0;
 
-   for(let i=0; i<=ptr_end; i++) {
+    for (let i = 0; i <= ptr_end; i++) {
 
-        if(list[i] > num) {
-            while(list[ptr_end] > num && ptr_end > i) ptr_end--;
+        if (list[i] > num) {
+            while (list[ptr_end] > num && ptr_end > i) ptr_end--;
             const temp = list[i];
             list[i] = list[ptr_end];
             list[ptr_end--] = temp;
         }
 
-        if(list[i] < num) {
+        if (list[i] < num) {
             const temp = list[i];
             list[i] = list[ptr_start];
             list[ptr_start++] = temp;
         }
-   }
+    }
 
-   return list;
+    return list;
 }

@@ -17,10 +17,10 @@ const Helper = require('../Helper');
 
 */
 
-Inout.result_comparer = Helper.Array_has_same_values;
+Inout.result_Comparer = Helper.hasArray_sameValues;
 
-Inout.push( '&AR 1,2,3', '&AR |3|2|2,3|1|1,3|1,2|1,2,3');
-Inout.push( '&AR 12,4,8', '&AR |12|4|12,4|8|12,8|4,8|12,4,8');
+Inout.push('&AR 1,2,3', '&AR |3|2|2,3|1|1,3|1,2|1,2,3');
+Inout.push('&AR 12,4,8', '&AR |12|4|12,4|8|12,8|4,8|12,4,8');
 
 Inout.solvers = [generate_all_subsets, generate_subset_methods_combined_into_one];
 Inout.solve();
@@ -53,12 +53,12 @@ Inout.solve();
 function binary_number_to_set(nums, binary) {
 
     const subset = [];
-    for(let num of nums) {
+    for (let num of nums) {
         // Each index corresponds to one bit in the binary number, the current index is represented by the last bit of the binary nubmer.
         // Every iteration the binary number is shifted by one to the right, so that the bit representing the next index is the last bit of the binary number.
-        
+
         // If the last bit is set, then the number at the current index is included in the subset.
-        if( binary & 0b1 ) subset.push(num) 
+        if (binary & 0b1) subset.push(num)
         // Shift the binary number by one to the right, thereby moving the second-bit to the first position. 0b010 >> 0b1 = 0b001
         binary >>= 1;
     }
@@ -66,7 +66,7 @@ function binary_number_to_set(nums, binary) {
     return subset;
 }
 
-function generate_all_subsets(nums)  {
+function generate_all_subsets(nums) {
 
     // Each position in the list corresponds to one bit in the binary number, with two options:
     //  - The bit being set indicating the number being included in the subset.
@@ -76,9 +76,9 @@ function generate_all_subsets(nums)  {
 
     // The Alogrithm start at the max number (0b111 for [1,2,3]) and counts down to zero.
     let binary_count = Math.pow(2, nums.length);
-    const subsets    = [];
+    const subsets = [];
 
-    while(binary_count--)
+    while (binary_count--)
         subsets.push(binary_number_to_set(nums, binary_count));
 
     return subsets;
@@ -88,17 +88,17 @@ function generate_all_subsets(nums)  {
 function generate_subset_methods_combined_into_one(nums) {
 
     let binary_count = 0b0;
-    const subsets    = [];
+    const subsets = [];
 
-    while(binary_count < Math.pow(2, nums.length)) {
-        let   b   = binary_count++;
+    while (binary_count < Math.pow(2, nums.length)) {
+        let b = binary_count++;
         const set = [];
 
-        for(let num of nums) {
-            if( b & 0b1 ) set.push(num) 
+        for (let num of nums) {
+            if (b & 0b1) set.push(num)
             b >>= 1;
         }
-    
+
         subsets.push(set);
     }
 

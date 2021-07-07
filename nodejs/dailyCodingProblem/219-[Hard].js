@@ -60,7 +60,7 @@ class Connect_Four {
         if(this.game_state == Connect_Four.GAME_ON) {
 
             console.log('\n     Player: ' + this.players[this.curr_player] + '  --- Turn: ' + this.counted_turns+'/'+Connect_Four.MAX_TURNS)
-            console.log(Helper.matrix_toString(this.board, false));
+            console.log(Helper.printMatrix(this.board, false));
 
             Connect_Four.rl.question('Choose a Row: ', (userInput) => {
                 Connect_Four.rl.close;
@@ -90,7 +90,7 @@ class Connect_Four {
 
             console.clear();
             console.log('\n     The game is a draw --- Turn: ' + this.counted_turns+'/'+Connect_Four.MAX_TURNS)
-            console.log(Helper.matrix_toString(this.board, false));
+            console.log(Helper.printMatrix(this.board, false));
             
             Connect_Four.rl.question('/// Enter to play again.', (userInput) => {
                 Connect_Four.rl.close;
@@ -117,8 +117,8 @@ class Connect_Four {
             
             console.clear();
             console.log('\n     Player: ' + this.players[this.curr_player] + ' has won the game --- Turn: ' + this.counted_turns+'/'+Connect_Four.MAX_TURNS)
-            console.log(Helper.matrix_toString(this.board, false));
-            console.log(Helper.matrix_toString(display_win, false))
+            console.log(Helper.printMatrix(this.board, false));
+            console.log(Helper.printMatrix(display_win, false))
 
             Connect_Four.rl.question('/// Enter to play again.', (userInput) => {
                 Connect_Four.rl.close;

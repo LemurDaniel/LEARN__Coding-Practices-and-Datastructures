@@ -13,7 +13,7 @@ const Helper = require('../Helper');
 
 */
 
-Inout.input_string_converter = arg => ' Num: ' + arg + ' -- ' + (arg >>> 0).toString(2);
+Inout.input_stringConverter = arg => ' Num: ' + arg + ' -- ' + (arg >>> 0).toString(2);
 
 Inout.push( 156, 3 );
 Inout.push( -156, 24 );

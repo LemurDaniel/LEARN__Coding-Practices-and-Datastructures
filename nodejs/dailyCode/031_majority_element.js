@@ -34,9 +34,9 @@ function majority_element(list) {
     let maj_el = 0;
     const dict = { [maj_el]: 0 };
 
-    for(let num of list) {
-        if(num in dict && ++dict[num] > dict[maj_el]) maj_el = dict[num];
-        else if( !(num in dict) ) dict[num] = 1;
+    for (let num of list) {
+        if (num in dict && ++dict[num] > dict[maj_el]) maj_el = dict[num];
+        else if (!(num in dict)) dict[num] = 1;
     }
 
     return maj_el;

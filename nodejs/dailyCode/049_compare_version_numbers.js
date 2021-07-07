@@ -56,33 +56,33 @@ const Helper = require('../Helper');
 */
 
 
-Inout.convert_result = num => num == 0 ? 'The Versions are equal' : (num == 1 ? 'Version 1 is bigger' : 'Version 2 is bigger');
-Inout.convert_output = Inout.convert_result;
+Inout.result_Converter = num => num == 0 ? 'The Versions are equal' : (num == 1 ? 'Version 1 is bigger' : 'Version 2 is bigger');
+Inout.output_Converter = Inout.result_Converter;
 
-Inout.push( {
+Inout.push({
     version_1: '1.0.33',
     version_2: '1.0.27'
-}, 1 );
+}, 1);
 
-Inout.push( {
+Inout.push({
     version_1: '0.1',
     version_2: '1.1'
-}, -1 );
+}, -1);
 
-Inout.push( {
+Inout.push({
     version_1: '1.01',
     version_2: '1.001'
-}, 0 );
+}, 0);
 
-Inout.push( {
+Inout.push({
     version_1: '1.0',
     version_2: '1.0.0'
-}, 0 );
+}, 0);
 
-Inout.push( {
+Inout.push({
     version_1: '1.0.1',
     version_2: '1'
-}, 1 );
+}, 1);
 
 Inout.solvers = [compare_versions, compare_versions_2];
 Inout.solve();
@@ -94,20 +94,20 @@ Inout.solve();
     ###########################################################################################
 */
 
-function compare_versions ( version_1, version_2 ) {
+function compare_versions(version_1, version_2) {
 
     // Split the version numbers into partes and convert those to numbers.
-    const v1 = version_1.split('.').map( v => v == '' ? 0 : parseInt(v) );
-    const v2 = version_2.split('.').map( v => v == '' ? 0 : parseInt(v) );
+    const v1 = version_1.split('.').map(v => v == '' ? 0 : parseInt(v));
+    const v2 = version_2.split('.').map(v => v == '' ? 0 : parseInt(v));
 
     // Get both of them to the same length by appending zeroes to the one missing them.
-    while(v1.length < v2.length) v1.push(0);
-    while(v2.length < v1.length) v2.push(0);
+    while (v1.length < v2.length) v1.push(0);
+    while (v2.length < v1.length) v2.push(0);
 
     // Compare each number at each version level starting from the highest.
-    for(let i = 0; i < v1.length; i++ ) {
-        if ( v1[i] > v2[i] ) return 1;
-        else if( v1[i] < v2[i] ) return -1;
+    for (let i = 0; i < v1.length; i++) {
+        if (v1[i] > v2[i]) return 1;
+        else if (v1[i] < v2[i]) return -1;
     }
 
     return 0;
@@ -121,9 +121,9 @@ function split_version(version) {
 
     const arr = [];
     let temp = 0;
-    
-    for(let c of version) {
-        if(c !== '.') temp = temp*10  + parseInt(c);
+
+    for (let c of version) {
+        if (c !== '.') temp = temp * 10 + parseInt(c);
         else {
             arr.push(temp);
             temp = 0;
@@ -135,18 +135,18 @@ function split_version(version) {
 }
 
 
-function compare_versions_2 ( version_1, version_2 ) {
+function compare_versions_2(version_1, version_2) {
 
     const v1 = split_version(version_1);
     const v2 = split_version(version_2);
-    
-    while(v1.length < v2.length) v1.push(0);
-    while(v2.length < v1.length) v2.push(0);
+
+    while (v1.length < v2.length) v1.push(0);
+    while (v2.length < v1.length) v2.push(0);
 
     // Compare each number at each version level starting from the highest.
-    for(let i = 0; i < v1.length; i++ ) {
-        if ( v1[i] > v2[i] ) return 1;
-        else if( v1[i] < v2[i] ) return -1;
+    for (let i = 0; i < v1.length; i++) {
+        if (v1[i] > v2[i]) return 1;
+        else if (v1[i] < v2[i]) return -1;
     }
 
     return 0;

@@ -1,4 +1,4 @@
-const Inout = new (require ('../Inout'))('DailyCode --- Missing Ranges');
+const Inout = new (require('../Inout'))('DailyCode --- Missing Ranges');
 const Helper = require('../Helper')
 
 /*
@@ -19,17 +19,7 @@ const Helper = require('../Helper')
 
 */
 
-Inout.convert_input = Helper.string_toIntArray;
-Inout.convert_output = Helper.string_toIntArray;
-
-Inout.map_input = (arg, solver) => solver(arg[0], arg[1]);
-
-Inout.input_string_converter = arr => '\n   --- Array: '+arr[0] + '\n   --- Range: '+arr[1];
-
-Inout.testcases.push({
-    input: '1, 3, 5, 10 | 1, 10',
-    output: '2,2 | 4,4 | 6,9'
-})
+Inout.push({ Array: '&AR 1, 3, 5, 10', Range: '&AR 1, 10' }, '&AR 2,2 | 4,4 | 6,9')
 
 Inout.solvers = [find_missing_ranges]
 Inout.solve();
@@ -46,16 +36,16 @@ Inout.solve();
 function find_missing_ranges(arr, range) {
 
     const missing = [];
-    for(let i=1; i<arr.length; i++) {
+    for (let i = 1; i < arr.length; i++) {
 
         // skip all numbers until start of range
-        if( arr[i] < range[0] ) continue;
+        if (arr[i] < range[0]) continue;
         // return when end of range is reached
-        else if ( arr[i] > range[1] ) return;
-        
+        else if (arr[i] > range[1]) return;
+
         // add missing range as tuplet
-        if( arr[i] - arr[i-1] != 1 )
-            missing.push( [ arr[i-1]+1, arr[i]-1 ] );
+        if (arr[i] - arr[i - 1] != 1)
+            missing.push([arr[i - 1] + 1, arr[i] - 1]);
     }
     return missing;
 }

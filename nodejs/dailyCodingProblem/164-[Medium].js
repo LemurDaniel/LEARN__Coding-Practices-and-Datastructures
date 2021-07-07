@@ -21,7 +21,7 @@ function add_testcase(len) {
         arr.push(i);
         if(i == rand) arr.push(rand);
     }
-    Helper.scramble_Array(arr);
+    Helper.scrambleArray(arr);
     Inout.push( { input: arr, output: rand } );
 }
 

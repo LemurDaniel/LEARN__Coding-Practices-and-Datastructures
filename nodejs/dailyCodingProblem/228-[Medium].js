@@ -14,7 +14,7 @@ const Helper = require('../Helper');
 */
 
 
-Inout.push( '&AR 10,7,76,415', 77641510 )
+Inout.push('&AR 10,7,76,415', 77641510)
 
 Inout.solvers = [burte_force_recursive, rearrange_numbers_1, rearrange_numbers_2];
 Inout.solve();
@@ -27,10 +27,10 @@ Inout.solve();
 */
 
 
-function burte_force_recursive(arr, num='') {
+function burte_force_recursive(arr, num = '') {
 
 
-    if(arr.length === 0) return parseInt(num);
+    if (arr.length === 0) return parseInt(num);
 
     let maximum = 0;
 
@@ -38,13 +38,13 @@ function burte_force_recursive(arr, num='') {
     // Then pass the copied array recursivly to the function again, once with the current value appended at the front and once a the back of the recursivley build number.
     // The recursion will cover all possible combinations and by comparing them return the maximum value.
     // This is done until all numbers are appended and the array therefore is zero.
-    for(let i=0; i<arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
 
         const val = arr[i]
-   
+
         // Remove current value from the arrray and remove the number at the specified index.
         const copy = arr.join(';').split(';');
-        copy.splice(i,1);
+        copy.splice(i, 1);
 
         // Call the function again once with the value at the front and once at the back of the current number.
         const a_then_b = burte_force_recursive(copy, val + num);
@@ -84,43 +84,43 @@ function burte_force_recursive(arr, num='') {
 
 */
 
-function rearrange_numbers_1( list ) {
+function rearrange_numbers_1(list) {
 
     const ll = new LinkedList('HEAD', new LinkedList.Node(list[0]));
 
-    for(let i=1; i<list.length; i++) {
+    for (let i = 1; i < list.length; i++) {
 
         const insert = list[i];
         let node = ll.head.next;
-      
-        while(node) {
+
+        while (node) {
             const order_of_magnitude_a = Math.floor(Math.log10(insert)) + 1;
             const order_of_magnitude_b = Math.floor(Math.log10(node.val)) + 1;
-        
-            const a_then_b = insert * Math.pow(10, order_of_magnitude_b) + node.val 
+
+            const a_then_b = insert * Math.pow(10, order_of_magnitude_b) + node.val
             const b_then_a = node.val * Math.pow(10, order_of_magnitude_a) + insert
 
             // If the number is bigger with the to be inserted value at the front, then
             // insert a dubplicate of the current node after it and replace the value of the
             // original with the to be inserted value.
-            if(a_then_b > b_then_a) {
+            if (a_then_b > b_then_a) {
                 node.next = new LinkedList.Node(node.val, node.next);
                 node.val = insert;
                 break;
-            } else if(node.next === null){
+            } else if (node.next === null) {
                 // If the current node is the tail of the list, then append the value as a node after it.
                 node.next = new LinkedList.Node(insert);
                 break;
             }
-            else node = node.next; 
-    
+            else node = node.next;
+
         }
     }
 
     // console.log(ll.toString())
 
     let num = 0;
-    for(let val of ll.head.next) 
+    for (let val of ll.head.next)
         num = num * Math.pow(10, 1 + Math.floor(Math.log10(val))) + val;
 
     return num;
@@ -128,40 +128,40 @@ function rearrange_numbers_1( list ) {
 
 
 
-function rearrange_numbers_2( list ) {
+function rearrange_numbers_2(list) {
 
     const ll = new LinkedList('HEAD', new LinkedList.Node(list[0]));
 
-    for(let i=1; i<list.length; i++) {
+    for (let i = 1; i < list.length; i++) {
 
         const insert = list[i];
         let node = ll.head.next;
-      
-        while(node) {
-            
+
+        while (node) {
+
             const a_then_b = parseInt(insert + '' + node.val);
-            const b_then_a = parseInt(node.val + '' +insert);
+            const b_then_a = parseInt(node.val + '' + insert);
 
             // If the number is bigger with the to be inserted value at the front, then
             // insert a dubplicate of the current node after it and replace the value of the
             // original with the to be inserted value.
-            if(a_then_b > b_then_a) {
+            if (a_then_b > b_then_a) {
                 node.next = new LinkedList.Node(node.val, node.next);
                 node.val = insert;
                 break;
-            } else if(node.next === null){
+            } else if (node.next === null) {
                 // If the current node is the tail of the list, then append the value as a node after it.
                 node.next = new LinkedList.Node(insert);
                 break;
             }
-            else node = node.next; 
-    
+            else node = node.next;
+
         }
     }
 
 
     let num = '';
-    for(let val of ll.head.next) num  = num + val.toString();
+    for (let val of ll.head.next) num = num + val.toString();
 
     return parseInt(num);
 }

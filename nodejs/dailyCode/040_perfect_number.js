@@ -22,11 +22,11 @@ const Helper = require('../Helper');
 
 */
 
-Inout.result_comparer = (arg, arg2) =>typeof arg == 'object' ? ( Helper.Array_has_same_values(arg.divisors, arg2.divisors) ) : ( arg == arg2.perfect );
+Inout.result_Comparer = (arg, arg2) => typeof arg == 'object' ? (Helper.hasArray_sameValues(arg.divisors, arg2.divisors)) : (arg == arg2.perfect);
 
-Inout.push( 28, { divisors: '&AR 1,2,4,7,14' } );
-Inout.push( 82, false );
-Inout.push( 8128, { divisors: '&AR 1,2,4,8,16,32,64,127,254,508,1016,2032,4064' } );
+Inout.push(28, { divisors: '&AR 1,2,4,7,14' });
+Inout.push(82, false);
+Inout.push(8128, { divisors: '&AR 1,2,4,8,16,32,64,127,254,508,1016,2032,4064' });
 
 Inout.solvers = [isPerfectNumber];
 Inout.solve();
@@ -41,15 +41,15 @@ Inout.solve();
 function isPerfectNumber(num) {
 
     let divisors = [];
-    let divisor  = Math.floor(num / 2);
+    let divisor = Math.floor(num / 2);
 
     let sum = 0;
     do {
-        if( num % divisor != 0 ) continue; 
+        if (num % divisor != 0) continue;
         divisors.push(divisor);
         sum += divisor;
-        if(sum > num) break;;
-    } while(--divisor)
+        if (sum > num) break;;
+    } while (--divisor)
 
     return { sum: sum, divisors: divisors, perfect: sum == num }
 }

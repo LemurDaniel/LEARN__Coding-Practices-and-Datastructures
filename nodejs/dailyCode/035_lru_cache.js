@@ -40,8 +40,8 @@ const Helper = require('../Helper');
 
 */
 
-Inout.push( { size: 2, operations: '&AR PUT 3 3|PUT 4 4|GET 4|GET 3|PUT 2 2|GET 4|GET 3' }, 
-            '&AR ,,4,3,,None,3');
+Inout.push({ size: 2, operations: '&AR PUT 3 3|PUT 4 4|GET 4|GET 3|PUT 2 2|GET 4|GET 3' },
+    '&AR ,,4,3,,None,3');
 
 Inout.solvers = [lru_cache];
 Inout.solve();
@@ -56,13 +56,13 @@ Inout.solve();
 function lru_cache(size, operations) {
 
     const cache = new LRU_Node_Cache(size)
-    const log   = [];
+    const log = [];
 
-    for(let op of operations){
-        
-        if(op[0] == 'GET') 
-            log.push( cache.get(op[1]) );
-        else  if(op[0] == 'PUT') {
+    for (let op of operations) {
+
+        if (op[0] == 'GET')
+            log.push(cache.get(op[1]));
+        else if (op[0] == 'PUT') {
             cache.put(op[1], op[2])
             log.push('');
         }

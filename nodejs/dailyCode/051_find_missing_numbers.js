@@ -37,17 +37,17 @@ Inout.solve();
 */
 
 
-function findMissingNumbers( arr ) {
+function findMissingNumbers(arr) {
 
     const missing = [];
     const countArr = new Array(arr.length);
 
-    for(let i=0; i<arr.length; i++) 
-        countArr[arr[i]-1] = arr[i];
+    for (let i = 0; i < arr.length; i++)
+        countArr[arr[i] - 1] = arr[i];
 
-    for(let i=0; i<arr.length; i++)
-        if(countArr[i] == undefined) missing.push(i+1);
+    for (let i = 0; i < arr.length; i++)
+        if (countArr[i] == undefined) missing.push(i + 1);
 
-    
+
     return missing;
 }

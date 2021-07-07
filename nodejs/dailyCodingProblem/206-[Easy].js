@@ -1,4 +1,4 @@
-const Inout = new (require ('../Inout'))('Daily Coding Problem --- Apply Permutation');
+const Inout = new (require('../Inout'))('Daily Coding Problem --- Apply Permutation');
 const Helper = require('../Helper');
 
 /*
@@ -15,7 +15,7 @@ const Helper = require('../Helper');
 
 */
 
-Inout.push( { characters: '&AR a b c', permutation: '&AR 2 1 0' } , '&AR c b a');
+Inout.push({ characters: '&AR a b c', permutation: '&AR 2 1 0' }, '&AR c b a');
 
 
 /*
@@ -25,7 +25,7 @@ Inout.push( { characters: '&AR a b c', permutation: '&AR 2 1 0' } , '&AR c b a')
     ###########################################################################################
 */
 
-const apply_permutation_one_line = (chars, perm) => chars.map( (v,i) => chars[perm[i]] )
+const apply_permutation_one_line = (chars, perm) => chars.map((v, i) => chars[perm[i]])
 
 Inout.solvers = [apply_permutation, apply_permutation_one_line];
 Inout.solve();
@@ -35,9 +35,9 @@ Inout.solve();
 function apply_permutation(chars, perm) {
 
     permutated = new Array(chars.length);
-    for(let i=0; i<perm.length; i++) {
-        const index   = perm[i];
-        permutated[i] = chars[index]; 
+    for (let i = 0; i < perm.length; i++) {
+        const index = perm[i];
+        permutated[i] = chars[index];
     }
 
     return permutated;

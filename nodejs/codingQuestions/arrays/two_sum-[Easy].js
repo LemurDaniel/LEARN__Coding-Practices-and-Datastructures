@@ -1,4 +1,4 @@
-const Inout = new (require ('../../Inout'))('Coding Questions --- Two sum - [difficulty: Easy]');
+const Inout = new (require('../../Inout'))('Coding Questions --- Two sum - [difficulty: Easy]');
 const Helper = require('../../Helper');
 
 /*
@@ -11,7 +11,7 @@ const Helper = require('../../Helper');
     return [0, 1]
 */
 
-Inout.push( { input: { nums: '2,7,11,15', target: 9 }, output: [0,1] } );
+Inout.push({ input: { nums: '2,7,11,15', target: 9 }, output: [0, 1] });
 
 Inout.solvers = [two_sum, two_sum_2];
 Inout.solve();
@@ -30,13 +30,13 @@ Inout.solve();
     time  complexity: O(n)  - linear
 */
 
-function two_sum (nums, target)  {
+function two_sum(nums, target) {
 
     const dict = {};
 
-    for(let i = 0; i<nums.length; i++) {
+    for (let i = 0; i < nums.length; i++) {
         const num = nums[i];
-        if(num in dict) return [Math.min(i, dict[num]), Math.max(i, dict[num])]
+        if (num in dict) return [Math.min(i, dict[num]), Math.max(i, dict[num])]
         else dict[target - nums[i]] = i;
     }
 
@@ -48,14 +48,14 @@ function two_sum (nums, target)  {
     time  complexity: O(n^2)  - quadratic
 */
 
-function two_sum_2 (nums, target)  {
+function two_sum_2(nums, target) {
 
-    for(let i = 0; i<nums.length; i++) {
-    
+    for (let i = 0; i < nums.length; i++) {
+
         const diff = target - nums[i];
-        for(let j = 0; j<nums.length; j++) {
-            if(j == i) continue;
-            else if(nums[j] == diff)
+        for (let j = 0; j < nums.length; j++) {
+            if (j == i) continue;
+            else if (nums[j] == diff)
                 return [Math.min(i, j), Math.max(i, j)]
         }
     }

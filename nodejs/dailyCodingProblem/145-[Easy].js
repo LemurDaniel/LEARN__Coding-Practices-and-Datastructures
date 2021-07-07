@@ -1,4 +1,4 @@
-const Inout = new (require ('../Inout'))('DailyCode --- Swap every two nodes in a Linked List');
+const Inout = new (require('../Inout'))('DailyCode --- Swap every two nodes in a Linked List');
 const LinkedList = require('../datastructures/linkedList');
 
 /*
@@ -13,8 +13,8 @@ const LinkedList = require('../datastructures/linkedList');
 
 */
 
-Inout.push( '&LL 1234', '&LL 2143' );
-Inout.push( '&LL 12345', '&LL 21435' );
+Inout.push('&LL 1234', '&LL 2143');
+Inout.push('&LL 12345', '&LL 21435');
 
 Inout.solvers = [Swap_values_iterative, Swap_nodes_iterative, Swap_values_recursive]
 
@@ -31,7 +31,7 @@ function Swap_values_iterative(list) {
     let prev = list.head;
     let curr = null;
 
-    while(prev && prev.next) {
+    while (prev && prev.next) {
 
         curr = prev.next;
 
@@ -48,21 +48,21 @@ function Swap_values_iterative(list) {
 
 // 1 ==> 2 ==> 3 ==> 4 => 5
 function Swap_nodes_iterative(list) {
-    
+
     // pair of nodes that get swapped each iteration
     let prev = null;
     let curr = list.head;
     let next;
 
-    if(curr.next) list.head = curr.next;
+    if (curr.next) list.head = curr.next;
 
-    while(curr && curr.next) {
+    while (curr && curr.next) {
 
         next = curr.next;
 
         //   2  ==>   3  ==>  4 ==> 5
         // prev ==> curr ==> next
-        if(prev) prev.next = next; // 2 ==> 4 ==> 5
+        if (prev) prev.next = next; // 2 ==> 4 ==> 5
 
         const temp = next.next; // 5
         next.next = curr; // 2 ==> 4 ==> 3 ==> (NULL)
@@ -78,13 +78,13 @@ function Swap_nodes_iterative(list) {
 
 
 function Swap_values_recursive(list) {
-    if(list.head) list.head.Swap_values_recursive();
+    if (list.head) list.head.Swap_values_recursive();
 }
 
 // recursive prototype method for all nodes of the linked list
-LinkedList.Node.prototype.Swap_values_recursive = function(prev_node){
+LinkedList.Node.prototype.Swap_values_recursive = function (prev_node) {
 
-    if(!prev_node && this.next)
+    if (!prev_node && this.next)
         return this.next.Swap_values_recursive(this);
 
     // swap values
@@ -92,13 +92,13 @@ LinkedList.Node.prototype.Swap_values_recursive = function(prev_node){
     this.val = prev_node.val;
     prev_node.val = temp;
 
-    if(this.next && this.next.next)
+    if (this.next && this.next.next)
         this.next.next.Swap_values_recursive(this.next);
 }
 
 // TODO
 function Swap_nodes_recursive(list) {
-    if(list.head) list.head.Swap_values_recursive();
+    if (list.head) list.head.Swap_values_recursive();
 }
 
 

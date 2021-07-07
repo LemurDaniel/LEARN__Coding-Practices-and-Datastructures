@@ -2,7 +2,7 @@ const Inout = new (require ('../Inout'))('Other --- Sorting');
 const Helper = require('../Helper');
 
 
-const arr = Helper.random_Array(10,100, 10, 25);
+const arr = Helper.randomArray(10,100, 10, 25);
 Inout.push( arr, arr.map( v => v ).sort() ); 
 
 Inout.push( '&LL'+arr.join(','), '&LL'+arr.sort().join(','));

@@ -33,11 +33,11 @@ const Helper = require('../Helper');
 
 */
 
-Inout.push( '&LL 12334', '&LL 124' );
-Inout.push( '&LL 12334355333', '&LL 124' );
-Inout.push( '&LL 33125334335', '&LL 124' );
+Inout.push('&LL 12334', '&LL 124');
+Inout.push('&LL 12334355333', '&LL 124');
+Inout.push('&LL 33125334335', '&LL 124');
 
-Inout.solvers = [remove_duplicates_merge_sort, remove_duplicates_two_passes];
+Inout.solvers = [removeDuplicates_mergeSort, removeDuplicates_twoPasses];
 Inout.solve();
 
 
@@ -48,25 +48,26 @@ Inout.solve();
     ###########################################################################################
 */
 
-function remove_duplicates_merge_sort( list ) {
+function removeDuplicates_mergeSort(list) {
 
     Helper.MergeSort.sort(list);
-
-    const head = new LinkedList.Node('HEAD', list.head);   
+    
+    const head = new LinkedList.Node('HEAD', list.head);
     let prev = head;
 
-    while(prev.next) {
+    while (prev.next) {
 
         let node = prev.next;
 
         // Check in sorted LL if there are two or more nodes with the same value in a row.
-        if(node.next != null && node.next.val == node.val) {
-    
+        if (node.next != null && node.next.val == node.val) {
+
+            console.log('YES')
             // Cut out all nodes with the same value by moving forward until one with a different value is found.
             prev.next = null;
             const val = node.val;
-            while(node) {
-                if(node.val != val) break;
+            while (node) {
+                if (node.val != val) break;
                 else node = node.next;
             }
             // Append the node with the different value to the previous node.
@@ -79,30 +80,29 @@ function remove_duplicates_merge_sort( list ) {
 
     list.tail = prev;
     list.head = head.next;
-
 }
 
-function remove_duplicates_two_passes( list ) {
+function removeDuplicates_twoPasses(list) {
 
     const dict = {};
     let node = list.head;
 
-    while(node) {
+    while (node) {
 
-        if( node.val in dict ) dict[node.val]++;
+        if (node.val in dict) dict[node.val]++;
         else dict[node.val] = 1;
 
         node = node.next;
     }
 
 
-    const head   = new LinkedList.Node('HEAD');
-    let new_list = head; 
+    const head = new LinkedList.Node('HEAD');
+    let new_list = head;
     node = list.head;
 
-    while(node) {
+    while (node) {
 
-        if( dict[node.val] == 1 ) {
+        if (dict[node.val] == 1) {
             new_list.next = node;
             new_list = new_list.next;
         }

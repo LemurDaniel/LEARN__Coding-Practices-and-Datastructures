@@ -25,10 +25,10 @@ const Helper = require('../Helper');
 
 */
 
-Inout.result_comparer = (arg, arg2) => (typeof arg2 == 'number' ? arg2 : arg2.ways) == arg
-Inout.result_string_converter = arg => {
+Inout.result_Comparer = (arg, arg2) => (typeof arg2 == 'number' ? arg2 : arg2.ways) == arg
+Inout.result_stringConverter = arg => {
     if(typeof arg == 'number') return  arg + ' Ways';;
-    return arg.ways + ' Ways\n       ' + Helper.print_Array(arg.paths, ',\n         ');
+    return arg.ways + ' Ways\n       ' + Helper.printArray(arg.paths, ',\n         ');
 }
 
 Inout.push( '&NA 001|001|100', 2 );

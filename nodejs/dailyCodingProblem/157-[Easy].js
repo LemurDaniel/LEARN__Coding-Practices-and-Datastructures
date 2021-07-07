@@ -14,7 +14,7 @@ const Helper = require('../Helper');
 
 */
 
-Inout.convert_input = inp => inp.toLowerCase();
+Inout.input_Converter = inp => inp.toLowerCase();
 
 Inout.push( { input: 'carrace', output: true } );
 Inout.push( { input: 'daily', output: false } );

@@ -1,4 +1,4 @@
-const Inout = new (require ('../Inout'))('DailyCode --- Remove duplicates from sorted list');
+const Inout = new (require('../Inout'))('DailyCode --- Remove duplicates from sorted list');
 const Helper = require('../Helper');
 
 /*
@@ -27,13 +27,13 @@ const Helper = require('../Helper');
 
 */
 
-Inout.convert_result = arg => new Object({ arr: arg, m: arg.length });
-Inout.convert_output = arg => Inout.convert_result(Helper.convert_strings_in_object(arg))
+Inout.result_Converter = arg => ({ arr: arg, m: arg.length });
+Inout.output_Converter = arg => Inout.result_Converter(Helper.default_Converter(arg))
 
 Inout.push("&AR 1,2,3,4,4,4,4,5,5,6,7,9", "&AR 1,2,3,4,5,6,7,9");
 Inout.push("&AR 1,1,1,1,1,1,1", "&AR 1");
 
-Inout.solvers = [remove_duplicates_in_place];
+Inout.solvers = [removeDuplicates_inPlace];
 Inout.solve();
 
 
@@ -45,14 +45,14 @@ Inout.solve();
 */
 
 
-function remove_duplicates_in_place(arr) {
+function removeDuplicates_inPlace(arr) {
 
     let ptr_start = 0;
-    for(let i=0; i<arr.length; i++) {
-        if(arr[i] == arr[ptr_start]) continue;
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] == arr[ptr_start]) continue;
         else arr[++ptr_start] = arr[i];
     }
 
-    arr.length = ptr_start+1;
+    arr.length = ptr_start + 1;
 }
 

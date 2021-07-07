@@ -1,4 +1,4 @@
-const Inout = new (require ('../../Inout'))('Coding Questions --- Min Stack - [difficulty: Easy]');
+const Inout = new (require('../../Inout'))('Coding Questions --- Min Stack - [difficulty: Easy]');
 const { Min_Max_Stack } = require('../../datastructures/stack');
 const Helper = require('../../Helper');
 
@@ -29,25 +29,25 @@ const Helper = require('../../Helper');
     minStack.getMax();      --> Returns  0.
 */
 
-function print_operations (operations) {
-    
+function print_operations(operations) {
+
     let str = '';
-    for(op of operations) {
+    for (op of operations) {
         str += '\n        ';
-        if(op[0] == 'PUSH') str += 'Push('+ (op[1] >= 0 ? ' ':'' ) + op[1] +')';
-        else if(op[0] == 'POP') str += 'Pop => '+ (op[1] >= 0 ? ' ':'' ) + op[1];
-        else if(op[0] == 'MIN') str += 'Min => '+ (op[1] >= 0 ? ' ':'' ) + op[1];
-        else if(op[0] == 'MAX') str += 'Max => '+ (op[1] >= 0 ? ' ':'' ) + op[1];
+        if (op[0] == 'PUSH') str += 'Push(' + (op[1] >= 0 ? ' ' : '') + op[1] + ')';
+        else if (op[0] == 'POP') str += 'Pop => ' + (op[1] >= 0 ? ' ' : '') + op[1];
+        else if (op[0] == 'MIN') str += 'Min => ' + (op[1] >= 0 ? ' ' : '') + op[1];
+        else if (op[0] == 'MAX') str += 'Max => ' + (op[1] >= 0 ? ' ' : '') + op[1];
         else str += op;
     }
     return str;
 }
 
-Inout.output_string_converter = print_operations;
-Inout.result_string_converter = print_operations;
+Inout.output_stringConverter = print_operations;
+Inout.result_stringConverter = print_operations;
 
-Inout.push( 
-    '&AR PUSH -2, PUSH 0, PUSH 4, PUSH -3, MIN, MAX, POP, MIN, MAX, POP, MIN, MAX', 
+Inout.push(
+    '&AR PUSH -2, PUSH 0, PUSH 4, PUSH -3, MIN, MAX, POP, MIN, MAX, POP, MIN, MAX',
     '&AR PUSH -2|PUSH 0|PUSH 4|PUSH -3|MIN -3|MAX 4|POP -3|MIN -2|MAX 4|POP 4|MIN -2|MAX 0'
 );
 
@@ -63,22 +63,22 @@ Inout.solve();
 */
 
 
-function min_stack( operations ) {
+function min_stack(operations) {
 
     const stack = new Min_Max_Stack();
     const log = [];
 
-    try{
+    try {
         // Apply operations.
-        for(let op of operations) {
-            if(op.includes('PUSH')) {
+        for (let op of operations) {
+            if (op.includes('PUSH')) {
                 const val = parseInt(op.split(' ')[1]);
-                stack.push( val );
-                log.push(['PUSH',val]);
+                stack.push(val);
+                log.push(['PUSH', val]);
             }
-            else if(op.includes('POP')) log.push(['POP', stack.pop() ]);
-            else if(op.includes('MIN')) log.push(['MIN', stack.peek_Min() ]);
-            else if(op.includes('MAX')) log.push(['MAX', stack.peek_Max() ]);
+            else if (op.includes('POP')) log.push(['POP', stack.pop()]);
+            else if (op.includes('MIN')) log.push(['MIN', stack.peek_Min()]);
+            else if (op.includes('MAX')) log.push(['MAX', stack.peek_Max()]);
 
         }
     } catch (exp) { log.push(exp); }

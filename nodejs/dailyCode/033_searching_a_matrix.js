@@ -27,13 +27,13 @@ const Helper = require('../Helper');
 
 */
 
-Inout.input_string_converter = arg => '\n     Value: ' + arg.val + '\n     Matrix:' + Helper.matrix_toString(arg.mat); 
+Inout.input_stringConverter = arg => '\n     Value: ' + arg.val + '\n     Matrix:' + Helper.printMatrix(arg.mat);
 
 Inout.push({ mat: '&AR 1,3,5,8|10,11,15,16|24,27,30,31', val: 4 }, false);
-Inout.push({ mat: '&AR 1,3,5,8|10,11,15,16|24,27,30,31', val: 10 }, {row: 1, col: 0});
-Inout.push({ mat: '&AR 1,3|5,8|10,11|15,16|24,27|30,31', val: 10 }, {row: 2, col: 0});
+Inout.push({ mat: '&AR 1,3,5,8|10,11,15,16|24,27,30,31', val: 10 }, { row: 1, col: 0 });
+Inout.push({ mat: '&AR 1,3|5,8|10,11|15,16|24,27|30,31', val: 10 }, { row: 2, col: 0 });
 
-Inout.solvers = [binary_search_matrix];
+Inout.solvers = [binarySearch_matrix];
 Inout.solve();
 
 /*
@@ -43,22 +43,21 @@ Inout.solve();
     ###########################################################################################
 */
 
-function binary_search_matrix(mat, value) {
+function binarySearch_matrix(mat, value) {
 
-    const abs_to_rel = abs => new Object({ row: Math.floor(abs/mat[0].length), col: abs%mat[0].length});
+    let lower = 0;
+    let upper = (mat.length * mat[0].length) - 1;
 
-    let lower  = 0;
-    let upper  = (mat.length * mat[0].length) - 1;
-    
-    while(lower <= upper) {
+    while (lower <= upper) {
 
-        const mid = Math.round( (upper + lower) / 2 );
-        const pos = abs_to_rel(mid);
-        const el  = mat[pos.row][pos.col];
+        const mid = Math.round((upper + lower) / 2);
+        const col = mid % mat[0].length;
+        const row = Math.floor(mid / mat[0].length);
+        const el = mat[row][col];
 
-        if(el > value) upper = mid - 1;
-        else if(el < value) lower = mid + 1;
-        else return pos;
+        if (el > value) upper = mid - 1;
+        else if (el < value) lower = mid + 1;
+        else return { row: row, col: col };
     }
 
     return false;

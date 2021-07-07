@@ -73,8 +73,8 @@ Inout.solvers = [invert_recursive, invert_recursive_static, invert_iterative];
 
 BinaryTree.Node.prototype.invert = function () {
 
-    if(this.right) this.right.invert();
-    if(this.left) this.left.invert();
+    if (this.right) this.right.invert();
+    if (this.left) this.left.invert();
 
     [this.left, this.right] = [this.right, this.left]
 }
@@ -86,10 +86,10 @@ function invert_recursive(tree) {
 
 function invert_recursive_static(node) {
 
-    if(node instanceof BinaryTree) invert_recursive_static(node.root);
+    if (node instanceof BinaryTree) invert_recursive_static(node.root);
 
-    if(node.left) invert_recursive_static(node.left);
-    if(node.right) invert_recursive_static(node.right);
+    if (node.left) invert_recursive_static(node.left);
+    if (node.right) invert_recursive_static(node.right);
 
     [node.right, node.left] = [node.left, node.right];
 
@@ -103,9 +103,9 @@ function invert_iterative(tree) {
     const stack = [];
     let node = tree.root
 
-    while(stack.length > 0 || node) {
+    while (stack.length > 0 || node) {
 
-        if(!node) {
+        if (!node) {
             node = stack.pop();
 
             // Swap child nodes with the fancy destructuring syntax.

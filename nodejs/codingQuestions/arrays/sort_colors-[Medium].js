@@ -1,5 +1,5 @@
 
-const Inout = new (require ('../../Inout'))('Coding Questions --- Sort Colors - [difficulty: Medium]');
+const Inout = new (require('../../Inout'))('Coding Questions --- Sort Colors - [difficulty: Medium]');
 const Helper = require('../../Helper');
 
 /*
@@ -20,14 +20,13 @@ const Helper = require('../../Helper');
 */
 
 
-for(let i=0; i<20; i++)
-{
+for (let i = 0; i < 20; i++) {
     const arr = [];
-    for(let i=(Math.round(Math.random()*15)+8); i>=0; i--){
-        arr.push( Math.floor(Math.random()*3) );
+    for (let i = (Math.round(Math.random() * 15) + 8); i >= 0; i--) {
+        arr.push(Math.floor(Math.random() * 3));
     }
 
-    Inout.push(arr, Helper.default_copy(arr).sort() )
+    Inout.push(arr, Helper.default_Copy(arr).sort())
 }
 
 Inout.solvers = [sort_colors_one_pass, sort_colors_two_passes_counting, sort_colors_two_passes_counting_variant_2];
@@ -61,26 +60,26 @@ Inout.solve();
 
 */
 
-function sort_colors_one_pass (colors)  {
+function sort_colors_one_pass(colors) {
 
-   let ptr_end = colors.length-1;
-   let ptr_start = 0; 
+    let ptr_end = colors.length - 1;
+    let ptr_start = 0;
 
-   for(let i=0; i<=ptr_end; i++) {
+    for (let i = 0; i <= ptr_end; i++) {
 
-        if(colors[i] == 2) {
-            while(colors[ptr_end] == 2 && ptr_end > i) ptr_end--;
+        if (colors[i] == 2) {
+            while (colors[ptr_end] == 2 && ptr_end > i) ptr_end--;
             colors[i] = colors[ptr_end];
             colors[ptr_end--] = 2;
         }
 
-        if(colors[i] == 0) {
+        if (colors[i] == 0) {
             colors[i] = colors[ptr_start];
             colors[ptr_start++] = 0;
         }
 
-        // console.log(Helper.print_Array(colors) + '  Start: ' + ptr_start + '  I: ' + i + '  End: ' + ptr_end);
-   }
+        // console.log(Helper.printArray(colors) + '  Start: ' + ptr_start + '  I: ' + i + '  End: ' + ptr_end);
+    }
 }
 
 /*
@@ -88,39 +87,39 @@ function sort_colors_one_pass (colors)  {
     time  complexity: O(2n) => O(n)  - linear (Two passes)
 */
 
-function sort_colors_two_passes_counting (colors)  {
+function sort_colors_two_passes_counting(colors) {
 
     let zeros = 0;
-    let ones  = 0;
- 
-    for(let color of colors) {
-        if(color == 0) zeros++;
-        else if(color == 1) ones++;
+    let ones = 0;
+
+    for (let color of colors) {
+        if (color == 0) zeros++;
+        else if (color == 1) ones++;
     }
 
-    for(let idx in colors) {
-        if(zeros-- > 0) colors[idx] = 0;
-        else if(ones-- > 0) colors[idx] = 1;
+    for (let idx in colors) {
+        if (zeros-- > 0) colors[idx] = 0;
+        else if (ones-- > 0) colors[idx] = 1;
         else colors[idx] = 2;
     }
 
- }
+}
 
- function sort_colors_two_passes_counting_variant_2 (colors)  {
+function sort_colors_two_passes_counting_variant_2(colors) {
 
     let zeros = 0;
-    let ones  = 0;
- 
-    for(let idx in colors) {
-        if(colors[idx] == 0) zeros++;
-        else if(colors[idx] == 1) ones++;
+    let ones = 0;
+
+    for (let idx in colors) {
+        if (colors[idx] == 0) zeros++;
+        else if (colors[idx] == 1) ones++;
         colors[idx] = 2;
     }
 
-    for(let idx in colors) {
-        if(zeros-- > 0) colors[idx] = 0;
-        else if(ones-- > 0) colors[idx] = 1;
+    for (let idx in colors) {
+        if (zeros-- > 0) colors[idx] = 0;
+        else if (ones-- > 0) colors[idx] = 1;
         else return;
     }
 
- }
+}

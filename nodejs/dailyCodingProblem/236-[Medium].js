@@ -15,13 +15,13 @@ const Helper = require('../Helper');
 
 */
 
-Inout.convert_result = res => {
+Inout.result_Converter = res => {
     if(res === 0) return 'Point is on the boundary of the Polygon';
     if(res === true) return 'Point is on the inside of the Polygon';
     if(res === false || res === -1 ) return 'Point is outside of the Polygon';
     return res;
 }
-Inout.convert_output = Inout.convert_result;
+Inout.output_Converter = Inout.result_Converter;
 
 Inout.push( { 
     shape: '&PT 1,1|-1,1|-1,-1|1,-1',

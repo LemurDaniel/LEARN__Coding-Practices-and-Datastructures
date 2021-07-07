@@ -1,4 +1,4 @@
-const Inout = new (require ('../Inout'))('Daily Coding Problem --- Find Path with Minimum Sum');
+const Inout = new (require('../Inout'))('Daily Coding Problem --- Find Path with Minimum Sum');
 const { BinaryTree } = require('../datastructures/bTree')
 
 /*
@@ -32,24 +32,24 @@ Inout.push('&BT %10,5,/,$2,5,/,1,-1', 15);
 
 function find_path_with_minimum_sum_iterative(tree) {
 
-    const stack = [ tree.root ];
+    const stack = [tree.root];
     let node = tree.root;
     let min_sum = null;
 
-    while(stack.length > 0) {
+    while (stack.length > 0) {
 
         let parent_val = node.val;
         node = node.left;
 
-        if(!node) {
+        if (!node) {
             node = stack.pop();
             parent_val = node.val;
             node = node.right;
         }
 
-        if(node) {
-            node.val += parent_val;         
-            if(node.isLeaf()) min_sum = (!min_sum || node.val < min_sum ? node.val : min_sum);
+        if (node) {
+            node.val += parent_val;
+            if (node.isLeaf()) min_sum = (!min_sum || node.val < min_sum ? node.val : min_sum);
             else stack.push(node);
         }
 
@@ -58,7 +58,7 @@ function find_path_with_minimum_sum_iterative(tree) {
     return min_sum;
 }
 
-BinaryTree.Node.prototype.find_path_with_minimum_sum_recursive = function() {
+BinaryTree.Node.prototype.find_path_with_minimum_sum_recursive = function () {
 
     let left = this.left ? this.left.find_path_with_minimum_sum_recursive() : null;
     let right = this.right ? this.right.find_path_with_minimum_sum_recursive() : null;

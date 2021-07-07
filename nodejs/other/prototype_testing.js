@@ -6,7 +6,7 @@ function Vehicle(name, tanksize = 20) {
     this.tank = 0;
 }
 
-Vehicle.prototype.bla = function() {
+Vehicle.prototype.bla = function () {
 
 }
 

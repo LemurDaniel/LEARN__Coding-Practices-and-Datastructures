@@ -1,4 +1,4 @@
-const Inout = new (require ('../Inout'))('Daily Coding Problem --- Check if integer is a palindrome without converting it to a String');
+const Inout = new (require('../Inout'))('Daily Coding Problem --- Check if integer is a palindrome without converting it to a String');
 const fs = require('fs');
 const Helper = require('../Helper');
 
@@ -22,7 +22,7 @@ Inout.push(10022001, true);
 Inout.push(1122222211, true);
 
 const palindromes_lookup_dict = {}
-fs.readFileSync('./dailyCodingProblem/202-palindrome_integers.txt','utf-8').split('\r\n').forEach( i => palindromes_lookup_dict[i] = 1 );
+fs.readFileSync('./dailyCodingProblem/202-palindrome_integers.txt', 'utf-8').split('\r\n').forEach(i => palindromes_lookup_dict[i] = 1);
 
 Inout.solvers = [is_Integer_a_palindrome_reverse_integer, is_Integer_a_palindrome_compare_digits, is_Integer_a_palindrome_lookup_table];
 Inout.solve();
@@ -42,24 +42,24 @@ function is_Integer_a_palindrome_compare_digits(num) {
 
     let leading_zero = false;
 
-    while(num) {
+    while (num) {
 
         const order_of_magnitude = Math.pow(10, Math.floor(Math.log10(num)))
-        const most_significant_digit  = leading_zero ? 0 : Math.floor( num / order_of_magnitude ); 
+        const most_significant_digit = leading_zero ? 0 : Math.floor(num / order_of_magnitude);
         const least_significant_digit = num % 10;
 
         // console.log('Num: ' + num + '  --  highest_digit: ' + most_significant_digit + '   lowest_digit: ' + least_significant_digit);
-        if( most_significant_digit != least_significant_digit ) return false;
+        if (most_significant_digit != least_significant_digit) return false;
 
         // To account for numbers like 10221. The leading zero gets removed when the most significant digit is removed: 0221 becomes 221
         leading_zero = Math.floor(num / order_of_magnitude * 10) % 10 == 0;
-        
+
         // Replace the leading zero with a one to prevent deletion.
-        if(leading_zero) num += order_of_magnitude / 10; 
+        if (leading_zero) num += order_of_magnitude / 10;
 
         // Remove most significant and least significant digit.
         num %= order_of_magnitude;
-        num = Math.floor( num / 10 );
+        num = Math.floor(num / 10);
 
     }
 
@@ -72,10 +72,10 @@ function is_Integer_a_palindrome_reverse_integer(num) {
     const number = num;
     let reversed = 0;
 
-    while(num) {
+    while (num) {
 
-        reversed = reversed * 10   + (num % 10);
-        num      = Math.floor( num / 10 );
+        reversed = reversed * 10 + (num % 10);
+        num = Math.floor(num / 10);
 
     }
 

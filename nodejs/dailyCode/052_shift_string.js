@@ -19,8 +19,8 @@ const Helper = require('../Helper');
 */
 
 
-Inout.output_string_converter = res => typeof res === 'number' ? 'Shift by '+(res+1) : 'String can\'t be shifted';
-Inout.result_string_converter = Inout.output_string_converter;
+Inout.output_stringConverter = res => typeof res === 'number' ? 'Shift by ' + (res + 1) : 'String can\'t be shifted';
+Inout.result_stringConverter = Inout.output_stringConverter;
 
 Inout.push({
     normal: 'abcde',
@@ -48,27 +48,27 @@ Inout.solve();
 */
 
 
-function shiftString( a, b ) {
+function shiftString(a, b) {
 
-    if(a.length != b.length) return false;
+    if (a.length != b.length) return false;
 
-    for(let offset=0; offset < a.length; offset++) {
+    for (let offset = 0; offset < a.length; offset++) {
 
         // Loop until first char of 'b' apears in 'a'.
-        if(a[offset] != b[0]) continue;
+        if (a[offset] != b[0]) continue;
 
         let match = true;
         // Then check from there on if the shifted sequence matches.
-        for(let i=0; i<a.length; i++) {
+        for (let i = 0; i < a.length; i++) {
             // Offset indexes of a and wrap around from end to start.
             const idx = (i + offset) % a.length;
-            if(b[i] === a[idx]) continue;
+            if (b[i] === a[idx]) continue;
             match = false;
             break;
         }
 
         // If the sequence matches return trueM
-        if(match) return offset;
+        if (match) return offset;
 
     }
 

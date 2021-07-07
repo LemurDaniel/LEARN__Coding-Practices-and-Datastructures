@@ -64,7 +64,7 @@ const Helper = require('../Helper');
     # [7, 3, 8]
 */
 
-Inout.result_comparer = Helper.Array_has_same_values;
+Inout.result_Comparer = Helper.hasArray_sameValues;
 
 Inout.push({
     points: '1|3|7|8|9',
@@ -120,7 +120,7 @@ Inout.push({
 },
     '&AR 0,0|1,2|1,1|-1,-1|-1,-1')
 
-Inout.solvers = [find_nearest_points, find_nearest_points_prio_node_queue];
+Inout.solvers = [findNearestPoints, findNearestPoints_prioNodeQueue];
 Inout.solve();
 
 
@@ -149,7 +149,7 @@ Inout.solve();
     representing the points with the smallest distance to origin (0, 0).
 */
 
-function find_nearest_points(points, origin, k) {
+function findNearestPoints(points, origin, k) {
 
     const nearest_points = new LinkedList();
 
@@ -186,7 +186,7 @@ function find_nearest_points(points, origin, k) {
     return nearest_points.to_array(v => v.point);
 }
 
-function find_nearest_points_prio_node_queue(points, origin, k) {
+function findNearestPoints_prioNodeQueue(points, origin, k) {
 
     const queue = new Queue.PriorityNodeQueue();
 

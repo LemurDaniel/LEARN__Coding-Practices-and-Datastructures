@@ -53,8 +53,8 @@ print(zigzag_order(n1))
 
 */
 
-Inout.push( '&BT 1,2,$4,$5,3,$6,$7', '&AR 1,3,2,4,5,6,7' );
-Inout.push( '&BT 1,2,4,$8,$9,5,$10,$11,3,6,$12,$13,7,$14,$15', '&AR 1,3,2,4,5,6,7,15,14,13,12,11,10,9,8' );
+Inout.push('&BT 1,2,$4,$5,3,$6,$7', '&AR 1,3,2,4,5,6,7');
+Inout.push('&BT 1,2,4,$8,$9,5,$10,$11,3,6,$12,$13,7,$14,$15', '&AR 1,3,2,4,5,6,7,15,14,13,12,11,10,9,8');
 
 Inout.solvers = [zigZag_levelorder_reverse_list, zigZag_levelorder_two_queues];
 Inout.solve();
@@ -68,7 +68,7 @@ Inout.solve();
 */
 
 
-function zigZag_levelorder_two_queues( tree ) {
+function zigZag_levelorder_two_queues(tree) {
 
     const zig = new NodeQueue();
     const zag = new NodeQueue();
@@ -82,20 +82,20 @@ function zigZag_levelorder_two_queues( tree ) {
     const list = [];
     let zig_or_zag = true;
 
-    while(zig.count > 1) {
-        
+    while (zig.count > 1) {
+
         const node_zig = zig.dequeue();
         const node_zag = zag.dequeue();
 
-        if(node_zig.left) zig.enqueue(node_zig.left);
-        if(node_zig.right) zig.enqueue(node_zig.right);
+        if (node_zig.left) zig.enqueue(node_zig.left);
+        if (node_zig.right) zig.enqueue(node_zig.right);
 
-        if(node_zag.right) zag.enqueue(node_zag.right);
-        if(node_zag.left) zag.enqueue(node_zag.left);
+        if (node_zag.right) zag.enqueue(node_zag.right);
+        if (node_zag.left) zag.enqueue(node_zag.left);
 
-        list.push( zig_or_zag ? node_zig.val : node_zag.val );
+        list.push(zig_or_zag ? node_zig.val : node_zag.val);
 
-        if(zig.peek() == null) {
+        if (zig.peek() == null) {
             zig.enqueue(zig.dequeue());
             zag.enqueue(zag.dequeue());
             zig_or_zag = !zig_or_zag;
@@ -107,7 +107,7 @@ function zigZag_levelorder_two_queues( tree ) {
 
 }
 
-function zigZag_levelorder_reverse_list( tree ) {
+function zigZag_levelorder_reverse_list(tree) {
 
     const q = new NodeQueue();
     q.enqueue(tree.root)
@@ -118,20 +118,20 @@ function zigZag_levelorder_reverse_list( tree ) {
     const temp = [];
     let zig_or_zag = true;
 
-    while(q.count > 1) {
+    while (q.count > 1) {
 
         const node = q.dequeue();
 
-        if(node.left) q.enqueue(node.left);
-        if(node.right) q.enqueue(node.right);
+        if (node.left) q.enqueue(node.left);
+        if (node.right) q.enqueue(node.right);
 
-        if(zig_or_zag) list.push(node.val);
+        if (zig_or_zag) list.push(node.val);
         else temp.push(node.val);
 
-        if(q.peek() == null) {
+        if (q.peek() == null) {
             q.enqueue(q.dequeue());
             zig_or_zag = !zig_or_zag;
-            while(temp.length > 0) list.push(temp.pop());
+            while (temp.length > 0) list.push(temp.pop());
         }
 
     }

@@ -2,7 +2,7 @@
 
 class Vehicle {
 
-    constructor(name, tank_size = 20){
+    constructor(name, tank_size = 20) {
         this.name = name;
         this.tank_size = tank_size;
         this.tank = 0;
@@ -24,7 +24,7 @@ console.log('\n-------------------\n')
 
 
 class Rocket extends Vehicle {
-    
+
     constructor(name, tank_size = 500) {
         super(name, tank_size);
     }

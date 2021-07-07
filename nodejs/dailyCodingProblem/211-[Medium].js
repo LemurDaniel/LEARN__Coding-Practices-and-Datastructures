@@ -1,4 +1,4 @@
-const Inout = new (require ('../Inout'))('Daily Coding Problem --- Get indices of all occurences of a pattern');
+const Inout = new (require('../Inout'))('Daily Coding Problem --- Get indices of all occurences of a pattern');
 const Helper = require('../Helper');
 
 /*
@@ -12,7 +12,7 @@ const Helper = require('../Helper');
 
 */
 
-Inout.push( { String: 'abracadabra', pattern: 'abr' } , [0, 7] );
+Inout.push({ String: 'abracadabra', pattern: 'abr' }, [0, 7]);
 
 
 Inout.solvers = [find_starting_indices];
@@ -28,22 +28,22 @@ Inout.solve();
 function find_starting_indices(str, pattern) {
 
     const indices = [];
-    for(let i=0; i<str.length; i++){
+    for (let i = 0; i < str.length; i++) {
 
-        if( str[i] != pattern[0] ) continue;
+        if (str[i] != pattern[0]) continue;
 
         // If first character matches then check in a second loop whether the pattern matches.
         let matches = true;
-        for(let j=1; j<pattern.length; j++) {
+        for (let j = 1; j < pattern.length; j++) {
             const index = j + i;
-            if( index > str.length || pattern[j] != str[index] ) {
+            if (index > str.length || pattern[j] != str[index]) {
                 matches = false;
                 break;
             }
         }
 
         // Continue if pattern doesn't match.
-        if(!matches) continue;
+        if (!matches) continue;
 
         // Push indice and increase i when matching.
         indices.push(i);

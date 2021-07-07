@@ -1,4 +1,4 @@
-const Inout = new (require ('../../Inout'))('Coding Questions --- Decode String');
+const Inout = new (require('../../Inout'))('Coding Questions --- Decode String');
 const Helper = require('../../Helper');
 
 /*
@@ -37,18 +37,18 @@ Inout.solve(0);
 */
 
 
-function decode_iterative( encoded ) {
+function decode_iterative(encoded) {
 
-    const stackNum    = [];
+    const stackNum = [];
     const stackDecode = [];
     let decoded = '';
     let num = '';
 
-    for(const c of encoded) {
+    for (const c of encoded) {
 
         // If a character is a digit then append it to the num-String.
-        if( '0123456789'.includes(c) ) num += c;
-        else if ( c === '[' ) {
+        if ('0123456789'.includes(c)) num += c;
+        else if (c === '[') {
             // Push the parsed sequence of digits onto the numStack and reset the num-String to ''.
             stackNum.push(parseInt(num));
             // On every opening bracke the current decoded string gets pushed to the stackDecode in order to parse the sequence of chars inside the brackets.
@@ -59,15 +59,15 @@ function decode_iterative( encoded ) {
             decoded = '';
             num = '';
         }
-        else if ( c === ']' ) {
+        else if (c === ']') {
             // Repeating the current sequence k-th times when a closing bracket is hit.
             // The numString gets appended to. 
             // (When a closing bracket had been encountered its content would have already been pushed to the stackNum and its value should be ''.
             // if no closing bracket is hit, its content will be interpreted as part of the decoded sequence. )
             let temp = decoded + num;
             let repeats = stackNum.pop();
-            while(--repeats) temp += decoded + num;
-            
+            while (--repeats) temp += decoded + num;
+
             // Prepend the value of the decoded-String before hitting the opening bracket to the decoded string inbetween the now parsed opening and closing bracket.
             decoded = stackDecode.pop() + temp;
         }
@@ -76,7 +76,7 @@ function decode_iterative( encoded ) {
             // The num-String gets added to, because any sequence of digits gets only interpreted as a number for decoding,
             // when it's directly followed by a opening-bracket, in which case it would have been already pushed to numStack and reset back to ''.
             decoded += num + c;
-            num  = '';
+            num = '';
         }
 
     }
@@ -84,36 +84,36 @@ function decode_iterative( encoded ) {
     return decoded;
 }
 
-function decode_recursive( str, repeat = 1 ) {
+function decode_recursive(str, repeat = 1) {
 
     let decoded = '';
     let num = '';
 
     //console.log(' ' + str + '  ' + repeat + '  ' + decoded)
 
-    for(let i = 0; i<str.length; i++) {
+    for (let i = 0; i < str.length; i++) {
 
         const char = str[i];
 
         // Add the char to the number when it's a digit.
-        if( '1234567890'.includes(char) ) num += char;
+        if ('1234567890'.includes(char)) num += char;
 
         // When the char is an open bracket then iterate through all characters until its closing bracket is found.
         // Then pass that substring recursivly into the function to decode it and append the result to the decoded string.
-        else if( char === '[' ) {
+        else if (char === '[') {
 
-            const start = i+1;
+            const start = i + 1;
             let open_brackets = 1;
 
             // Find matching closing bracket.
-            while( open_brackets ) {
-                if(str[++i] === '[') open_brackets++;
-                else if(str[i] === ']') open_brackets--;
-            } 
+            while (open_brackets) {
+                if (str[++i] === '[') open_brackets++;
+                else if (str[i] === ']') open_brackets--;
+            }
 
             // Decode substring and add it to the decoded string.
-            const substr =  str.substr( start, i-start );
-            decoded += decode_recursive( substr , parseInt(num) );
+            const substr = str.substr(start, i - start);
+            decoded += decode_recursive(substr, parseInt(num));
             // Reset the numer string.
             num = '';
         }
@@ -128,6 +128,6 @@ function decode_recursive( str, repeat = 1 ) {
 
     // Repeat the decoded string the specified number of times and return it.
     let temp = '';
-    while(repeat--) temp += decoded + num;
+    while (repeat--) temp += decoded + num;
     return temp;
 }

@@ -22,7 +22,7 @@ const Helper = require('../Helper');
 
 */
 
-Inout.push( 159, 6 );
+Inout.push(159, 6);
 
 
 Inout.solvers = [add_digits, add_digits_to_string_recursive];
@@ -37,20 +37,20 @@ Inout.solve();
 */
 
 
-function add_digits_to_string_recursive (num) {
+function add_digits_to_string_recursive(num) {
 
-    return num > 10 ? add_digits_to_string_recursive( num.toString().split('').reduce( (a,b) => parseInt(a)+parseInt(b) ) ) : num;
+    return num > 10 ? add_digits_to_string_recursive(num.toString().split('').reduce((a, b) => parseInt(a) + parseInt(b))) : num;
 }
 
-function add_digits (num) {
+function add_digits(num) {
 
-    while(num > 10) {
+    while (num > 10) {
 
         let temp = 0;
-        
-        while(num) {
+
+        while (num) {
             temp += num % 10;
-            num  = Math.floor( num / 10 );
+            num = Math.floor(num / 10);
         }
 
         num = temp;

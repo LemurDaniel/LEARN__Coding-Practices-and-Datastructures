@@ -1,5 +1,5 @@
 
-const Inout = new (require ('../../Inout'))('Coding Questions --- Move zeroes - [difficulty: Easy]');
+const Inout = new (require('../../Inout'))('Coding Questions --- Move zeroes - [difficulty: Easy]');
 const Helper = require('../../Helper');
 
 /*
@@ -33,21 +33,21 @@ Inout.solve();
     time  complexity: O(n)  - linear
 */
 
-function move_zeroes (array)  {
+function move_zeroes(array) {
 
-   let ptr_start = 0;
-   let count_zeros = 0;
+    let ptr_start = 0;
+    let count_zeros = 0;
 
-   for(let i=0; i<array.length; i++) {
-        
+    for (let i = 0; i < array.length; i++) {
+
         // ptr_start always points to the index after the last moved non-zero element at the start of the array
         // via this all non-zero elements are gradually moved to the start of the array
-        if(array[i] != 0) array[ptr_start++] = array[i];
+        if (array[i] != 0) array[ptr_start++] = array[i];
         else count_zeros++;
-   }
+    }
 
-   // replace all index from the end of the array with zeroes,
-   // according to the number of counted zeroes
-   while(count_zeros > 0)  array[ array.length - count_zeros-- ] = 0;
+    // replace all index from the end of the array with zeroes,
+    // according to the number of counted zeroes
+    while (count_zeros > 0) array[array.length - count_zeros--] = 0;
 
 }

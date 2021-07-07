@@ -8,12 +8,16 @@ const classes = [LinkedList, BTree.BinaryTree, BTree.BinaryTree.Node, Queue.Node
 
 const Helper = {};
 
-Helper.uniform_string = function (str, len) {
+Helper.reapeatSequence = function (sequence, len) {
+    return new Array(len).fill(sequence).join('');
+}
+
+Helper.uniformString = function (str, len) {
     while (str.length < len) str = ' ' + str;
     return str;
 }
 
-Helper.random_Array = function (min, max, min_len, max_len) {
+Helper.randomArray = function (min, max, min_len, max_len) {
     const arr = [];
     const len = Math.round(Math.random() * (max_len - min_len) + min_len);
     for (let i = 0; i < len; i++) {
@@ -26,14 +30,14 @@ Helper.random_Array = function (min, max, min_len, max_len) {
 // ######### PRINT METHODS
 // ############################################################################
 
-Helper.matrix_toString = function (mat, rows_vertical = true, len = 4) {
+Helper.printMatrix = function (mat, rows_vertical = true, len = 4) {
 
     let str = '\n';
     if (!rows_vertical) {
         for (let col = mat[0].length - 1; col >= 0; col--) {
             str += '    ';
             for (let row = 0; row < mat.length; row++)
-                str += Helper.uniform_string(mat[row][col].toString(), len);
+                str += Helper.uniformString(mat[row][col].toString(), len);
             str += '\n';
         }
     }
@@ -41,14 +45,14 @@ Helper.matrix_toString = function (mat, rows_vertical = true, len = 4) {
         for (let row = 0; row < mat.length; row++) {
             str += '    ';
             for (let col = 0; col < mat[row].length; col++)
-                str += Helper.uniform_string(mat[row][col].toString(), len);
+                str += Helper.uniformString(mat[row][col].toString(), len);
             str += '\n';
         }
     }
     return str;
 }
 
-Helper.print_Array = function (arr, bl = ', ', open = '[ ', close = ' ]') {
+Helper.printArray = function (arr, bl = ', ', open = '[ ', close = ' ]') {
 
     str = '';
     for (let i = 0; i < arr.length; i++) {
@@ -56,8 +60,8 @@ Helper.print_Array = function (arr, bl = ', ', open = '[ ', close = ' ]') {
         if (arr[i] === null) str += 'NULL'
         else if (arr[i] === undefined) str += 'undefined';
         else if (arr[i].print) str += "'" + arr[i].print() + "'";
-        else if (Array.isArray(arr[i])) str += Helper.print_Array(arr[i], bl, '( ', ' )');
-        else if (typeof arr[i] == 'object') str += Helper.print_map(arr[i], -1);
+        else if (Array.isArray(arr[i])) str += Helper.printArray(arr[i], bl, '( ', ' )');
+        else if (typeof arr[i] == 'object') str += Helper.printMap(arr[i], -1);
         else if (typeof arr[i] == 'string') str += "'" + arr[i] + "'";
         else str += arr[i]
 
@@ -71,7 +75,7 @@ Helper.print_Array = function (arr, bl = ', ', open = '[ ', close = ' ]') {
     return open + str + close;
 }
 
-Helper.print_map = function (map, depth = 5) {
+Helper.printMap = function (map, depth = 5) {
 
     // return nothing if map is null
     if (!map) return '';
@@ -86,8 +90,8 @@ Helper.print_map = function (map, depth = 5) {
         let val = map[k];
 
         // If the value of the key is an array, then call the specific function for printing arrays.
-        if (k.includes('matrix')) val = Helper.matrix_toString(val);
-        else if (Array.isArray(val)) val = Helper.print_Array(val);
+        if (k.includes('matrix')) val = Helper.printMatrix(val);
+        else if (Array.isArray(val)) val = Helper.printArray(val);
 
         // Call toString funtions if the type is a LinkedList or BinaryTree or Queue
         else if (val instanceof LinkedList) val = val.toString();
@@ -98,11 +102,11 @@ Helper.print_map = function (map, depth = 5) {
 
         else if (typeof val == 'function') val = '(function)';
         // If the value is itself an object, then print its content recursivley.
-        else if (typeof val == 'object') val = Helper.print_map(val, depth + 2);
+        else if (typeof val == 'object') val = Helper.printMap(val, depth + 2);
 
         if (depth == -1) str += k + ': ' + val + ', ';
         // Create a string with correct indentations and the key and value.
-        else str += '\n' + Helper.uniform_string('  ', depth) + k + ': ' + val
+        else str += '\n' + Helper.uniformString('  ', depth) + k + ': ' + val
     });
 
     if (depth == -1) return str.substr(0, str.length - 2) + ' }';
@@ -113,7 +117,7 @@ Helper.print_map = function (map, depth = 5) {
 // ######### EUQALS METHODS
 // ############################################################################
 
-Helper.Array_equals = function (arr, arr1) {
+Helper.ArrayEquals = function (arr, arr1) {
 
 
     if (!Array.isArray(arr) || !Array.isArray(arr1)) return false;
@@ -125,7 +129,7 @@ Helper.Array_equals = function (arr, arr1) {
         const el1 = arr1[i];
 
         if (Array.isArray(el)) {
-            if (!Helper.Array_equals(el, el1)) return false;
+            if (!Helper.ArrayEquals(el, el1)) return false;
         } else if (typeof el == 'object') {
             if (!el.equals(el1)) return false;
         }
@@ -136,7 +140,7 @@ Helper.Array_equals = function (arr, arr1) {
     return true;
 }
 
-Helper.Array_has_same_values = function (arr, arr1) {
+Helper.hasArray_sameValues = function (arr, arr1) {
 
     if (!Array.isArray(arr) || !Array.isArray(arr1)) return false;
     if (arr.length != arr1.length) return false;
@@ -159,7 +163,7 @@ Helper.Array_has_same_values = function (arr, arr1) {
     return Object.keys(dict).length == 0;
 }
 
-Helper.scramble_Array = function (arr, cycles = 10e2) {
+Helper.scrambleArray = function (arr, cycles = 10e2) {
 
     for (let i = 0; i < cycles; i++) {
         const r1 = Math.floor(Math.random() * arr.length);
@@ -236,26 +240,26 @@ Helper.string_toIntArray = function (str, split = ' ') {
 
 
 // converts all strings in an object to the desired object
-Helper.convert_strings_in_object = function (obj, testcase) {
+Helper.default_Converter = function (obj, testcase) {
 
     const keywords_arr = ['nums', 'arr', 'points'];
     const keywords_list = ['list'];
     const keywords_tree = ['tree', 'subtree'];
 
     if (typeof obj == 'function') return obj;
-    else if (typeof obj == 'string') return convert_string(obj, testcase);
+    else if (typeof obj == 'string') return convertString(obj, testcase);
     else if (typeof obj == 'object') {
         for (let key of Object.keys(obj)) {
 
             if (typeof obj[key] == 'string') {
 
-                if (obj[key][0] == '&') obj[key] = convert_string(obj[key], testcase);
+                if (obj[key][0] == '&') obj[key] = convertString(obj[key], testcase);
                 else if (keywords_arr.includes(key)) obj[key] = Helper.string_toIntArray(obj[key]);
-                else if (keywords_list.includes(key)) obj[key] = LinkedList.LinkedListFromString_Int(obj[key]);
+                else if (keywords_list.includes(key)) obj[key] = LinkedList.LinkedListFromString(obj[key]);
                 else if (keywords_tree.includes(key)) obj[key] = BTree.BinaryTree.GenerateIntPreorderFromString(obj[key]);
             }
 
-            else if (typeof obj[key] == 'object') obj[key] = Helper.convert_strings_in_object(obj[key], testcase);
+            else if (typeof obj[key] == 'object') obj[key] = Helper.default_Converter(obj[key], testcase);
         }
     }
 
@@ -263,19 +267,19 @@ Helper.convert_strings_in_object = function (obj, testcase) {
 }
 
 // converts string to the desired object
-function convert_string(str, testcase) {
+function convertString(str, testcase) {
 
     const keychars = {
         '&NA': str => Helper.string_toArray(str),
         '&NI': str => Helper.string_toIntArray(str, ''),
         '&AR': str => Helper.string_toIntArray(str),
-        '&PT': str => Helper.string_toIntArray(str).map( v => new Vector(v[0], v[1])),
-        '&LL': str => LinkedList.LinkedListFromString_Int(str),
+        '&PT': str => Helper.string_toIntArray(str).map(v => new Vector(v[0], v[1])),
+        '&LL': str => LinkedList.LinkedListFromString(str),
         '&BT': str => BTree.BinaryTree.GenerateIntPreorderFromString(str),
         '&FS': str => {
             const args = Helper.string_toArray(str);
             const file = fs.readFileSync(args[0], 'utf-8');
-            return convert_string(args[1] + ' ' + file);
+            return convertString(args[1] + ' ' + file);
         },
         '&RF': str => {
             let obj = testcase;
@@ -300,7 +304,7 @@ function convert_string(str, testcase) {
 // ############################################################################
 
 // Copys 
-Helper.default_copy = function (arg) {
+Helper.default_Copy = function (arg) {
 
     // If object has a copy method, then use it.
     if (arg === undefined) return undefined;
@@ -312,7 +316,7 @@ Helper.default_copy = function (arg) {
     if (typeof arg == 'object' && !Array.isArray(arg)) {
         const copy = {};
         for (let key of Object.keys(arg))
-            copy[key] = Helper.default_copy(arg[key]);
+            copy[key] = Helper.default_Copy(arg[key]);
 
         return copy;
     }
@@ -321,22 +325,22 @@ Helper.default_copy = function (arg) {
 }
 
 // Standard converter to convert arguments into string for display in console.
-Helper.default_converter = function (arg) {
+Helper.default_StringConverter = function (arg) {
 
     if (arg == null) return '(undefined)';
 
     for (let c of classes)
         if (arg instanceof c) return arg.toString();
 
-    if (Array.isArray(arg)) return Helper.print_Array(arg);
+    if (Array.isArray(arg)) return Helper.printArray(arg);
     else if (typeof arg == 'function') return '(function) ' + arg.name;
-    else if (typeof arg == 'object') return Helper.print_map(arg);
+    else if (typeof arg == 'object') return Helper.printMap(arg);
     else return arg.toString();
 
 }
 
 // Standard mapper to map arguments to the solver functions
-Helper.default_mapper = function (arg, solver) {
+Helper.default_Mapper = function (arg, solver) {
 
     for (let c of classes)
         if (arg instanceof c) return solver(arg);
@@ -351,7 +355,7 @@ Helper.default_mapper = function (arg, solver) {
 // ######### BINARY SEARCH
 // ############################################################################
 
-Helper.binary_search = function (nums, target, lower, upper) {
+Helper.binarySearch = function (nums, target, lower, upper) {
 
     upper = upper ?? nums.length - 1;
     lower = lower ?? 0;
@@ -370,7 +374,7 @@ Helper.binary_search = function (nums, target, lower, upper) {
 
 // Note: https://medium.com/@CalvinChankf/how-to-deal-with-lower-upper-bound-binary-search-b9ce744673df
 
-Helper.binary_search_lower_bound = function (nums, target, lower, upper) {
+Helper.binarySearch_lowerBound = function (nums, target, lower, upper) {
 
     upper = upper ?? nums.length - 1;
     lower = lower ?? 0;
@@ -389,7 +393,7 @@ Helper.binary_search_lower_bound = function (nums, target, lower, upper) {
     return -1;
 }
 
-Helper.binary_search_upper_bound = function (nums, target, lower, upper) {
+Helper.binarySearch_upperBound = function (nums, target, lower, upper) {
 
     upper = upper ?? nums.length - 1;
     lower = lower ?? 0;

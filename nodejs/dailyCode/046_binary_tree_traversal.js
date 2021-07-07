@@ -37,7 +37,7 @@ const Helper = require('../Helper');
 
 */
 
-Inout.push( '&BT% 12,6,$2,$3,4,$7,$8', '&AR 2,6,3,12,7,4,8' );
+Inout.push('&BT% 12,6,$2,$3,4,$7,$8', '&AR 2,6,3,12,7,4,8');
 
 
 /*
@@ -48,11 +48,11 @@ Inout.push( '&BT% 12,6,$2,$3,4,$7,$8', '&AR 2,6,3,12,7,4,8' );
 */
 
 
-BinaryTree.Node.prototype.inorder_recursive = function(list = []) {
+BinaryTree.Node.prototype.inorder_recursive = function (list = []) {
 
-    if(this.left) inorder_recursive_static(this.left, list);    // Left
+    if (this.left) inorder_recursive_static(this.left, list);    // Left
     list.push(this.val);                                        // Root
-    if(this.right) inorder_recursive_static(this.right, list);  // Right
+    if (this.right) inorder_recursive_static(this.right, list);  // Right
 
     return list;
 }
@@ -60,31 +60,31 @@ Inout.solvers = [inorder_recursive_static, inorder_recursive_prototype, inorder_
 Inout.solve();
 
 
-function inorder_recursive_prototype( tree ) {
+function inorder_recursive_prototype(tree) {
     return tree.root.inorder_recursive();
 }
 
-function inorder_recursive_static( node, list = [] ) {
-    if(node instanceof BinaryTree ) return inorder_recursive_static(node.root);
+function inorder_recursive_static(node, list = []) {
+    if (node instanceof BinaryTree) return inorder_recursive_static(node.root);
 
-    if(node.left) inorder_recursive_static(node.left, list);          // Left
+    if (node.left) inorder_recursive_static(node.left, list);          // Left
     list.push(node.val);                                        // Root
-    if(node.right) inorder_recursive_static(node.right, list);        // Right
+    if (node.right) inorder_recursive_static(node.right, list);        // Right
 
     return list;
 }
 
 
-function inorder_iteratvie( tree ) {
-    
-    
+function inorder_iteratvie(tree) {
+
+
     const stack = [];
     let node = tree.root;
     const list = [];
 
-    while(node ||stack.length > 0) {
+    while (node || stack.length > 0) {
 
-        if(!node) {
+        if (!node) {
             node = stack.pop();
             list.push(node.val);
             node = node.right;

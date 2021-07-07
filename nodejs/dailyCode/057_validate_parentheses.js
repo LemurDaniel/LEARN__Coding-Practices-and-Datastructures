@@ -71,9 +71,7 @@ function validateParentheses(str) {
             if (stack.length === 0) return false;
 
             if (c === ')' && stack.pop() !== '(') return false;
-            else
             if (c === ']' && stack.pop() !== '[') return false;
-            else
             if (c === '}' && stack.pop() !== '{') return false;
         }
     }

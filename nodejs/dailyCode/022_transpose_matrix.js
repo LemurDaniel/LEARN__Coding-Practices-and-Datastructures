@@ -1,4 +1,4 @@
-const Inout = new (require ('../Inout'))('DailyCode --- Transpose a 2D Matrix');
+const Inout = new (require('../Inout'))('DailyCode --- Transpose a 2D Matrix');
 const Helper = require('../Helper');
 
 /*
@@ -24,11 +24,11 @@ const Helper = require('../Helper');
 
 */
 
-Inout.input_string_converter = Helper.matrix_toString;
-Inout.output_string_converter = Helper.matrix_toString;
-Inout.result_string_converter = Helper.matrix_toString;
+Inout.input_stringConverter = Helper.printMatrix;
+Inout.output_stringConverter = Helper.printMatrix;
+Inout.result_stringConverter = Helper.printMatrix;
 
-Inout.push( '&NA 123|456', '&NA 14|25|36' );
+Inout.push('&NA 123|456', '&NA 14|25|36');
 
 Inout.solvers = [transpose_matrix];
 Inout.solve();
@@ -42,16 +42,15 @@ Inout.solve();
 */
 
 
-function transpose_matrix(mat){
+function transpose_matrix(mat) {
 
     transposed = [];
 
-    for(let col=0; col<mat[0].length; col++){
-        
+    for (let col = 0; col < mat[0].length; col++) {
+
         const new_row = [];
-        for(let row=0; row < mat.length; row++){
+        for (let row = 0; row < mat.length; row++)
             new_row.push(mat[row][col]);
-        }
         transposed.push(new_row);
     }
 

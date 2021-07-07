@@ -1,6 +1,6 @@
 const Inout = new (require("../Inout"))("DailyCode --- Clone trees");
 const { BinaryTree } = require("../datastructures/bTree");
-const { Trie }  = require('../datastructures/tree') 
+const { Trie } = require('../datastructures/tree')
 const Helper = require('../Helper');
 
 /*
@@ -58,20 +58,20 @@ const Helper = require('../Helper');
 
 */
 
-Inout.push( {
-    tree:   '&BT% 1,$2,3,*$4',
-    clone:  '&BT% 1,$2,3,*$4',
+Inout.push({
+    tree: '&BT% 1,$2,3,*$4',
+    clone: '&BT% 1,$2,3,*$4',
     node: '&RF input.tree.node'
 }, '&RF input.clone.node');
 
-Inout.push( {
-    tree:   '&BT% 1,$2,3,4,4,$4,*$4,/,5',
-    clone:  '&BT% 1,$2,3,4,4,$4,*$4,/,5',
+Inout.push({
+    tree: '&BT% 1,$2,3,4,4,$4,*$4,/,5',
+    clone: '&BT% 1,$2,3,4,4,$4,*$4,/,5',
     node: '&RF input.tree.node'
 }, '&RF input.clone.node');
 
-Inout.input_copy_method = arg => arg;
-Inout.solvers = [find_node_recursive, find_node_iterative];
+Inout.input_Copy = arg => arg;
+Inout.solvers = [findNode_recursive, findNode_iterative];
 Inout.solve();
 
 /*
@@ -81,39 +81,39 @@ Inout.solve();
     ###########################################################################################
 */
 
-function find_node_recursive(tree, clone, node) {
-    if(!tree || !clone) return null;
-    if(tree instanceof BinaryTree) 
-        return find_node_recursive(tree.root, clone.root, node);
-    
+function findNode_recursive(tree, clone, node) {
+    if (!tree || !clone) return null;
+    if (tree instanceof BinaryTree)
+        return findNode_recursive(tree.root, clone.root, node);
 
-    if(node == tree) return clone;
 
-    const node_right = find_node_recursive(tree.right, clone.right, node);
-    const node_left  = find_node_recursive(tree.left , clone.left , node);
+    if (node == tree) return clone;
+
+    const node_right = findNode_recursive(tree.right, clone.right, node);
+    const node_left = findNode_recursive(tree.left, clone.left, node);
 
     return node_right ?? node_left ?? null;
 }
 
-function find_node_iterative(tree, clone, searched) {
-    
+function findNode_iterative(tree, clone, searched) {
+
     let node = tree.root;
-    clone    = clone.root;
-    
-    stack_node  = [node];
+    clone = clone.root;
+
+    stack_node = [node];
     stack_clone = [clone];
 
-    while(stack_node.length > 0) {
+    while (stack_node.length > 0) {
 
-        if( node == searched ) return clone;
+        if (node == searched) return clone;
 
-        if(!node) {
-            node  = stack_node.pop().right;
+        if (!node) {
+            node = stack_node.pop().right;
             clone = stack_clone.pop().right;
         } else {
             stack_node.push(node);
             stack_clone.push(clone);
-            node  = node.left;
+            node = node.left;
             clone = clone.left;
         }
 

@@ -1,4 +1,4 @@
-const Inout = new (require ('../../Inout'))('Coding Questions --- Decode Strings - [difficulty: Medium]');
+const Inout = new (require('../../Inout'))('Coding Questions --- Decode Strings - [difficulty: Medium]');
 
 /*
     
@@ -29,37 +29,37 @@ Inout.solve();
     ###########################################################################################
 */
 
-function roman_to_integer (roman)  {
+function roman_to_integer(roman) {
 
     doubles = { CM: -200, CD: -200, XC: -20, XL: -20, IX: -2, IV: -2 };
-    roman_numerals = { M: 1000, D: 500, C: 100, L: 50, X: 10, V: 5, I: 1};
+    roman_numerals = { M: 1000, D: 500, C: 100, L: 50, X: 10, V: 5, I: 1 };
     let decimal = 0;
 
-    for(let key of Object.keys(doubles)) 
-        if( roman.includes(key) ) decimal += doubles[key];
-       
-    for(let c of roman)
+    for (let key of Object.keys(doubles))
+        if (roman.includes(key)) decimal += doubles[key];
+
+    for (let c of roman)
         decimal += roman_numerals[c];
 
-    return decimal; 
+    return decimal;
 }
 
-function roman_to_integer2 (roman)  {
+function roman_to_integer2(roman) {
 
-    roman_numerals = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1};
+    roman_numerals = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1 };
     let decimal = 0;
 
-    for(let i=0; i<roman.length; i++) {
-    
-        const digit  = roman[i];
-        const double = roman[i] + (i < roman.length ? roman[i+1] : '');
+    for (let i = 0; i < roman.length; i++) {
 
-        if( double in  roman_numerals ) {
+        const digit = roman[i];
+        const double = roman[i] + (i < roman.length ? roman[i + 1] : '');
+
+        if (double in roman_numerals) {
             decimal += roman_numerals[double];
             i++;
         }
         else decimal += roman_numerals[digit];
     }
 
-    return decimal; 
+    return decimal;
 }

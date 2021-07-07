@@ -1,4 +1,4 @@
-const Inout = require ('../dailyCode/009_rotate_matrix_90');
+const Inout = require('../dailyCode/009_rotate_matrix_90');
 
 /*
 
@@ -19,5 +19,5 @@ const Inout = require ('../dailyCode/009_rotate_matrix_90');
     [8, 5, 2],
     [9, 6, 3]]
     Follow-up: What if you couldn't use any extra space?
-    
+
 */

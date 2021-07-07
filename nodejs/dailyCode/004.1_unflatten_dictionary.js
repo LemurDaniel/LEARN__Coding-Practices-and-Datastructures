@@ -1,4 +1,4 @@
-const Inout = new (require ('../Inout'))('DailyCode --- Unflatten Dictionary');
+const Inout = new (require('../Inout'))('DailyCode --- Unflatten Dictionary');
 
 /*
         Hi, here's your problem today. This problem was recently asked by Google:
@@ -46,12 +46,12 @@ Inout.map_input = (inp, solver) => solver(inp);
 
 // Testcases
 Inout.push(
-    {'a': 1, 'b.c': 2, 'b.d.e': 3},
-    { 'a': 1, 'b': {'c': 2,'d': { 'e': 3 } } }
+    { 'a': 1, 'b.c': 2, 'b.d.e': 3 },
+    { 'a': 1, 'b': { 'c': 2, 'd': { 'e': 3 } } }
 );
 Inout.push(
-    {'a': 1, 'b.c': 2, 'b.d.e': 3, 'b.d.f': 2, 'b.d.d': 4 },
-    {'a': 1, 'b': {'c': 2,'d': { 'e': 3, 'f': 2, 'd': 4 } } }
+    { 'a': 1, 'b.c': 2, 'b.d.e': 3, 'b.d.f': 2, 'b.d.d': 4 },
+    { 'a': 1, 'b': { 'c': 2, 'd': { 'e': 3, 'f': 2, 'd': 4 } } }
 );
 
 Inout.push(
@@ -83,11 +83,11 @@ Inout.solve();
     ###########################################################################################
 */
 
-function unflatten_dictionary (dict)  {
+function unflatten_dictionary(dict) {
 
-    for(let key of Object.keys(dict)){
+    for (let key of Object.keys(dict)) {
 
-        if(!key.includes('.')) continue;
+        if (!key.includes('.')) continue;
 
         const sub_keys = key.split('.');
         const last_val = dict[key];
@@ -95,15 +95,15 @@ function unflatten_dictionary (dict)  {
 
         delete dict[key];
 
-        let curr_dict  = dict;
+        let curr_dict = dict;
 
-        for(let key of sub_keys) {
-            if( !(key in curr_dict) ) curr_dict[key] = {};
+        for (let key of sub_keys) {
+            if (!(key in curr_dict)) curr_dict[key] = {};
             curr_dict = curr_dict[key]
         }
 
         curr_dict[last_key] = last_val;
-    
+
     }
 
 }

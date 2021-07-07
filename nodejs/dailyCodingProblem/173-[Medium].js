@@ -1,4 +1,4 @@
-const Inout = require ('../dailyCode/004_flatten_dictionary');
+const Inout = require('../dailyCode/004_flatten_dictionary');
 
 /*
 
@@ -27,5 +27,5 @@ const Inout = require ('../dailyCode/004_flatten_dictionary');
         "foo.bar.baz": 8
     }
     You can assume keys do not contain dots in them, i.e. no clobbering will occur.
-    
+
 */

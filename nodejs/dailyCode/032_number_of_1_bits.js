@@ -18,7 +18,7 @@ const Helper = require('../Helper');
 
 */
 
-Inout.input_string_converter = arg  =>  arg + '  ---  ' +(arg >>> 0).toString(2);
+Inout.input_stringConverter = arg => arg + '  ---  ' + (arg >>> 0).toString(2);
 
 Inout.push(23, 4);
 Inout.push(-23, 29);
@@ -32,19 +32,19 @@ Inout.push(-1, 32);
     ###########################################################################################
 */
 
-const one_line_to_string = num => (num >>> 0).toString(2).split('').filter( v => v == 1 ).length;
+const one_line_to_string = num => (num >>> 0).toString(2).split('').filter(v => v == 1).length;
 
 Inout.solvers = [one_line_to_string, number_of_1_bits_math, number_of_1_bits_bitshift];
 Inout.solve();
 
 function number_of_1_bits_math(num) {
 
-    if(num < 0) num >>>= 0;
+    if (num < 0) num >>>= 0;
 
     let count = 0;
-    while(num) {
+    while (num) {
         count += num % 2;
-        num    = Math.floor( num / 2 );
+        num = Math.floor(num / 2);
     }
 
     return count;
@@ -54,7 +54,7 @@ function number_of_1_bits_math(num) {
 function number_of_1_bits_bitshift(num) {
 
     let count = 0;
-    while(num) {
+    while (num) {
         count += num & 0b1;
         num >>>= 0b1;
     }

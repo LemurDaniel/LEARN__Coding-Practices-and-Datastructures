@@ -27,11 +27,11 @@ const Helper = require('../Helper');
 */
 
 
-Inout.input_string_converter  = Helper.matrix_toString;
+Inout.input_stringConverter = Helper.printMatrix;
 
 Inout.push('&AR 0,3,0,2|1,2,3,3|6,0,3,2', 13);
 
-Inout.solvers = [picking_up_change, picking_up_change_recursive];
+Inout.solvers = [pickingUpChange, pickingUpChange_recursive];
 Inout.solve();
 
 /*
@@ -41,15 +41,15 @@ Inout.solve();
     ###########################################################################################
 */
 
-function picking_up_change(mat) {
+function pickingUpChange(mat) {
 
-    for(let row=mat.length-1; row>=0; row--){
-        for(let col=mat[row].length-1; col>=0; col--){
+    for (let row = mat.length - 1; row >= 0; row--) {
+        for (let col = mat[row].length - 1; col >= 0; col--) {
 
-            const down  = (row + 1 >= mat.length ? 0 : mat[row + 1][col])
+            const down = (row + 1 >= mat.length ? 0 : mat[row + 1][col])
             const right = (col + 1 >= mat[row].length ? 0 : mat[row][col + 1]);
 
-            if(down > right) mat[row][col] += down;
+            if (down > right) mat[row][col] += down;
             else mat[row][col] += right;
         }
     }
@@ -57,12 +57,12 @@ function picking_up_change(mat) {
     return mat[0][0];
 }
 
-function picking_up_change_recursive(mat, row = 0, col = 0, val = 0) {
+function pickingUpChange_recursive(mat, row = 0, col = 0, val = 0) {
 
-    if( row >= mat.length || col >= mat[row].length) return val;
+    if (row >= mat.length || col >= mat[row].length) return val;
 
-    const down  = val + mat[row][col] + picking_up_change_recursive(mat, row + 1, col);
-    const right = val + mat[row][col] + picking_up_change_recursive(mat, row , col + 1);
+    const down = val + mat[row][col] + pickingUpChange_recursive(mat, row + 1, col);
+    const right = val + mat[row][col] + pickingUpChange_recursive(mat, row, col + 1);
 
     return down > right ? down : right;
 }

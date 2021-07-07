@@ -19,10 +19,10 @@ const Helper = require('../Helper');
 
 */
 
-Inout.convert_output = str => new Object({ substring: str, length: str.length });
-Inout.convert_result = Inout.convert_output;
+Inout.output_Converter = str => ({ substring: str, length: str.length });
+Inout.result_Converter = Inout.output_Converter;
 
-Inout.push( 'abrkaabcdefghijjxxx', 'abcdefghij' );
+Inout.push('abrkaabcdefghijjxxx', 'abcdefghij');
 
 Inout.solvers = [longest_substring];
 Inout.solve();
@@ -41,29 +41,29 @@ Inout.solve();
 
 */
 
-function longest_substring ( str ) {
+function longest_substring(str) {
 
 
     let dict = {};
     let start = 0; // Starting index of the current substring sequence
     let longest = '';
 
-    for ( let i=0; i<str.length; i++ ) {
+    for (let i = 0; i < str.length; i++) {
 
         const c = str[i];
-        
+
         // If character is in dicitonary and is in the current sequence (index bigger or euqal than startindex).
-        if( (c in dict) && dict[c] >= start ) {
-            
+        if ((c in dict) && dict[c] >= start) {
+
             // Calculate length of substring and check if it's longer.
             const len = i - start;
-            if(longest.length < len) longest = str.substr(start, len);
+            if (longest.length < len) longest = str.substr(start, len);
 
             // Start the sequence one index after the doubley appeared character and keep the current index the same.
             // In case of: 'abrka' <== a appeared a second time ==> New Sequence is 'brka'.
             // This ensures that the new Sequence holds unique characters without iterating again from the start of the new sequence.
             start = dict[c] + 1;
-        } 
+        }
 
         // Save character and its index in the dicionary.
         dict[c] = i;

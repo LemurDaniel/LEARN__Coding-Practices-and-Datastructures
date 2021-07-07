@@ -1,4 +1,4 @@
-const Inout = new (require ('../Inout'))('DailyCode --- Character Map');
+const Inout = new (require('../Inout'))('DailyCode --- Character Map');
 
 /*
     Hi, here's your problem today. This problem was recently asked by Google:
@@ -22,8 +22,8 @@ const Inout = new (require ('../Inout'))('DailyCode --- Character Map');
     # False
 */
 
-Inout.push({  str: 'abc', str2: 'def' }, true);
-Inout.push({  str: 'aac', str2: 'def' }, false);
+Inout.push({ str: 'abc', str2: 'def' }, true);
+Inout.push({ str: 'aac', str2: 'def' }, false);
 
 Inout.solvers = [solver1];
 Inout.solve();
@@ -37,7 +37,7 @@ Inout.solve();
     ###########################################################################################
 */
 
-function solver1 (str1, str2)  {
+function solver1(str1, str2) {
 
     // length of shortest string
     const max_len = Math.min(str1.length, str2.length);
@@ -45,7 +45,7 @@ function solver1 (str1, str2)  {
     // Always two entries required
     // if 'a' maps to 'd', then 'd' can only map back to 'a'
     const dict = {};
-    for(let i=0; i<max_len; i++){
+    for (let i = 0; i < max_len; i++) {
 
         const c1 = str1[i];
         const c2 = str2[i];
@@ -56,11 +56,11 @@ function solver1 (str1, str2)  {
         else if (c2 in dict && dict[c2] != c1) return false;
 
         // enter new entries, when not present
-        else if(!(c1 in dict) && !(c2 in dict) ){
+        else if (!(c1 in dict) && !(c2 in dict)) {
             dict[c1] = c2;
             dict[c2] = c1;
         }
-    
+
     }
 
     return true;

@@ -1,4 +1,4 @@
-const Inout = new (require ('../../Inout'))('Coding Questions --- Simplify Unix-style path - [difficulty: Easy]');
+const Inout = new (require('../../Inout'))('Coding Questions --- Simplify Unix-style path - [difficulty: Easy]');
 
 /*
     Given an absolute path for a file (Unix-Style), simplify it.
@@ -8,8 +8,8 @@ const Inout = new (require ('../../Inout'))('Coding Questions --- Simplify Unix-
     path = "/a/./b/../../c/" => "/c"
 */
 
-Inout.testcases.push( { input: '/home/', output: '/home' } );
-Inout.testcases.push( { input: '/a/./b/../../c/', output: '/c' } );
+Inout.testcases.push({ input: '/home/', output: '/home' });
+Inout.testcases.push({ input: '/a/./b/../../c/', output: '/c' });
 
 Inout.solvers = [simplify_path];
 Inout.solve();
@@ -31,14 +31,14 @@ Inout.solve();
     Ignore all spaces ' ' and '.'
 */
 
-function simplify_path (path)  {
+function simplify_path(path) {
 
     const stack = [];
 
-    for(let token of path.split('/')) {
-        if(token == '..' && stack.length != 0) stack.pop(); 
-        else if(' .'.includes(token)) continue;
-        else stack.push( '/' + token);
+    for (let token of path.split('/')) {
+        if (token == '..' && stack.length != 0) stack.pop();
+        else if (' .'.includes(token)) continue;
+        else stack.push('/' + token);
     }
 
     return stack.join('');

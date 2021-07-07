@@ -23,11 +23,11 @@ const Helper = require('../Helper');
 
 */
 
-Inout.push( '&NI 21', false );
-Inout.push( '&NI 355', false );
-Inout.push( '&NI 0321', true );
-Inout.push( '&NI 12321', true );
-Inout.push( '&NI 123', false );
+Inout.push('&NI 21', false);
+Inout.push('&NI 355', false);
+Inout.push('&NI 0321', true);
+Inout.push('&NI 12321', true);
+Inout.push('&NI 123', false);
 
 Inout.solvers = [validMountainArray];
 Inout.solve();
@@ -39,27 +39,27 @@ Inout.solve();
     ###########################################################################################
 */
 
-function validMountainArray (array) {
+function validMountainArray(array) {
 
     // Each array must have passed the ascending and descending stage once.
-    let ascended  = false;
+    let ascended = false;
     let descended = false;
 
-    for(let i=1; i<array.length; i++) {
+    for (let i = 1; i < array.length; i++) {
 
         // Next element bigger than previous. (Ascending)
-        if( array[i] > array[i-1] ) {
+        if (array[i] > array[i - 1]) {
 
             // If its ascending again after having descended return false.
-            if(descended) return false;
+            if (descended) return false;
             ascended = true;
         }
 
         // Next element smaller than previous. (Descending)
-        else if( array[i] < array[i-1] ) {
-            
+        else if (array[i] < array[i - 1]) {
+
             // If its descending before having ascended return false.
-            if(!ascended) return false;
+            if (!ascended) return false;
             descended = true;
         }
 
