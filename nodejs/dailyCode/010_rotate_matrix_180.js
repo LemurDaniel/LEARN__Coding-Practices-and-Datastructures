@@ -32,6 +32,7 @@ Inout.output_stringConverter = Helper.printMatrix;
 Inout.result_stringConverter = Helper.printMatrix;
 
 Inout.push('&AR 1,2,3|4,5,6|7,8,9', '&AR 9,8,7|6,5,4|3,2,1');
+Inout.push('&AR 1,2,3,4|5,6,7,8|9,10,11,12|13,14,15,16', '&AR 16,15,14,13|12,11,10,9|8,7,6,5|4,3,2,1');
 
 Inout.solvers = [RotateMatrix_inPlace, RotateMatrix_inPlace_onePass];
 Inout.solve();
@@ -63,4 +64,27 @@ function RotateMatrix_inPlace(mat) {
         mat[mat.length - row - 1] = mat[row];
         mat[row] = temp;
     }
+}
+
+function RotateMatrix_inPlace_onePass(mat) {
+
+    let en = mat.length * mat[0].length -1;
+    let st = 0;
+
+    do { 
+        const stRow = Math.floor(st / mat[0].length);
+        const enRow = Math.floor(en / mat[0].length);
+        const stCol = st % mat[0].length;
+        const enCol = en % mat[0].length;
+
+        // console.log('EnABS:  ' + en + ' ROW:  ' + enRow + ' COL:  ' + enCol)
+        // console.log('stABS:  ' + st + ' ROW:  ' + stRow + ' COL:  ' + stCol)
+        // console.log('-----------------------------------------------------')
+
+        const temp = mat[stRow][stCol];
+        mat[stRow][stCol] = mat[enRow][enCol];
+        mat[enRow][enCol] = temp;
+
+    } while (++st < --en)
+
 }

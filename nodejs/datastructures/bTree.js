@@ -1,4 +1,5 @@
 // Note https://www.geeksforgeeks.org/binary-tree-set-3-types-of-binary-tree/
+const { serialize } = require("v8");
 const { ID_Object } = require("./other")
 
 class Node extends ID_Object {
@@ -208,6 +209,41 @@ BinaryTree.prototype.traverse = function (traversal = BinaryTree.TraverseType.IN
     }
 
     return list;
+}
+
+BinaryTree.prototype.serialize = function serialize(tree, split = ':', isNull = '#', isLeaf = '$') {
+
+    const format = {
+        split: split,
+        isNull: isNull,
+        isLeaf: isLeaf,
+        tree: [],
+    }
+
+    const stack = [this.root];
+    let node = this.root;
+
+    while (stack.length > 0) {
+
+        if (node === null) {
+            format.tree.push(isNull);
+            node = stack.pop().right;
+        }
+        else if (node.isLeaf()) {
+            format.tree.push(isLeaf + node.val);
+            node = stack.pop().right;
+        }
+        else {
+            format.tree.push(node.val);
+            stack.push(node);
+            node = node.left;
+        }
+
+    }
+
+    format.tree = format.tree.join(format.split);
+    const merge = Object.keys(format).map(v => `${v}=${format[v]}`);
+    return '&' + merge.join('&');
 }
 
 
