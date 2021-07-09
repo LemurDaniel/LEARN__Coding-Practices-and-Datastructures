@@ -11,11 +11,17 @@ class Node extends ID_Object {
         this.right = right ?? null;
     }
 
-    isLeaf = () => this.left == null && this.right == null;
+    isLeaf() {
+        return this.left == null && this.right == null;
+    }
 
-    toString = () => this.val + (this.isLeaf() ? '/L' : '') + ' (Node - ' + this.id + ')';
+    toString() {
+        this.val + (this.isLeaf() ? '/L' : '') + ' (Node - ' + this.id + ')';
+    }
 
-    print = () => this.toString();
+    print() {
+        return this.toString()
+    };
 }
 
 
@@ -33,6 +39,10 @@ class BinaryTree extends ID_Object {
         super();
         this.root = val == null ? null : new Node(val);
         this.print_null = print_null ?? true;
+    }
+
+    print() {
+        return this.toString();
     }
 
     copy() {
@@ -211,10 +221,10 @@ BinaryTree.prototype.traverse = function (traversal = BinaryTree.TraverseType.IN
     return list;
 }
 
-BinaryTree.prototype.serialize = function serialize(tree, split = ':', isNull = '#', isLeaf = '$') {
+BinaryTree.prototype.serialize = function serialize(isSplit = ':', isNull = '#', isLeaf = '$') {
 
     const format = {
-        split: split,
+        isSplit: isSplit,
         isNull: isNull,
         isLeaf: isLeaf,
         tree: [],
@@ -241,8 +251,71 @@ BinaryTree.prototype.serialize = function serialize(tree, split = ':', isNull = 
 
     }
 
-    format.tree = format.tree.join(split);
+    format.tree = format.tree.join(isSplit);
     return '&' + Object.entries(format).map(([key, val]) => `${key}=${val}`).join('&');
+}
+
+BinaryTree.deserialize = function deserialize(serialized) {
+
+    const format = {
+        isSplit: null,
+        isNull: null,
+        isLeaf: null,
+        tree: null
+    };
+
+    serialized.substr(1).split(serialized[0]).map(v => v.split('=')).forEach(v => format[v[0]] = v[1]);
+
+    for (const [key, val] of Object.entries(format)) {
+        if (val === null) throw Error(`Wrong format because of missing parameter: ${key}`)
+    }
+
+    // Destructure.
+    const { isNull, isLeaf, isSplit, tree } = format;
+    const serialTree = tree.split(isSplit);
+
+    // Build tree.
+    const root = parseInt(serialTree[0]);
+    const deserialized = new BinaryTree(root);
+
+    const stack = [];
+    let node = deserialized.root;
+
+    for (let i = 1, insertLeft = true; i < serialTree.length; i++) {
+
+        const value = serialTree[i];
+
+        const flag_Null = value === isNull;
+        const flag_Leaf = value[0] === isLeaf;
+
+        if (flag_Null) {
+            if (insertLeft) insertLeft = false;
+            else node = stack.pop();
+            continue;
+        }
+
+        const numberStr = flag_Leaf ? value.substr(1) : value;
+        const parsedNum = parseInt(numberStr);
+        const newNode = new BinaryTree.Node(parsedNum);
+
+        if (insertLeft) {
+            stack.push(node);
+            node.left = newNode;
+            node = node.left;
+        }
+        else {
+            node.right = newNode;
+            node = node.right;
+            insertLeft = true;
+        }
+
+        if (flag_Leaf) {
+            node = stack.pop();
+            insertLeft = false;
+        }
+    }
+
+    return deserialized;
 }
 
 

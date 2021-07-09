@@ -1,7 +1,7 @@
 const LinkedList = require('./datastructures/linkedList');
 const BTree = require('./datastructures/bTree');
 const Queue = require('./datastructures/queue');
-const { Vector, MappableStructure } = require('./datastructures/other')
+const { Vector } = require('./datastructures/other')
 const fs = require('fs');
 
 const classes = [LinkedList, BTree.BinaryTree, BTree.BinaryTree.Node, Queue.NodeQueue, Queue.ArrayQueue];
