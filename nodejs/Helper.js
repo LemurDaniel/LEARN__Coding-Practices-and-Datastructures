@@ -1,7 +1,7 @@
 const LinkedList = require('./datastructures/linkedList');
 const BTree = require('./datastructures/bTree');
 const Queue = require('./datastructures/queue');
-const { Vector } = require('./datastructures/other')
+const { Vector, MappableStructure } = require('./datastructures/other')
 const fs = require('fs');
 
 const classes = [LinkedList, BTree.BinaryTree, BTree.BinaryTree.Node, Queue.NodeQueue, Queue.ArrayQueue];
@@ -57,13 +57,11 @@ Helper.printArray = function (arr, bl = ', ', open = '[ ', close = ' ]') {
     str = '';
     for (let i = 0; i < arr.length; i++) {
 
-        if (arr[i] === null) str += 'NULL'
-        else if (arr[i] === undefined) str += 'undefined';
-        else if (arr[i].print) str += "'" + arr[i].print() + "'";
-        else if (Array.isArray(arr[i])) str += Helper.printArray(arr[i], bl, '( ', ' )');
-        else if (typeof arr[i] == 'object') str += Helper.printMap(arr[i], -1);
-        else if (typeof arr[i] == 'string') str += "'" + arr[i] + "'";
-        else str += arr[i]
+        if (Array.isArray(arr[i]))
+            str += Helper.printArray(arr[i], bl, '( ', ' )');
+
+        else
+            str += Helper.default_StringConverter(arr[i]);
 
         if (i > 100) {
             str += ' >>> ' + (arr.length - i) + ' more items ';
@@ -75,43 +73,30 @@ Helper.printArray = function (arr, bl = ', ', open = '[ ', close = ' ]') {
     return open + str + close;
 }
 
-Helper.printMap = function (map, depth = 5) {
+Helper.printMap = function (map, mapDepth = 5) {
 
-    // return nothing if map is null
-    if (!map) return '';
+    let str = mapDepth === -1 ? '\n     { ' : '';
 
-    // Get all keys of the map an loop though them.
-    const keys = Object.keys(map);
+    for (let [key, val] of Object.entries(map)) {
 
-    let str = depth == -1 ? '\n     { ' : '';
-    keys.forEach(k => {
+        if (key.includes('matrix'))
+            val = Helper.printMatrix(val);
+        else
+            val = Helper.default_StringConverter(val, mapDepth + 2);
 
-        // Get value for the corresponding key.
-        let val = map[k];
-
-        // If the value of the key is an array, then call the specific function for printing arrays.
-        if (k.includes('matrix')) val = Helper.printMatrix(val);
-        else if (Array.isArray(val)) val = Helper.printArray(val);
-
-        // Call toString funtions if the type is a LinkedList or BinaryTree or Queue
-        else if (val instanceof LinkedList) val = val.toString();
-        else if (val instanceof BTree.BinaryTree) val = val.toString();
-        else if (val instanceof BTree.BinaryTree.Node) val = val.toString();
-        else if (val instanceof Queue.NodeQueue) val = val.toString();
-        else if (val instanceof Queue.ArrayQueue) val = val.toString();
-
-        else if (typeof val == 'function') val = '(function)';
-        // If the value is itself an object, then print its content recursivley.
-        else if (typeof val == 'object') val = Helper.printMap(val, depth + 2);
-
-        if (depth == -1) str += k + ': ' + val + ', ';
         // Create a string with correct indentations and the key and value.
-        else str += '\n' + Helper.uniformString('  ', depth) + k + ': ' + val
-    });
+        if (mapDepth !== -1)
+            str += `\n${Helper.uniformString('   ', mapDepth)}`
 
-    if (depth == -1) return str.substr(0, str.length - 2) + ' }';
-    else return str;
+        str += `${key}: ${val}`;
+    }
+
+    if (mapDepth === -1)
+        return str.substr(0, str.length - 2) + ' }';
+    else
+        return str;
 }
+
 
 // ############################################################################
 // ######### EUQALS METHODS
@@ -238,28 +223,23 @@ Helper.string_toIntArray = function (str, split = ' ') {
     return matrix;
 }
 
+// ############################################################################
+// ######### DEFAULT METHODS
+// ############################################################################
 
 // converts all strings in an object to the desired object
 Helper.default_Converter = function (obj, testcase) {
 
-    const keywords_arr = ['nums', 'arr', 'points'];
-    const keywords_list = ['list'];
-    const keywords_tree = ['tree', 'subtree'];
+    if (typeof obj === 'string') return convertString(obj, testcase);
 
-    if (typeof obj == 'function') return obj;
-    else if (typeof obj == 'string') return convertString(obj, testcase);
-    else if (typeof obj == 'object') {
-        for (let key of Object.keys(obj)) {
+    else if (typeof obj === 'object') {
+        for (const [key, val] of Object.entries(obj)) {
 
-            if (typeof obj[key] == 'string') {
+            if (typeof val === 'string' && val[0] === '&')
+                obj[key] = convertString(val, testcase);
 
-                if (obj[key][0] == '&') obj[key] = convertString(obj[key], testcase);
-                else if (keywords_arr.includes(key)) obj[key] = Helper.string_toIntArray(obj[key]);
-                else if (keywords_list.includes(key)) obj[key] = LinkedList.LinkedListFromString(obj[key]);
-                else if (keywords_tree.includes(key)) obj[key] = BTree.BinaryTree.GenerateIntPreorderFromString(obj[key]);
-            }
-
-            else if (typeof obj[key] == 'object') obj[key] = Helper.default_Converter(obj[key], testcase);
+            else if (typeof val === 'object')
+                obj[key] = Helper.default_Converter(obj[key], testcase);
         }
     }
 
@@ -268,6 +248,8 @@ Helper.default_Converter = function (obj, testcase) {
 
 // converts string to the desired object
 function convertString(str, testcase) {
+
+    if (str[0] !== '&') return str;
 
     const keychars = {
         '&NA': str => Helper.string_toArray(str),
@@ -288,32 +270,28 @@ function convertString(str, testcase) {
         }
     }
 
-    if (str[0] == '&') {
-        const chars = str.substr(0, 3);
-        const substr = str.substr((str[3] == ' ' ? 4 : 3), str.length);
+    const chars = str.substr(0, 3);
+    const substr = str.substr((str[3] == ' ' ? 4 : 3), str.length);
 
-        if (chars in keychars) return keychars[chars](substr);
-    }
-
-    return str;
+    if (chars in keychars)
+        return keychars[chars](substr);
+    else
+        return str;
 }
-
-
-// ############################################################################
-// ######### DEFAULT METHODS
-// ############################################################################
 
 // Copys 
 Helper.default_Copy = function (arg) {
 
     // If object has a copy method, then use it.
-    if (arg === undefined) return undefined;
-    else if (arg === null) return null;
-    else if (arg.copy) return arg.copy();
-    else if (typeof arg == 'function') return arg;
+    if (arg === undefined || arg === null)
+        return arg
+    else if (typeof arg === 'function')
+        return arg;
+    else if (arg.copy)
+        return arg.copy();
 
     // If arg is an object then copy all keys and their values.
-    if (typeof arg == 'object' && !Array.isArray(arg)) {
+    if (typeof arg === 'object' && !Array.isArray(arg)) {
         const copy = {};
         for (let key of Object.keys(arg))
             copy[key] = Helper.default_Copy(arg[key]);
@@ -325,29 +303,84 @@ Helper.default_Copy = function (arg) {
 }
 
 // Standard converter to convert arguments into string for display in console.
-Helper.default_StringConverter = function (arg) {
+Helper.default_StringConverter = function (arg, mapDepth) {
 
-    if (arg == null) return '(undefined)';
+    if (arg === undefined) return '<undefined>';
+    if (arg === null) return '<Null>';
+    if (arg.print) return arg.print();
 
-    for (let c of classes)
-        if (arg instanceof c) return arg.toString();
+    if (typeof arg === 'string')
+        return `'${arg}'`
 
-    if (Array.isArray(arg)) return Helper.printArray(arg);
-    else if (typeof arg == 'function') return '(function) ' + arg.name;
-    else if (typeof arg == 'object') return Helper.printMap(arg);
-    else return arg.toString();
+    if (Array.isArray(arg))
+        return Helper.printArray(arg);
+
+    if (typeof arg === 'function')
+        return '(function) ' + arg.name;
+
+    if (typeof arg === 'object')
+        return Helper.printMap(arg, mapDepth);
+
+    return arg.toString();
 
 }
+
+Helper.default_Comparator = function (arg1, arg2) {
+
+    if (arg1 === arg2) return true;
+
+
+    const type1 = typeof arg1;
+    const type2 = typeof arg2;
+
+    if (type1 !== type2) return false;
+
+    if (arg1.compare)
+        return arg1.compare(arg2);
+
+    if (typeof arg1 === 'object') {
+
+        if (typeof arg2 !== 'object') return false;
+        for (const key of Object.keys(arg1)) {
+            if (!(key in arg2)) return false;
+
+            const val1 = arg1[key];
+            const val2 = arg2[key];
+            if (!Helper.default_Comparator(val1, val2)) return false;
+        }
+        return true;
+    }
+
+    return JSON.stringify(arg1) === JSON.stringify(arg2);
+}
+
 
 // Standard mapper to map arguments to the solver functions
 Helper.default_Mapper = function (arg, solver) {
 
-    for (let c of classes)
+    for (let c of classes) {
         if (arg instanceof c) return solver(arg);
+    }
 
-    if (arg === null || arg === undefined) return solver(arg);
     if (Array.isArray(arg) || typeof arg !== 'object') return solver(arg);
-    else return solver(...Object.values(arg));
+
+    const methodHead = solver.toString().split('{')[0];
+    const argStartIndex = methodHead.indexOf('(');
+    const argEndIndex = methodHead.lastIndexOf(')');
+
+    const parameters = methodHead
+        .slice(argStartIndex + 1, argEndIndex).split(',')
+        .map(param => param.trim());
+
+    const keysArg = { ...arg };
+    const mapping = parameters.map(v => {
+        delete keysArg[v];
+        return arg[v];
+    })
+    .filter( v => v !== undefined )
+    .concat(Object.values(keysArg));
+
+    return solver(...mapping);
 }
 
 

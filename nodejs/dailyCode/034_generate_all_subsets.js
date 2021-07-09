@@ -17,7 +17,7 @@ const Helper = require('../Helper');
 
 */
 
-Inout.result_Comparer = Helper.hasArray_sameValues;
+Inout.result_Comparator = Helper.hasArray_sameValues;
 
 Inout.push('&AR 1,2,3', '&AR |3|2|2,3|1|1,3|1,2|1,2,3');
 Inout.push('&AR 12,4,8', '&AR |12|4|12,4|8|12,8|4,8|12,4,8');

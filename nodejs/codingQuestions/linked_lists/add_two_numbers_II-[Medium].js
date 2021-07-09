@@ -1,4 +1,4 @@
-const Inout = new (require ('../../Inout'))('Coding Questions --- Add Two Numbers II - [difficulty: Medium]');
+const Inout = new (require('../../Inout'))('Coding Questions --- Add Two Numbers II - [difficulty: Medium]');
 const LinkedList = require('../../datastructures/linkedList');
 const Helper = require('../../Helper');
 
@@ -19,14 +19,14 @@ const Helper = require('../../Helper');
 
 Inout.input_stringConverter = arg => '(' + arg.list.toString() + ') + (' + arg.list_2.toString() + ')';
 
-Inout.push( { list: '1', list_2: '&LL 999999' } , '&LL 1000000' );
-Inout.push( { list: '999999', list_2: '&LL 1' } , '&LL 1000000' );
-Inout.push( { list: '7243', list_2: '&LL 564' } , '&LL 7807' );
-Inout.push( { list: '7243', list_2: '&LL 3564' } , '&LL 10807' );
-Inout.push( { list: '7243', list_2: '&LL 993564' } , '&LL 1000807' );
-Inout.push( { list: '7243', list_2: '&LL 122993564' } , '&LL 123000807' );
-Inout.push( { list: '564', list_2: '&LL 7243' } , '&LL 7807' );
-Inout.push( { list: '564', list_2: '&LL 3237243' } , '&LL 3237807' );
+Inout.push({ list: '&LL 1', list_2: '&LL 999999' }, '&LL 1000000');
+Inout.push({ list: '&LL 999999', list_2: '&LL 1' }, '&LL 1000000');
+Inout.push({ list: '&LL 7243', list_2: '&LL 564' }, '&LL 7807');
+Inout.push({ list: '&LL 7243', list_2: '&LL 3564' }, '&LL 10807');
+Inout.push({ list: '&LL 7243', list_2: '&LL 993564' }, '&LL 1000807');
+Inout.push({ list: '&LL 7243', list_2: '&LL 122993564' }, '&LL 123000807');
+Inout.push({ list: '&LL 564', list_2: '&LL 7243' }, '&LL 7807');
+Inout.push({ list: '&LL 564', list_2: '&LL 3237243' }, '&LL 3237807');
 
 Inout.solvers = [add_two_number_with_a_stack, add_two_number_with_a_stack_in_new_ll];
 Inout.solve();
@@ -39,40 +39,40 @@ Inout.solve();
 */
 
 
-function add_two_number_with_a_stack (num, num2)  {
+function add_two_number_with_a_stack(num, num2) {
 
     const stack_1 = [];
     const stack_2 = [];
 
     // store nodes in stacks
     let node = num.head;
-    while(node) {
+    while (node) {
         stack_1.push(node);
         node = node.next;
     }
     // store only the values of the second list in the stack
     node = num2.head;
-    while(node) {
+    while (node) {
         stack_2.push(node.val);
         node = node.next;
     }
 
     // new number is added to/stored in first linked list
     let carry = 0;
-    while(stack_1.length > 0 || stack_2.length > 0 || carry) {
+    while (stack_1.length > 0 || stack_2.length > 0 || carry) {
 
         // add new nodes to head of num to account for carries and num2 being bigger
-        if(stack_1.length == 0) {
+        if (stack_1.length == 0) {
             num.head = new LinkedList.Node(0, num.head);
             stack_1.push(num.head);
         }
 
         const node_1 = stack_1.pop();
-        const val_2  = stack_2.length > 0 ? stack_2.pop() : 0;
-        
-        const sum  = node_1.val + val_2 + carry;
+        const val_2 = stack_2.length > 0 ? stack_2.pop() : 0;
+
+        const sum = node_1.val + val_2 + carry;
         node_1.val = sum % 10;
-        carry      = Math.floor(sum / 10)
+        carry = Math.floor(sum / 10)
     }
 
     return num;
@@ -80,20 +80,20 @@ function add_two_number_with_a_stack (num, num2)  {
 
 
 
-function add_two_number_with_a_stack_in_new_ll (num, num2)  {
+function add_two_number_with_a_stack_in_new_ll(num, num2) {
 
     const stack_1 = [];
     const stack_2 = [];
-    const result  = new LinkedList();
+    const result = new LinkedList();
 
     // store values in stacks
     let node = num.head;
-    while(node) {
+    while (node) {
         stack_1.push(node.val);
         node = node.next;
     }
     node = num2.head;
-    while(node) {
+    while (node) {
         stack_2.push(node.val);
         node = node.next;
     }
@@ -101,15 +101,15 @@ function add_two_number_with_a_stack_in_new_ll (num, num2)  {
 
     // Start adding the content of the stacks
     let carry = 0;
-    while(stack_1.length > 0 || stack_2.length > 0 || carry) {
+    while (stack_1.length > 0 || stack_2.length > 0 || carry) {
         const val_1 = stack_1.length > 0 ? stack_1.pop() : 0;
         const val_2 = stack_2.length > 0 ? stack_2.pop() : 0;
 
-        const sum  = val_1 + val_2 + carry;
-        carry      = Math.floor(sum / 10);
+        const sum = val_1 + val_2 + carry;
+        carry = Math.floor(sum / 10);
 
-        result.head = new LinkedList.Node( sum % 10, result.head);
-        if(result.tail == null) result.tail = result.head;
+        result.head = new LinkedList.Node(sum % 10, result.head);
+        if (result.tail == null) result.tail = result.head;
     }
 
     return result;

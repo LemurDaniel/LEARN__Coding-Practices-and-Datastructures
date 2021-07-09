@@ -64,63 +64,63 @@ const Helper = require('../Helper');
     # [7, 3, 8]
 */
 
-Inout.result_Comparer = Helper.hasArray_sameValues;
+Inout.result_Comparator = Helper.hasArray_sameValues;
 
 Inout.push({
-    points: '1|3|7|8|9',
+    points: '&AR 1|3|7|8|9',
     origin: [5], k: 3
 },
     '&AR 7|3|8')
 
 Inout.push({
-    points: '0,0|1,1|2,2|3,3',
+    points: '&AR 0,0|1,1|2,2|3,3',
     origin: [0, 2], k: 2
 },
     '&AR 0,0|1,1')
 
 Inout.push({
-    points: '0,0|1,1|2,2|3,3',
+    points: '&AR 0,0|1,1|2,2|3,3',
     origin: [1, 2], k: 2
 },
     '&AR 2,2|1,1')
 
 Inout.push({
-    points: '0,0|1,1|2,2|3,3',
+    points: '&AR 0,0|1,1|2,2|3,3',
     origin: [0, 1], k: 2
 },
     '&AR 0,0|1,1')
 
 Inout.push({
-    points: '0,0|1,2|-3,4|3,1',
+    points: '&AR 0,0|1,2|-3,4|3,1',
     origin: [0, 0], k: 2
 },
     '&AR 0,0|1,2')
 
 Inout.push({
-    points: '-3,4|3,1|0,0|1,2|',
+    points: '&AR -3,4|3,1|0,0|1,2|',
     origin: [0, 0], k: 2
 },
     '&AR 0,0|1,2')
 
 Inout.push({
-    points: '-3,4|3,1|0,0|1,2|',
+    points: '&AR -3,4|3,1|0,0|1,2|',
     origin: [0, 0], k: 3
 },
     '&AR 0,0|1,2|3,1')
 
 Inout.push({
-    points: '-0,0|1,2|-3,4|3,1|1,1|-1,0|-1,-1|-1,-1|5,5',
+    points: '&AR -0,0|1,2|-3,4|3,1|1,1|-1,0|-1,-1|-1,-1|5,5',
     origin: [0, 0], k: 5
 },
     '&AR 0,0|-1,0|1,1|-1,-1|-1,-1')
 
 Inout.push({
-    points: '0,0|1,2|-3,4|3,1|1,1|-1,-4|-1,-1|-1,-1|5,5',
+    points: '&AR 0,0|1,2|-3,4|3,1|1,1|-1,-4|-1,-1|-1,-1|5,5',
     origin: [0, 0], k: 5
 },
     '&AR 0,0|1,2|1,1|-1,-1|-1,-1')
 
-Inout.solvers = [findNearestPoints, findNearestPoints_prioNodeQueue];
+Inout.solvers = [findNearestPoints]//, findNearestPoints_prioNodeQueue];
 Inout.solve();
 
 

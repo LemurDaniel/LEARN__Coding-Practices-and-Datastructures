@@ -17,7 +17,7 @@ const Helper = require('../Helper');
 
 */
 
-Inout.push({ nums: '8,7,2,3,4,1,5,6,9,0', k: 3 }, 7)
+Inout.push({ nums: '&AR 8,7,2,3,4,1,5,6,9,0', k: 3 }, 7)
 
 Inout.solvers = [findNearestPoints, findNearestPoints_prioNodeQueue];
 Inout.solve();

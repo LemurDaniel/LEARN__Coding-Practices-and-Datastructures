@@ -1,4 +1,4 @@
-const Inout = new (require ('../../Inout'))('Coding Questions --- Add Two Numbers I - [difficulty: Medium]');
+const Inout = new (require('../../Inout'))('Coding Questions --- Add Two Numbers I - [difficulty: Medium]');
 const LinkedList = require('../../datastructures/linkedList');
 const Helper = require('../../Helper');
 
@@ -19,13 +19,13 @@ const Helper = require('../../Helper');
 
 Inout.input_stringConverter = arg => '(' + arg.list.toString() + ') + (' + arg.list_2.toString() + ')';
 
-Inout.push( { list: '99', list_2: '&LL 52' } , '&LL 421' );
-Inout.push( { list: '9999999', list_2: '&LL 1' } , '&LL 00000001' );
-Inout.push( { list: '243', list_2: '&LL 564' } , '&LL 708' );
-Inout.push( { list: '243', list_2: '&LL 566' } , '&LL 7001' );
-Inout.push( { list: '243', list_2: '&LL 5669' } , '&LL 70001' );
-Inout.push( { list: '24333', list_2: '&LL 564' } , '&LL 70833' );
-Inout.push( { list: '243', list_2: '&LL 56444' } , '&LL 70844' );
+Inout.push({ list: '&LL 99', list_2: '&LL 52' }, '&LL 421');
+Inout.push({ list: '&LL 9999999', list_2: '&LL 1' }, '&LL 00000001');
+Inout.push({ list: '&LL 243', list_2: '&LL 564' }, '&LL 708');
+Inout.push({ list: '&LL 243', list_2: '&LL 566' }, '&LL 7001');
+Inout.push({ list: '&LL 243', list_2: '&LL 5669' }, '&LL 70001');
+Inout.push({ list: '&LL 24333', list_2: '&LL 564' }, '&LL 70833');
+Inout.push({ list: '&LL 243', list_2: '&LL 56444' }, '&LL 70844');
 
 Inout.solvers = [add_two_numbers, add_two_numbers_in_new_list, add_number_recursive];
 
@@ -38,27 +38,27 @@ Inout.solvers = [add_two_numbers, add_two_numbers_in_new_list, add_number_recurs
 */
 
 // no new linked list is created, all values are stored in first linked list 'num'
-function add_two_numbers (num, num2)  {
+function add_two_numbers(num, num2) {
 
     let node_1 = num.head;
     let node_2 = num2.head;
 
     let carry = 0;
-    while(node_1) {
-        const sum   = node_1.val + (node_2 ? node_2.val : 0) + carry;
-        node_1.val  = sum % 10;
-        carry       = Math.floor(sum / 10)
+    while (node_1) {
+        const sum = node_1.val + (node_2 ? node_2.val : 0) + carry;
+        node_1.val = sum % 10;
+        carry = Math.floor(sum / 10)
 
         // handles carries beyond nums most significant digit
         // Example: 999 + 1 ==> 0001 (Additional node with carry is needed after 999 most significant digit) 
-        if(carry && !node_1.next) num.Append(0);
+        if (carry && !node_1.next) num.Append(0);
 
         node_1 = node_1.next;
         node_2 = node_2 ? node_2.next : null;
     }
 
     // handle additional nodes if num2 is bigger than num 
-    while(node_2) {
+    while (node_2) {
         num.Append(node_2.val);
         node_2 = node_2.next;
     }
@@ -67,26 +67,26 @@ function add_two_numbers (num, num2)  {
 }
 
 
-function add_two_numbers_in_new_list (num, num2)  {
+function add_two_numbers_in_new_list(num, num2) {
 
     let node_1 = num.head;
     let node_2 = num2.head;
     const summed = new LinkedList();
 
     let carry = 0;
-    while(node_1) {
-        const sum   = node_1.val + (node_2 ? node_2.val : 0) + carry;
-        carry       = Math.floor(sum / 10)
+    while (node_1) {
+        const sum = node_1.val + (node_2 ? node_2.val : 0) + carry;
+        carry = Math.floor(sum / 10)
         summed.Append(sum % 10);
 
-        if(carry && !node_1.next) num.Append(0);
+        if (carry && !node_1.next) num.Append(0);
 
         node_1 = node_1.next;
         node_2 = node_2 ? node_2.next : null;
     }
 
     // handle additional nodes if num2 is bigger than num 
-    while(node_2) {
+    while (node_2) {
         summed.Append(node_2.val);
         node_2 = node_2.next;
     }
@@ -100,16 +100,16 @@ function add_number_recursive(num, num2) {
     return num.head.add_number_recursive(num, num2.head);
 }
 
-LinkedList.Node.prototype.add_number_recursive = function(list, node, carry = 0) {
+LinkedList.Node.prototype.add_number_recursive = function (list, node, carry = 0) {
 
-    const sum   = this.val + (node ? node.val : 0) + carry;
-    this.val    = sum % 10;
-    carry       = Math.floor(sum / 10);
+    const sum = this.val + (node ? node.val : 0) + carry;
+    this.val = sum % 10;
+    carry = Math.floor(sum / 10);
 
     // If neither a carry nor another node of the second num is present then the addition is completed.
-    if( !carry && (!node || !node.next) ) return list;
-    else if(!this.next) list.Append(0);
+    if (!carry && (!node || !node.next)) return list;
+    else if (!this.next) list.Append(0);
 
-    return this.next.add_number_recursive(list, node ? node.next : null, carry );
+    return this.next.add_number_recursive(list, node ? node.next : null, carry);
 }
 Inout.solve();

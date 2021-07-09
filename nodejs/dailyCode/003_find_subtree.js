@@ -64,15 +64,15 @@ const Tree = new require('../datastructures/bTree')
 */
 
 Inout.push(
-    { tree: '%1,4,3,/,/,2,/,/,5,4,/,/,-1', subtree: '%4,3,/,/,2' },
+    { tree: '&BT 1,4,3,/,/,2,/,/,5,4,/,/,-1', subtree: '&BT 4,3,/,/,2' },
     true
 );
 Inout.push(
-    { tree: '%1,4,3,5,/,/,/,2,/,/,5,4,/,/,-1', subtree: '%4,3,/,/,2' },
+    { tree: '&BT 1,4,3,5,/,/,/,2,/,/,5,4,/,/,-1', subtree: '&BT 4,3,/,/,2' },
     true
 );
 Inout.push(
-    { tree: '%1,4,5,/,/,2,/,/,5,4,/,/,-1', subtree: '%4,3,/,/,2' },
+    { tree: '&BT 1,4,5,/,/,2,/,/,5,4,/,/,-1', subtree: '&BT 4,3,/,/,2' },
     false
 );
 

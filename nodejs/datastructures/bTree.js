@@ -241,9 +241,8 @@ BinaryTree.prototype.serialize = function serialize(tree, split = ':', isNull = 
 
     }
 
-    format.tree = format.tree.join(format.split);
-    const merge = Object.keys(format).map(v => `${v}=${format[v]}`);
-    return '&' + merge.join('&');
+    format.tree = format.tree.join(split);
+    return '&' + Object.entries(format).map(([key, val]) => `${key}=${val}`).join('&');
 }
 
 

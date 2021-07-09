@@ -43,6 +43,11 @@ class NodeQueue {
         }
         return str + ' | <IN';
     }
+
+
+    print() { 
+        return this.toString() 
+    };
 }
 
 
@@ -96,6 +101,10 @@ class ArrayQueue {
         }
         return str + ' | Start';
     }
+
+    print() { 
+        return this.toString() 
+    };
 }
 
 

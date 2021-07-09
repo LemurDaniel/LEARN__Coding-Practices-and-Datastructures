@@ -38,7 +38,7 @@ function Check_output(testcase, result) {
     return true;
 }
 
-Inout.push({ nums: '9, 12, 3, 5, 14, 10, 10', num: 10 }, Check_output);
+Inout.push({ nums: '&AR 9, 12, 3, 5, 14, 10, 10', num: 10 }, Check_output);
 
 Inout.solvers = [partition_list_one_pass];
 Inout.solve();

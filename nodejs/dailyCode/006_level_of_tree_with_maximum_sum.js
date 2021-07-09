@@ -49,17 +49,15 @@ const Queue = new require('../datastructures/queue');
     """
 */
 
-Inout.map_input = (i, s) => s(i)
+Inout.push(
+    '&BT' + '%1,4,3,/,/,2,/,/,5,4,/,/,-1',
+    { level: 1, sum: 9 }
+)
 
-Inout.testcases.push({
-    input: '&BT' + '%1,4,3,/,/,2,/,/,5,4,/,/,-1',
-    output: { level: 1, sum: 9 }
-})
-
-Inout.testcases.push({
-    input: '&BT' + '%1,4,$3,$2,5,$4,2',
-    output: { level: 2, sum: 11 }
-})
+Inout.push(
+    '&BT' + '%1,4,$3,$2,5,$4,2',
+    { level: 2, sum: 11 }
+)
 
 Inout.solvers = [find_level_with_maximum_sum];
 Inout.solve();

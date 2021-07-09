@@ -14,6 +14,7 @@ class Inout {
         this.solvers = []
 
         this.map_input = Helper.default_Mapper;
+        this.input_Copy = Helper.default_Copy;
         this.input_Converter = Helper.default_Converter;
         this.output_Converter = Helper.default_Converter;
         this.result_Converter = res => res;
@@ -22,11 +23,7 @@ class Inout {
         this.output_stringConverter = Helper.default_StringConverter;
         this.result_stringConverter = Helper.default_StringConverter;
 
-        this.input_Copy = Helper.default_Copy;
-        this.result_Comparer = (arg1, arg2) => {
-            if (arg1.compare) return arg1.compare(arg2);
-            return JSON.stringify(arg1) === JSON.stringify(arg2);
-        }
+        this.result_Comparator = Helper.default_Comparator;
     }
 
     push(arg, arg1) {
@@ -75,7 +72,7 @@ class Inout {
                 console.log(exp)
             }
 
-            const success = (typeof test.output == 'function') ? test.output(test, result) : this.result_Comparer(test.output, result)
+            const success = (typeof test.output === 'function') ? test.output(test, result) : this.result_Comparator(test.output, result)
             console.log('\nSolver: ' + solver.name + '  ---  ' + (success ? 'Success' : 'Failure'));
             if (exception) console.log('   Exception: ' + exception);
             else console.log('  Result: ' + this.result_stringConverter(result));

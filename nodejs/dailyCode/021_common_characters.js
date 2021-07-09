@@ -17,7 +17,7 @@ const Inout = new (require('../Inout'))('DailyCode --- Common Characters');
 
 */
 
-Inout.result_Comparer = Helper.hasArray_sameValues;
+Inout.result_Comparator = Helper.hasArray_sameValues;
 Inout.push('&NA google facebook youtube', '&NA e o')
 
 Inout.solvers = [find_common_characters];

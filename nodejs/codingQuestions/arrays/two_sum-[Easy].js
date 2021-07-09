@@ -11,7 +11,7 @@ const Helper = require('../../Helper');
     return [0, 1]
 */
 
-Inout.push({ input: { nums: '2,7,11,15', target: 9 }, output: [0, 1] });
+Inout.push({ nums: '&AR 2,7,11,15', target: 9 }, [0, 1]);
 
 Inout.solvers = [two_sum, two_sum_2];
 Inout.solve();

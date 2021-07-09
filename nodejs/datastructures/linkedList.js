@@ -17,6 +17,10 @@ class Node {
         }
     }
 
+    print() {
+        return this.toString()
+    };
+
 }
 
 
@@ -42,7 +46,13 @@ class LinkedList {
         this.tail = this.head;
     }
 
-    copy = () => LinkedList.Copy(this)
+    copy() {
+        return LinkedList.Copy(this);
+    };
+
+    print() {
+        return this.toString()
+    };
 }
 
 LinkedList.Copy = function (list) {
