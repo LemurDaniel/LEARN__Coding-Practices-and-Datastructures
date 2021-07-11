@@ -21,8 +21,15 @@ const Inout = new (require("../Inout"))("Daily Coding Problem --- Zigzag form");
 
 */
 
+Inout.result_Converter = res => {
+    return {
+        matrix: res.map(arr => arr.map(v => v === ' ' ? '-' : v)),
+        string: res.map(v => v.join('')).join('\n ')
+    }
+}
+
 Inout.push({ k: 4, str: 'thisisazigzag' }, () => true);
-Inout.solvers = [printZigZag];
+Inout.solvers = [printZigZag, printZigZag_variant2];
 Inout.solve();
 
 /*
@@ -34,7 +41,7 @@ Inout.solve();
 
 function printZigZag(str, k) {
 
-    const result = new Array(k).fill('').map(v => []);
+    const result = new Array(k).fill(null).map(v => []);
 
     let direction = 1;
     let currRow = 0;
@@ -55,8 +62,27 @@ function printZigZag(str, k) {
             direction = -1;
     }
 
-    return {
-        matrix: result.map(arr => arr.map(v => v === ' ' ? '-' : v)),
-        string: result.map(v => v.join('')).join('\n ')
+    return result;
+}
+
+function printZigZag_variant2(str, k) {
+
+    const result = new Array(k).fill(null)
+        .map(v => new Array(str.length).fill(' '));
+
+    let direction = 1;
+    let currRow = 0;
+
+    for (let i=0 ; i<str.length; i++) {
+
+        result[currRow][i] = str[i];
+        
+        currRow += direction;
+        if (currRow === 0)
+            direction = 1;
+        else if (currRow === k - 1)
+            direction = -1;
     }
+
+    return result;
 }
