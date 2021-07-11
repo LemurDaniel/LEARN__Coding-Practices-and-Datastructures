@@ -52,16 +52,16 @@ Helper.printMatrix = function (mat, rows_vertical = true, len = 4) {
     return str;
 }
 
-Helper.printArray = function (arr, bl = ', ', open = '[ ', close = ' ]') {
+Helper.printArray = function (arr, mapDepth, bl = ', ', open = '[ ', close = ' ]') {
 
-    str = '';
+    str = open;
     for (let i = 0; i < arr.length; i++) {
 
         if (Array.isArray(arr[i]))
-            str += Helper.printArray(arr[i], bl, '( ', ' )');
+            str += Helper.printArray(arr[i], mapDepth, bl, '( ', ' )');
 
         else
-            str += Helper.default_StringConverter(arr[i]);
+            str += Helper.default_StringConverter(arr[i], mapDepth + 2);
 
         if (i > 100) {
             str += ' >>> ' + (arr.length - i) + ' more items ';
@@ -70,7 +70,9 @@ Helper.printArray = function (arr, bl = ', ', open = '[ ', close = ' ]') {
 
         str += (i != arr.length - 1 ? bl : '');
     }
-    return open + str + close;
+
+    if (str.includes('\n')) str += '\n' + Helper.reapeatSequence(' ', mapDepth)
+    return str + close;
 }
 
 Helper.printMap = function (map, mapDepth = 5) {
@@ -85,8 +87,8 @@ Helper.printMap = function (map, mapDepth = 5) {
             val = Helper.default_StringConverter(val, mapDepth + 2);
 
         // Create a string with correct indentations and the key and value.
-        if (mapDepth !== -1)
-            str += `\n${Helper.uniformString('   ', mapDepth)}`
+        if (mapDepth > 0)
+            str += `\n${Helper.reapeatSequence(' ', mapDepth)}`
 
         str += `${key}: ${val}`;
     }
@@ -306,17 +308,21 @@ Helper.default_Copy = function (arg) {
 Helper.default_StringConverter = function (arg, mapDepth) {
 
     if (arg === undefined) return '<undefined>';
-    if (arg === null) return '<Null>';
+    if (arg === null) return '<null>';
     if (arg.print) return arg.print();
 
-    if (typeof arg === 'string')
-        return `'${arg}'`
+    if (typeof arg === 'string') {
+        if (arg.includes('\n'))
+            return `\n'${arg}'`;
+        else
+            return `'${arg}'`;
+    }
 
     if (Array.isArray(arg))
-        return Helper.printArray(arg);
+        return Helper.printArray(arg, mapDepth);
 
     if (typeof arg === 'function')
-        return '(function) ' + arg.name;
+        return `[Function (${!arg.name ? 'anonymous' : arg.name})]`;
 
     if (typeof arg === 'object')
         return Helper.printMap(arg, mapDepth);
@@ -328,25 +334,18 @@ Helper.default_StringConverter = function (arg, mapDepth) {
 Helper.default_Comparator = function (arg1, arg2) {
 
     if (arg1 === arg2) return true;
+    if (typeof arg1 !== typeof arg2) return false;
 
-
-    const type1 = typeof arg1;
-    const type2 = typeof arg2;
-
-    if (type1 !== type2) return false;
-
-    if (arg1.compare)
-        return arg1.compare(arg2);
+    if (arg1.compare) return arg1.compare(arg2);
 
     if (typeof arg1 === 'object') {
 
-        if (typeof arg2 !== 'object') return false;
-        for (const key of Object.keys(arg1)) {
-            if (!(key in arg2)) return false;
+        for (const key of Object.keys({ ...arg1, ...arg2 })) {
 
-            const val1 = arg1[key];
-            const val2 = arg2[key];
-            if (!Helper.default_Comparator(val1, val2)) return false;
+            const [val1, val2] = [arg1[key], arg2[key]];
+            const res = Helper.default_Comparator(val1, val2);
+
+            if (!res) return false;
         }
         return true;
     }
@@ -377,8 +376,8 @@ Helper.default_Mapper = function (arg, solver) {
         delete keysArg[v];
         return arg[v];
     })
-    .filter( v => v !== undefined )
-    .concat(Object.values(keysArg));
+        .filter(v => v !== undefined)
+        .concat(Object.values(keysArg));
 
     return solver(...mapping);
 }
