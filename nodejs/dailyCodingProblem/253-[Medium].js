@@ -56,7 +56,7 @@ function printZigZag(str, k) {
     }
 
     return {
-        matrix: result,
+        matrix: result.map(arr => arr.map(v => v === ' ' ? '_' : v)),
         string: result.map(v => v.join('')).join('\n ')
     }
 }
