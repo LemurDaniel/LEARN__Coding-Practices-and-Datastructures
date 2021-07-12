@@ -70,6 +70,7 @@ Clear-Host
 # node ./dailyCode/059_most_frequent_words.js
 # node ./dailyCode/060_height_balanced_tree.js
 # node ./dailyCode/061_tree_serialization.js
+node ./dailyCode/062_full_binary_tree.js
 
 
     ##################################
@@ -102,7 +103,8 @@ Clear-Host
 # node ./dailyCodingProblem/236-[Medium].js    # Determine if point is inside of a shape
 # node ./dailyCodingProblem/245-[Medium].js    # optimal amout of jumps
 # node ./dailyCodingProblem/247-[Easy].js      # is tree height balanced
-node ./dailyCodingProblem/253-[Medium].js  # print string in zigzag pattern
+# node ./dailyCodingProblem/253-[Medium].js    # print string in zigzag pattern
+# node ./dailyCodingProblem/254-[Medium].js    # remove nodes to generate a full binary tree
 
     ##############################
     ###### Coding Questions ######

@@ -16,7 +16,7 @@ class Node extends ID_Object {
     }
 
     toString() {
-        this.val + (this.isLeaf() ? '/L' : '') + ' (Node - ' + this.id + ')';
+        return this.val + (this.isLeaf() ? '/L' : '') + ' (Node - ' + this.id + ')';
     }
 
     print() {
