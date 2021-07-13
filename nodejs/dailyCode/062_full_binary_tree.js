@@ -233,7 +233,7 @@ function fullBinaryTree_postorder_iterative(tree) {
     const postorder = [];
     let node = tree.root;
 
-    // Preorder traversal of the binary tree.
+    // Preorder traversal in reverse (Root,right,left) of the binary tree.
     while (node || stack.length > 0) {
 
         if (node !== null) {
@@ -312,7 +312,7 @@ function fullBinaryTree_postorder_helper_iterative(tree) {
     const postorder = [];
     let node = tree.root;
 
-    // Preorder traversal of the binary tree.
+     // Preorder traversal in reverse (Root,right,left) of the binary tree.
     while (node || stack.length > 0) {
 
         if (node !== null) {
