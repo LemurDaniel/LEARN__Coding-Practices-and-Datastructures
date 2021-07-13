@@ -17,10 +17,6 @@ class Node {
         }
     }
 
-    print() {
-        return this.toString()
-    };
-
 }
 
 
