@@ -66,6 +66,23 @@ const Inout = new (require('../Inout'))('DailyCode --- Full binary tree')
     # 03
     # 94
 
+        # Given this tree:
+    #      1
+    #     / \ 
+    #    2   3
+    #   /   / \
+    #  0   9   4
+      /
+    -1
+
+    # We want a tree like:
+    #     1
+    #    / \ 
+    #  -1   3
+    #      / \
+    #     9   4
+
+
              0
           /     \
         1         2
@@ -83,12 +100,15 @@ const Inout = new (require('../Inout'))('DailyCode --- Full binary tree')
 */
 
 Inout.push('&BT 1,2,$0,/,3,$9,4', '&BT 1,$0,3,$9,4');
+Inout.push('&BT 1,2,0,$-1,/,/,3,$9,4', '&BT 1,$-1,3,$9,4');
 Inout.push('&BT 0,1,3,/,$5,/,2,/,4,$6,$7', '&BT 0,$5,4,$6,$7')
 
 // Prototype method needs to be added before calling solve.
 BinaryTree.Node.prototype.fullBinaryTree_recursive = fullBinaryTree_recursive_prototype;
 
-Inout.solvers = [fullBinaryTree_recursive_static, fullBinaryTree_recursive];
+Inout.solvers = [fullBinaryTree_recursive, fullBinaryTree_recursive_static,
+    fullBinaryTree_preorder_iterative, fullBinaryTree_postorder_iterative,
+    fullBinaryTree_preorder_helper_iterative, fullBinaryTree_postorder_helper_iterative];
 Inout.solve();
 
 /*
@@ -151,5 +171,166 @@ function fullBinaryTree_recursive_static(node) {
         return node.left ?? node.right;
     // If the node has no childs or two childs then return it again.
     else return node
+
+}
+
+
+// Method 3 iterative preorder traversal.
+function fullBinaryTree_preorder_iterative(tree) {
+
+    const stack = [tree.root];
+
+    let isLeft = true;
+    let parent = tree.root;
+    let node = tree.root.left;
+
+    // Preorder traversal of the binary tree.
+    while (node || stack.length > 0) {
+
+        if (node === null) {
+
+            // If node is null pop last node from stack, set it as parent and move to the right node of it.
+            parent = stack.pop();
+            node = parent.right;
+            isLeft = false;
+            continue;
+        }
+        
+        const child = node.left ?? node.right;
+        const isOneChildedNode =
+            node.left === null && node.right !== null ||
+            node.left !== null && node.right === null
+
+        if (isOneChildedNode) {
+
+            // If the current node is to be removed, 'isLeft' indicates
+            // whether the right or left node of the parent needs to be reassigned
+            if (isLeft) parent.left = child;
+            else parent.right = child;
+
+            // Since a childnode move up in the tree don't push to stack or change the parent variable, also keep the isLeft indicator to the same value.
+            // The childnode will be processed next iteration and if it's also a onechilded node reassigned to the left or right of the same parent.
+            node = child;
+
+        } else {
+            // Move forwad in preorder fashion and update all variables.
+            stack.push(node);
+            node = node.left;
+            parent = node;
+            isLeft = true;
+        }
+
+    }
+
+}
+
+
+
+// Method 4 iterative postorder traversal.
+function fullBinaryTree_postorder_iterative(tree) {
+
+    const stack = [];
+    const postorder = [];
+    let node = tree.root;
+
+    // Preorder traversal of the binary tree.
+    while (node || stack.length > 0) {
+
+        if (node !== null) {
+            stack.push(node);
+            postorder.push(node);
+            node = node.right;
+        } else {
+            node = stack.pop().left;
+        }
+
+    }
+
+    while (postorder.length > 0) {
+
+        const node = postorder.pop();
+        const isOneChildedNode =
+            node.left === null && node.right !== null ||
+            node.left !== null && node.right === null
+
+        if (isOneChildedNode) {
+            const child = node.left ?? node.right;
+            node.val = child.val;
+            node.left = child.left;
+            node.right = child.right;
+        }
+
+    }
+
+}
+
+
+
+
+// Helper method
+function processNode(node) {
+    if (node === null) return null;
+
+    const isOneChilded =
+        node.left === null && node.right !== null ||
+        node.left !== null && node.right === null
+
+    if (isOneChilded)
+        return node.left ?? node.right;
+    else
+        return node;
+}
+
+// Method 5 iterative preorder traversal helper method.
+function fullBinaryTree_preorder_helper_iterative(tree) {
+
+    const stack = [];
+    let node = tree.root;
+
+    // Preorder traversal of the binary tree.
+    while (node || stack.length > 0) {
+
+        if (node === null) {
+            node = stack.pop();
+            node.left = processNode(node.left);
+            node.right = processNode(node.right);
+            node = node.right;
+        } else {
+            stack.push(node);
+            node = node.left;
+        }
+
+    }
+
+}
+
+
+// Method 6 iterative postorder traversal helper method.
+function fullBinaryTree_postorder_helper_iterative(tree) {
+
+    const stack = [];
+    const postorder = [];
+    let node = tree.root;
+
+    // Preorder traversal of the binary tree.
+    while (node || stack.length > 0) {
+
+        if (node !== null) {
+            stack.push(node);
+            postorder.push(node);
+            node = node.right;
+        } else {
+            node = stack.pop().left;
+        }
+
+    }
+
+    while (postorder.length > 0) {
+
+        const node = postorder.pop();
+        node.left = processNode(node.left);
+        node.right = processNode(node.right);
+
+    }
 
 }
