@@ -105,7 +105,8 @@ Clear-Host
 # node ./dailyCodingProblem/247-[Easy].js      # is tree height balanced
 # node ./dailyCodingProblem/253-[Medium].js    # print string in zigzag pattern
 # node ./dailyCodingProblem/254-[Medium].js    # remove nodes to generate a full binary tree
-node ./dailyCodingProblem/256-[Medium].js   # Rearrange linked list in low => high => low => high ... pattern
+# node ./dailyCodingProblem/256-[Medium].js    # Rearrange linked list in low => high => low => high ... pattern
+node ./dailyCodingProblem/258-[Easy].js     # Print binary tree in boustrophedon
 
     ##############################
     ###### Coding Questions ######
