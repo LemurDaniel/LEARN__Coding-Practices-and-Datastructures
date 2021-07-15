@@ -20,7 +20,7 @@ Inout.push('&LL 12345', '&LL 13254');
 Inout.push('&LL 123456', '&LL 132546');
 Inout.push('&LL 34512', '&LL 13254');
 Inout.push('&LL 345126', '&LL 132546');
-Inout.solvers = [rearrangeLinkedList];
+Inout.solvers = [rearrangeLinkedList, rearrangeLinkedList2];
 Inout.solve();
 
 /*
@@ -53,3 +53,22 @@ function rearrangeLinkedList(list) {
     list.tail = curr ?? prev;
 }
 
+
+function rearrangeLinkedList2(list) {
+
+    Helper.MergeSort.sort(list);
+
+    let node = list.head.next;
+
+    while(node !== null && node.next !== null) {
+
+        const next = node.next
+        const temp = next.val;
+
+        next.val = node.val;
+        node.val = temp;
+        
+        node = next.next;
+    }
+
+}
