@@ -48,10 +48,8 @@ Inout.solve();
 
 function optimalPlay_TreeStructure(words) {
 
-    const optimalPlayTree = OptimalPlayTree.createRoot();
-    optimalPlayTree.addWords(words);
-    const plays = optimalPlayTree.getAllPlays();
-
+    const plays = OptimalPlayTree.createRoot().addWords(words).getAllPlays();
+    
     const max = Object.keys(plays).reduce(
         (a, b) => plays[a].ratio > plays[b].ratio ? a : b
     )
@@ -83,6 +81,7 @@ function initialize() {
 
         addWords(words) {
             words.forEach(word => this.addWord(word));
+            return this;
         }
         addWord(word, idx = 0) {
 
@@ -97,6 +96,8 @@ function initialize() {
                 nodes[char] = new Node(char, this.num + 1);
 
             nodes[char].addWord(word, idx + 1);
+
+            return this;
         }
 
         getAllPlays() {
