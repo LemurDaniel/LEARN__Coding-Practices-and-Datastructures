@@ -34,32 +34,27 @@ Helper.printMatrix = function (mat, rows_vertical = true, len = 4) {
 
     let str = '\n';
     if (!rows_vertical) {
-        for (let col = mat[0].length - 1; col >= 0; col--) {
-            str += '    ';
+        for (let col = mat[0].length - 1; col >= 0; col--, str += '\n') {
             for (let row = 0; row < mat.length; row++)
                 str += Helper.uniformString(mat[row][col].toString(), len);
-            str += '\n';
         }
     }
     else {
-        for (let row = 0; row < mat.length; row++) {
-            str += '    ';
+        for (let row = 0; row < mat.length; row++, str += '\n') {
             for (let col = 0; col < mat[row].length; col++)
                 str += Helper.uniformString(mat[row][col].toString(), len);
-            str += '\n';
         }
     }
     return str;
 }
 
-Helper.printArray = function (arr, mapDepth, bl = ', ', open = '[ ', close = ' ]') {
+Helper.printArray = function (arr, mapDepth = 0, bl = ', ', open = '[ ', close = ' ]') {
 
     str = open;
     for (let i = 0; i < arr.length; i++) {
 
         if (Array.isArray(arr[i]))
             str += Helper.printArray(arr[i], mapDepth, bl, '( ', ' )');
-
         else
             str += Helper.default_StringConverter(arr[i], mapDepth + 2);
 
@@ -75,7 +70,7 @@ Helper.printArray = function (arr, mapDepth, bl = ', ', open = '[ ', close = ' ]
     return str + close;
 }
 
-Helper.printMap = function (map, mapDepth = 5) {
+Helper.printMap = function (map, mapDepth = 0) {
 
     let str = mapDepth === -1 ? '\n     { ' : '';
 
@@ -88,9 +83,9 @@ Helper.printMap = function (map, mapDepth = 5) {
 
         // Create a string with correct indentations and the key and value.
         if (mapDepth > 0)
-            str += `\n${Helper.reapeatSequence(' ', mapDepth)}`
-
-        str += `${key}: ${val}`;
+            str += `\n${Helper.reapeatSequence(' ', mapDepth)}${key}: ${val}`
+        else
+            str += `${key}: ${val}\n`;
     }
 
     if (mapDepth === -1)
@@ -305,7 +300,7 @@ Helper.default_Copy = function (arg) {
 }
 
 // Standard converter to convert arguments into string for display in console.
-Helper.default_StringConverter = function (arg, mapDepth) {
+Helper.default_StringConverter = function (arg, mapDepth = 0) {
 
     if (arg === undefined) return '<undefined>';
     if (arg === null) return '<null>';

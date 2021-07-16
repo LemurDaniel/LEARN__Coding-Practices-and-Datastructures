@@ -37704,7 +37704,7 @@ earphones
 earmarks
 earmarked
 earl's
-d�cor
+decor
 dysentery
 dwindling
 dwight's
@@ -38323,7 +38323,6 @@ aarp
 aaaaargh
 aaaaaaaaaaaaa
 a'ight
-��
 zzzzzzz
 zucchini
 zoos
@@ -41280,6 +41279,5 @@ aboriginal
 ablaze
 Aberdeen
 abdomenizer
-
 aaaaaaaaaa
 a'right

@@ -39,14 +39,25 @@ class Inout {
         test.input = this.input_Converter(test.input, test);
         test.output = this.output_Converter(test.output, test);
 
-        console.log('\n--------------------------------')
-        console.log('Testcase ' + (i + 1) + ':');
 
-        console.log('\n---Input:  ' + this.input_stringConverter(test.input));
-        console.log('\n---Output: ' + this.output_stringConverter(test.output));
+        console.log('\n--------------------------------\n')
+        console.group();
+        console.log('\x1b[42m', 'Testcase ' + (i + 1) + ':', '\x1b[0m');
 
-        this.Apply_solvers(test)
 
+        console.log()
+        console.group();
+
+        console.log(this.input_stringConverter({ Input: test.input }));
+        console.log(this.input_stringConverter({ Output: test.output }));
+        console.log('\x1b[42m', ' ---- Solving below ---- ', '\x1b[0m', '\n')
+        this.applySolvers(test)
+
+        console.groupEnd();
+
+
+        console.groupEnd();
+        console.log('\x1b[0m')
         console.log('--------------------------------\n')
 
 
@@ -57,7 +68,7 @@ class Inout {
         });
     }
 
-    Apply_solvers(test) {
+    applySolvers(test) {
         for (let solver of this.solvers) {
 
             let result;
@@ -73,9 +84,15 @@ class Inout {
             }
 
             const success = (typeof test.output === 'function') ? test.output(test, result) : this.result_Comparator(test.output, result)
-            console.log('\nSolver: ' + solver.name + '  ---  ' + (success ? 'Success' : 'Failure'));
-            if (exception) console.log('   Exception: ' + exception);
-            else console.log('  Result: ' + this.result_stringConverter(result));
+            const color = (exception || !success) ? '\x1b[31m' : '\x1b[32m';
+            console.log(color, `Solver: ${solver.name}  ---  ${(success ? 'Success' : 'Failure')}`);
+
+            console.group();
+            console.log(exception ? 'Exception: ' : 'Result: ');
+            console.group();
+            console.log(exception ? exception.toString() : this.result_stringConverter(result));
+            console.groupEnd();
+            console.groupEnd();
         }
     }
 }

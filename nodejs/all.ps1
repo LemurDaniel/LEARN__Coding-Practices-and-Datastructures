@@ -82,10 +82,10 @@ Clear-Host
 # node ./dailyCodingProblem/129-[Medium].js    # Find square root of number
 # node ./dailyCodingProblem/135-[Easy].js      # Find path with minimum sum from root to leaf
 # node ./dailyCodingProblem/143-[Medium].js    # Partition list into three parts
+# node ./dailyCodingProblem/145-[Easy].js      # Swap every two nodes in a linked list
 # node ./dailyCodingProblem/157-[Easy].js      # Is any permutation a palindrom
 # node ./dailyCodingProblem/158-[Medium].js    # Ways to to reach the bottom of a matrix'
 # node ./dailyCodingProblem/159-[Easy].js      # Find first recurring Character
-# node ./dailyCodingProblem/145-[Easy].js      # Swap every two nodes in a linked list
 # node ./dailyCodingProblem/163-[Hard].js      # Evaluate reverse polish notation
 # node ./dailyCodingProblem/164-[Medium].js    # Find duplicate number in array
 # node ./dailyCodingProblem/165-[Medium].js    # Count smaller elements on right side
@@ -106,7 +106,8 @@ Clear-Host
 # node ./dailyCodingProblem/253-[Medium].js    # print string in zigzag pattern
 # node ./dailyCodingProblem/254-[Medium].js    # remove nodes to generate a full binary tree
 # node ./dailyCodingProblem/256-[Medium].js    # Rearrange linked list in low => high => low => high ... pattern
-node ./dailyCodingProblem/258-[Easy].js     # Print binary tree in boustrophedon
+# node ./dailyCodingProblem/258-[Easy].js      # Print binary tree in boustrophedon
+node ./dailyCodingProblem/259-[Hard].js     # Find optimal solution for ghost
 
     ##############################
     ###### Coding Questions ######
