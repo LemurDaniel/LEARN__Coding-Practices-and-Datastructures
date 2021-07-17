@@ -64,7 +64,7 @@ const Helper = require('../Helper');
     # [7, 3, 8]
 */
 
-Inout.result_Comparator = Helper.hasArray_sameValues;
+Inout.result_Equals = Helper.hasArray_sameValues;
 
 Inout.push({
     points: '&AR 1|3|7|8|9',

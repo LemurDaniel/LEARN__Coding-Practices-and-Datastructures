@@ -71,6 +71,7 @@ Clear-Host
 # node ./dailyCode/060_height_balanced_tree.js
 # node ./dailyCode/061_tree_serialization.js
 # node ./dailyCode/062_full_binary_tree.js
+node ./dailyCode/063_remove_kth_node_from_ll.js
 
 
     ##################################
@@ -107,7 +108,7 @@ Clear-Host
 # node ./dailyCodingProblem/254-[Medium].js    # remove nodes to generate a full binary tree
 # node ./dailyCodingProblem/256-[Medium].js    # Rearrange linked list in low => high => low => high ... pattern
 # node ./dailyCodingProblem/258-[Easy].js      # Print binary tree in boustrophedon
-node ./dailyCodingProblem/259-[Hard].js     # Find optimal solution for ghost
+# node ./dailyCodingProblem/259-[Hard].js     # Find optimal solution for ghost
 
     ##############################
     ###### Coding Questions ######

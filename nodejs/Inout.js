@@ -1,3 +1,4 @@
+const { CustomError } = require('./Helper');
 const Helper = require('./Helper');
 
 const rl = require('readline').createInterface({
@@ -23,7 +24,7 @@ class Inout {
         this.output_stringConverter = Helper.default_StringConverter;
         this.result_stringConverter = Helper.default_StringConverter;
 
-        this.result_Comparator = Helper.default_Comparator;
+        this.result_Equals = Helper.default_Equals;
     }
 
     push(arg, arg1) {
@@ -79,18 +80,20 @@ class Inout {
                 result = this.map_input(input, solver);
                 result = this.result_Converter(result ?? input, test);
             } catch (exp) {
-                exception = exp;
-                console.log(exp)
+                exception = { [exp.name]: exp };
             }
 
-            const success = (typeof test.output === 'function') ? test.output(test, result) : this.result_Comparator(test.output, result)
-            const color = (exception || !success) ? '\x1b[31m' : '\x1b[32m';
+            const isOutputFunction = typeof test.output === 'function';
+            const comparator = isOutputFunction ? test.output : this.result_Equals;
+            const success = comparator(isOutputFunction ? test : test.output, exception ?? result);
+            const color = exception ? '\x1b[33m' : (success ? '\x1b[32m' : '\x1b[31m');
             console.log(color, `Solver: ${solver.name}  ---  ${(success ? 'Success' : 'Failure')}`);
 
             console.group();
             console.log(exception ? 'Exception: ' : 'Result: ');
             console.group();
-            console.log(exception ? exception.toString() : this.result_stringConverter(result));
+            console.log(this.result_stringConverter(exception ?? result));
+            console.log();
             console.groupEnd();
             console.groupEnd();
         }

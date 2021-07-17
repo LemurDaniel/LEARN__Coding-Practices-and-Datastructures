@@ -49,7 +49,7 @@ class BinaryTree extends ID_Object {
         return BinaryTree.GenerateIntPreorderFromString(this.toString(), ',', '<NULL>', '/L')
     }
 
-    compare(tree) {
+    equals(tree) {
         return BinaryTree._areTreesSame(this.root, tree.root);
     }
 
@@ -373,7 +373,7 @@ BinarySearchTree.Node.prototype.Insert = function (val) {
 }
 
 BinarySearchTree.Node.prototype.Search = function (val) {
-    const comp = val.compare(this.val);
+    const comp = val.equals(this.val);
     if (comp == 0) return this;
     else if (comp > 0 && this.right) return this.right.Search(val);
     else if (comp <= 0 && this.left) return this.left.Search(val);

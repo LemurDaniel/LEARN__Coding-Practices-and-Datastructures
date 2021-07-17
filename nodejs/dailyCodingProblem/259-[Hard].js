@@ -24,7 +24,7 @@ const Helper = require("../Helper");
 
 */
 
-Inout.result_Comparator = (oup, res) => res.some(v => v.letter === oup.letter);
+Inout.result_Equals = (oup, res) => res.some(v => v.letter === oup.letter);
 Inout.result_Converter = result => {
 
     const convert = [];

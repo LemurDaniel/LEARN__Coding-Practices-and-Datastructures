@@ -227,6 +227,7 @@ Helper.string_toIntArray = function (str, split = ' ') {
 // converts all strings in an object to the desired object
 Helper.default_Converter = function (obj, testcase) {
 
+    if (obj instanceof Error) return { [obj.name]: obj };
     if (typeof obj === 'string') return convertString(obj, testcase);
 
     else if (typeof obj === 'object') {
@@ -299,6 +300,24 @@ Helper.default_Copy = function (arg) {
     return JSON.parse(JSON.stringify(arg));
 }
 
+
+Helper.CustomError =
+    class CustomError extends Error {
+
+        constructor(type, message) {
+            super(message)
+            this.type = type;
+        }
+
+        print() {
+            return `${this.type} => ${this.message === '' ? '(No Message)' : this.message}`
+        }
+
+        equals(exp) {
+            return this.type === exp.type;
+        }
+    }
+
 // Standard converter to convert arguments into string for display in console.
 Helper.default_StringConverter = function (arg, mapDepth = 0) {
 
@@ -326,19 +345,19 @@ Helper.default_StringConverter = function (arg, mapDepth = 0) {
 
 }
 
-Helper.default_Comparator = function (arg1, arg2) {
+Helper.default_Equals = function (arg1, arg2) {
 
     if (arg1 === arg2) return true;
     if (typeof arg1 !== typeof arg2) return false;
 
-    if (arg1.compare) return arg1.compare(arg2);
+    if (arg1.equals) return arg1.equals(arg2);
 
     if (typeof arg1 === 'object') {
 
         for (const key of Object.keys({ ...arg1, ...arg2 })) {
 
             const [val1, val2] = [arg1[key], arg2[key]];
-            const res = Helper.default_Comparator(val1, val2);
+            const res = Helper.default_Equals(val1, val2);
 
             if (!res) return false;
         }

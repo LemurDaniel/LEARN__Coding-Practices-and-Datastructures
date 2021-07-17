@@ -22,7 +22,7 @@ const Helper = require('../Helper');
 
 */
 
-Inout.result_Comparator = (arg, arg2) => typeof arg == 'object' ? (Helper.hasArray_sameValues(arg.divisors, arg2.divisors)) : (arg == arg2.perfect);
+Inout.result_Equals = (arg, arg2) => typeof arg == 'object' ? (Helper.hasArray_sameValues(arg.divisors, arg2.divisors)) : (arg == arg2.perfect);
 
 Inout.push(28, { divisors: '&AR 1,2,4,7,14' });
 Inout.push(82, false);

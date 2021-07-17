@@ -97,7 +97,7 @@ const Helper = require('../Helper');
 
 */
 
-Inout.result_Comparator = (arg, arg2) => typeof arg2 == 'object' ? arg2.isSimilar == arg : arg2 == arg;
+Inout.result_Equals = (arg, arg2) => typeof arg2 == 'object' ? arg2.isSimilar == arg : arg2 == arg;
 
 Inout.push({
     tree_1: '&BT% 7,2,/,$2,1',

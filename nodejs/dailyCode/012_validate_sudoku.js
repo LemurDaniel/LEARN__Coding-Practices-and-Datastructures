@@ -43,7 +43,7 @@ const Helper = require('../Helper');
     # True
 */
 
-Inout.result_Comparator = (arg, arg2) => (arg2.val == 1) == arg;
+Inout.result_Equals = (arg, arg2) => (arg2.val == 1) == arg;
 Inout.input_stringConverter = Helper.printMatrix;
 
 Inout.result_stringConverter = arg => {
