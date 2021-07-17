@@ -38,9 +38,12 @@ const { CustomError } = require('../Helper');
 */
 
 Inout.result_Converter = res => res.list;
+Inout.push({ k: 0, list: '&LL 1' }, '&LL ');
 Inout.push({ k: 3, list: '&LL 12345' }, '&LL 1245');
-Inout.push({ k: 5, list: '&LL 12345' }, new CustomError('Out-of-Bounds', 'Kth element from the last node is not a valid index'));
+Inout.push({ k: 5, list: '&LL 12345' }, '&LL 2345');
+Inout.push({ k: 0, list: '&LL 12345' }, '&LL 1234');
 Inout.push({ k: 3, list: '&LL 0123456789' }, '&LL 012345689');
+Inout.push({ k: 7, list: '&LL 12345' }, new CustomError('Out-of-Bounds', 'Kth element from the last node is not a valid index'));
 
 Inout.solvers = [removeKthLastElement];
 Inout.solve(0);
@@ -48,22 +51,39 @@ Inout.solve(0);
 
 function removeKthLastElement(list, k) {
 
+    if( k === 0 && list.head === list.tail) {
+        list.head = null;
+        list.tail = null
+        return;
+    }
+
+
     let walker = list.head;
     let runner = list.head.next;
 
     // Move Runner kth+1 nodes ahead of walker.
-    while (k-- && runner) runner = runner.next;
-    if (runner == null)
-        throw new CustomError('Out-of-Bounds', 'Kth element from the last node is not a valid index')
+    while (--k > 0) {
+        if (runner === null && k > 0)
+            throw new CustomError('Out-of-Bounds', 'Kth element from the last node is not a valid index');
+        else if (runner !== null)
+            runner = runner.next;
+    }
 
-    // For each iteration both walker and runner move aheah by one node.
+    // For each iteration both walker and runner move ahead by one node.
     // When the runner reached the end of the list then the walker is still kth+1 nodes behind it
     // which is exactly one node before the to be removed node.
-    while (runner) {
+    while (runner && runner.next) {
         runner = runner.next;
         walker = walker.next;
     }
 
-    // Remove the node after the walker by pointing its pointer to the node after it.
-    walker.next = walker.next.next;
+    // Remove the node and cover cases where node is head or tail.
+    if (walker.next === list.tail)
+        list.tail = walker;
+    else if (runner !== null)
+        walker.next = walker.next.next;
+    else if (walker === list.head)
+        list.head = walker.next;
+
+    list.tail.next = null;
 }
