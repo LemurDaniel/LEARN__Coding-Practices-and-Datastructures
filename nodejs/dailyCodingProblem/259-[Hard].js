@@ -36,7 +36,7 @@ Inout.result_Converter = result => {
             words.length = 9;
             words.push(`... >>> ${(length - 9)} more`);
         }
-        stats.ratio = Math.floor(stats.ratio * 10000) / 100 + '%';
+        stats.winToPathsRatio = Math.floor(stats.winToPathsRatio * 10000) / 100 + '%';
 
         convert.push(res);
         convert.push('\n')
@@ -64,7 +64,7 @@ function optimalPlay_TreeStructure(words) {
     return OptimalPlayTree.createRoot()
         .addWords(words).getAllPlays()
         .filter(({ stats }) => stats.isWinAlwaysPossible)
-        .sort((a, b) => b.stats.ratio - a.stats.ratio)
+        .sort((a, b) => b.stats.winToPathsRatio - a.stats.winToPathsRatio)
 }
 
 
@@ -115,10 +115,10 @@ function initialize() {
                 // isWinAlwaysPossible determines if player one can always force a win with optimal play regardless of the opponent's moves.
                 const localRes = {
                     isWinAlwaysPossible: false,
-                    plays: 0,
-                    wins: 0,
-                    loses: 0,
-                    ratio: 0,
+                    possiblePaths: 0,
+                    winningPaths: 0,
+                    loosingPaths: 0,
+                    winToPathsRatio: 0,
                     words: []
                 };
                 localRes.isWinAlwaysPossible = node.__getAllPlays(localRes);
@@ -130,9 +130,9 @@ function initialize() {
 
             if (this.isLeaf) {
                 const isWin = this.player === 1;
-                result.loses += isWin ? 0 : 1;
-                result.wins += isWin ? 1 : 0;
-                result.ratio = result.wins / ++result.plays;
+                result.loosingPaths += isWin ? 0 : 1;
+                result.winningPaths += isWin ? 1 : 0;
+                result.winToPathsRatio = result.winningPaths / ++result.possiblePaths;
                 result.words.push(prefix + this.val);
 
                 return isWin;
