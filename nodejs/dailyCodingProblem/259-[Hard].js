@@ -1,4 +1,5 @@
 const Inout = new (require("../Inout"))("Daily Coding Problem --- Rearrange linked list");
+const { uptime } = require("process");
 const { NodeQueue } = require("../datastructures/queue");
 const Helper = require("../Helper");
 
@@ -21,14 +22,26 @@ const Helper = require("../Helper");
 
     For example, if the dictionary is ["cat", "calf", "dog", "bear"], the only winning start letter would be b.
 
-    Build a tree structure with all possible ways of playing the game and take the branch with the most possible win scenarios.
-
 */
 
-Inout.result_Comparator = (oup, res) => oup.letter === res.letter;
-Inout.result_Converter = res => {
-    res.ratio = Math.floor(res.ratio * 10000) / 100 + '%';
-    return res;
+Inout.result_Comparator = (oup, res) => res.some(v => v.letter === oup.letter);
+Inout.result_Converter = result => {
+
+    const convert = [];
+    for (const res of result) {
+        const stats = res.stats;
+        const words = stats.words;
+        const length = words.length;
+        if (length > 10) {
+            words.length = 9;
+            words.push(`... >>> ${(length - 9)} more`);
+        }
+        stats.ratio = Math.floor(stats.ratio * 10000) / 100 + '%';
+
+        convert.push(res);
+        convert.push('\n')
+    }
+    return convert;
 }
 
 Inout.push('&AR cat calf dog bear', { letter: 'b' });
@@ -48,15 +61,11 @@ Inout.solve();
 
 function optimalPlay_TreeStructure(words) {
 
-    const plays = OptimalPlayTree.createRoot().addWords(words).getAllPlays();
-    
-    const max = Object.keys(plays).reduce(
-        (a, b) => plays[a].ratio > plays[b].ratio ? a : b
-    )
-
-    return { letter: max, ...plays[max] };
+    return OptimalPlayTree.createRoot()
+        .addWords(words).getAllPlays()
+        .filter(({ stats }) => stats.isWinAlwaysPossible)
+        .sort((a, b) => b.stats.ratio - a.stats.ratio)
 }
-
 
 
 
@@ -72,10 +81,10 @@ function initialize() {
             return this.nodes === null;
         }
 
-        constructor(val, num) {
-            this.num = num;
-            this.val = val;
+        constructor(val, player) {
+            this.player = (player + 1) % 2;
             this.nodes = null;
+            this.val = val;
         }
 
 
@@ -93,7 +102,7 @@ function initialize() {
             const char = word[idx];
 
             if (!(char in nodes))
-                nodes[char] = new Node(char, this.num + 1);
+                nodes[char] = new Node(char, this.player);
 
             nodes[char].addWord(word, idx + 1);
 
@@ -101,29 +110,50 @@ function initialize() {
         }
 
         getAllPlays() {
-            const result = {};
-            Object.entries(this.nodes).forEach(
-                ([char, node]) => result[char] = node.__getAllPlays()
-            )
-            return result;
+            const results = [];
+            for (const [char, node] of Object.entries(this.nodes)) {
+                // isWinAlwaysPossible determines if player one can always force a win with optimal play regardless of the opponent's moves.
+                const localRes = {
+                    isWinAlwaysPossible: false,
+                    plays: 0,
+                    wins: 0,
+                    loses: 0,
+                    ratio: 0,
+                    words: []
+                };
+                localRes.isWinAlwaysPossible = node.__getAllPlays(localRes);
+                results.push({ letter: char, stats: localRes });
+            }
+            return results;
         }
-        __getAllPlays(prefix = '', result = { wins: 0, loses: 0, diff: 0, plays: 0, ratio: 0, words: [] }) {
+        __getAllPlays(result, prefix = '') {
 
             if (this.isLeaf) {
+                const isWin = this.player === 1;
+                result.loses += isWin ? 0 : 1;
+                result.wins += isWin ? 1 : 0;
+                result.ratio = result.wins / ++result.plays;
                 result.words.push(prefix + this.val);
-                result.wins += 1 - this.num % 2;
-                result.loses += this.num % 2;
-                result.plays = result.wins + result.loses;
-                result.diff = result.wins - result.loses;
-                result.ratio = result.wins / (result.wins + result.loses);
-            } else {
-                for (const [char, node] of Object.entries(this.nodes)) {
-                    node.__getAllPlays(prefix + this.val, result);
-                }
-            }
 
-            return result;
+                return isWin;
+            } else {
+
+                let hasLoosingBranch = false;
+                let hasWinningBranch = false;
+                for (const [char, node] of Object.entries(this.nodes)) {
+                    const isWin = node.__getAllPlays(result, prefix + this.val);
+
+                    if (isWin) hasWinningBranch = true;
+                    else hasLoosingBranch = true;
+                }
+
+                // player 1 => 0 ||| player 2 => 1
+                // If it's the second players turn then optimal play is assumed which
+                // will lead to player 2 choosing a branch resulting in a possible loss for player 1.
+                const choosingPlayer = (this.player + 1) % 2;
+                return (choosingPlayer === 1 && !hasLoosingBranch) ||
+                    (choosingPlayer === 0 && hasWinningBranch)
+            }
         }
     }
-
 }
