@@ -86,7 +86,7 @@ class Inout {
             const isOutputFunction = typeof test.output === 'function';
             const comparator = isOutputFunction ? test.output : this.result_Equals;
             const success = comparator(isOutputFunction ? test : test.output, exception ?? result);
-            const color = exception ? '\x1b[33m' : (success ? '\x1b[32m' : '\x1b[31m');
+            const color = success ? (exception ? '\x1b[33m' : '\x1b[32m') : '\x1b[31m';
             console.log(color, `Solver: ${solver.name}  ---  ${(success ? 'Success' : 'Failure')}`);
 
             console.group();

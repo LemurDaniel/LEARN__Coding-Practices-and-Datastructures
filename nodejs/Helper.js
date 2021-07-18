@@ -325,6 +325,9 @@ Helper.default_StringConverter = function (arg, mapDepth = 0) {
     if (arg === null) return '<null>';
     if (arg.print) return arg.print();
 
+    if (arg instanceof Error)
+        return arg.message;
+
     if (typeof arg === 'string') {
         if (arg.includes('\n'))
             return `\n'${arg}'`;
