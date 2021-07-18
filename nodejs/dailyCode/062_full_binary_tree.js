@@ -1,6 +1,6 @@
+const Inout = new (require('../Inout'))('DailyCode --- Full binary tree')
 const { BinaryTree } = require('../datastructures/bTree');
 
-const Inout = new (require('../Inout'))('DailyCode --- Full binary tree')
 
 /*
 

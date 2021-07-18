@@ -1,6 +1,6 @@
+const Inout = new (require('../Inout'))('DailyCode --- Find non duplicate number')
 const { BinaryTree } = require('../datastructures/bTree');
 
-const Inout = new (require('../Inout'))('DailyCode --- Find non duplicate number')
 
 /*
 

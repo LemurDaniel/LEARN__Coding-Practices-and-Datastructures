@@ -1,5 +1,4 @@
-const Inout = new (require("../Inout"))("Daily Coding Problem --- Rearrange linked list");
-const { uptime } = require("process");
+const Inout = new (require("../Inout"))("Daily Coding Problem --- Find optimal Solution for ghost");
 const { NodeQueue } = require("../datastructures/queue");
 const Helper = require("../Helper");
 

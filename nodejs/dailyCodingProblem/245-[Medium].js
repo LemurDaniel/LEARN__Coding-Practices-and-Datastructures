@@ -1,6 +1,5 @@
-const LinkedList = require("../datastructures/linkedList");
-
 const Inout = new (require("../Inout"))("Daily Coding Problem --- Implement a PrefixMapsum");
+const LinkedList = require("../datastructures/linkedList");
 
 
 /*

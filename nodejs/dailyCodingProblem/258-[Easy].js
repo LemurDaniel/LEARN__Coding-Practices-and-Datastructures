@@ -1,4 +1,4 @@
-const Inout = new (require("../Inout"))("Daily Coding Problem --- Rearrange linked list");
+const Inout = new (require("../Inout"))("Daily Coding Problem --- Print binary tree in boustrophedon");
 const { NodeQueue } = require("../datastructures/queue");
 const Helper = require("../Helper");
 

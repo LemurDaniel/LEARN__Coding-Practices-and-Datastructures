@@ -1,4 +1,4 @@
-const Inout = new (require("../Inout"))("Daily Coding Problem --- Rearrange linked list");
+const Inout = new (require("../Inout"))("Daily Coding Problem --- Find smallest unsorted subarray");
 const LinkedList = require("../datastructures/linkedList");
 const Helper = require("../Helper");
 

@@ -1,6 +1,6 @@
+const Inout = new (require('../Inout'))('DailyCode --- Find non duplicate number')
 const Helper = require('../Helper');
 
-const Inout = new (require('../Inout'))('DailyCode --- Find non duplicate number')
 
 /*
 
