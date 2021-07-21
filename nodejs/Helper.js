@@ -48,17 +48,18 @@ Helper.printMatrix = function (mat, rows_vertical = true, len = 4) {
     return str;
 }
 
-Helper.printArray = function (arr, mapDepth = 0, bl = ', ', open = '[ ', close = ' ]') {
+Helper.printArray = function (arr, mapDepth = 0, maxLen = 100, bl = ', ', open = '[ ', close = ' ]') {
 
-    str = open;
+    str = Helper.reapeatSequence(' ', mapDepth) + open;
+
     for (let i = 0; i < arr.length; i++) {
 
         if (Array.isArray(arr[i]))
-            str += Helper.printArray(arr[i], mapDepth, bl, '( ', ' )');
+            str += Helper.printArray(arr[i], mapDepth, maxLen, bl, '( ', ' )');
         else
-            str += Helper.default_StringConverter(arr[i], mapDepth + 2);
+            str += Helper.default_StringConverter(arr[i], mapDepth + 2, typeof arr[i] === 'object');
 
-        if (i > 100) {
+        if (i > maxLen) {
             str += ' >>> ' + (arr.length - i) + ' more items ';
             break;
         }
@@ -66,13 +67,18 @@ Helper.printArray = function (arr, mapDepth = 0, bl = ', ', open = '[ ', close =
         str += (i != arr.length - 1 ? bl : '');
     }
 
-    if (str.includes('\n')) str += '\n' + Helper.reapeatSequence(' ', mapDepth)
+    if (str.includes('\n'))
+        str += '\n' + Helper.reapeatSequence(' ', mapDepth);
+
     return str + close;
 }
 
-Helper.printMap = function (map, mapDepth = 0) {
+Helper.printMap = function (map, mapDepth = 0, compactObject) {
 
-    let str = mapDepth === -1 ? '\n     { ' : '';
+    const spacingKeys = Helper.reapeatSequence(' ', mapDepth + (compactObject ? 2 : 0))
+    const spacingBrackets = Helper.reapeatSequence(' ', mapDepth);
+
+    let str = compactObject ? `\n${spacingBrackets}{` : '';
 
     for (let [key, val] of Object.entries(map)) {
 
@@ -83,15 +89,14 @@ Helper.printMap = function (map, mapDepth = 0) {
 
         // Create a string with correct indentations and the key and value.
         if (mapDepth > 0)
-            str += `\n${Helper.reapeatSequence(' ', mapDepth)}${key}: ${val}`
+            str += `\n${spacingKeys}${key}: ${val}`
         else
             str += `${key}: ${val}\n`;
     }
 
-    if (mapDepth === -1)
-        return str.substr(0, str.length - 2) + ' }';
-    else
-        return str;
+    if (compactObject) str += `\n${spacingBrackets}}`;
+
+    return str;
 }
 
 
@@ -319,7 +324,10 @@ Helper.CustomError =
     }
 
 // Standard converter to convert arguments into string for display in console.
-Helper.default_StringConverter = function (arg, mapDepth = 0) {
+Helper.default_StringConverter = function (arg, mapDepth = 0, compactObject = false) {
+
+    // Passed in via binding it in the Inout class.
+    const config = (this != null ? this.config : {});
 
     if (arg === undefined) return '<undefined>';
     if (arg === null) return '<null>';
@@ -342,7 +350,7 @@ Helper.default_StringConverter = function (arg, mapDepth = 0) {
         return `[Function (${!arg.name ? 'anonymous' : arg.name})]`;
 
     if (typeof arg === 'object')
-        return Helper.printMap(arg, mapDepth);
+        return Helper.printMap(arg, mapDepth, compactObject);
 
     return arg.toString();
 

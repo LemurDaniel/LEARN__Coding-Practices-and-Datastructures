@@ -14,6 +14,12 @@ class Inout {
         this.testcases = []
         this.solvers = []
 
+        this.env = {
+            config: {
+                stringConverter: {}
+            }
+        };
+
         this.map_input = Helper.default_Mapper;
         this.input_Copy = Helper.default_Copy;
         this.input_Converter = Helper.default_Converter;
@@ -33,6 +39,11 @@ class Inout {
     }
 
     solve(i = 0) {
+
+        this.input_stringConverter = this.input_stringConverter.bind(this.env);
+        this.output_stringConverter = this.output_stringConverter.bind(this.env);
+        this.result_stringConverter = this.result_stringConverter.bind(this.env);
+
 
         if (i == 0) console.log(' ===> ' + this.description + ' <=== ');
 

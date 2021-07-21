@@ -101,7 +101,7 @@ Clear-Host
 # node ./dailyCodingProblem/219-[Hard].js      # Implement Connect Four
 # node ./dailyCodingProblem/228-[Medium].js    # Arrange number into largest Integer
 # node ./dailyCodingProblem/232-[Easy].js      # Implement PrefixMapSum
-node ./dailyCodingProblem/233-[Easy].js      # Fibonacci sequence
+# node ./dailyCodingProblem/233-[Easy].js      # Fibonacci sequence
 # node ./dailyCodingProblem/236-[Medium].js    # Determine if point is inside of a shape
 # node ./dailyCodingProblem/245-[Medium].js    # optimal amout of jumps
 # node ./dailyCodingProblem/247-[Easy].js      # is tree height balanced
@@ -110,7 +110,8 @@ node ./dailyCodingProblem/233-[Easy].js      # Fibonacci sequence
 # node ./dailyCodingProblem/256-[Medium].js    # Rearrange linked list in low => high => low => high ... pattern
 # node ./dailyCodingProblem/257-[Easy].js      # Determine indexes of unsorted subarray in array
 # node ./dailyCodingProblem/258-[Easy].js      # Print binary tree in boustrophedon
-# node ./dailyCodingProblem/259-[Hard].js     # Find optimal solution for ghost
+# node ./dailyCodingProblem/259-[Hard].js      # Find optimal solution for ghost
+node ./dailyCodingProblem/263-[Medium].js      # Validate sentence.
 
     ##############################
     ###### Coding Questions ######

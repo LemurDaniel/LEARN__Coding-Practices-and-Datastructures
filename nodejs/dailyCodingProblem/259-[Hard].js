@@ -26,21 +26,13 @@ const Helper = require("../Helper");
 Inout.result_Equals = (oup, res) => res.some(v => v.letter === oup.letter);
 Inout.result_Converter = result => {
 
-    const convert = [];
-    for (const res of result) {
-        const stats = res.stats;
-        const words = stats.words;
-        const length = words.length;
-        if (length > 10) {
-            words.length = 9;
-            words.push(`... >>> ${(length - 9)} more`);
-        }
+    for (const { stats } of result) {
+        stats.winningWords = Helper.printArray(stats.winningWords, 0, 10);
+        stats.loosingWords = Helper.printArray(stats.loosingWords, 0, 10);
         stats.winToPathsRatio = Math.floor(stats.winToPathsRatio * 10000) / 100 + '%';
-
-        convert.push(res);
-        convert.push('\n')
     }
-    return convert;
+
+    return result;
 }
 
 Inout.push('&AR cat calf dog bear', { letter: 'b' });
@@ -63,7 +55,8 @@ function optimalPlay_TreeStructure(words) {
     return OptimalPlayTree.createRoot()
         .addWords(words).getAllPlays()
         .filter(({ stats }) => stats.isWinAlwaysPossible)
-        .sort((a, b) => b.stats.winToPathsRatio - a.stats.winToPathsRatio)
+        .sort((a, b) => b.stats.winToPathsRatio - a.stats.winToPathsRatio);
+
 }
 
 
@@ -118,7 +111,8 @@ function initialize() {
                     winningPaths: 0,
                     loosingPaths: 0,
                     winToPathsRatio: 0,
-                    words: []
+                    winningWords: [],
+                    loosingWords: [],
                 };
                 localRes.isWinAlwaysPossible = node.__getAllPlays(localRes);
                 results.push({ letter: char, stats: localRes });
@@ -132,7 +126,9 @@ function initialize() {
                 result.loosingPaths += isWin ? 0 : 1;
                 result.winningPaths += isWin ? 1 : 0;
                 result.winToPathsRatio = result.winningPaths / ++result.possiblePaths;
-                result.words.push(prefix + this.val);
+
+                const wordListRef = isWin ? result.winningWords : result.loosingWords
+                wordListRef.push(prefix + this.val);
 
                 return isWin;
             } else {
