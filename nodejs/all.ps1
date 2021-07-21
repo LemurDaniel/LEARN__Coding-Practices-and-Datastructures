@@ -111,7 +111,7 @@ Clear-Host
 # node ./dailyCodingProblem/257-[Easy].js      # Determine indexes of unsorted subarray in array
 # node ./dailyCodingProblem/258-[Easy].js      # Print binary tree in boustrophedon
 # node ./dailyCodingProblem/259-[Hard].js      # Find optimal solution for ghost
-node ./dailyCodingProblem/263-[Medium].js      # Validate sentence.
+# node ./dailyCodingProblem/263-[Medium].js    # Validate sentence.
 
     ##############################
     ###### Coding Questions ######
@@ -121,6 +121,7 @@ node ./dailyCodingProblem/263-[Medium].js      # Validate sentence.
 # node ./codingQuestions/strings/simplify_path-[Easy].js
 # node ./codingQuestions/strings/longest_common_prefix-[Easy].js
 # node ./codingQuestions/strings/roman_to_integer-[Easy].js
+node ./codingQuestions/strings/count_and_say-[Easy].js
 
     ########### STACKS ###########
 # node ./codingQuestions/stacks/min_stack-[Easy].js

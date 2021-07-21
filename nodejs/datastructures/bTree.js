@@ -11,12 +11,12 @@ class Node extends ID_Object {
         this.right = right ?? null;
     }
 
-    isLeaf() {
+    get isLeaf() {
         return this.left == null && this.right == null;
     }
 
     toString() {
-        return this.val + (this.isLeaf() ? '/L' : '') + ' (Node - ' + this.id + ')';
+        return this.val + (this.isLeaf ? '/L' : '') + ' (Node - ' + this.id + ')';
     }
 
     print() {
@@ -141,9 +141,9 @@ BinaryTree.prototype.toString = function (null_str = '<NULL>') {
             limbo = '';
 
             if (this.nodes && this.nodes.includes(node)) str += '*';
-            str += node.val + (node.isLeaf() ? '/L' : '') + ', ';
+            str += node.val + (node.isLeaf ? '/L' : '') + ', ';
 
-            if (node.isLeaf())
+            if (node.isLeaf)
                 node = stack.pop().right;
             else {
                 stack.push(node);
@@ -239,7 +239,7 @@ BinaryTree.prototype.serialize = function serialize(isSplit = ':', isNull = '#',
             format.tree.push(isNull);
             node = stack.pop().right;
         }
-        else if (node.isLeaf()) {
+        else if (node.isLeaf) {
             format.tree.push(isLeaf + node.val);
             node = stack.pop().right;
         }
