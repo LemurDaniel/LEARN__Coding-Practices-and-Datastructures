@@ -1,5 +1,4 @@
 const Inout = new (require("../Inout"))("Daily Coding Problem --- Make a sentence checker");
-const { Readable } = require("stream")
 const Helper = require("../Helper");
 
 
@@ -49,7 +48,7 @@ function validateSentence(sentence) {
     const seperators = ',;:'
     const terminators = '.?!'
 
-    var readable = new Readable();
+    const errors = [];
 
     let lastTerminator = 1;
 
@@ -58,10 +57,6 @@ function validateSentence(sentence) {
 
     let whiteSpaceOccured = false;
     let expectWhiteSpace = false;
-
-
-    let position = 0;
-    const errors = [];
 
     for (let idx = 0; idx < sentence.length; idx++) {
 
