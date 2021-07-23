@@ -57,12 +57,17 @@ Inout.output_Converter = (out, { input }) => {
 }
 
 Inout.push('&BT 1,2,$5,/,3,$4', null);
-Inout.push('&BT 1,2,$5,$7,3,4,/,$9,2,/,8', '&BT 1,/,2,/,5,/,7,/,3,/,4,/,9,/,2,/,8');
+Inout.push('&BT 1,2,$5,$7,3,4,/,$9,2,/,8', null);
 
 // Assign prototype methods before calling solve
 BinaryTree.Node.prototype.flatten_recursive = flatten_recursive_prototype;
+BinaryTree.Node.prototype.flatten_recursive2 = flatten_recursive2_prototype;
 
-Inout.solvers = [flatten_static_recursive, flatten_recursive];
+Inout.solvers = [
+    flatten_static_recursive, flatten_static_recursive2,
+    flatten_recursive, flatten_recursive2,
+    obnoxiousWay_iterative
+];
 Inout.solve();
 
 /*
@@ -72,8 +77,6 @@ Inout.solve();
     ###########################################################################################
 */
 
-
-// Assumes no circular dependencies in Input.
 
 function flatten_static_recursive(node, prevRight) {
 
@@ -97,6 +100,28 @@ function flatten_static_recursive(node, prevRight) {
 }
 
 
+function flatten_static_recursive2(node, prevRight = null) {
+
+    if (node instanceof BinaryTree) {
+        flatten_static_recursive2(node.root);
+        return null;
+    }
+
+    // Return the previous right subtree as the node, if the current node is null.
+    // This ensure that any right subtree will eventually be assigned to a node with an empty right child.
+    if (node === null) return prevRight;
+
+    // Flatten the right subtree with the previous right subtree and aassign it to the right child.
+    node.right = flatten_static_recursive2(node.right, prevRight); // <== The right subtree of the parent node.
+    // Flatten the left subtree with the now flattened right subtree and assign it to the right child.
+    node.right = flatten_static_recursive2(node.left, node.right);
+
+    // Set left child to null and return itself.
+    node.left = null;
+    return node;
+}
+
+
 // prototype methods.
 function flatten_recursive_prototype(prevRight) {
 
@@ -113,7 +138,54 @@ function flatten_recursive_prototype(prevRight) {
 
 }
 
+function flatten_recursive2_prototype(prevRight = null) {
+
+    // If right is not null then flatten it recursivley with the parent's right subtree else assign the parent's right subtree as the right node.
+    this.right = this.right ? this.right.flatten_recursive2(prevRight) : prevRight;
+    // If left is not null then flatten it recursivley with the right child else assign the right child as the right node.
+    this.right = this.left ? this.left.flatten_recursive2(this.right) : this.right;
+
+    // Set left child to null and return itself.
+    this.left = null;
+    return this;
+}
+
 // Call prototype methods.
 function flatten_recursive(tree) {
     tree.root.flatten_recursive();
+}
+function flatten_recursive2(tree) {
+    tree.root.flatten_recursive2();
+}
+
+
+
+
+function obnoxiousWay_iterative(tree) {
+
+    const preorder = [];
+
+    const stack = [];
+    let node = tree.root;
+
+    while (node || stack.length > 0) {
+
+        if (node === null) {
+            node = stack.pop().right;
+        } else {
+            preorder.push(node);
+            stack.push(node);
+            node = node.left;
+        }
+
+    }
+    
+    let prevNode = null;
+    while (preorder.length > 0) {
+        const node = preorder.pop();
+        node.right = prevNode;
+        node.left = null;
+        prevNode = node;
+    }
+
 }

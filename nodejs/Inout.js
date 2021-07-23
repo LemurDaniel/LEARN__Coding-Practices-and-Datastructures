@@ -60,8 +60,25 @@ class Inout {
         console.log()
         console.group();
 
-        console.log(this.input_stringConverter({ Input: test.input }));
-        console.log(this.input_stringConverter({ Output: test.output }));
+        const input_String = this.input_stringConverter(test.input) ?? '<Undefined>';
+        const output_String = this.output_stringConverter(test.output) ?? '<Undefined>';
+
+        if (input_String.includes('\n')) {
+            console.log('Input: ');
+            console.group();
+            console.log(input_String);
+            console.groupEnd();
+        } else
+            console.log('Input: ' + input_String + '\n')
+
+        if (output_String.includes('\n')) {
+            console.log('Output: ');
+            console.group();
+            console.log(output_String);
+            console.groupEnd();
+        } else
+            console.log('Output: ' + output_String + '\n')
+
         console.log('\x1b[42m', ' ---- Solving below ---- ', '\x1b[0m', '\n')
         this.applySolvers(test)
 

@@ -133,14 +133,14 @@ LinkedList.prototype.toString = function (value_converter = v => v, connector = 
 
 LinkedList.toString = function (head, value_converter = v => v, connector = ' ==> ') {
 
-    let str = '';
+    let str = '<HEAD> -> ';
     let node = head;
     while (node) {
         str += value_converter(node.val) + connector;
         node = node.next;
     }
 
-    return str.substr(0, str.length - 5);
+    return str.substr(0, str.length - 5) + ' -> <TAIL>';
 }
 
 /*

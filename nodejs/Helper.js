@@ -211,10 +211,19 @@ Helper.string_toIntArray = function (str, split = ' ') {
         const array = sub_strs[i].split(split);
 
         // Loop through the array and convert its contents to numbers.
-        for (let i in array) {
-            array[i] = array[i].trim();
-            const num = parseInt(array[i]);
-            if (!isNaN(num)) array[i] = num;
+        for (const i in array) {
+            let val = array[i].trim();
+            let num = Number.NaN;
+
+            if (val.substr(0, 2) === '0b')
+                num = parseInt(val.substr(2), 2);
+            else
+                num = parseInt(val, 10);
+
+            if (!isNaN(num))
+                array[i] = num;
+            else
+                array[i] = val;
         }
 
         // If there is only one substring in 'str' then return a 1D array.
@@ -232,9 +241,10 @@ Helper.string_toIntArray = function (str, split = ' ') {
 // converts all strings in an object to the desired object
 Helper.default_Converter = function (obj, testcase) {
 
-    if (obj instanceof Error) return { [obj.name]: obj };
-    if (typeof obj === 'string') return convertString(obj, testcase);
+    if (obj === null || obj === undefined) return obj;
 
+    else if (obj instanceof Error) return { [obj.name]: obj };
+    else if (typeof obj === 'string') return convertString(obj, testcase);
     else if (typeof obj === 'object') {
         for (const [key, val] of Object.entries(obj)) {
 
