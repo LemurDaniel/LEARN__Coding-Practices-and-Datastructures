@@ -72,6 +72,7 @@ Clear-Host
 # node ./dailyCode/061_tree_serialization.js
 # node ./dailyCode/062_full_binary_tree.js
 # node ./dailyCode/063_remove_kth_node_from_ll.js
+node ./dailyCode/064_flatten_binary_tree.js
 
 
     ##################################
@@ -121,7 +122,7 @@ Clear-Host
 # node ./codingQuestions/strings/simplify_path-[Easy].js
 # node ./codingQuestions/strings/longest_common_prefix-[Easy].js
 # node ./codingQuestions/strings/roman_to_integer-[Easy].js
-node ./codingQuestions/strings/count_and_say-[Easy].js
+# node ./codingQuestions/strings/count_and_say-[Easy].js
 
     ########### STACKS ###########
 # node ./codingQuestions/stacks/min_stack-[Easy].js
