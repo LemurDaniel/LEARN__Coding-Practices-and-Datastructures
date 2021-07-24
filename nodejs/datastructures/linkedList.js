@@ -127,20 +127,30 @@ LinkedList.prototype.to_array = function (value_converter = v => v) {
 
 
 LinkedList.prototype.toString = function (value_converter = v => v, connector = ' ==> ') {
-    return LinkedList.toString(this.head, value_converter, connector);
+    return LinkedList.toString(this, value_converter, connector);
 }
 
 
-LinkedList.toString = function (head, value_converter = v => v, connector = ' ==> ') {
+LinkedList.toString = function (list, value_converter = v => v, connector = ' ==> ') {
+
+    if(list.head === null && list.tail === null)
+        return '<HEAD> -> <TAIL>'
 
     let str = '<HEAD> -> ';
-    let node = head;
+    let node = list.head;
+    
     while (node) {
-        str += value_converter(node.val) + connector;
+        str += value_converter(node.val);
+        if (node === list.tail)
+            str += ' -> <TAIL>'
+        str += connector;
         node = node.next;
     }
 
-    return str.substr(0, str.length - 5) + ' -> <TAIL>';
+    str = str.substr(0, str.length - 5);
+
+    if(list.tail === null) str+= ' [/?? <TAIL> Null Pointer]'
+    return str;
 }
 
 /*

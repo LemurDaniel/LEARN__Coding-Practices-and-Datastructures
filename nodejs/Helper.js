@@ -371,6 +371,9 @@ Helper.default_Equals = function (arg1, arg2) {
     if (arg1 === arg2) return true;
     if (typeof arg1 !== typeof arg2) return false;
 
+    if(arg1 === null || arg2 === null) return false;
+    if(arg1 === undefined || arg2 === undefined) return false;
+
     if (arg1.equals) return arg1.equals(arg2);
 
     if (typeof arg1 === 'object') {
