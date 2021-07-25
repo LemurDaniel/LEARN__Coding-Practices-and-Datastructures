@@ -73,7 +73,7 @@ Clear-Host
 # node ./dailyCode/062_full_binary_tree.js
 # node ./dailyCode/063_remove_kth_node_from_ll.js
 # node ./dailyCode/064_flatten_binary_tree.js
-node ./dailyCode/065_utf8_encoder.js
+# node ./dailyCode/065_utf8_encoder.js
 
 
     ##################################
@@ -114,6 +114,7 @@ node ./dailyCode/065_utf8_encoder.js
 # node ./dailyCodingProblem/258-[Easy].js      # Print binary tree in boustrophedon
 # node ./dailyCodingProblem/259-[Hard].js      # Find optimal solution for ghost
 # node ./dailyCodingProblem/263-[Medium].js    # Validate sentence.
+node ./dailyCodingProblem/267-[Hard].js        # Determine if king is checked.
 
     ##############################
     ###### Coding Questions ######

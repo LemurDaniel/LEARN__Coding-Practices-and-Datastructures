@@ -108,6 +108,8 @@ class Inout {
                 result = this.map_input(input, solver);
                 result = this.result_Converter(result ?? input, test);
             } catch (exp) {
+                if( !(exp instanceof CustomError) )
+                    console.log(exp)
                 exception = { [exp.name]: exp };
             }
 

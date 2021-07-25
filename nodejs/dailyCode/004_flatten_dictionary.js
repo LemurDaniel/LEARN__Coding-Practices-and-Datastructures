@@ -70,7 +70,7 @@ Inout.push({
     }
 )
 
-Inout.solvers = [flatten_dictionary, flatten_dictionary_recursive];
+Inout.solvers = [flatten_dictionary, flatten_dictionary2, flatten_dictionary_recursive];
 Inout.solve();
 
 
@@ -81,7 +81,6 @@ Inout.solve();
     ####################             Solving problem below              #######################
     ###########################################################################################
 */
-
 
 function flatten_dictionary(dict) {
 
@@ -117,7 +116,30 @@ function flatten_dictionary(dict) {
     return dict;
 }
 
+function flatten_dictionary2(dict) {
 
+    const stack = Object.entries(dict);
+
+    while (stack.length > 0) {
+
+        const [key, val] = stack.pop();
+
+        // Already flattened
+        if (typeof val !== 'object') continue;
+
+        delete dict[key];
+
+        for (const [k, v] of Object.entries(val)) {
+
+            const fK = key + '.' + k;
+            dict[fK] = v;
+
+            if (typeof v === 'object')
+                stack.push([fK, v]);
+        }
+
+    }
+}
 
 
 
