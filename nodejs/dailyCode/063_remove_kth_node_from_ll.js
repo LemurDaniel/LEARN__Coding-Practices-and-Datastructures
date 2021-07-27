@@ -1,5 +1,6 @@
 const Inout = new (require('../Inout'))('DailyCode --- Remove kth node from linked list')
 const { BinaryTree } = require('../datastructures/bTree');
+const LinkedList = require('../datastructures/linkedList');
 const { CustomError } = require('../Helper');
 
 /*
@@ -45,13 +46,47 @@ Inout.push({ k: 0, list: '&LL 12345' }, '&LL 1234');
 Inout.push({ k: 3, list: '&LL 0123456789' }, '&LL 012345689');
 Inout.push({ k: 7, list: '&LL 12345' }, new CustomError('Out-of-Bounds', 'Kth element from the last node is not a valid index'));
 
-Inout.solvers = [removeKthLastElement];
-Inout.solve(0);
+Inout.solvers = [removeKthLastElement_fakeHead];
+Inout.solve();
 
+
+function removeKthLastElement_fakeHead(list, k) {
+
+    const fakeHead = new LinkedList.Node('HEAD', list.head);
+
+    let walker = fakeHead;
+    let runner = fakeHead.next;
+
+    while (--k > 0) {
+        if (runner === null && k > 0)
+            throw new CustomError('Out-of-Bounds', 'Kth element from the last node is not a valid index');
+        else if (runner !== null)
+            runner = runner.next;
+    }
+    while (runner && runner.next) {
+        runner = runner.next;
+        walker = walker.next;
+    }
+
+    const toRemoveNode = walker.next;
+    walker.next = toRemoveNode.next;
+
+
+    // Take care of head and tail.
+    list.head = fakeHead.next;
+    list.tail = runner;
+
+    // No elements left in list.
+    if(fakeHead.next === null)
+        list.tail = null;
+    else if(toRemoveNode === list.tail)
+        list.tail = walker;
+
+}
 
 function removeKthLastElement(list, k) {
 
-    if( k === 0 && list.head === list.tail) {
+    if (k === 0 && list.head === list.tail) {
         list.head = null;
         list.tail = null
         return;

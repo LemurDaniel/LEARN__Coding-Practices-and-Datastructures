@@ -114,7 +114,8 @@ Clear-Host
 # node ./dailyCodingProblem/258-[Easy].js      # Print binary tree in boustrophedon
 # node ./dailyCodingProblem/259-[Hard].js      # Find optimal solution for ghost
 # node ./dailyCodingProblem/263-[Medium].js    # Validate sentence.
-node ./dailyCodingProblem/267-[Hard].js        # Determine if king is checked.
+# node ./dailyCodingProblem/267-[Hard].js      # Determine if king is checked.
+node ./dailyCodeingProblem/269-[Easy].js       # Caclulate fallen dominoes.
 
     ##############################
     ###### Coding Questions ######
