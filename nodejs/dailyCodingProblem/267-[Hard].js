@@ -141,7 +141,9 @@ Inout.push(
     true
 )
 
-Inout.solvers = [isKingChecked]
+const Vector = initialize();
+
+Inout.solvers = [isKingChecked, isKingChecked_Vectors]
 Inout.solve();
 
 /*
@@ -256,3 +258,111 @@ function isKingChecked(board) {
 }
 
 
+
+
+
+function isKingChecked_Vectors(board) {
+
+    // Get the positions of all pieces and the king.
+    let colKing;
+    let rowKing;
+    const posPieces = [];
+
+    for (let row = 0; row < board.length; row++) {
+        for (let col = 0; col < board[0].length; col++) {
+
+            const piece = board[row][col];
+            if (piece === PIECES.King)
+                [rowKing, colKing] = [row, col];
+            else if (piece !== PIECES.Empty)
+                posPieces.push(new Vector(row, col));
+        }
+    }
+
+    // Map the positions to angles and only consider the closets ones.
+    const anglesAroundKing = {};
+
+    for (const posPiece of posPieces) {
+
+        const vectorFromKing = posPiece.sub(rowKing, colKing);
+        const heading = Math.round(vectorFromKing.heading / 2 / Math.PI * 360);
+
+        // Only consider the pieces with the least distance.
+        if (heading in anglesAroundKing) {
+            const dist1 = anglesAroundKing[heading].mag;
+            const dist2 = posPiece.mag;
+            if (dist1 < dist2) continue;
+        }
+
+        anglesAroundKing[heading] = vectorFromKing;
+    };
+
+    for (const vectorFromKing of Object.values(anglesAroundKing)) {
+
+        const [rad, mag] = vectorFromKing.polar;
+        const [rowPiece, colPiece] = vectorFromKing.add(rowKing, colKing);
+        const piece = board[rowPiece][colPiece];
+
+        if (!doesPieceCheck(piece, rad, mag)) continue;
+
+        // Return position and piece that checks the King.
+        const piecePos = String.fromCharCode(65 + colPiece) + (8 - rowPiece);
+        const KingPos = String.fromCharCode(65 + colKing) + (8 - rowKing);
+        const pieceName = Object.keys(PIECES).filter(v => PIECES[v] === piece);
+
+        return [true, `King on ${KingPos} is checked by ${pieceName} on ${piecePos}.`];
+    }
+
+    return [false, 'King is not checked by and piece.'];
+
+}
+
+
+
+function initialize() {
+    return class Vector extends Array {
+
+        get mag() {
+            const [row, col] = this;
+            return Math.round(
+                Math.sqrt(row * row + col * col)
+            );
+        }
+
+        get heading() {
+            const [row, col] = this;
+
+            // Can't divide by null.
+            if (col === 0)
+                return row > 0 ? Math.PI / 2 : Math.PI * 3 / 2;
+
+            const TAU = Math.PI * 2;
+            if (col > 0)
+                return (TAU + Math.atan(col / row)) % TAU;
+            else
+                return Math.PI + Math.atan(col / row);
+        }
+
+        get polar() {
+            return [this.heading, this.mag];
+        }
+
+        constructor(row, col) {
+            super(2);
+            this[0] = row ?? 0;
+            this[1] = col ?? 0;
+        }
+
+        add(row, col) {
+            this[0] += row;
+            this[1] += col;
+            return this;
+        }
+
+        sub(row, col) {
+            this[0] -= row;
+            this[1] -= col;
+            return this;
+        }
+    }
+}
