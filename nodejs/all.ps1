@@ -4,9 +4,9 @@
 
 Clear-Host
 
-    #######################
-    ###### DailyCode ######
-    #######################
+#######################
+###### DailyCode ######
+#######################
 
 # node ./dailyCode/001_reverse_polish_notation_calculator.js
 # node ./dailyCode/002_character_map.js
@@ -76,9 +76,9 @@ Clear-Host
 # node ./dailyCode/065_utf8_encoder.js
 
 
-    ##################################
-    ###### Daily Coding Problem ######
-    ##################################
+##################################
+###### Daily Coding Problem ######
+##################################
 
 # node ./dailyCodingProblem/117-[Easy].js      # Find level with minimum sum
 # node ./dailyCodingProblem/127-[Easy].js      # Add two numbers in linked list format
@@ -114,33 +114,33 @@ Clear-Host
 # node ./dailyCodingProblem/258-[Easy].js      # Print binary tree in boustrophedon
 # node ./dailyCodingProblem/259-[Hard].js      # Find optimal solution for ghost
 # node ./dailyCodingProblem/263-[Medium].js    # Validate sentence.
+node ./dailyCodingProblem/266-[Easy].js      # Get all step words for a word.
 # node ./dailyCodingProblem/267-[Hard].js      # Determine if king is checked.
-node ./dailyCodeingProblem/269-[Easy].js       # Caclulate fallen dominoes.
 
-    ##############################
-    ###### Coding Questions ######
-    ##############################
+##############################
+###### Coding Questions ######
+##############################
 
-    ########### STRINGS ###########
+########### STRINGS ###########
 # node ./codingQuestions/strings/simplify_path-[Easy].js
 # node ./codingQuestions/strings/longest_common_prefix-[Easy].js
 # node ./codingQuestions/strings/roman_to_integer-[Easy].js
 # node ./codingQuestions/strings/count_and_say-[Easy].js
 
-    ########### STACKS ###########
+########### STACKS ###########
 # node ./codingQuestions/stacks/min_stack-[Easy].js
 # node ./codingQuestions/stacks/decode_string-[Medium].js
 
-    ########### ARRAYS ###########
+########### ARRAYS ###########
 # node ./codingQuestions/arrays/two_sum-[Easy].js
 # node ./codingQuestions/arrays/search_for_range-[Medium].js
 # node ./codingQuestions/arrays/sort_colors-[Medium].js
 # node ./codingQuestions/arrays/move_zeroes-[Easy].js
 
-    ########### LINKED LISTS ###########
+########### LINKED LISTS ###########
 # node ./codingQuestions/linked_lists/remove_linked_list_element-[Easy].js
 # node ./codingQuestions/linked_lists/add_two_numbers_I-[Medium].js
 # node ./codingQuestions/linked_lists/add_two_numbers_II-[Medium].js
 
-    ########### TREES ###########
+########### TREES ###########
 # node ./codingQuestions/trees/same_tree-[Easy].js
