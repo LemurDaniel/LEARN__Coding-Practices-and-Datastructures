@@ -51,6 +51,42 @@ Inout.solve(1);
 */
 
 
+// Each timestep a domino can another one to fall.
+// Every timestep the new state of dominos is calculated until no further change happens, which will be returned as the final state.
+function fallenDominos_severalPasses(str) {
+
+    let dominos = str.split('');
+    let dominoFell = true;
+
+    while (dominoFell) {
+
+
+        dominoFell = false;
+        let temp = [];
+
+        for (let i = 0; i < dominos.length; i++) {
+            let curr = dominos[i];
+            let prev = dominos[i - 1] ?? '.';
+            let next = dominos[i + 1] ?? '.';
+
+            if (curr === '.') {
+                if (prev === 'R' && next !== 'L') {
+                    curr = 'R';
+                    dominoFell = true;
+                } else if (next === 'L' && prev !== 'R') {
+                    curr = 'L';
+                    dominoFell = true;
+                }
+            }
+            temp.push(curr);
+        }
+
+        dominos = temp;
+    }
+
+    return dominos.join('');
+}
+
 
 // It takes to passes from left handling the R direction and from right to left handling the L direction.
 // The hopper hops two place for each one domino and therefore detects the middle in a RL sequence.
