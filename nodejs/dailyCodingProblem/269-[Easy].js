@@ -52,6 +52,51 @@ Inout.solve(1);
 
 
 
+// It takes to passes from left handling the R direction and from right to left handling the L direction.
+// The hopper hops two place for each one domino and therefore detects the middle in a RL sequence.
+function fallenDominos_ArrayTwoPasses(str) {
+
+    str = '//' + str + '//';
+    const len = str.length;
+    const dominos = str.split('');
+
+    for (let i = 0, hopper = 0; i < len; i++) {
+
+        if (str[i] !== 'R') continue;
+
+        do {
+            if (str[i] === 'R')
+                hopper = i;
+
+            hopper += 2;
+            dominos[i++] = 'R';
+        }
+        while (hopper < len &&
+        str[hopper - 1] !== 'L' && str[hopper] !== 'L')
+
+    }
+
+    for (let i = len - 1, hopper = i; i >= 0; i--) {
+
+        if (str[i] !== 'L') continue;
+
+        do {
+            if (str[i] === 'L')
+                hopper = i;
+
+            hopper -= 2;
+            dominos[i--] = 'L';
+        }
+        while (hopper >= 0 &&
+        str[hopper + 1] !== 'R' && str[hopper] !== 'R')
+    }
+
+    return dominos.splice(2, len - 4).join('');
+}
+
+
+
+
 
 function fallenDominos_IndexArray(str) {
 
