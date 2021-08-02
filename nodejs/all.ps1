@@ -117,7 +117,8 @@ Clear-Host
 # node ./dailyCodingProblem/266-[Easy].js      # Get all step words for a word.
 # node ./dailyCodingProblem/267-[Hard].js      # Determine if king is checked.
 # node ./dailyCodingProblem/269-[Easy].js      # Caclulate fallen dominoes.
-node ./dailyCodingProblem/273-[Easy].js       # Find fixed point in array.
+# node ./dailyCodingProblem/273-[Easy].js      # Find fixed point in array.
+node ./dailyCodingProblem/275-[Medium].js      # Count and say sequence.
 
 
 ##############################
