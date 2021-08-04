@@ -35,6 +35,12 @@ class BinaryTree extends ID_Object {
         POST_ORDER: 2,
     }
 
+    static FromNode(root) {
+        const tree = new BinaryTree();
+        tree.root = root;
+        return tree;
+    }
+
     constructor(val, print_null) {
         super();
         this.root = val == null ? null : new Node(val);

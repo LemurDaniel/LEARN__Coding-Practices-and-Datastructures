@@ -9,10 +9,14 @@ const rl = require('readline').createInterface({
 
 class Inout {
 
+    static None = '%NONE%';
+
     constructor(description) {
         this.description = description ?? 'No Description';
         this.testcases = []
         this.solvers = []
+
+        this.static = Inout;
 
         this.env = {
             config: {
@@ -61,7 +65,9 @@ class Inout {
         console.group();
 
         const input_String = this.input_stringConverter(test.input) ?? '<Undefined>';
-        const output_String = this.output_stringConverter(test.output) ?? '<Undefined>';
+        const output_String = Inout.None === test.output ?
+            '(No validation Function or Object)' :
+            this.output_stringConverter(test.output) ?? '<Undefined>';
 
         if (input_String.includes('\n')) {
             console.log('Input: ');
@@ -108,16 +114,31 @@ class Inout {
                 result = this.map_input(input, solver);
                 result = this.result_Converter(result ?? input, test);
             } catch (exp) {
-                if( !(exp instanceof CustomError) )
+                if (!(exp instanceof CustomError))
                     console.log(exp)
                 exception = { [exp.name]: exp };
             }
 
             const isOutputFunction = typeof test.output === 'function';
-            const comparator = isOutputFunction ? test.output : this.result_Equals;
-            const success = comparator(isOutputFunction ? test : test.output, exception ?? result);
-            const color = success ? (exception ? '\x1b[33m' : '\x1b[32m') : '\x1b[31m';
-            console.log(color, `Solver: ${solver.name}  ---  ${(success ? 'Success' : 'Failure')}`);
+            const euqalsFunc = isOutputFunction ? test.output : this.result_Equals;
+            const euqalsParam = isOutputFunction ? test : test.output
+
+            const success = euqalsFunc(euqalsParam, exception ?? result);
+            const hasOutputValidator = Inout.None !== test.output;
+
+            let color = '\x1b[32m';
+            if (!hasOutputValidator) color = '\x1b[35m';
+            else if (exception) color = '\x1b[32m';
+            else if (success) color = '\x1b[33m';
+            else color = '\x1b[31m';
+
+            let successState = 'Pending';
+            if (!hasOutputValidator) successState = 'Pending';
+            else if (success) successState = 'Success';
+            else successState = 'Failure';
+
+
+            console.log(color, `Solver: ${solver.name}  ---  ${successState}`);
 
             console.group();
             console.log(exception ? 'Exception: ' : 'Result: ');
