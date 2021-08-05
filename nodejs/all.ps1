@@ -74,6 +74,7 @@ Clear-Host
 # node ./dailyCode/063_remove_kth_node_from_ll.js
 # node ./dailyCode/064_flatten_binary_tree.js
 # node ./dailyCode/065_utf8_encoder.js
+node ./dailyCode/066_coursePrerequisites.js
 
 
 ##################################
@@ -120,7 +121,7 @@ Clear-Host
 # node ./dailyCodingProblem/273-[Easy].js      # Find fixed point in array.
 # node ./dailyCodingProblem/275-[Medium].js    # Count and say sequence.
 # node ./dailyCodingProblem/277-[Easy].js      # UTF-8 Validator.
-node ./dailyCodingProblem/279-[Medium].js      # Construct all binary search trees for 1 ... N.
+# node ./dailyCodingProblem/279-[Easy].js      # Construct all binary search trees for 1 ... N.
 
 
 ##############################
