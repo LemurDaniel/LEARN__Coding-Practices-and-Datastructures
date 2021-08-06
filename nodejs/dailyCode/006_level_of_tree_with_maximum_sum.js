@@ -77,7 +77,7 @@ function find_level_with_maximum_sum(tree) {
     let level_max_sum = 0;
     let max_sum = 0;
 
-    while (!q.isEmpty()) {
+    while (!q.isEmpty) {
 
         const node = q.dequeue();
         curr_sum += node.val;

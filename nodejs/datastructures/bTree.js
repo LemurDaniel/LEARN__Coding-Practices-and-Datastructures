@@ -130,7 +130,7 @@ BinaryTree.GenerateIntPreorderFromString = function (str, splitter = ',', rem = 
     return tree;
 }
 
-BinaryTree.prototype.toString = function (null_str = '<NULL>') {
+BinaryTree.prototype.toString = function (stringConverter = n => n.val.toString(), null_str = '<NULL>') {
     if (!this.root) return null_str;
 
     // Printing string in preorder fashion (Root, Left, Right)
@@ -147,7 +147,7 @@ BinaryTree.prototype.toString = function (null_str = '<NULL>') {
             limbo = '';
 
             if (this.nodes && this.nodes.includes(node)) str += '*';
-            str += node.val + (node.isLeaf ? '/L' : '') + ', ';
+            str += stringConverter(node) + (node.isLeaf ? '/L' : '') + ', ';
 
             if (node.isLeaf)
                 node = stack.pop().right;

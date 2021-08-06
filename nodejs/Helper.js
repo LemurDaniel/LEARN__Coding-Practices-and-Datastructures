@@ -491,10 +491,12 @@ Helper.binarySearch_upperBound = function (nums, target, lower, upper) {
 
 Helper.MergeSort = {};
 
-Helper.MergeSort.sort = function (list) {
-    if (list instanceof LinkedList) Helper.MergeSort.sortLinkedList(list);
-    else if (Array.isArray(list)) Helper.MergeSort.sortArray(list);
+Helper.MergeSort.sort = function (list, func) {
+    if (list instanceof LinkedList) Helper.MergeSort.sortLinkedList(list, func);
+    else if (Array.isArray(list)) Helper.MergeSort.sortArray(list, func);
     else throw 'Datatype not supported';
+
+    return list;
 }
 
 Helper.MergeSort.sortLinkedList = function (list, lower, upper) {
@@ -568,7 +570,7 @@ Helper.MergeSort.mergeLinkedList = function (list, lower, middle, upper) {
 
 }
 
-Helper.MergeSort.sortArray = function (arr, lower, upper) {
+Helper.MergeSort.sortArray = function (arr, sortingFunction, lower, upper) {
     if (lower == null) lower = 0;
     if (upper == null) upper = arr.length;
 
@@ -576,16 +578,19 @@ Helper.MergeSort.sortArray = function (arr, lower, upper) {
     if (upper - lower == 1) return arr;
 
     const middle = Math.floor(lower + (upper - lower) / 2);
-    //console.log( 'LOWER: ' + lower + '    UPPER: ' + upper + '  MIDDLE:  ' + middle)
+    // console.log('LOWER: ' + lower + '    UPPER: ' + upper + '  MIDDLE:  ' + middle)
 
-    Helper.MergeSort.sortArray(arr, lower, middle);
-    Helper.MergeSort.sortArray(arr, middle, upper);
+    Helper.MergeSort.sortArray(arr, sortingFunction, lower, middle);
+    Helper.MergeSort.sortArray(arr, sortingFunction, middle, upper);
 
     // Sorting and merging each partition recursivley back.
-    Helper.MergeSort.mergeArray(arr, lower, middle, upper);
+    Helper.MergeSort.mergeArray(arr, lower, middle, upper, sortingFunction);
 }
 
-Helper.MergeSort.mergeArray = function (arr, lower, middle, upper) {
+Helper.MergeSort.mergeArray = function (arr, lower, middle, upper, sortingFunction) {
+
+    if (!sortingFunction)
+        sortingFunction = (a, b) => b - a;
 
     // Create temporary array containing the elements of the lower and upper parts.
     const arr_lower = [];
@@ -605,15 +610,19 @@ Helper.MergeSort.mergeArray = function (arr, lower, middle, upper) {
     let idx_upper = 0;
     let idx_target = lower;
 
+    // Merge as long as indexes are samller than both arrays.
     while (idx_lower < arr_lower.length && idx_upper < arr_upper.length) {
 
-        if (arr_lower[idx_lower] <= arr_upper[idx_upper])
+        const comparingResult = sortingFunction(arr_lower[idx_lower], arr_upper[idx_upper]);
+
+        if (comparingResult >= 0)
             arr[idx_target++] = arr_lower[idx_lower++];
         else
             arr[idx_target++] = arr_upper[idx_upper++];
 
     }
 
+    // Merge remaining characters.
     while (idx_lower < arr_lower.length) arr[idx_target++] = arr_lower[idx_lower++];
     while (idx_upper < arr_upper.length) arr[idx_target++] = arr_upper[idx_upper++];
 }

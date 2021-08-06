@@ -65,7 +65,7 @@ function brute_force_iterative(mat) {
     const q = new Queue.NodeQueue( { row: 0, col: 0 } );
     let sum = 0;
 
-    while(!q.isEmpty()) {
+    while(!q.isEmpty) {
 
         const { row, col } = q.dequeue();
 
@@ -88,7 +88,7 @@ function brute_force_iterative2(mat) {
     const q = new Queue.NodeQueue( { row: 0, col: 0, path: '' } );
     let paths = [];
 
-    while(!q.isEmpty()) {
+    while(!q.isEmpty) {
 
         const { row, col, path } = q.dequeue();
         

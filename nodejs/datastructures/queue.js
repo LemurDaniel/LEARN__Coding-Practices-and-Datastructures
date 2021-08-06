@@ -2,6 +2,10 @@
 // Start <== val <== val <== val <== end
 class NodeQueue {
 
+    static newNode(val, next) {
+        return { val: val, next: next };
+    }
+
     constructor(val) {
         this.start = null;
         this.end = null;
@@ -9,13 +13,18 @@ class NodeQueue {
         if (val) this.enqueue(val);
     }
 
-    isEmpty = () => this.end == null;
+    get isEmpty() {
+        return this.end == null;
+    }
 
     enqueue(val) {
+
+        const insert = NodeQueue.newNode(val);
+
         if (!this.start)
-            this.start = this.end = { val: val };
+            this.start = this.end = insert;
         else {
-            this.start.next = { val: val };
+            this.start.next = insert;
             this.start = this.start.next;
         }
         this.count++;
@@ -45,8 +54,8 @@ class NodeQueue {
     }
 
 
-    print() { 
-        return this.toString() 
+    print() {
+        return this.toString()
     };
 }
 
@@ -62,9 +71,13 @@ class ArrayQueue {
         this.ptr_end = 0;
     }
 
-    isEmpty = () => this.ptr_start == this.ptr_end;
+    get isEmpty() {
+        return this.ptr_start == this.ptr_end;
+    }
 
-    isFull = () => (this.ptr_start + 1) % this.arr.length == this.ptr_end;
+    get isFull() {
+        return (this.ptr_start + 1) % this.arr.length == this.ptr_end;
+    }
 
     count() {
         let ptr_start = this.ptr_start;
@@ -73,14 +86,14 @@ class ArrayQueue {
     }
 
     enqueue(val) {
-        if (this.isFull()) throw 'Queue is Full';
+        if (this.isFull) throw 'Queue is Full';
 
         this.arr[this.ptr_start] = val;
         this.ptr_start = (this.ptr_start + 1) % this.arr.length
     }
 
     peek() {
-        if (this.isEmpty()) throw 'Queue is Empty';
+        if (this.isEmpty) throw 'Queue is Empty';
         else return this.arr[this.ptr_end];
     }
 
@@ -102,8 +115,8 @@ class ArrayQueue {
         return str + ' | Start';
     }
 
-    print() { 
-        return this.toString() 
+    print() {
+        return this.toString()
     };
 }
 
@@ -113,24 +126,42 @@ class ArrayQueue {
 
 class PriorityNodeQueue extends NodeQueue {
 
-    constructor(val) {
+    constructor(val, reversePriority) {
         super(val);
+        this.reversePriority = reversePriority;
     }
 
     enqueue(val, priority = 0) {
 
-        const insert = { val: val, prio: priority };
+        this.count++;
+        const insert = NodeQueue.newNode(
+            { val: val, prio: priority }
+        );
 
-        if (!this.start)
+
+        if (!this.start) {
             this.start = this.end = insert;
-        else if (this.start.prio >= priority) {
+            return;
+        }
+
+
+        let PrioComparison = this.start.val.prio >= priority;
+        if (this.reversePriority) PrioComparison = !PrioComparison;
+
+        if (PrioComparison) {
             this.start.next = insert;
             this.start = this.start.next;
+
         } else {
             let prev = null
             let curr = this.end;
+
+
             while (curr) {
-                if (curr.prio < priority) {
+                let comparsion = curr.val.prio < priority;
+                if (this.reversePriority) comparsion = !comparsion;
+
+                if (comparsion) {
                     if (prev == null) this.end = insert;
                     else prev.next = insert;
                     insert.next = curr;
@@ -140,20 +171,18 @@ class PriorityNodeQueue extends NodeQueue {
                 curr = curr.next;
             }
         }
-
-        this.count++;
     }
 
     getHighestPriority() {
-        return super.peek();
+        return super.peek().val;
     }
 
     deleteHighestPriority() {
-        return super.dequeue();
+        return super.dequeue().val;
     }
 
     toString() {
-        return super.toString(v => v.val.toString() + '/(' + v.prio + ')');
+        return super.toString(v => `{${v.val.toString()}}/(${v.prio})`);
     }
 }
 
