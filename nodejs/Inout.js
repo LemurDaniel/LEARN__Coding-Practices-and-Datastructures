@@ -128,8 +128,8 @@ class Inout {
 
             let color = '\x1b[32m';
             if (!hasOutputValidator) color = '\x1b[35m';
-            else if (exception) color = '\x1b[32m';
-            else if (success) color = '\x1b[33m';
+            else if (exception) color = '\x1b[33m';
+            else if (success) color = '\x1b[32m';
             else color = '\x1b[31m';
 
             let successState = 'Pending';

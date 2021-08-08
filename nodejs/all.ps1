@@ -74,7 +74,7 @@ Clear-Host
 # node ./dailyCode/063_remove_kth_node_from_ll.js
 # node ./dailyCode/064_flatten_binary_tree.js
 # node ./dailyCode/065_utf8_encoder.js
-node ./dailyCode/066_coursePrerequisites.js
+# node ./dailyCode/066_coursePrerequisites.js
 
 
 ##################################
@@ -114,7 +114,7 @@ node ./dailyCode/066_coursePrerequisites.js
 # node ./dailyCodingProblem/257-[Easy].js      # Determine indexes of unsorted subarray in array
 # node ./dailyCodingProblem/258-[Easy].js      # Print binary tree in boustrophedon
 # node ./dailyCodingProblem/259-[Hard].js      # Find optimal solution for ghost
-node ./dailyCodingProblem/261-[Easy].js    # Build a Huffmant tree.
+# node ./dailyCodingProblem/261-[Easy].js      # Build a Huffmant tree.
 # node ./dailyCodingProblem/263-[Medium].js    # Validate sentence.
 # node ./dailyCodingProblem/266-[Easy].js      # Get all step words for a word.
 # node ./dailyCodingProblem/267-[Hard].js      # Determine if king is checked.
@@ -123,6 +123,7 @@ node ./dailyCodingProblem/261-[Easy].js    # Build a Huffmant tree.
 # node ./dailyCodingProblem/275-[Medium].js    # Count and say sequence.
 # node ./dailyCodingProblem/277-[Easy].js      # UTF-8 Validator.
 # node ./dailyCodingProblem/279-[Easy].js      # Construct all binary search trees for 1 ... N.
+node ./dailyCodingProblem/281-[Medium].js    # Determine vertical in brickwall with minimum amount of intersections.
 
 
 ##############################

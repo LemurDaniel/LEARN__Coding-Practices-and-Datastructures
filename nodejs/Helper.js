@@ -13,7 +13,14 @@ Helper.reapeatSequence = function (sequence, len) {
 }
 
 Helper.uniformString = function (str, len) {
-    while (str.length < len) str = ' ' + str;
+    len = 6
+    let diff = len - str.length;
+
+    let half = Math.floor(diff / 2)
+    let half2 = diff - half;
+    while (--half >= 0) str = ' ' + str;
+    while (--half2 >= 0) str += ' ';
+
     return str;
 }
 
