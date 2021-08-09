@@ -114,6 +114,16 @@ class Boundary {
         const p1 = this.p1;
         const p2 = this.p2;
 
+        const dxc = point.x - p1.x;
+        const dyc = point.y - p1.y;
+
+        const dxl = p2.x - p1.x;
+        const dyl = p2.y - p1.y;
+
+        const cross = dxc * dyl - dyc * dxl;
+
+        if(cross !== 0) return false;
+
         return point.x <= Math.max(p1.x, p2.x) &&
             point.x >= Math.min(p1.x, p2.x) &&
             point.y <= Math.max(p1.y, p2.y) &&
