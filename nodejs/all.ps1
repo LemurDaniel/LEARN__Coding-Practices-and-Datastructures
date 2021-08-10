@@ -124,7 +124,8 @@ Clear-Host
 # node ./dailyCodingProblem/277-[Easy].js      # UTF-8 Validator.
 # node ./dailyCodingProblem/279-[Easy].js      # Construct all binary search trees for 1 ... N.
 # node ./dailyCodingProblem/281-[Medium].js    # Determine vertical in brickwall with minimum amount of intersections.
-node ./dailyCodingProblem/282-[Easy].js    # Find phytagorean triplets in array.
+# node ./dailyCodingProblem/282-[Easy].js      # Find phytagorean triplets in array.
+node ./dailyCodingProblem/284-[Medium].js     # Find all cousins of a binary tree node.
 
 
 

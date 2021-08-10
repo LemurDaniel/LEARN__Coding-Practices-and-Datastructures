@@ -79,11 +79,21 @@ BinaryTree.GenerateIntPreorderFromString = function (str, splitter = ',', rem = 
     const flag_null = str[0] == '%';
     const arr = (flag_null ? str.substr(1) : str).split(splitter);
 
-    const temp = parseInt(arr[0]);
-    const tree = new BinaryTree(Number.isNaN(temp) ? arr[0] : temp, !flag_null);
 
+    const tree = new BinaryTree(0, !flag_null);
     const nodes = [];
     const stack = [];
+
+
+    let rootVal = arr[0];
+    if (rootVal[0] === sav) {
+        nodes.push(tree.root);
+        rootVal = rootVal.substr(1);
+    }
+    const temp = parseInt(rootVal);
+    tree.root.val = Number.isNaN(temp) ? rootVal : temp;
+
+
     let node = tree.root;
 
     for (let i = 1, flag_leaf = false; i < arr.length; i++) {
