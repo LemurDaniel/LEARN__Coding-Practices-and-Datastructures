@@ -56,7 +56,6 @@ function findAllCousins_levelOrder(tree, node) {
                 q.enqueue(n.left);
             if (n.right)
                 q.enqueue(n.right);
-
         }
 
         if (q.peek() === null) {
@@ -67,7 +66,7 @@ function findAllCousins_levelOrder(tree, node) {
 
     // All nodes of the same level of another parent are now left in the queue.
     // The last element of the queue will always be null.
-    while (q.count > 1) 
+    while (q.count > 1)
         cousins.push(q.dequeue().val)
 
     return cousins;

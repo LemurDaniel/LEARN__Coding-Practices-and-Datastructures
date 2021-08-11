@@ -14,7 +14,7 @@ const Inout = new (require("../Inout"))("Daily Coding Problem --- Phytagorean tr
 Inout.push('&AR 3,1,4,6,5', '&AR 3,4,5');
 Inout.push('&AR 10,4,6,12,5', false);
 
-Inout.solvers = [phytagoreanTriplet_bruteForce, phytagoreanTriplet_hashing, phytagoreanTriplet_hashing2]
+Inout.solvers = [phytagoreanTriplet_bruteForce, phytagoreanTriplet_hashing, phytagoreanTriplet_hashing2, phytagoreanTriplet_mapping]
 Inout.solve();
 
 /*
@@ -89,14 +89,47 @@ function phytagoreanTriplet_hashing2(nums) {
     for (let i = 0; i < nums.length; i++) {
         for (let j = 0; j < nums.length; j++) {
 
+            // Don't use same value at same index twice.
             if (i === j) continue;
 
             const [a, b] = [nums[i], nums[j]];
             const cpow2 = a * a + b * b;
             const c = Math.round(Math.sqrt(cpow2));
-            if( c*c !== cpow2) continue;
+            if (c * c !== cpow2) continue;
 
             if (c in dict)
+                return [a, b, c]
+        }
+    }
+
+    return false;
+}
+
+
+// Time complexity: (n + n^2)  -  Quadratic
+// Space complxity: n - linear
+
+function phytagoreanTriplet_mapping(nums) {
+
+    // Take into account the a and b could be the same index as c.
+    const dict = {};
+    for (let i = 0; i < nums.length; i++)
+        dict[nums[i]] = i;
+
+
+    for (let i = 0; i < nums.length; i++) {
+        for (let j = 0; j < nums.length; j++) {
+
+            if (i === j) continue;
+
+            const [a, b] = [nums[i], nums[j]];
+            const cpow2 = a * a + b * b;
+            const c = Math.round(Math.sqrt(cpow2));
+
+            // If c*c doesn't resolve to the squared num continue.
+            if (c * c !== cpow2) continue;
+
+            if (c in dict && dict[c] !== i && dict[c] !== j)
                 return [a, b, c]
         }
     }
