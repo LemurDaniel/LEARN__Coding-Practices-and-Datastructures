@@ -13,7 +13,6 @@ Helper.reapeatSequence = function (sequence, len) {
 }
 
 Helper.uniformString = function (str, len) {
-    len = 6
     let diff = len - str.length;
 
     let half = Math.floor(diff / 2)
