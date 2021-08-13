@@ -1,5 +1,6 @@
 
 const Inout = new (require('../../Inout'))('Coding Questions --- Game of Life - [difficulty: Medium]');
+const LinkedList = require('../../datastructures/linkedList');
 const Helper = require('../../Helper');
 
 /*
@@ -27,20 +28,20 @@ Inout.input_stringConverter = arg => Helper.default_StringConverter(
 )
 
 Inout.result_stringConverter = arg => {
-    
-    const patternsOnLine = Math.floor(35 / arg[0].length);
+
+    const patternsOnLine = Math.floor(55 / arg[0].length);
     let boardsString = '';
 
-    while(arg.length > 0){
+    while (arg.length > 0) {
         const stack = [];
         const lines = [];
 
-        while(arg.length > 0 && stack.length < patternsOnLine)
+        while (arg.length > 0 && stack.length < patternsOnLine)
             stack.push(arg.shift())
 
-        while(stack[0].length > 0) {
+        while (stack[0].length > 0) {
             const line = [];
-            for(let i=0; i<stack.length; i++) {
+            for (let i = 0; i < stack.length; i++) {
                 const tmp = stack[i].shift();
                 line.push(...tmp);
                 line.push(' ')
@@ -55,6 +56,17 @@ Inout.result_stringConverter = arg => {
     return boardsString;
 }
 
+Inout.result_Converter = arg => {
+    for (board of arg) {
+        for (row of board) {
+            for (let i = 0; i < row.length; i++) {
+                row[i] = row[i] === 1 ? IS_LIVE : IS_NOTLIVE;
+            }
+        }
+    }
+    return arg;
+}
+
 Inout.input_Converter = arg => {
     Helper.default_Converter(arg);
 
@@ -62,12 +74,12 @@ Inout.input_Converter = arg => {
     arg.board = [];
     for (let i = 0; i < arg.m; i++) {
         arg.board.push(
-            new Array(arg.n).fill(IS_NOTLIVE)
+            new Array(arg.n).fill(0)
         )
     }
 
     for (const [row, col] of arg.state)
-        arg.board[row][col] = IS_LIVE;
+        arg.board[row][col] = 1;
 
     return arg;
 }
@@ -75,11 +87,11 @@ Inout.input_Converter = arg => {
 
 
 Inout.push({ m: 4, n: 4, steps: 4, state: '&AR 1,1|1,2|2,1|2,2' }, Inout.static.None)
-Inout.push({ m: 8, n: 8, steps: 4, state: '&AR 4,3|3,3|3,4|3,5' }, Inout.static.None)
-Inout.push({ m: 9, n: 9, steps: 24, state: '&AR 3,4|4,4|4,3|4,5' }, Inout.static.None)
+Inout.push({ m: 8, n: 8, steps: 3, state: '&AR 4,3|3,3|3,4|3,5' }, Inout.static.None)
+Inout.push({ m: 9, n: 9, steps: 23, state: '&AR 3,4|4,4|4,3|4,5' }, Inout.static.None)
 
 
-Inout.solvers = [calculateNextStates];
+Inout.solvers = [calculateNextStates, calculateNextStates_inPlace];
 Inout.solve();
 
 /*
@@ -90,9 +102,15 @@ Inout.solve();
 */
 
 
+//  State caluclation:
+//      time complexity: linear -- n
+//      space complexity: linear -- n
+
 function calculateNextStates(board, steps) {
 
-    let trace = [];
+    const LIVING = 1;
+    const DEAD = 0;
+    let trace = [board];
 
     let newBoard = [];
     while (steps-- > 0) {
@@ -102,13 +120,13 @@ function calculateNextStates(board, steps) {
 
             // Start with all alive in the next state.
             newBoard.push(
-                new Array(board[i].length).fill(IS_NOTLIVE)
+                new Array(board[i].length).fill(DEAD)
             );
 
             for (let j = 0; j < board[i].length; j++) {
 
                 let activeNeighbours = 0;
-                const isLiveCell = board[i][j] === IS_LIVE;
+                const isLiveCell = board[i][j] === LIVING;
 
                 // Move around postion in 45 degree angles and look at all neighbours.
                 for (let rad = 0; rad < (Math.PI * 2); rad += Math.PI / 4) {
@@ -119,14 +137,14 @@ function calculateNextStates(board, steps) {
                     if (row < 0 || row >= board.length) continue;
                     if (col < 0 || col >= board[i].length) continue;
 
-                    if (board[row][col] === IS_LIVE)
+                    if (board[row][col] === LIVING)
                         activeNeighbours++;
                 }
 
                 if (activeNeighbours < 2 || activeNeighbours > 3)
-                    newBoard[i][j] = IS_NOTLIVE;
+                    newBoard[i][j] = DEAD;
                 else if (isLiveCell || (!isLiveCell && activeNeighbours === 3))
-                    newBoard[i][j] = IS_LIVE;
+                    newBoard[i][j] = LIVING;
 
             }
         }
@@ -134,6 +152,61 @@ function calculateNextStates(board, steps) {
         board = newBoard;
         newBoard = [];
         trace.push(board)
+    }
+
+    return trace;
+}
+
+
+
+//  State caluclation:
+//      time complexity: linear -- 2n
+//      space complexity: constant -- 1
+// 2 Bits: current state | next state
+
+function calculateNextStates_inPlace(board, steps) {
+
+    let trace = [
+        board.map(arr => arr.map(v => v))
+    ];
+
+    while (steps-- > 0) {
+
+        // First shift all bits to left as current bits.
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board[i].length; j++) {
+                board[i][j] = board[i][j] << 1 & 0b11;
+            }
+        }
+
+        // Set the first bits indicating the next state.
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board[i].length; j++) {
+
+                const curr = board[i][j] >> 1;
+                const isLiveCell = curr === 1;
+                let activeNeighbours = 0;
+
+                // Move around postion in 45 degree angles and look at all neighbours.
+                for (let rad = 0; rad < (Math.PI * 2); rad += Math.PI / 4) {
+
+                    const col = j + Math.round(Math.cos(rad));
+                    const row = i + Math.round(Math.sin(rad));
+
+                    if (row < 0 || row >= board.length) continue;
+                    if (col < 0 || col >= board[i].length) continue;
+
+                    if (board[row][col] >> 1 === 1)
+                        activeNeighbours++;
+                }
+
+                if (activeNeighbours < 2 || activeNeighbours > 3)
+                    board[i][j] &= 0b10;    // Last bit must be zero.
+                else if (isLiveCell || (!isLiveCell && activeNeighbours === 3))
+                    board[i][j] |= 0b01;    // Last bit must be one.
+            }
+        }
+        trace.push(board.map(arr => arr.map(v => v & 0b1)))
     }
 
     return trace;
