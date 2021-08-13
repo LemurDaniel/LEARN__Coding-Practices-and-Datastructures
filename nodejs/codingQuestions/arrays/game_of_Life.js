@@ -76,7 +76,7 @@ Inout.input_Converter = arg => {
 
 Inout.push({ m: 4, n: 4, steps: 4, state: '&AR 1,1|1,2|2,1|2,2' }, Inout.static.None)
 Inout.push({ m: 8, n: 8, steps: 4, state: '&AR 4,3|3,3|3,4|3,5' }, Inout.static.None)
-Inout.push({ m: 9, n: 9, steps: 18, state: '&AR 3,4|4,4|4,3|4,5' }, Inout.static.None)
+Inout.push({ m: 9, n: 9, steps: 24, state: '&AR 3,4|4,4|4,3|4,5' }, Inout.static.None)
 
 
 Inout.solvers = [calculateNextStates];
