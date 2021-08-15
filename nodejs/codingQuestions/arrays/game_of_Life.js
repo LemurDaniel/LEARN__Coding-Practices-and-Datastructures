@@ -25,7 +25,9 @@ const IS_NOTLIVE = '-'
 
 // Convert the input object to an String by turning the board into a string with printMatrix.
 Inout.input_stringConverter = arg => Helper.default_StringConverter(
-    { ...arg, board: Helper.printMatrix(arg.board, true, 2) }
+    {
+        ...arg, board: Helper.printMatrix(arg.board.map(row => row.map(v => v === 1 ? IS_LIVE : IS_NOTLIVE)), true, 2)
+    }
 )
 
 // Print several boards next to each other on a line.
@@ -109,8 +111,8 @@ Inout.push({ m: 9, n: 9, steps: 23, state: '&AR 3,4|4,4|4,3|4,5' }, Inout.static
 Inout.push({ m: 5, n: 5, steps: 23, state: '&AR 1,2|2,2|2,1|2,3' }, Inout.static.None)
 
 
-Inout.solvers = [calculateNextStates, calculateNextStates_unbound];
-Inout.solve(2);
+Inout.solvers = [calculateNextStates, calculateNextStates_inPlace, calculateNextStates_unbound, calculateNextStates_unbound_inPlace];
+Inout.solve();
 
 /*
     ###########################################################################################
@@ -252,15 +254,6 @@ function calculateNextStates_unbound(board, steps) {
     const minBounds = { col: 0, row: 0 };
     while (steps-- > 0) {
 
-        // Find the bounds of the board. (The outermost living cell plus one for place of spawing a new cell)
-        for (const pos of Object.values(positions)) {
-            maxBounds.row = Math.max(maxBounds.row, pos[0] + 1);
-            maxBounds.col = Math.max(maxBounds.col, pos[1] + 1);
-            minBounds.row = Math.min(minBounds.row, pos[0] - 1);
-            minBounds.col = Math.min(minBounds.col, pos[1] - 1);
-        }
-
-
         for (let i = minBounds.row; i <= maxBounds.row; i++) {
             for (let j = minBounds.col; j <= maxBounds.col; j++) {
 
@@ -292,14 +285,120 @@ function calculateNextStates_unbound(board, steps) {
         positions = newPositions;
         newPositions = {};
 
+        // Find the bounds of the board. (The outermost living cell plus one for place of spawing a new cell)
+        for (const pos of Object.values(positions)) {
+            maxBounds.row = Math.max(maxBounds.row, pos[0] + 1);
+            maxBounds.col = Math.max(maxBounds.col, pos[1] + 1);
+            minBounds.row = Math.min(minBounds.row, pos[0]);
+            minBounds.col = Math.min(minBounds.col, pos[1]);
+        }
+
+        
         // Build a board for trace.
-        const tmp = new Array(maxBounds.row - minBounds.row + 1).fill(0);
+        const tmp = new Array(maxBounds.row - minBounds.row).fill(0);
         for (let i = 0; i < tmp.length; i++)
-            tmp[i] = new Array(maxBounds.col - minBounds.col + 1).fill(0);
+            tmp[i] = new Array(maxBounds.col - minBounds.col).fill(0);
 
         for (let [row, col] of Object.values(positions)) {
             row -= minBounds.row;
             col -= minBounds.col;
+            tmp[row][col] = 1;
+        }
+
+        trace.push(tmp);
+    }
+
+    return trace;
+}
+
+
+
+
+
+function calculateNextStates_unbound_inPlace(board, steps) {
+
+    const trace = [
+        board.map(arr => arr.map(v => v))
+    ];
+
+    const positions = {};
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[i].length; j++) {
+            if (board[i][j] === 1) positions[[i, j]] = 0b10;
+        }
+    }
+
+
+    const maxBounds = { col: board.length, row: board[0].length };
+    const minBounds = { col: 0, row: 0 };
+
+    while (steps-- > 0) {
+
+        for (const key of Object.keys(positions)) {
+            const pos = key.split(',').map(v => parseInt(v));
+
+            // Move around postion in 45 and add cells for processing.
+            for (let rad = 0; rad < (Math.PI * 2); rad += Math.PI / 4) {
+
+                const col = pos[1] + Math.round(Math.cos(rad));
+                const row = pos[0] + Math.round(Math.sin(rad));
+
+                const target = [row, col];
+
+                if (target in positions) continue;
+                else positions[target] = 0b00;
+            }
+        }
+
+        for (const key of Object.keys(positions)) {
+
+            const pos = key.split(',').map(v => parseInt(v));
+            const isLiveCell = positions[pos] >> 1 === 1;
+            let activeNeighbours = 0;
+
+            // Move around postion in 45 degree angles and look at all neighbours.
+            for (let rad = 0; rad < (Math.PI * 2); rad += Math.PI / 4) {
+
+                const col = pos[1] + Math.round(Math.cos(rad));
+                const row = pos[0] + Math.round(Math.sin(rad));
+
+                const target = [row, col];
+
+                if (positions[target] >> 1 === 1)
+                    activeNeighbours++;
+            }
+
+            if (activeNeighbours < 2 || activeNeighbours > 3)
+                positions[pos] &= 0b10;
+            else if (isLiveCell || (!isLiveCell && activeNeighbours === 3))
+                positions[pos] |= 0b01;
+            else
+                positions[pos] &= 0b10;
+        }
+
+        for (const key of Object.keys(positions)) {
+            positions[key] = positions[key] << 1 & 0b11;
+            if (positions[key] >> 1 === 0) delete positions[key];
+        }
+
+        // Build a board for trace.
+        // Find the bounds of the board. (The outermost living cell plus one for place of spawing a new cell)
+        for (const key of Object.keys(positions)) {
+            const pos = key.split(',').map(v => parseInt(v));
+            maxBounds.row = Math.max(maxBounds.row, pos[0] + 1);
+            maxBounds.col = Math.max(maxBounds.col, pos[1] + 1);
+            minBounds.row = Math.min(minBounds.row, pos[0]);
+            minBounds.col = Math.min(minBounds.col, pos[1]);
+        }
+
+        const tmp = new Array(maxBounds.row - minBounds.row).fill(0);
+        for (let i = 0; i < tmp.length; i++)
+            tmp[i] = new Array(maxBounds.col - minBounds.col).fill(0);
+
+        for (let key of Object.keys(positions)) {
+            const pos = key.split(',').map(v => parseInt(v));
+            const row = pos[0] - minBounds.row;
+            const col = pos[1] - minBounds.col;
             tmp[row][col] = 1;
         }
 
