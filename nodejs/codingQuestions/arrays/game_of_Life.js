@@ -23,26 +23,40 @@ const Helper = require('../../Helper');
 const IS_LIVE = '#';
 const IS_NOTLIVE = '-'
 
+// Convert the input object to an String by turning the board into a string with printMatrix.
 Inout.input_stringConverter = arg => Helper.default_StringConverter(
     { ...arg, board: Helper.printMatrix(arg.board, true, 2) }
 )
 
+// Print several boards next to each other on a line.
 Inout.result_stringConverter = arg => {
 
-    const patternsOnLine = Math.floor(55 / arg[0].length);
+    if (arg === undefined || arg === null || !Array.isArray(arg[0])) return arg;
+
+    const patternsOnLine = 65
     let boardsString = '';
 
     while (arg.length > 0) {
         const stack = [];
         const lines = [];
 
-        while (arg.length > 0 && stack.length < patternsOnLine)
-            stack.push(arg.shift())
+        let cumulativeLength = 0;
+        while (arg.length > 0 && cumulativeLength < patternsOnLine) {
+            const board = arg.shift();
+            cumulativeLength += board[0].length;
+            stack.push(board)
+        }
 
-        while (stack[0].length > 0) {
+        let maxLines = 0;
+        for (const board of stack) maxLines = Math.max(maxLines, board[0].length);
+
+        for (let i = 0; i < maxLines; i++) {
             const line = [];
-            for (let i = 0; i < stack.length; i++) {
-                const tmp = stack[i].shift();
+            for (let j = 0; j < stack.length; j++) {
+                let tmp = stack[j][i];
+                if (tmp === undefined)
+                    tmp = new Array(stack[j][0].length).fill(IS_NOTLIVE)
+
                 line.push(...tmp);
                 line.push(' ')
             }
@@ -56,7 +70,9 @@ Inout.result_stringConverter = arg => {
     return boardsString;
 }
 
+// Convert 1 and 0 of resulting board to specifed characters for dead and living cells.
 Inout.result_Converter = arg => {
+    if (arg === undefined || arg === null || !Array.isArray(arg[0])) return arg;
     for (board of arg) {
         for (row of board) {
             for (let i = 0; i < row.length; i++) {
@@ -67,6 +83,7 @@ Inout.result_Converter = arg => {
     return arg;
 }
 
+// Create board of specified size with specified cell postions set to living.
 Inout.input_Converter = arg => {
     Helper.default_Converter(arg);
 
@@ -89,10 +106,11 @@ Inout.input_Converter = arg => {
 Inout.push({ m: 4, n: 4, steps: 4, state: '&AR 1,1|1,2|2,1|2,2' }, Inout.static.None)
 Inout.push({ m: 8, n: 8, steps: 3, state: '&AR 4,3|3,3|3,4|3,5' }, Inout.static.None)
 Inout.push({ m: 9, n: 9, steps: 23, state: '&AR 3,4|4,4|4,3|4,5' }, Inout.static.None)
+Inout.push({ m: 5, n: 5, steps: 23, state: '&AR 1,2|2,2|2,1|2,3' }, Inout.static.None)
 
 
-Inout.solvers = [calculateNextStates, calculateNextStates_inPlace];
-Inout.solve();
+Inout.solvers = [calculateNextStates, calculateNextStates_unbound];
+Inout.solve(2);
 
 /*
     ###########################################################################################
@@ -211,3 +229,83 @@ function calculateNextStates_inPlace(board, steps) {
 
     return trace;
 }
+
+
+
+
+function calculateNextStates_unbound(board, steps) {
+
+    let trace = [
+        board.map(arr => arr.map(v => v))
+    ];
+
+    let positions = {};
+    let newPositions = {};
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[i].length; j++) {
+            if (board[i][j] === 1) positions[[i, j]] = [i, j];
+        }
+    }
+
+
+    const maxBounds = { col: board.length, row: board[0].length };
+    const minBounds = { col: 0, row: 0 };
+    while (steps-- > 0) {
+
+        // Find the bounds of the board. (The outermost living cell plus one for place of spawing a new cell)
+        for (const pos of Object.values(positions)) {
+            maxBounds.row = Math.max(maxBounds.row, pos[0] + 1);
+            maxBounds.col = Math.max(maxBounds.col, pos[1] + 1);
+            minBounds.row = Math.min(minBounds.row, pos[0] - 1);
+            minBounds.col = Math.min(minBounds.col, pos[1] - 1);
+        }
+
+
+        for (let i = minBounds.row; i <= maxBounds.row; i++) {
+            for (let j = minBounds.col; j <= maxBounds.col; j++) {
+
+                const pos = [i, j]
+                const isLiveCell = pos in positions;
+                let activeNeighbours = 0;
+
+                // Move around postion in 45 degree angles and look at all neighbours.
+                for (let rad = 0; rad < (Math.PI * 2); rad += Math.PI / 4) {
+
+                    const col = j + Math.round(Math.cos(rad));
+                    const row = i + Math.round(Math.sin(rad));
+
+                    const target = [row, col];
+
+                    if (target in positions)
+                        activeNeighbours++;
+                }
+
+                const isStateLive =
+                    (isLiveCell && activeNeighbours >= 2 && activeNeighbours <= 3)
+                    || (!isLiveCell && activeNeighbours === 3);
+
+                if (isStateLive)
+                    newPositions[pos] = pos
+            }
+        }
+
+        positions = newPositions;
+        newPositions = {};
+
+        // Build a board for trace.
+        const tmp = new Array(maxBounds.row - minBounds.row + 1).fill(0);
+        for (let i = 0; i < tmp.length; i++)
+            tmp[i] = new Array(maxBounds.col - minBounds.col + 1).fill(0);
+
+        for (let [row, col] of Object.values(positions)) {
+            row -= minBounds.row;
+            col -= minBounds.col;
+            tmp[row][col] = 1;
+        }
+
+        trace.push(tmp);
+    }
+
+    return trace;
+}
+
