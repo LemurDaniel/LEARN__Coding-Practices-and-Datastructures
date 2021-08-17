@@ -126,7 +126,7 @@ Clear-Host
 # node ./dailyCodingProblem/281-[Medium].js    # Determine vertical in brickwall with minimum amount of intersections.
 # node ./dailyCodingProblem/282-[Easy].js      # Find phytagorean triplets in array.
 # node ./dailyCodingProblem/284-[Medium].js    # Find all cousins of a binary tree node.
-# node ./dailyCodingProblem/285-[Medium].js     # Find all buildings with an unobstructed View.
+# node ./dailyCodingProblem/285-[Medium].js    # Find all buildings with an unobstructed View.
 
 
 ##############################
@@ -148,7 +148,8 @@ Clear-Host
 # node ./codingQuestions/arrays/search_for_range-[Medium].js
 # node ./codingQuestions/arrays/sort_colors-[Medium].js
 # node ./codingQuestions/arrays/move_zeroes-[Easy].js
-node ./codingQuestions/arrays/game_of_Life.js
+# node ./codingQuestions/arrays/game_of_Life-[Medium].js
+node ./codingQuestions/arrays/shuffle_an_array-[Medium].js
 
 ########### LINKED LISTS ###########
 # node ./codingQuestions/linked_lists/remove_linked_list_element-[Easy].js
