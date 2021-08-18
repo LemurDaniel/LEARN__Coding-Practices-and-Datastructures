@@ -221,7 +221,7 @@ Helper.string_toIntArray = function (str, split = ' ') {
         const array = sub_strs[i].split(split);
 
         // Loop through the array and convert its contents to numbers.
-        for (const i in array) {
+        for (let i=0; i<array.length; i++) {
             let val = array[i].trim();
             let num = Number.NaN;
 
