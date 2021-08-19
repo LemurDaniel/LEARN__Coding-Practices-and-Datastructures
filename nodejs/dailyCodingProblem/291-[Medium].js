@@ -51,7 +51,7 @@ Array.prototype.peek = function () {
     return this[this.length - 1];
 }
 
-Inout.solvers = [smallestNumberOfBoatTrips_sortArray]
+Inout.solvers = [smallestNumberOfBoatTrips_sortArray, smallestNumberOfBoatTrips_minElement]
 
 Inout.solve();
 
@@ -81,6 +81,42 @@ function smallestNumberOfBoatTrips_sortArray(boatLimit, population) {
             const currPop = population.pop();
             currLim += currPop;
             currTrip.push(currPop)
+        }
+
+        sateOfTrips.push(currTrip)
+    }
+
+    return {
+        numberOfTrips: numberOfTrips,
+        trips: sateOfTrips
+    };
+}
+
+
+function smallestNumberOfBoatTrips_minElement(boatLimit, population) {
+
+    let numberOfTrips = 0;
+    let sateOfTrips = [];
+
+    while (population.length > 0) {
+
+        numberOfTrips++;
+        let currLim = 0;
+        let currTrip = [];
+
+        while (population.length > 0) {
+
+            let currMin = 0;
+            for(let i=1; i<population.length; i++) {
+                if(population[currMin] >= population[i])
+                    currMin = i;
+            }
+
+            if (currLim + population[currMin] > boatLimit) break;
+
+            currLim += population[currMin];
+            currTrip.push(population[currMin])
+            population.splice(currMin, 1);
         }
 
         sateOfTrips.push(currTrip)
