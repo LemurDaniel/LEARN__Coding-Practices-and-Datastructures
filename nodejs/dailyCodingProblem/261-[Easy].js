@@ -1,5 +1,5 @@
 const Inout = new (require("../Inout"))("Daily Coding Problem --- Construct huffman tree");
-const { BinaryTree } = require("../datastructures/bTree");
+const { MinHeap } = require("../datastructures/heap");
 const HuffmanTree = require("../datastructures/huffmanTree");
 const { PriorityNodeQueue } = require("../datastructures/queue");
 const { MergeSort } = require("../Helper");
@@ -46,7 +46,7 @@ Inout.push({
     }
 }, Inout.static.None);
 
-Inout.solvers = [buildHuffmanTree]
+Inout.solvers = [buildHuffmanTree, buildHuffmanTree_heap]
 Inout.solve();
 
 /*
@@ -102,6 +102,74 @@ function buildHuffmanTree(text, frequencies = null) {
 
     const huffManTree = new HuffmanTree();
     huffManTree.root = prioQueue.deleteHighestPriority();
+
+    return huffManTree;
+}
+
+
+
+
+function buildHuffmanTree_heap(text, frequencies = null) {
+
+    if (frequencies === null || Object.keys(frequencies).length === 0) {
+
+        frequencies = {};
+        for (const char of text) {
+            if (char in frequencies)
+                frequencies[char]++;
+            else
+                frequencies[char] = 1;
+        }
+
+        for (const key of Object.keys(frequencies))
+            frequencies[key] = frequencies[key] / text.length;
+
+    }
+
+    const sorted = MergeSort.sort(Object.entries(frequencies), (a, b) => a[1] - b[1])
+    ////////////////////////////////////////////////////////////////////
+
+    const minHeap = new MinHeap()
+    while (sorted.length > 0) {
+        const [char, freq] = sorted.pop();
+        const node = new HuffmanTree.Node(char, freq);
+        minHeap.add(node, freq)
+    }
+/*
+    console.log(Helper.default_StringConverter(minHeap.heap))
+    minHeap.poll()
+    console.log(Helper.default_StringConverter(minHeap.heap))
+    console.log('PLLLL 2')
+    minHeap.poll()
+    minHeap.poll()
+    console.log(Helper.default_StringConverter(minHeap.heap))
+    console.log('PLLLL 3')
+    minHeap.add(12321,22)
+    minHeap.add(12321,22)
+    minHeap.add(12321,22)
+    minHeap.add(12321,21)
+    minHeap.add(12321,20)
+    console.log(Helper.default_StringConverter(minHeap.heap))
+    minHeap.poll()
+    console.log(Helper.default_StringConverter(minHeap.heap))*/
+ 
+    while (minHeap.size > 1) {
+
+        const n1 = minHeap.poll();
+        const n2 = minHeap.poll();
+
+        const summedFreq = n1.freq + n2.freq;
+
+        const node = new HuffmanTree.Node(HuffmanTree.Empty, summedFreq);
+        node.left = n1.freq > n2.freq ? n2 : n1;
+        node.right = n1.freq > n2.freq ? n1 : n2;
+
+        minHeap.add(node, summedFreq)
+    }
+
+
+    const huffManTree = new HuffmanTree();
+    huffManTree.root = minHeap.poll();
 
     return huffManTree;
 }
