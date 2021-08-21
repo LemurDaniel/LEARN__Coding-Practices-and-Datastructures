@@ -29,7 +29,7 @@ for (let i = 0; i < 20; i++) {
     Inout.push(arr, Helper.default_Copy(arr).sort())
 }
 
-Inout.solvers = [dutchSorting, sort_colors_one_pass, sort_colors_one_pass2, sort_colors_two_passes_counting, sort_colors_two_passes_counting_variant_2];
+Inout.solvers = [dutchSorting, sort_colors_one_pass, sort_colors_one_pass2, sort_colors_one_pass_dutchSortingVariant, sort_colors_two_passes_counting, sort_colors_two_passes_counting_variant_2];
 Inout.solve();
 
 /*
@@ -39,24 +39,13 @@ Inout.solve();
     ###########################################################################################
 */
 
+
 /*
-    space complexity: O(1)  - constant 
-    time  complexity: O(n)  - linear
 
-    ptr_end points to the start of all 2's at the end of the array.
-    ptr_start points to the end of all 1's at the start of the array.
-
-    While passing through the values of the array, Whenever a 2 is encountered,
-    the current value get swapped with the one at ptr_end. Then decrease ptr_end.
-
-    if its a 0 instead or a 0 get swapped into place, swap it with the value
-    at ptr_start, wich will always be a 1. Then increase ptr_start.
-    
-    The value at ptr_start will always be a one. It can't be a two, because the loop
-    would have already checked the value at that index and moved it to the end. Can't
-    be a zero either since it would have already been moved too at this point. 
-    The value at ptr_start can only be a zero when the current index i in the loop
-    euqals ptr_start which has no effect at all.
+    Uses three pointers, low, high and mid.
+    On encounter of 0 it'll be swapped with the value at low.
+    On encounter of 2 it'll be swapped with the value at high.
+    On encounter of 1 the mid pointer is increased by one.
 
 */
 
@@ -88,7 +77,51 @@ function dutchSorting(colors) {
     }
 }
 
+
+/*
+    space complexity: O(1)  - constant 
+    time  complexity: O(n)  - linear
+
+    ptr_end points to the start of all 2's at the end of the array.
+    ptr_start points to the end of all 1's at the start of the array.
+
+    While passing through the values of the array, Whenever a 2 is encountered,
+    the current value get swapped with the one at ptr_end. Then decrease ptr_end.
+
+    if its a 0 instead or a 0 get swapped into place, swap it with the value
+    at ptr_start, wich will always be a 1. Then increase ptr_start.
+    
+    The value at ptr_start will always be a one. It can't be a two, because the loop
+    would have already checked the value at that index and moved it to the end. Can't
+    be a zero either since it would have already been moved too at this point. 
+    The value at ptr_start can only be a zero when the current index i in the loop
+    euqals ptr_start which has no effect at all.
+
+*/
+
 function sort_colors_one_pass(colors) {
+
+    let ptr_end = colors.length - 1;
+    let ptr_start = 0;
+
+    for (let i = 0; i <= ptr_end; i++) {
+
+        if (colors[i] == 2) {
+            while (colors[ptr_end] == 2 && ptr_end > i) ptr_end--;
+            colors[i] = colors[ptr_end];
+            colors[ptr_end--] = 2;
+        }
+
+        if (colors[i] == 0) {
+            colors[i] = colors[ptr_start];
+            colors[ptr_start++] = 0;
+        }
+
+        // console.log(Helper.printArray(colors) + '  Start: ' + ptr_start + '  I: ' + i + '  End: ' + ptr_end);
+    }
+}
+
+function sort_colors_one_pass2(colors) {
 
     // Marks beginning of all twoes.
     let ptr_end = colors.length - 1;
@@ -118,24 +151,28 @@ function sort_colors_one_pass(colors) {
     }
 }
 
-function sort_colors_one_pass2(colors) {
+function sort_colors_one_pass_dutchSortingVariant(colors) {
 
+    // Marks beginning of all twoes.
     let ptr_end = colors.length - 1;
+    // Marks end of all zeroes.
     let ptr_start = 0;
 
     for (let i = 0; i <= ptr_end; i++) {
 
-        if (colors[i] == 2) {
-            while (colors[ptr_end] == 2 && ptr_end > i) ptr_end--;
-            colors[i] = colors[ptr_end];
-            colors[ptr_end--] = 2;
-        }
-
-        if (colors[i] == 0) {
-            colors[i] = colors[ptr_start];
+        // All swapped values will always be ones, since all twoes have been processed at this point.
+        // A zero will always be encountered at the end of the "ones" subarray.
+        // Swapping it will result in the one being placed at the end of the current "ones" subarray and the zero being placed at the zeros subarray end.
+        if (colors[i] === 0) {
+            colors[i] = 1;
             colors[ptr_start++] = 0;
         }
 
+        // A two will always be swapped with the last value and the index will be decremented since the swapped value may be a two too.
+        if (colors[i] === 2) {
+            colors[i--] = colors[ptr_end];
+            colors[ptr_end--] = 2;
+        }
         // console.log(Helper.printArray(colors) + '  Start: ' + ptr_start + '  I: ' + i + '  End: ' + ptr_end);
     }
 }
