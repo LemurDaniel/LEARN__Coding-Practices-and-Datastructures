@@ -29,7 +29,7 @@ for (let i = 0; i < 20; i++) {
     Inout.push(arr, Helper.default_Copy(arr).sort())
 }
 
-Inout.solvers = [sort_colors_one_pass, sort_colors_two_passes_counting, sort_colors_two_passes_counting_variant_2];
+Inout.solvers = [dutchSorting, sort_colors_one_pass, sort_colors_one_pass2, sort_colors_two_passes_counting, sort_colors_two_passes_counting_variant_2];
 Inout.solve();
 
 /*
@@ -60,7 +60,65 @@ Inout.solve();
 
 */
 
+function dutchSorting(colors) {
+
+    let low = 0;
+    let mid = 0;
+    let high = colors.length - 1;
+
+    for (let i = 0; mid <= high; i++) {
+
+        switch (colors[i]) {
+            case 0:
+                colors[i] = colors[low]
+                colors[low] = 0;
+                low = low + 1;
+                mid = mid + 1;
+                break;
+            case 2:
+                colors[i] = colors[high]
+                colors[high] = 2;
+                high = high - 1;
+                i = i - 1;
+                break;
+            case 1:
+                mid = mid + 1;
+                break;
+        }
+    }
+}
+
 function sort_colors_one_pass(colors) {
+
+    // Marks beginning of all twoes.
+    let ptr_end = colors.length - 1;
+    // Marks end of all zeroes.
+    let ptr_start = 0;
+
+    for (let i = 0; i <= ptr_end;) {
+
+        // All twoes are swapped with the end of the array. The index isn't incremented since the swapped value could have been another two.
+        if (colors[i] === 2) {
+            colors[i] = colors[ptr_end];
+            colors[ptr_end--] = 2;
+        }
+
+        // Since all previous values are processed the swapped value will be either 1 or 0.
+        if (colors[i] === 0) {
+            colors[i] = colors[ptr_start];
+            colors[ptr_start++] = 0;
+            i++;
+        }
+
+        // If its a one just move along. Any following zero will be placed at its position and the one will be placed at the occurence of the zero then.
+        if (colors[i] === 1)
+            i++;
+
+        // console.log(Helper.printArray(colors) + '  Start: ' + ptr_start + '  I: ' + i + '  End: ' + ptr_end);
+    }
+}
+
+function sort_colors_one_pass2(colors) {
 
     let ptr_end = colors.length - 1;
     let ptr_start = 0;
