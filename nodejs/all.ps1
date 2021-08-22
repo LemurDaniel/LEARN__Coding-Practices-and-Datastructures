@@ -128,7 +128,7 @@ Clear-Host
 # node ./dailyCodingProblem/284-[Medium].js    # Find all cousins of a binary tree node.
 # node ./dailyCodingProblem/285-[Medium].js    # Find all buildings with an unobstructed View.
 # node ./dailyCodingProblem/291-[Medium].js    # Find minimum number of boat trips.
-node ./dailyCodingProblem/295-[Medium].js    # Calculate kth row of pascals triangle
+# node ./dailyCodingProblem/295-[Medium].js    # Calculate kth row of pascals triangle
 
 ##############################
 ###### Coding Questions ######
@@ -152,6 +152,7 @@ node ./dailyCodingProblem/295-[Medium].js    # Calculate kth row of pascals tria
 # node ./codingQuestions/arrays/game_of_Life-[Medium].js
 # node ./codingQuestions/arrays/shuffle_an_array-[Medium].js
 # node ./codingQuestions/arrays/container_with_most_water-[Medium].js
+node ./codingQuestions/arrays/diagonal_traversal-[Medium].js
 
 ########### LINKED LISTS ###########
 # node ./codingQuestions/linked_lists/remove_linked_list_element-[Easy].js
