@@ -46,7 +46,7 @@ const Helper = require('../Helper');
                  /   \
                 2      3
               /  \    /
-            4     5  6
+             4    5  6
             /
            7 
            
@@ -65,7 +65,7 @@ Inout.push('&BT 1,2,$4', false);
 Inout.push('&BT 1,2,4,$7,/,$5,3,$6', true);
 Inout.push('&BT 1,2,4,$7,/,/,3,$6', false);
 
-Inout.solvers = [solver1];
+Inout.solvers = [solver1, solver2];
 Inout.solve();
 
 /*
@@ -104,4 +104,8 @@ function recursive_static(node, height = { val: 0 }) {
 
 function solver1(tree) {
     return recursive_static(tree.root);
+}
+
+function solver2(tree) {
+    return tree.isHeightBalanced;
 }

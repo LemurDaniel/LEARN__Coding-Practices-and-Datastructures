@@ -22,6 +22,23 @@ class Node extends ID_Object {
     print() {
         return this.toString()
     };
+
+
+    isHeightBalanced(height = { val: 0 }) {
+
+         // Wrapper Objects for passing height by reference.
+        const hLeft = { val: 0 };
+        const hRight = { val: 0 };
+
+        const isLeftBalanced = this.left !== null ? this.left.isHeightBalanced(hLeft) : true;
+        const isRightBalanced = this.right !== null ? this.right.isHeightBalanced(hRight) : true;
+
+        const isBalanced = Math.abs(hLeft.val - hRight.val) <= 1;
+        
+        height.val = Math.max(hLeft.val, hRight.val) + 1;
+
+        return isLeftBalanced && isRightBalanced && isBalanced;
+    }
 }
 
 
@@ -39,6 +56,11 @@ class BinaryTree extends ID_Object {
         const tree = new BinaryTree();
         tree.root = root;
         return tree;
+    }
+
+    get isHeightBalanced() {
+        if(this.root === null) return true;
+        else return this.root.isHeightBalanced();
     }
 
     constructor(val, print_null) {
