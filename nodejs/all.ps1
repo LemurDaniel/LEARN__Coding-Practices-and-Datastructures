@@ -129,7 +129,7 @@ Clear-Host
 # node ./dailyCodingProblem/285-[Medium].js    # Find all buildings with an unobstructed View.
 # node ./dailyCodingProblem/291-[Medium].js    # Find minimum number of boat trips.
 # node ./dailyCodingProblem/295-[Medium].js    # Calculate kth row of pascals triangle
-node ./dailyCodingProblem/296-[Hard].js    # Generate height balanced tree from a sorted array.
+node ./dailyCodingProblem/296-[Hard].js       # Generate height balanced tree from a sorted array.
 
 ##############################
 ###### Coding Questions ######
