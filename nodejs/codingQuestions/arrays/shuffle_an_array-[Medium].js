@@ -23,9 +23,12 @@ const Helper = require('../../Helper');
 
 const ArrayShuffler = initialize();
 
-Inout.push('&AR 1,2,3', () => true)
+Inout.result_stringConverter = arg => Helper.default_StringConverter({ ...arg, shuffles: Helper.printMatrix(arg.shuffles)})
 
-Inout.solvers = [testShuffler1, testShuffler2];
+Inout.push('&AR 1,2,3', () => true)
+Inout.push('&AR 1,2,3,4,5,6,7,8,9', () => true)
+
+Inout.solvers = [testShuffler1, testShuffler2, testShuffler3];
 Inout.solve();
 
 /*
@@ -42,6 +45,10 @@ function testShuffler1(array) {
 
 function testShuffler2(array) {
     return baseShuffler(array, 'shuffle2')
+}
+
+function testShuffler3(array) {
+    return baseShuffler(array, 'shuffle3')
 }
 
 
@@ -112,6 +119,19 @@ function initialize() {
 
             return this._array;
         }
+
+        shuffle3() {
+
+            const array = this._array;
+
+            for(let i=0; i<array.length; i++) {
+                const idx = Math.floor(Math.random() * (array.length - i)) + i;
+                [array[idx], array[i]] = [array[i], array[idx]];
+            }
+        
+            return this._array;
+        }
+
 
         reset() {
             const original = this._original;
