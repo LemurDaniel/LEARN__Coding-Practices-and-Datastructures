@@ -86,24 +86,27 @@ class Inout {
             console.log('Output: ' + output_String + '\n')
 
         console.log('\x1b[42m', ' ---- Solving below ---- ', '\x1b[0m', '\n')
-        this.applySolvers(test)
 
-        console.groupEnd();
+        this.applySolvers(test).finally(res => {
+
+            console.groupEnd();
+
+            console.groupEnd();
+            console.log('\x1b[0m')
+            console.log('--------------------------------\n')
 
 
-        console.groupEnd();
-        console.log('\x1b[0m')
-        console.log('--------------------------------\n')
+            if (i + 1 >= this.testcases.length) process.exit(1);
+            rl.question('///', (userInput) => {
+                rl.close;
+                return this.solve(i + 1);
+            });
 
+        })
 
-        if (i + 1 >= this.testcases.length) process.exit(1);
-        rl.question('///', (userInput) => {
-            rl.close;
-            return this.solve(i + 1);
-        });
     }
 
-    applySolvers(test) {
+    async applySolvers(test) {
         for (let solver of this.solvers) {
 
             let result;
@@ -113,6 +116,8 @@ class Inout {
             try {
                 result = this.map_input(input, solver);
                 result = this.result_Converter(result ?? input, test);
+                if(result instanceof Promise)
+                    result = await result;
             } catch (exp) {
                 if (!(exp instanceof CustomError))
                     console.log(exp)

@@ -16,7 +16,7 @@ const Helper = require("../Helper");
 
 */
 
-Inout.output_stringConverter = arg => `Indexes: ${arg[0]} \nElements: ${arg[1]} \nLength: ${arg[2]}`
+Inout.output_stringConverter = arg => `Indexes: ${arg[0]} \nElements: ${arg[1]} \nLength: ${arg[2]}\n`
 Inout.result_stringConverter = Inout.output_stringConverter;
 
 Inout.push('&AR 2,1,2,3,3,1,3,5', '&AR 3,6|1,3|4');
