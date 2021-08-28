@@ -44,6 +44,8 @@ class Inout {
 
     solve(i = 0) {
 
+        if(this.testcases.length === 0) return;
+
         this.input_stringConverter = this.input_stringConverter.bind(this.env);
         this.output_stringConverter = this.output_stringConverter.bind(this.env);
         this.result_stringConverter = this.result_stringConverter.bind(this.env);

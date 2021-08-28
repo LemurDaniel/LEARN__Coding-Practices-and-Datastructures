@@ -131,7 +131,8 @@ Clear-Host
 # node ./dailyCodingProblem/295-[Medium].js    # Calculate kth row of pascals triangle
 # node ./dailyCodingProblem/296-[Hard].js      # Generate height balanced tree from a sorted array.
 # node ./dailyCodingProblem/298-[Easy].js      # Find longest sequence of two elements.
-node ./dailyCodingProblem/300-[Easy].js      # Find top candidates out of votestream.
+# node ./dailyCodingProblem/300-[Easy].js      # Find top candidates out of votestream.
+node ./dailyCodingProblem/301-[Medium].js      # Implement a Bloom Filter.
 
 ##############################
 ###### Coding Questions ######
