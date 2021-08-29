@@ -132,7 +132,8 @@ Clear-Host
 # node ./dailyCodingProblem/296-[Hard].js      # Generate height balanced tree from a sorted array.
 # node ./dailyCodingProblem/298-[Easy].js      # Find longest sequence of two elements.
 # node ./dailyCodingProblem/300-[Easy].js      # Find top candidates out of votestream.
-node ./dailyCodingProblem/301-[Medium].js      # Implement a Bloom Filter.
+# node ./dailyCodingProblem/301-[Medium].js    # Implement a Bloom Filter.
+node ./dailyCodingProblem/302-[Medium].js      # Count number of regions in a matrix.
 
 ##############################
 ###### Coding Questions ######
