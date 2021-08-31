@@ -133,7 +133,8 @@ Clear-Host
 # node ./dailyCodingProblem/298-[Easy].js      # Find longest sequence of two elements.
 # node ./dailyCodingProblem/300-[Easy].js      # Find top candidates out of votestream.
 # node ./dailyCodingProblem/301-[Medium].js    # Implement a Bloom Filter.
-node ./dailyCodingProblem/302-[Medium].js      # Count number of regions in a matrix.
+# node ./dailyCodingProblem/302-[Medium].js    # Count number of regions in a matrix.
+node ./dailyCodingProblem/303-[Easy].js      # Calculate the angle between the hours and minutes of a clock.
 
 ##############################
 ###### Coding Questions ######
