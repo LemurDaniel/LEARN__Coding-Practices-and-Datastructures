@@ -81,6 +81,7 @@ Clear-Host
 ###### Daily Coding Problem ######
 ##################################
 
+node ./dailyCodingProblem/001-[Easy].js      # Two Sum.
 # node ./dailyCodingProblem/117-[Easy].js      # Find level with minimum sum
 # node ./dailyCodingProblem/127-[Easy].js      # Add two numbers in linked list format
 # node ./dailyCodingProblem/129-[Medium].js    # Find square root of number
@@ -134,7 +135,7 @@ Clear-Host
 # node ./dailyCodingProblem/300-[Easy].js      # Find top candidates out of votestream.
 # node ./dailyCodingProblem/301-[Medium].js    # Implement a Bloom Filter.
 # node ./dailyCodingProblem/302-[Medium].js    # Count number of regions in a matrix.
-node ./dailyCodingProblem/303-[Easy].js      # Calculate the angle between the hours and minutes of a clock.
+# node ./dailyCodingProblem/303-[Easy].js      # Calculate the angle between the hours and minutes of a clock.
 
 ##############################
 ###### Coding Questions ######

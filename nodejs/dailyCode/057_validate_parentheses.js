@@ -49,7 +49,7 @@ Inout.push('()(){(())', false);
 Inout.push('', true);
 Inout.push('([{}])()', true);
 
-Inout.solvers = [validateParentheses, validateParentheses2];
+Inout.solvers = [validateParentheses, validateParentheses2, validateParentheses3];
 Inout.solve(0);
 
 /*
@@ -98,6 +98,30 @@ function validateParentheses2(str, brackets = '(),[],{}') {
 
     }
 
+
+    return stack.length === 0;
+}
+
+
+function validateParentheses3(str, brackets = '(),[],{}') {
+
+    const stack = [];
+    const dict = {};
+
+    for (const str of brackets.split(','))
+        dict[str[0]] = str[1];
+
+
+    for (const c of str) {
+
+        if (c in dict)
+            stack.push(c);
+        else {
+            if (stack.length === 0) return false
+            if (dict[stack.pop()] !== c) return false;
+        }
+
+    }
 
     return stack.length === 0;
 }
