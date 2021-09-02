@@ -57,3 +57,30 @@ function findNumbersAddingUptoTarget_twoLoops(list, k) {
     return [-1, -1]
 }
 
+
+
+/*
+
+    Approach with a dictionary:
+        Iterate through the whole array once. For each element the term "a + b = k" can be rearanged to find the needed 'b' value 'k - a = b'.
+        So we can calculate for each element which other element needs to be present to complete the term and save that in the dictionary: dict[a] = b;
+        Furthermore can we check on each subsequent value, whether it is in the dictionary and needed by one of the previously calculated terms.
+
+        time complexity:   O(n)  --- linear    --- The whole list is iterated once. (Access to dictionary is O(1))
+        space complexity:  O(n)  --- linear    --- In the worst case calculations for all elements will need to be save in the dictionary.
+*/
+function findNumbersAddingUptoTarget_dictionary(list, k) {
+
+    const dict = {};
+    for (const a of list) {
+
+        // Check if value is in dictionary.
+        if (a in dict) return [dict[a], a];
+
+        // Save the caluclated value and its acutal value in the dict;
+        dict[k - a] = a;
+
+    }
+
+    return [-1, -1]
+}
