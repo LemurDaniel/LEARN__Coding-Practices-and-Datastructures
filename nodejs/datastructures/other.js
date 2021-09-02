@@ -92,9 +92,19 @@ class Vector {
         return new Vector(x, y);
     }
 
+    static sub(vec, vec2) {
+        return new Vector(vec.x, vec.y).sub(vec2);
+    }
+
     add(vec) {
         this.x += vec.x;
         this.y += vec.y;
+        return this;
+    }
+
+    sub(vec) {
+        this.x -= vec.x;
+        this.y -= vec.y;
         return this;
     }
 
@@ -122,7 +132,7 @@ class Boundary {
 
         const cross = dxc * dyl - dyc * dxl;
 
-        if(cross !== 0) return false;
+        if (cross !== 0) return false;
 
         return point.x <= Math.max(p1.x, p2.x) &&
             point.x >= Math.min(p1.x, p2.x) &&
@@ -130,6 +140,29 @@ class Boundary {
             point.y >= Math.min(p1.y, p2.y);
     }
 
+    isPointOnBoundaryCustom(point) {
+
+        const [p1, p2] = [this.p1, this.p2];
+
+        // Special check for vertical lines
+        if (p1.x === p2.x) {
+            return point.x === p1.x &&
+                point.y <= Math.max(p1.y, p2.y) &&
+                point.y >= Math.min(p1.y, p2.y)
+        }
+
+        // To limit the input for the linear function to the x range from both points.
+        if (point.x > Math.max(p1.x, p2.x) ||
+            point.x < Math.min(p1.x, p2.x)
+        ) return false;
+
+        // Calculates linear function for linear boundary f(x) = mx + t;
+        const diff = Vector.sub(p1, p2);
+        const m = diff.y / diff.x;
+        const f = (x) => m * (x - this.p1.x) + this.p1.y;
+
+        return f(point.x) === point.y;
+    }
 }
 
 

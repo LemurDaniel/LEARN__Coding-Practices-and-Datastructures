@@ -84,7 +84,7 @@ function isPointInShape( shape, point) {
         const bound = new Boundary(prev.x, prev.y, curr.x, curr.y);
  
         // Check if point is directly on boundary.
-        if(bound.isPointOnBoundary(point)) return 0;
+        if(bound.isPointOnBoundaryCustom(point)) return 0;
         else ray.cast(bound);
     }
 
