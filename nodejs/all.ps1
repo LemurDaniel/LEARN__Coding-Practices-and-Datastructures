@@ -82,7 +82,7 @@ Clear-Host
 ##################################
 
 # node ./dailyCodingProblem/001-[Easy].js      # Two Sum.
-node ./dailyCodingProblem/002-[Hard].js      # Multiply numbers in array, so that every number is the product of all numbers except itself.
+# node ./dailyCodingProblem/002-[Hard].js      # Multiply numbers in array, so that every number is the product of all numbers except itself.
 # node ./dailyCodingProblem/117-[Easy].js      # Find level with minimum sum
 # node ./dailyCodingProblem/127-[Easy].js      # Add two numbers in linked list format
 # node ./dailyCodingProblem/129-[Medium].js    # Find square root of number
@@ -137,6 +137,7 @@ node ./dailyCodingProblem/002-[Hard].js      # Multiply numbers in array, so tha
 # node ./dailyCodingProblem/301-[Medium].js    # Implement a Bloom Filter.
 # node ./dailyCodingProblem/302-[Medium].js    # Count number of regions in a matrix.
 # node ./dailyCodingProblem/303-[Easy].js      # Calculate the angle between the hours and minutes of a clock.
+node ./dailyCodingProblem/307-[Easy].js      # Find floor and ceil of a binary search tree.
 
 ##############################
 ###### Coding Questions ######

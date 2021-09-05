@@ -26,7 +26,7 @@ class Node extends ID_Object {
 
     isHeightBalanced(height = { val: 0 }) {
 
-         // Wrapper Objects for passing height by reference.
+        // Wrapper Objects for passing height by reference.
         const hLeft = { val: 0 };
         const hRight = { val: 0 };
 
@@ -34,7 +34,7 @@ class Node extends ID_Object {
         const isRightBalanced = this.right !== null ? this.right.isHeightBalanced(hRight) : true;
 
         const isBalanced = Math.abs(hLeft.val - hRight.val) <= 1;
-        
+
         height.val = Math.max(hLeft.val, hRight.val) + 1;
 
         return isLeftBalanced && isRightBalanced && isBalanced;
@@ -59,14 +59,14 @@ class BinaryTree extends ID_Object {
     }
 
     get isHeightBalanced() {
-        if(this.root === null) return true;
+        if (this.root === null) return true;
         else return this.root.isHeightBalanced();
     }
 
     constructor(val, print_null) {
         super();
-        this.root = val == null ? null : new Node(val);
         this.print_null = print_null ?? true;
+        this.root = val === null || val === undefined ? null : new Node(val);
     }
 
     print() {
@@ -101,6 +101,7 @@ BinaryTree.GenerateIntPreorderFromString = function (str, splitter = ',', rem = 
     const flag_null = str[0] == '%';
     const arr = (flag_null ? str.substr(1) : str).split(splitter);
 
+    if(arr[0].includes(rem)) return new BinaryTree();
 
     const tree = new BinaryTree(0, !flag_null);
     const nodes = [];
