@@ -89,6 +89,7 @@ Clear-Host
 # node ./dailyCodingProblem/135-[Easy].js      # Find path with minimum sum from root to leaf
 # node ./dailyCodingProblem/143-[Medium].js    # Partition list into three parts
 # node ./dailyCodingProblem/145-[Easy].js      # Swap every two nodes in a linked list
+node ./dailyCodingProblem/152-[Medium].js    # Generate output with weighted probalilites
 # node ./dailyCodingProblem/157-[Easy].js      # Is any permutation a palindrom
 # node ./dailyCodingProblem/158-[Medium].js    # Ways to to reach the bottom of a matrix'
 # node ./dailyCodingProblem/159-[Easy].js      # Find first recurring Character
@@ -137,7 +138,7 @@ Clear-Host
 # node ./dailyCodingProblem/301-[Medium].js    # Implement a Bloom Filter.
 # node ./dailyCodingProblem/302-[Medium].js    # Count number of regions in a matrix.
 # node ./dailyCodingProblem/303-[Easy].js      # Calculate the angle between the hours and minutes of a clock.
-node ./dailyCodingProblem/307-[Easy].js      # Find floor and ceil of a binary search tree.
+# node ./dailyCodingProblem/307-[Easy].js      # Find floor and ceil of a binary search tree.
 
 ##############################
 ###### Coding Questions ######

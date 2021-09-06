@@ -227,6 +227,8 @@ Helper.string_toIntArray = function (str, split = ' ') {
 
             if (val.substr(0, 2) === '0b')
                 num = parseInt(val.substr(2), 2);
+            else if(val.includes('.'))
+                num = parseFloat(val);
             else
                 num = parseInt(val, 10);
 
