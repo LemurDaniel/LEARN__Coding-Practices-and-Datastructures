@@ -83,13 +83,15 @@ Clear-Host
 
 # node ./dailyCodingProblem/001-[Easy].js      # Two Sum.
 # node ./dailyCodingProblem/002-[Hard].js      # Multiply numbers in array, so that every number is the product of all numbers except itself.
+# node ./dailyCodingProblem/003-[Medium].js    # Serialize and deserialize binary tree.
+node ./dailyCodingProblem/004-[Hard].js    # Find first missing positive in unsorted array.
 # node ./dailyCodingProblem/117-[Easy].js      # Find level with minimum sum
 # node ./dailyCodingProblem/127-[Easy].js      # Add two numbers in linked list format
 # node ./dailyCodingProblem/129-[Medium].js    # Find square root of number
 # node ./dailyCodingProblem/135-[Easy].js      # Find path with minimum sum from root to leaf
 # node ./dailyCodingProblem/143-[Medium].js    # Partition list into three parts
 # node ./dailyCodingProblem/145-[Easy].js      # Swap every two nodes in a linked list
-node ./dailyCodingProblem/152-[Medium].js    # Generate output with weighted probalilites
+# node ./dailyCodingProblem/152-[Medium].js    # Generate output with weighted probalilites
 # node ./dailyCodingProblem/157-[Easy].js      # Is any permutation a palindrom
 # node ./dailyCodingProblem/158-[Medium].js    # Ways to to reach the bottom of a matrix'
 # node ./dailyCodingProblem/159-[Easy].js      # Find first recurring Character
