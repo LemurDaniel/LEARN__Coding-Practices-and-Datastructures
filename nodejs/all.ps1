@@ -84,7 +84,8 @@ Clear-Host
 # node ./dailyCodingProblem/001-[Easy].js      # Two Sum.
 # node ./dailyCodingProblem/002-[Hard].js      # Multiply numbers in array, so that every number is the product of all numbers except itself.
 # node ./dailyCodingProblem/003-[Medium].js    # Serialize and deserialize binary tree.
-node ./dailyCodingProblem/004-[Hard].js    # Find first missing positive in unsorted array.
+# node ./dailyCodingProblem/004-[Hard].js      # Find first missing positive in unsorted array
+node ./dailyCodingProblem/005-[Medium].js    # Implement car and cdr.
 # node ./dailyCodingProblem/117-[Easy].js      # Find level with minimum sum
 # node ./dailyCodingProblem/127-[Easy].js      # Add two numbers in linked list format
 # node ./dailyCodingProblem/129-[Medium].js    # Find square root of number
