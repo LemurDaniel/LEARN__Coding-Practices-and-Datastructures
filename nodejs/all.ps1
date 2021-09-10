@@ -75,7 +75,7 @@ Clear-Host
 # node ./dailyCode/064_flatten_binary_tree.js
 # node ./dailyCode/065_utf8_encoder.js
 # node ./dailyCode/066_coursePrerequisites.js
-
+node ./dailyCode/067_fractionToDecimal.js
 
 ##################################
 ###### Daily Coding Problem ######
@@ -85,7 +85,7 @@ Clear-Host
 # node ./dailyCodingProblem/002-[Hard].js      # Multiply numbers in array, so that every number is the product of all numbers except itself.
 # node ./dailyCodingProblem/003-[Medium].js    # Serialize and deserialize binary tree.
 # node ./dailyCodingProblem/004-[Hard].js      # Find first missing positive in unsorted array
-node ./dailyCodingProblem/005-[Medium].js    # Implement car and cdr.
+# node ./dailyCodingProblem/005-[Medium].js    # Implement car and cdr.
 # node ./dailyCodingProblem/117-[Easy].js      # Find level with minimum sum
 # node ./dailyCodingProblem/127-[Easy].js      # Add two numbers in linked list format
 # node ./dailyCodingProblem/129-[Medium].js    # Find square root of number
