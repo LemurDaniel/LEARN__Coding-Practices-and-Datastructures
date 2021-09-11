@@ -75,7 +75,7 @@ Clear-Host
 # node ./dailyCode/064_flatten_binary_tree.js
 # node ./dailyCode/065_utf8_encoder.js
 # node ./dailyCode/066_coursePrerequisites.js
-node ./dailyCode/067_fractionToDecimal.js
+# node ./dailyCode/067_fractionToDecimal.js
 
 ##################################
 ###### Daily Coding Problem ######
@@ -142,6 +142,8 @@ node ./dailyCode/067_fractionToDecimal.js
 # node ./dailyCodingProblem/302-[Medium].js    # Count number of regions in a matrix.
 # node ./dailyCodingProblem/303-[Easy].js      # Calculate the angle between the hours and minutes of a clock.
 # node ./dailyCodingProblem/307-[Easy].js      # Find floor and ceil of a binary search tree.
+node ./dailyCodingProblem/315-[Easy].js      # Check if matrix is a Toeplitz matrix.
+
 
 ##############################
 ###### Coding Questions ######
