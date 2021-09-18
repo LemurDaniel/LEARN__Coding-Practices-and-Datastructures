@@ -86,6 +86,7 @@ Clear-Host
 # node ./dailyCodingProblem/003-[Medium].js    # Serialize and deserialize binary tree.
 # node ./dailyCodingProblem/004-[Hard].js      # Find first missing positive in unsorted array
 # node ./dailyCodingProblem/005-[Medium].js    # Implement car and cdr.
+node ./dailyCodingProblem/008-[Easy].js     # Count number of unival subtrees.
 # node ./dailyCodingProblem/117-[Easy].js      # Find level with minimum sum
 # node ./dailyCodingProblem/127-[Easy].js      # Add two numbers in linked list format
 # node ./dailyCodingProblem/129-[Medium].js    # Find square root of number
@@ -142,7 +143,7 @@ Clear-Host
 # node ./dailyCodingProblem/302-[Medium].js    # Count number of regions in a matrix.
 # node ./dailyCodingProblem/303-[Easy].js      # Calculate the angle between the hours and minutes of a clock.
 # node ./dailyCodingProblem/307-[Easy].js      # Find floor and ceil of a binary search tree.
-node ./dailyCodingProblem/315-[Easy].js      # Check if matrix is a Toeplitz matrix.
+# node ./dailyCodingProblem/315-[Easy].js      # Check if matrix is a Toeplitz matrix.
 
 
 ##############################
