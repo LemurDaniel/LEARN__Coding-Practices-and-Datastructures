@@ -221,13 +221,13 @@ Helper.string_toIntArray = function (str, split = ' ') {
         const array = sub_strs[i].split(split);
 
         // Loop through the array and convert its contents to numbers.
-        for (let i=0; i<array.length; i++) {
+        for (let i = 0; i < array.length; i++) {
             let val = array[i].trim();
             let num = Number.NaN;
 
             if (val.substr(0, 2) === '0b')
                 num = parseInt(val.substr(2), 2);
-            else if(val.includes('.'))
+            else if (val.includes('.'))
                 num = parseFloat(val);
             else
                 num = parseInt(val, 10);
@@ -639,7 +639,6 @@ Helper.MergeSort.mergeArray = function (arr, lower, middle, upper, sortingFuncti
 Helper.CountingSort = {}
 Helper.CountingSort.Find_Bounds = function (list) {
 
-
     let max;
     let min;
 
@@ -649,42 +648,41 @@ Helper.CountingSort.Find_Bounds = function (list) {
     }
 
     return [min, max];
-
 }
 
 Helper.CountingSort.sort = function (list) {
 
+    // Find bounds.
     const bounds = Helper.CountingSort.Find_Bounds(list);
-
     const min = bounds[0];
     const max = bounds[1];
 
+    // Calculate offset and array size.
     const offset = -min;
     const size = max - min + 1;
 
-
+    // Create index array and fill with value counts.
     const index_array = new Array(size).fill(0);
 
     for (let val of list)
         index_array[val + offset]++;
 
-
-    let node;
-    let pos = 0;
-    if (list instanceof LinkedList) node = list.head;
-
-    for (let i = 0; i < index_array.length; i++) {
-        while (index_array[i]--) {
-            if (node) {
+    // Sort the list with the index array.
+    if (list instanceof LinkedList) {
+        for (let i = 0, node = list.head; i < index_array.length; i++) {
+            while (index_array[i]--) {
                 node.val = i - offset;
                 node = node.next;
             }
-            else list[pos++] = i - offset;
-
         }
     }
-
+    else if (Array.isArray(list)) {
+        for (let i = 0, pos = 0; i < index_array.length; i++) {
+            while (index_array[i]--) {
+                list[pos++] = i - offset;
+            }
+        }
+    }
 }
-
 
 module.exports = Helper;
