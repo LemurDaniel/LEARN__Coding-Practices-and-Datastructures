@@ -1,7 +1,4 @@
-Advent of Code[About][Events][Shop][Settings][Log Out]Daniel Landau 2*
-       λy.2021[Calendar][AoC++][Sponsors][Leaderboard][Stats]
-Our sponsors help make Advent of Code possible:
-Retool - Build internal apps remarkably fast. Drag and drop a form together, and have it POST back to your API in minutes. Write JavaScript anywhere to customize. Deploy instantly with access controls and audit logs.
+
 --- Day 1: Sonar Sweep ---
 You're minding your own business on a ship at sea when the overboard alarm goes off! You rush to see if you can help. Apparently, one of the Elves tripped and accidentally sent the sleigh keys flying into the ocean!
 
