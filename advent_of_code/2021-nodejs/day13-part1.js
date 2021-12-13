@@ -64,17 +64,4 @@ for (let i = 0; i < 1; i++) {
 }
 
 
-
-
-for (let y = 0; y < dimensions[1]; y++) {
-
-  let line = '';
-  for (let x = 0; x < dimensions[0]; x++) {
-    const point = [x, y];
-    if (point in paper) line += '#';
-    else line += '.'
-  }
-  console.log(line)
-}
-
 console.log('Number of visible Dots after first fold: ' + Object.keys(paper).length);

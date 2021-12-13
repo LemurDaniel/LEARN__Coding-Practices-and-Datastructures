@@ -24,6 +24,7 @@ for (const point of POINTS) {
 
 for (let i = 0; i < INTSTRUCTIONS.length; i++) {
 
+  console.log('   Doing Fold: ' + (i + 1))
   const [axis, value] = INTSTRUCTIONS[i];
 
   if (axis === 'x') {
