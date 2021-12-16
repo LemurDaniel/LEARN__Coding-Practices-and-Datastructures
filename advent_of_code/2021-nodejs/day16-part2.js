@@ -100,7 +100,6 @@ function interpretAsOperator(reader) {
   let packetLengthBitsCount = LengthBit === '1' ? 11 : 15;
   let packetsLength = reader.read(packetLengthBitsCount);
 
-  console.log(packetsLength)
   if (packetsLength === null || packetsLength.length !== packetLengthBitsCount)
     throw new Error('Error while parsing sub packet length of operator.')
 
