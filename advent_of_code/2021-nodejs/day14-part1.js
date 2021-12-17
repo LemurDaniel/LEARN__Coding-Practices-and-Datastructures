@@ -87,5 +87,4 @@ while (node !== null) {
 
 console.log(commonElements)
 let sorted = Object.values(commonElements).sort((a, b) => b - a)
-console.log(sorted)
-console.log('   ' + (sorted[0] - sorted.pop()))
+console.log('\n   Difference between highest and lowest atom count: ' + (sorted[0] - sorted.pop()) + '\n')

@@ -42,20 +42,7 @@ while (toBeVisited.length > 0) {
   if (++counter % 1000 === 0)
     console.log('Visited ' + counter + ' Nodes of ' + nodeCount);
 
-  // Find smallest nonVisited
-  let index = 0;
-  let pos = toBeVisited[0];
-  for (let i = 1; i < toBeVisited.length; i++) {
-    const nextPos = toBeVisited[i];
-    if (table[nextPos].cost < table[pos].cost) {
-      pos = nextPos;
-      index = i;
-    }
-  }
-  // console.log(pos, table[pos], '####', toBeVisited.map( v => table[v]))
-  toBeVisited.splice(index, 1);
-
-
+  const pos = toBeVisited.pop()
   const [row, col] = pos;
   for (const [y, x] of [[0, 1], [1, 0], [-1, 0], [0, -1]]) {
     const rowNew = row + y;
@@ -76,6 +63,8 @@ while (toBeVisited.length > 0) {
     }
   }
 
+  toBeVisited.sort( (a,b) => table[b].cost - table[a].cost)
+  //console.log(toBeVisited.map( v => table[v].cost))
 }
 
 
