@@ -14,8 +14,8 @@ const PIXEL = {
   LIGHT: '#'
 }
 const BOUNDS = {
-  minY: 0, maxY: 0,
-  minX: 0, maxX: 0,
+  minY: 0, maxY: input[1].length - 1,
+  minX: 0, maxX: input[1][0].length - 1,
   INFINITE_GRID: PIXEL.DARK,
 };
 
@@ -44,11 +44,6 @@ for (let i = 0; i < input[1].length; i++) {
       IMAGE[pos] = 0b01;
   }
 }
-
-// Set bounds of image.
-BOUNDS.maxY = input[1].length - 1;
-BOUNDS.maxX = input[1][0].length - 1;
-
 
 // Determine wether pixel at position is light or dark.
 function enhancePixelAtPos(x, y) {

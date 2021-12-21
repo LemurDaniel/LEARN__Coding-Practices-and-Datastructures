@@ -14,13 +14,13 @@ const CACHE = {};
 
 function splitUniverse(pl1Pos, pl2Pos, turn = 0, pl1Score = 0, pl2Score = 0) {
 
-  if (pl1Score >= MINIMUM_SCORE) return [1, 0, 1];
-  if (pl2Score >= MINIMUM_SCORE) return [0, 1, 1];
+  if (pl1Score >= MINIMUM_SCORE) return [1, 0];
+  if (pl2Score >= MINIMUM_SCORE) return [0, 1];
 
   const cacheKey = [pl1Pos, pl2Pos, turn, pl1Score, pl2Score].join('-');
   if (cacheKey in CACHE && USE_CACHE) return CACHE[cacheKey];
 
-  let result = [0, 0, 0];
+  let result = [0, 0];
   for (let i = 0; i < 27; i++) {
 
     const roll1 = i % 3 + 1;
