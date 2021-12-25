@@ -79,10 +79,10 @@ function solve() {
 
     delete BLOCKS[i - 1];
     console.log('   ', 'Processed Digit Block ' + i, '   ', ' States: ' + Object.keys(BLOCKS[i]).length);
-    console.log();
-    console.log(Object.entries(BLOCKS[14]))
-    console.log(BLOCKS[14][0])
   }
+  console.log();
+  console.log(Object.entries(BLOCKS[14]))
+  console.log(BLOCKS[14][0])
 
 }
 
