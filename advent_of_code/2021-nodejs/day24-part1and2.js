@@ -51,6 +51,7 @@ function solve() {
     currentStates = {};
     BLOCKS[i] = currentStates;
 
+    const timeStart = Date.now();
     for (const key of Object.keys(prevStates)) {
 
       const zState = Number(key);
@@ -78,7 +79,13 @@ function solve() {
     }
 
     delete BLOCKS[i - 1];
-    console.log('   ', 'Processed Digit Block ' + i, '   ', ' States: ' + Object.keys(BLOCKS[i]).length);
+    const timestamp = Date.now() - timeStart;
+    const seconds = timestamp / 1000 % 60
+    const minutes = Math.floor(timestamp / 1000 / 60);
+    console.log(
+      '   ', 'Processed Digit Block ', i,
+      '   ', ' States: ', Object.keys(BLOCKS[i]).length,
+      '   - in', minutes, ' minutes ', seconds, ' seconds');
   }
   console.log();
   console.log(Object.entries(BLOCKS[14]))
