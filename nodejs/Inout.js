@@ -1,10 +1,6 @@
 const { CustomError } = require('./Helper');
 const Helper = require('./Helper');
-
-const rl = require('readline').createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+const rl = require('readline');
 
 
 class Inout {
@@ -42,26 +38,77 @@ class Inout {
         else this.testcases.push(arg);
     }
 
-    solve(i = 0) {
-
-        if(this.testcases.length === 0) return;
+    async solve() {
 
         this.input_stringConverter = this.input_stringConverter.bind(this.env);
         this.output_stringConverter = this.output_stringConverter.bind(this.env);
         this.result_stringConverter = this.result_stringConverter.bind(this.env);
 
+        console.log(' ===> ' + this.description + ' <=== ');
 
-        if (i == 0) console.log(' ===> ' + this.description + ' <=== ');
+        for (let i = 0; i < this.testcases.length; i++) {
 
-        const test = this.testcases[i];
-        test.input = this.input_Converter(test.input, test);
-        test.output = this.output_Converter(test.output, test);
+            const test = this.testcases[i];
+            test.input = this.input_Converter(test.input, test);
+            test.output = this.output_Converter(test.output, test);
 
+            const results = await this.applySolvers(test);
+            this.printTestcase(i, test, results)
+
+            if (i < this.testcases.length - 1)
+                await this.wait();
+            else
+                process.exit(1);
+        }
+    }
+
+
+    async applySolvers(test) {
+
+        let resultArray = [];
+        for (let solver of this.solvers) {
+
+            let result;
+            let exception;
+            const input = this.input_Copy(test.input);
+
+            try {
+                result = this.map_input(input, solver);
+                result = this.result_Converter(result ?? input, test);
+                if (result instanceof Promise)
+                    result = await result;
+
+            } catch (exp) {
+                if (!(exp instanceof CustomError))
+                    console.log(exp)
+                exception = { [exp.name]: exp };
+            }
+
+            resultArray.push({ solver, result, exception });
+        };
+
+        return resultArray;
+    }
+
+    wait() {
+        const userInterface = rl.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        });
+
+        return new Promise((resolve, reject) => {
+            userInterface.question('///', userInput => {
+                userInterface.close();
+                resolve(userInput);
+            })
+        })
+    }
+
+    printTestcase(i, test, results) {
 
         console.log('\n--------------------------------\n')
         console.group();
         console.log('\x1b[42m', 'Testcase ' + (i + 1) + ':', '\x1b[0m');
-
 
         console.log()
         console.group();
@@ -89,73 +136,49 @@ class Inout {
 
         console.log('\x1b[42m', ' ---- Solving below ---- ', '\x1b[0m', '\n')
 
-        this.applySolvers(test).finally(res => {
-
-            console.groupEnd();
-
-            console.groupEnd();
-            console.log('\x1b[0m')
-            console.log('--------------------------------\n')
-
-
-            if (i + 1 >= this.testcases.length) process.exit(1);
-            rl.question('///', (userInput) => {
-                rl.close;
-                return this.solve(i + 1);
-            });
-
-        })
-
-    }
-
-    async applySolvers(test) {
-        for (let solver of this.solvers) {
-
-            let result;
-            let exception;
-            const input = this.input_Copy(test.input);
-
-            try {
-                result = this.map_input(input, solver);
-                result = this.result_Converter(result ?? input, test);
-                if(result instanceof Promise)
-                    result = await result;
-            } catch (exp) {
-                if (!(exp instanceof CustomError))
-                    console.log(exp)
-                exception = { [exp.name]: exp };
-            }
-
-            const isOutputFunction = typeof test.output === 'function';
-            const euqalsFunc = isOutputFunction ? test.output : this.result_Equals;
-            const euqalsParam = isOutputFunction ? test : test.output
-
-            const success = euqalsFunc(euqalsParam, exception ?? result);
-            const hasOutputValidator = Inout.None !== test.output;
-
-            let color = '\x1b[32m';
-            if (!hasOutputValidator) color = '\x1b[35m';
-            else if (exception) color = '\x1b[33m';
-            else if (success) color = '\x1b[32m';
-            else color = '\x1b[31m';
-
-            let successState = 'Pending';
-            if (!hasOutputValidator) successState = 'Pending';
-            else if (success) successState = 'Success';
-            else successState = 'Failure';
-
-
-            console.log(color, `Solver: ${solver.name}  ---  ${successState}`);
-
-            console.group();
-            console.log(exception ? 'Exception: ' : 'Result: ');
-            console.group();
-            console.log(this.result_stringConverter(exception ?? result));
-            console.log();
-            console.groupEnd();
-            console.groupEnd();
+        for (const { solver, exception, result } of results) {
+            this.printSolver(test, solver, exception, result);
         }
+
+        console.groupEnd();
+        console.groupEnd();
+        console.log('\x1b[0m')
+        console.log('--------------------------------\n')
     }
+
+    printSolver(test, solver, exception, result) {
+
+        const isOutputFunction = typeof test.output === 'function';
+        const euqalsFunc = isOutputFunction ? test.output : this.result_Equals;
+        const euqalsParam = isOutputFunction ? test : test.output
+
+        const success = euqalsFunc(euqalsParam, exception ?? result);
+        const hasOutputValidator = Inout.None !== test.output;
+
+        let color = '\x1b[32m';
+        if (!hasOutputValidator) color = '\x1b[35m';
+        else if (exception) color = '\x1b[33m';
+        else if (success) color = '\x1b[32m';
+        else color = '\x1b[31m';
+
+        let successState = 'Pending';
+        if (!hasOutputValidator) successState = 'Pending';
+        else if (success) successState = 'Success';
+        else successState = 'Failure';
+
+
+        console.log(color, `Solver: ${solver.name}  ---  ${successState}`);
+
+        console.group();
+        console.log(exception ? 'Exception: ' : 'Result: ');
+        console.group();
+        console.log(this.result_stringConverter(exception ?? result));
+        console.log();
+        console.groupEnd();
+        console.groupEnd();
+    }
+
+
 }
 
 module.exports = Inout;

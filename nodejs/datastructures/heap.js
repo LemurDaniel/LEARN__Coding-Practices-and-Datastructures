@@ -102,8 +102,8 @@ class BaseHeap {
         return payload;
     }
 
-    add(payload, priority) {
-        const insert = new BaseHeapPayload(payload, priority);
+    add(payload, priority = null) {
+        const insert = new BaseHeapPayload(payload, priority ?? payload);
         this.heap.push(insert);
         this.heapifyUp();
     }
