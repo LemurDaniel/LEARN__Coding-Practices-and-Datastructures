@@ -94,7 +94,7 @@ class BaseHeap {
         const payload = this.peek();
         const last = this.heap.pop();
 
-        if(this.size > 0) {
+        if (this.size > 0) {
             this.heap[0] = last;
             this.heapifyDown();
         }
@@ -127,11 +127,11 @@ class MinHeap extends BaseHeap {
         const heap = this.heap;
         let idx = super.size - 1;
         while (idx > 0) {
-            const parentIdx = super.getParentIndex(idx);
+            const parentIdx = this.getParentIndex(idx);
             if (this.comparePriority(idx, parentIdx) >= 0)
                 return;
 
-            super.swap(parentIdx, idx);
+            this.swap(parentIdx, idx);
             idx = parentIdx;
         }
     }
@@ -168,29 +168,29 @@ class MaxHeap extends BaseHeap {
         const heap = this.heap;
         let idx = super.size - 1;
         while (idx > 0) {
-            const parentIdx = super.getParentIndex(idx);
+            const parentIdx = this.getParentIndex(idx);
             if (this.comparePriority(idx, parentIdx) <= 0)
                 return;
 
-            super.swap(parentIdx, idx);
+            this.swap(parentIdx, idx);
             idx = parentIdx;
         }
     }
 
     heapifyDown() {
 
-        const heap = this.heap;
         let idx = 0;
-        while (super.hasleftChild(idx)) {
-            const idxLeft = super.getleftChildIndex(idx);
-            const idxRight = super.getRightChildIndex(idx);
+
+        while (this.hasleftChild(idx)) {
+            const idxLeft = this.getleftChildIndex(idx);
+            const idxRight = this.getRightChildIndex(idx);
             let biggerIndex = idxLeft;
 
             if (idxRight !== -1 && this.comparePriority(idxRight, idxLeft) > 0)
                 biggerIndex = idxRight
 
-                if (this.comparePriority(idx, smallerIndex) < 0)
-                super.swap(idx, biggerIndex);
+            if (this.comparePriority(idx, biggerIndex) < 0)
+                this.swap(idx, biggerIndex);
             else
                 return;
 
