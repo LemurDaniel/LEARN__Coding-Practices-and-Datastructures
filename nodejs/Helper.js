@@ -411,6 +411,7 @@ Helper.default_Mapper = function (arg, solver) {
         if (arg instanceof c) return solver(arg);
     }
 
+
     if (Array.isArray(arg) || typeof arg !== 'object') return solver(arg);
 
     const methodHead = solver.toString().split('{')[0];
@@ -421,14 +422,29 @@ Helper.default_Mapper = function (arg, solver) {
         .slice(argStartIndex + 1, argEndIndex).split(',')
         .map(param => param.trim());
 
+
+    // Map values to exact parameter name.
     const keysArg = { ...arg };
-    const mapping = parameters.map(v => {
-        delete keysArg[v];
-        return arg[v];
+    let mapping = parameters.map(v => {
+        const val = keysArg[v];
+        delete keysArg[v]
+        return val;
+    })
+
+    // Map remaining values in order and concat the rest at the end.
+    const keysArr = Object.keys(keysArg);
+    mapping = mapping.map(v => {
+        if (v !== undefined) return v;
+        const val = keysArg[keysArr[0]];
+        delete keysArg[keysArr.shift()]
+        return val;
     })
         .filter(v => v !== undefined)
         .concat(Object.values(keysArg));
 
+    console.log('###########################')
+    console.log(mapping)
+    console.log('###########################')
     return solver(...mapping);
 }
 
