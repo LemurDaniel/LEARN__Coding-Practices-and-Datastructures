@@ -442,9 +442,6 @@ Helper.default_Mapper = function (arg, solver) {
         .filter(v => v !== undefined)
         .concat(Object.values(keysArg));
 
-    console.log('###########################')
-    console.log(mapping)
-    console.log('###########################')
     return solver(...mapping);
 }
 
