@@ -194,6 +194,7 @@
     <Compile Include="Daily Code\zeug\Wrappers.cs" />
     <Compile Include="Daily Coding Problem\2019\Daily Coding Problem 157 - Easy.cs" />
     <Compile Include="Daily Coding Problem\Daily Coding Problem 451- Easy.cs" />
+    <Compile Include="Daily Coding Problem\Daily Coding Problem 470 - Easy.cs" />
     <Compile Include="Daily Coding Problem\Daily Coding Problem 491 - Easy.cs" />
     <Compile Include="Daily Coding Problem\Daily Coding Problem 453 - Easy.cs" />
     <Compile Include="Data Structures and Algos\Design Twitter\TwitterTest.cs" />
