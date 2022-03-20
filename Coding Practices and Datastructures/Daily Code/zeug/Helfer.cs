@@ -271,7 +271,7 @@ namespace Coding_Practices_and_Datastructures.Daily_Code
             if (len) sb.Append("  Länge: " + arr.Length);
             return sb.ToString();
         }
-        public static String _2Dim_Arrayausgabe<V>(V[][] _2dim, bool len = false, string concat = "\n") => _2Dim_Arrayausgabe<V>(_2dim, len, concat);
+        public static String _2Dim_Arrayausgabe<V>(V[][] _2dim, bool len = false, string concat = "\n") => _2Dim_Arrayausgabe<V>("", _2dim, len, concat);
         public static String _2Dim_Arrayausgabe<V>(string s, V[][] _2dim, bool len = false, string concat = "\n")
         {
             if (_2dim == null) return "{ <NULL> }";
