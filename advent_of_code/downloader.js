@@ -158,8 +158,7 @@ async function main() {
     }
     else {
         console.log('Valid Session Token Found!')
-        downloadProblem(2021, 12)
-        //downloadProblemsYear() // No Input = Current Year
+        downloadProblemsYear() // No Input = Current Year
     }
 }
 
