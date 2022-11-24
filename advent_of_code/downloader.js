@@ -48,7 +48,7 @@ async function isSessionValid() {
         await new Promise((resolve, reject) => {
             https.get({
                 ...options,
-                path: '/'
+                path: '/settings'
             }, res => {
                 if (res.statusCode == 200) resolve(res.statusCode)
                 else reject(res.statusCode)
@@ -137,13 +137,13 @@ async function main() {
             userInterface.close()
             fs.writeFileSync('.sessionCookie', userInput, 'utf-8')
             options.headers.Cookie = `session=${userInput}`
-            resolve()
+            main()
         })
-        return main()
     }
-
-    console.log('Valid Session Token Found!')
-    downloadProblemsYear() // No Input = Current Year
+    else {
+        console.log('Valid Session Token Found!')
+        downloadProblemsYear() // No Input = Current Year
+    }
 }
 
 main()
