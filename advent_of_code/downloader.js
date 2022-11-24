@@ -12,6 +12,7 @@ const INSTRUCTIONS_FILE = 'instructions.html'
 const FOLDER_POSTFIX = 'nodejs'
 const INPUT_FILE = 'input.txt'
 
+const solutionFile = (day, part) => `day${day?.toString().padStart(2, '0')}-part${parseInt(part)}.js`
 const instructionFile = day => `day${day?.toString().padStart(2, '0')}-${INSTRUCTIONS_FILE}`
 const inputFileNormal = day => `day${day?.toString().padStart(2, '0')}-${INPUT_FILE}`
 const inputFileTest = day => `day${day?.toString().padStart(2, '0')}-input-test.txt`
@@ -120,6 +121,21 @@ async function downloadProblem(year, day) {
     console.log('Download Day ', day, instructionPath, inputPathNormal)
     fs.writeFileSync(instructionPath, problemHtml.match(/<main>[\S\s]*<\/main>/g)[0], 'utf-8')
     fs.writeFileSync(inputPathNormal, problemInputContent, 'utf-8')
+    fs.writeFileSync(inputPathTest, ' <<< PUT TEST DATA HERE >>> ', 'utf-8')
+
+
+    blueprint = fs.readFileSync('blueprint.js', 'utf-8')
+        .replace('${{INPUT_NORMAL}}', inputFileNormal(day))
+        .replace('${{INPUT_TEST}}', inputFileTest(day))
+
+    solutionPart1 = `${folderPathProblems(year)}/${solutionFile(day, 1)}`
+    solutionPart2 = `${folderPathProblems(year)}/${solutionFile(day, 2)}`
+
+    if (!(fs.existsSync(solutionPart1))) {
+        fs.writeFileSync(solutionPart1, blueprint, 'utf-8')
+    } else if (problemHtml.includes('id="part2"')) {
+        fs.writeFileSync(solutionPart2, blueprint, 'utf-8')
+    }
 
 }
 
@@ -142,7 +158,8 @@ async function main() {
     }
     else {
         console.log('Valid Session Token Found!')
-        downloadProblemsYear() // No Input = Current Year
+        downloadProblem(2021, 12)
+        //downloadProblemsYear() // No Input = Current Year
     }
 }
 
