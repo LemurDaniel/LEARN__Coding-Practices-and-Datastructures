@@ -1,12 +1,21 @@
 
 const process = require('process')
-const https = require('https'); // or 'https' for https:// URLs
+const https = require('https');
 const fs = require('fs');
+const userInterface = require('readline')
+    .createInterface({
+        input: process.stdin,
+        output: process.stdout
+    })
 
-const instructionFile = day => `day${day?.toString().padStart(2, '0')}-instructions.html`
-const inputFileNormal = day => `day${day?.toString().padStart(2, '0')}-input.txt`
+const INSTRUCTIONS_FILE = 'instructions.html'
+const FOLDER_POSTFIX = 'nodejs'
+const INPUT_FILE = 'input.txt'
+
+const instructionFile = day => `day${day?.toString().padStart(2, '0')}-${INSTRUCTIONS_FILE}`
+const inputFileNormal = day => `day${day?.toString().padStart(2, '0')}-${INPUT_FILE}`
 const inputFileTest = day => `day${day?.toString().padStart(2, '0')}-input-test.txt`
-const folderPathProblems = year => `./${year}-nodejs`
+const folderPathProblems = year => `./${year}-${FOLDER_POSTFIX}`
 const folderPathInput = year => `${folderPathProblems(year)}/input`
 
 const options = {
@@ -18,16 +27,19 @@ const options = {
         Cookie: undefined
     }
 }
-
 function getWebContent(path) {
 
+    console.log(path)
     return new Promise((resolve, reject) => {
         https.get({
             ...options,
             path: path
         }, res => {
+            let content = ''
             res.setEncoding('utf-8')
-            res.on('data', e => resolve(e.toString())).on('error', reject)
+                .on('data', e => content += e.toString())
+                .on('end', e => resolve(content))
+                .on('error', reject)
         })
     })
 }
@@ -73,10 +85,9 @@ async function downloadProblemsYear(year) {
     const calendarHtml = await getWebContent(`/${year}`)
     const regex = /\/\d{4}\/day\/\d{1,2}/g
 
-
     allDays_unlocked = fs.readdirSync(currentFolderPath, {})
-        .filter(v => v.includes(instructionFile()))
-        .filter(v => !fs.readFileSync(`${currentFolderPath}/${instructionFile(v)}`, 'utf-8').includes('id="part2"'))
+        .filter(file => file.includes(INSTRUCTIONS_FILE))
+        .filter(file => fs.readFileSync(`${currentFolderPath}/${file}`, 'utf-8').includes('id="part2"'))
 
     allUnlockedDays_toDownload = calendarHtml.match(regex)
         .map(path => path.split('/')[3])
@@ -86,10 +97,13 @@ async function downloadProblemsYear(year) {
 
     console.log(allDays_unlocked)
     console.log(allUnlockedDays_toDownload)
+
+    allUnlockedDays_toDownload.forEach(day => downloadProblem(year, day))
 }
 
 async function downloadProblem(year, day) {
 
+    day = parseInt(day)
     const problemHtml = await getWebContent(`/${year}/day/${day}`)
     const problemInput = (await getWebContent(`/${year}/day/${day}/input`)).split('\n')
 
@@ -98,13 +112,17 @@ async function downloadProblem(year, day) {
     const inputPathTest = `${folderPathInput(year)}/${inputFileTest(day)}`
 
     let length = problemInput.length - 1
-    for (; length >= 0 && problemInput[length].length == 0; length--) { }
+    for (; length >= 0 && problemInput[length] == ''; length--) { }
     const problemInputContent = problemInput.slice(0, length + 1).join('\r\n') // Encode CRLF files
 
-    fs.writeFileSync(instructionPath, problemHtml.match(/<main>[\S\s]*<\/main>/g)[0])
+    console.log('Download Day ', day, instructionPath, inputPathNormal)
+    fs.writeFileSync(instructionPath, problemHtml.match(/<main>[\S\s]*<\/main>/g)[0], 'utf-8')
     fs.writeFileSync(inputPathNormal, problemInputContent, 'utf-8')
 
 }
+
+
+
 
 async function main() {
     if (fs.existsSync('.sessionCookie')) {
@@ -113,25 +131,17 @@ async function main() {
 
     if (!options.headers.Cookie || !(await isSessionValid())) {
 
-        await new Promise((resolve, reject) => {
-            const userInterface = require('readline').createInterface({
-                input: process.stdin,
-                output: process.stdout
-            })
-
-            userInterface.question('///Please Enter Session Cookie:', async userInput => {
-                userInterface.close()
-                fs.writeFileSync('.sessionCookie', userInput, 'utf-8')
-                options.headers.Cookie = `session=${userInput}`
-                resolve()
-            })
+        userInterface.question('///Please Enter Session Cookie:', async userInput => {
+            userInterface.close()
+            fs.writeFileSync('.sessionCookie', userInput, 'utf-8')
+            options.headers.Cookie = `session=${userInput}`
+            resolve()
         })
         return main()
     }
 
     console.log('Valid Session Token Found!')
-
-    downloadProblemsYear(2020)
+    downloadProblemsYear(2021)
 }
 
 main()
