@@ -11,8 +11,9 @@ const userInterface = require('readline')
 const INSTRUCTIONS_FILE = 'instructions.html'
 const FOLDER_POSTFIX = 'nodejs'
 const INPUT_FILE = 'input.txt'
+const SOLUTION_POSTFIX = '__TODO__'
 
-const solutionFile = (day, part) => `day${day?.toString().padStart(2, '0')}-part${parseInt(part)}.js`
+const solutionFile = (day, part, postfix = '') => `day${day?.toString().padStart(2, '0')}-part${parseInt(part)}${postfix}.js`
 const instructionFile = day => `day${day?.toString().padStart(2, '0')}-${INSTRUCTIONS_FILE}`
 const inputFileNormal = day => `day${day?.toString().padStart(2, '0')}-${INPUT_FILE}`
 const inputFileTest = day => `day${day?.toString().padStart(2, '0')}-input-test.txt`
@@ -96,6 +97,7 @@ async function downloadProblemsYear(year) {
         .map(path => path.split('/')[3])
         .map(day => day.padStart(2, '0'))
         .filter(v => !allDays_unlocked.includes(instructionFile(v)))
+        .filter(v => !fs.existsSync(`${currentFolderPath}/${solutionFile(v, 1, SOLUTION_POSTFIX)}`))
         .sort((a, b) => parseInt(a) - parseInt(b))
 
     console.log(allDays_unlocked)
@@ -110,32 +112,39 @@ async function downloadProblem(year, day) {
     const problemHtml = await getWebContent(`/${year}/day/${day}`)
     const problemInput = (await getWebContent(`/${year}/day/${day}/input`)).split('\n')
 
+    // Solution Blueprint Files
+    blueprint = fs.readFileSync('blueprint.js', 'utf-8')
+        .replace('${{INPUT_NORMAL}}', inputFileNormal(day))
+        .replace('${{INPUT_TEST}}', inputFileTest(day))
+
+    const solutionPart1 = `${folderPathProblems(year)}/${solutionFile(day, 1)}`
+    const solutionPart1Todo = `${folderPathProblems(year)}/${solutionFile(day, 1, SOLUTION_POSTFIX)}`
+    const solutionPart2 = `${folderPathProblems(year)}/${solutionFile(day, 2)}`
+    const solutionPart2Todo = `${folderPathProblems(year)}/${solutionFile(day, 2, SOLUTION_POSTFIX)}`
+
     const instructionPath = `${folderPathProblems(year)}/${instructionFile(day)}`
     const inputPathNormal = `${folderPathInput(year)}/${inputFileNormal(day)}`
     const inputPathTest = `${folderPathInput(year)}/${inputFileTest(day)}`
+
+
+    if (!(fs.existsSync(solutionPart1))) {
+        fs.writeFileSync(solutionPart1Todo, blueprint, 'utf-8')
+        console.log('Downloaded Part 1 - Day ', day, instructionPath, inputPathNormal)
+    } else if (problemHtml.includes('id="part2"')) {
+        fs.writeFileSync(solutionPart2Todo, blueprint, 'utf-8')
+        console.log('Downloaded Part 2 - Day ', day, instructionPath, inputPathNormal)
+    } else {
+        console.log('Downloaded - Day ', day, 'No New Content')
+        return
+    }
 
     let length = problemInput.length - 1
     for (; length >= 0 && problemInput[length] == ''; length--) { }
     const problemInputContent = problemInput.slice(0, length + 1).join('\r\n') // Encode CRLF files
 
-    console.log('Download Day ', day, instructionPath, inputPathNormal)
     fs.writeFileSync(instructionPath, problemHtml.match(/<main>[\S\s]*<\/main>/g)[0], 'utf-8')
     fs.writeFileSync(inputPathNormal, problemInputContent, 'utf-8')
     fs.writeFileSync(inputPathTest, ' <<< PUT TEST DATA HERE >>> ', 'utf-8')
-
-
-    blueprint = fs.readFileSync('blueprint.js', 'utf-8')
-        .replace('${{INPUT_NORMAL}}', inputFileNormal(day))
-        .replace('${{INPUT_TEST}}', inputFileTest(day))
-
-    solutionPart1 = `${folderPathProblems(year)}/${solutionFile(day, 1)}`
-    solutionPart2 = `${folderPathProblems(year)}/${solutionFile(day, 2)}`
-
-    if (!(fs.existsSync(solutionPart1))) {
-        fs.writeFileSync(solutionPart1, blueprint, 'utf-8')
-    } else if (problemHtml.includes('id="part2"')) {
-        fs.writeFileSync(solutionPart2, blueprint, 'utf-8')
-    }
 
 }
 
@@ -149,17 +158,17 @@ async function main() {
 
     if (!options.headers.Cookie || !(await isSessionValid())) {
 
-        userInterface.question('///Please Enter Session Cookie:', async userInput => {
-            userInterface.close()
-            fs.writeFileSync('.sessionCookie', userInput, 'utf-8')
+        userInterface.question('///Please Enter Valid Session Cookie:', async userInput => {
             options.headers.Cookie = `session=${userInput}`
-            main()
+            fs.writeFileSync('.sessionCookie', userInput, 'utf-8')
+            return main()
         })
-    }
-    else {
-        console.log('Valid Session Token Found!')
+    } else {
+        userInterface.close()
+        console.log('Valid Session Cookie Found!')
         downloadProblemsYear() // No Input = Current Year
     }
+
 }
 
 main()
