@@ -28,8 +28,6 @@ const options = {
     }
 }
 function getWebContent(path) {
-
-    console.log(path)
     return new Promise((resolve, reject) => {
         https.get({
             ...options,
@@ -84,6 +82,10 @@ async function downloadProblemsYear(year) {
 
     const calendarHtml = await getWebContent(`/${year}`)
     const regex = /\/\d{4}\/day\/\d{1,2}/g
+
+    if (calendarHtml.match(regex) == null) {
+        return console.log("AOC hasn't started :(")
+    }
 
     allDays_unlocked = fs.readdirSync(currentFolderPath, {})
         .filter(file => file.includes(INSTRUCTIONS_FILE))
@@ -141,7 +143,7 @@ async function main() {
     }
 
     console.log('Valid Session Token Found!')
-    downloadProblemsYear(2021)
+    downloadProblemsYear() // No Input = Current Year
 }
 
 main()
