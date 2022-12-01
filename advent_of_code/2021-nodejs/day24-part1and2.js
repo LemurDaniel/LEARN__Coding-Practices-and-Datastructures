@@ -41,8 +41,10 @@ const BLOCKS = {
 };
 
 // Takes a few minutes and around 3 Gigs (at peak nearly 4) of RAM,
-// may run in memory issues on smaller machines, (It really works)
-// but works and bruteforces even though 9^14 possibilities (shrunk by z-state collapsing)
+// may run in memory issues on smaller machines,
+// but it does still work with enough memory and bruteforces even though 9^14 possibilities 
+// (shrunk by z-state collapsing)
+//
 // Nodejs can also be run with more allocated memory by:
 //    - node --max-old-space-size=4096 day24-part1and2.js
 //    - node --max-old-space-size=8192 day24-part1and2.js
