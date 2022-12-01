@@ -90,20 +90,21 @@ async function downloadProblemsYear(year) {
     return console.log("AOC hasn't started :(")
   }
 
-  allDays_unlocked = fs.readdirSync(currentFolderPath, {})
-    .filter(file => file.includes(INSTRUCTIONS_FILE))
-    .filter(file => fs.readFileSync(`${currentFolderPath}/${file}`, 'utf-8').includes('id="part2"'))
-
   allUnlockedDays_toDownload = calendarHtml.match(regex)
     .map(path => path.split('/')[3])
     .map(day => day.padStart(2, '0'))
-    .filter(v => !allDays_unlocked.includes(instructionFile(v)))
-    .filter(v => !fs.existsSync(`${currentFolderPath}/${solutionFile(v, 1, SOLUTION_POSTFIX)}`))
+    .filter(v =>
+      (
+        !fs.existsSync(`${currentFolderPath}/${solutionFile(v, 1, SOLUTION_POSTFIX)}`) &&
+        !fs.existsSync(`${currentFolderPath}/${solutionFile(v, 2, SOLUTION_POSTFIX)}`) &&
+        !fs.existsSync(`${currentFolderPath}/${solutionFile(v, 2)}`)
+      ) ||
+      fs.readFileSync(`${currentFolderPath}/${instructionFile(v)}`, 'utf-8')
+        .match(/<p>Your puzzle answer was <code>\d*<\/code>.<\/p>/g)?.length < 2
+    )
     .sort((a, b) => parseInt(a) - parseInt(b))
     .forEach(day => downloadProblem(year, day))
 
-  //console.log(allDays_unlocked)
-  //console.log(allUnlockedDays_toDownload)
 }
 
 async function downloadProblem(year, day) {
@@ -132,10 +133,12 @@ async function downloadProblem(year, day) {
   if (!(fs.existsSync(solutionPart1))) {
     fs.writeFileSync(solutionPart1Todo, blueprint, 'utf-8')
     console.log('Downloaded Part 1 - Day ', day, instructionPath, inputPathNormal)
-  } else if (problemHtml.includes('id="part2"')) {
+
+  } else if (problemHtml.match(/<p>Your puzzle answer was <code>\d*<\/code>.<\/p>/g)?.length < 2) {
     fs.writeFileSync(solutionPart2Todo, blueprint, 'utf-8')
     console.log('Downloaded Part 2 - Day ', day, instructionPath, inputPathNormal)
     return
+
   } else {
     console.log('Downloaded - Day ', day, 'No New Content')
     return
