@@ -40,16 +40,21 @@ const BLOCKS = {
   0: { 0: { z: 0, max: 0, min: 0 } }
 };
 
-// Takes a few minutes and around 3 Gigs (at peak nearly 4) of RAM, 
-// may run in memory issues on smaller machines, 
+// Takes a few minutes and around 3 Gigs (at peak nearly 4) of RAM,
+// may run in memory issues on smaller machines, (It really works)
 // but works and bruteforces even though 9^14 possibilities (shrunk by z-state collapsing)
+// Nodejs can also be run with more allocated memory by:
+//    - node --max-old-space-size=4096 day24-part1and2.js
+//    - node --max-old-space-size=8192 day24-part1and2.js
+//
+//  ==> Output: At Block 14 with z-state 0: { min: 11419161313147, max: 36969794979199 }
 
 // Calculate from a z-state all different possible z-states by digit and collapse equal ones.
 
 function solve() {
 
   console.log();
-  for (let i = 1; i <= 4; i++) {
+  for (let i = 1; i <= 14; i++) {
 
     prevStates = BLOCKS[i - 1]
     currentStates = {};
@@ -91,9 +96,13 @@ function solve() {
       '   ', ' States: ', Object.keys(BLOCKS[i]).length,
       '   - in', minutes, ' minutes ', seconds, ' seconds');
   }
+
+  delete BLOCKS[13] // Release Memory
   console.log();
-  console.log(Object.entries(BLOCKS[Object.keys(BLOCKS).sort()[0]]))
-  console.log(BLOCKS[Object.keys(BLOCKS).sort()[0]][0])
+  console.log(Object.entries(BLOCKS[14]))
+  console.log(BLOCKS[14][0])
+  //console.log(Object.entries(BLOCKS[Object.keys(BLOCKS).sort()[0]]))
+  //console.log(BLOCKS[Object.keys(BLOCKS).sort()[0]][0])
 
 }
 
