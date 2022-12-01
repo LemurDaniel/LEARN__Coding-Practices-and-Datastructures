@@ -104,7 +104,8 @@ function solve() {
 
   delete BLOCKS[13] // Release Memory
   console.log();
-  console.log(Object.entries(BLOCKS[14]))
+  // console.log(Object.entries(BLOCKS[14])) // Console.loggin it can also cause reaching heap limit.
+  console.log('Number of z-states left', Object.keys(BLOCKS[14]).length)
   console.log(BLOCKS[14][0])
   //console.log(Object.entries(BLOCKS[Object.keys(BLOCKS).sort()[0]]))
   //console.log(BLOCKS[Object.keys(BLOCKS).sort()[0]][0])
