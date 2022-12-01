@@ -15,10 +15,10 @@ const uniqueSegmentsDigits = {
 }
 
 let appearancesOf1478 = 0;
-for(const line of input) {
+for (const line of input) {
 
-  for(const output of line.split(' | ')[1].split(' ')) {
-    if(output.length in uniqueSegmentsDigits) appearancesOf1478++;
+  for (const output of line.split(' | ')[1].split(' ')) {
+    if (output.length in uniqueSegmentsDigits) appearancesOf1478++;
   }
 
   console.log(appearancesOf1478)

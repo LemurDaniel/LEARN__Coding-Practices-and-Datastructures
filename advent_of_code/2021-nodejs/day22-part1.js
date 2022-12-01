@@ -38,7 +38,7 @@ function processRebootStep([[x1, x2], [y1, y2], [z1, z2], state]) {
 for (let i = 0; i < input.length; i++) {
   const step = input[i];
   if (step[0][0] > 50 || step[0][0] < -50) break;
-  if(i % 1 === 0) console.log('processed ' + i + ' reboot steps. ')
+  if (i % 1 === 0) console.log('processed ' + i + ' reboot steps. ')
   processRebootStep(step)
 }
 

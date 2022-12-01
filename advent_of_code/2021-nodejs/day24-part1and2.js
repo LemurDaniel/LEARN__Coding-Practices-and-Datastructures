@@ -40,12 +40,16 @@ const BLOCKS = {
   0: { 0: { z: 0, max: 0, min: 0 } }
 };
 
-// Takes a few minutes and around 3 Gigs (at peak nearly 4) of RAM.
+// Takes a few minutes and around 3 Gigs (at peak nearly 4) of RAM, 
+// may run in memory issues on smaller machines, 
+// but works and bruteforces even though 9^14 possibilities (shrunk by z-state collapsing)
+
 // Calculate from a z-state all different possible z-states by digit and collapse equal ones.
+
 function solve() {
 
   console.log();
-  for (let i = 1; i <= 14; i++) {
+  for (let i = 1; i <= 4; i++) {
 
     prevStates = BLOCKS[i - 1]
     currentStates = {};
@@ -88,8 +92,8 @@ function solve() {
       '   - in', minutes, ' minutes ', seconds, ' seconds');
   }
   console.log();
-  console.log(Object.entries(BLOCKS[14]))
-  console.log(BLOCKS[14][0])
+  console.log(Object.entries(BLOCKS[Object.keys(BLOCKS).sort()[0]]))
+  console.log(BLOCKS[Object.keys(BLOCKS).sort()[0]][0])
 
 }
 

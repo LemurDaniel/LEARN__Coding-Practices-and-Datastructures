@@ -48,7 +48,7 @@ for (let steps = 0; steps < 100; steps++) {
 
   const flashes = runStep();
   totalNumberOfFlashes += flashes;
-  console.log(`Number of Flashes at Step ${steps+1}: ${flashes}`)
+  console.log(`Number of Flashes at Step ${steps + 1}: ${flashes}`)
   // console.log(octopuses.map( row => row.map( v => v === -1 ? 0 : v).join('')))
   // console.log('###############')
 }

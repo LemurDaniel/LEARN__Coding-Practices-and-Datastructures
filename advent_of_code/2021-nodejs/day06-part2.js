@@ -18,6 +18,6 @@ for (let days = 256; days > 0; days--) {
   timers[6] += spawningFishes;
   timers[8] = spawningFishes;
 
-  if (days < 20) console.log(19-days, timers.reduce((acc, v) => acc + v), timers)
+  if (days < 20) console.log(19 - days, timers.reduce((acc, v) => acc + v), timers)
 
 }

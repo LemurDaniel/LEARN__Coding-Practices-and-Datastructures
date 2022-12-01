@@ -14,26 +14,26 @@ const LOOKUP_TABLE = {
 var syntaxErrorScore = 0;
 
 
-function validateParentheses(line, brackets = '(),[],{},<>'){
+function validateParentheses(line, brackets = '(),[],{},<>') {
 
   const dict = {};
   const stack = [];
-  brackets.split(',').forEach( v => dict[v[0]] = v[1]);
+  brackets.split(',').forEach(v => dict[v[0]] = v[1]);
 
-  for(const char of line) {
+  for (const char of line) {
 
-    if(char in dict)
+    if (char in dict)
       stack.push(char);
-    else if( char !== dict[stack.pop()])
+    else if (char !== dict[stack.pop()])
       return char;
   }
 
   return true;
 }
 
-for(const line of input) {
+for (const line of input) {
   const result = validateParentheses(line);
-  if(result !== true)
+  if (result !== true)
     syntaxErrorScore += LOOKUP_TABLE[result];
 }
 

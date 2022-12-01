@@ -3,7 +3,7 @@ const Helper = require('../../nodejs/Helper')
 
 let input;
 input = fs.readFileSync('./input/day20-input-test.txt', 'utf-8').split('\r\n\r').map(v => v.trim());
-input = fs.readFileSync('./input/day20-input.txt', 'utf-8').split('\r\n\r').map( v => v.trim() );
+input = fs.readFileSync('./input/day20-input.txt', 'utf-8').split('\r\n\r').map(v => v.trim());
 
 input[1] = input[1].trim().split('\r\n')
 

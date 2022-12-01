@@ -63,7 +63,7 @@ while (toBeVisited.length > 0) {
     }
   }
 
-  toBeVisited.sort( (a,b) => table[b].cost - table[a].cost)
+  toBeVisited.sort((a, b) => table[b].cost - table[a].cost)
   //console.log(toBeVisited.map( v => table[v].cost))
 }
 

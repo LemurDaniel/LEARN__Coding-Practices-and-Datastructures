@@ -32,7 +32,7 @@ let biggestYvelocity = 0;
 // looking at the input with 209 => 20 steps are needed and deltaY=-86 covers those 20 steps well.
 
 biggestYvelocity = -targetBounds.yMin;
-for(let step=1, sum=0; biggestYvelocity>0; step++) {
+for (let step = 1, sum = 0; biggestYvelocity > 0; step++) {
   sum += --biggestYvelocity;
   console.log('Step: ' + step + ' --- Height: ' + sum)
 }
