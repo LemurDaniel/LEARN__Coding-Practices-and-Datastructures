@@ -5,7 +5,7 @@ const file = fs.readFileSync('./input/day18-input.txt', 'utf-8').split('\r\n');
 //const file = ['((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2'];
 
 const Stack = function () {
-  this.node = function(data, prev) {
+  this.node = function (data, prev) {
     this.data = data;
     this.prev = prev;
   }
@@ -14,7 +14,7 @@ const Stack = function () {
 
   this.empty = () => this.top == null
   this.push = (data) => this.top = new this.node(data, this.top);
-  this.peek= () => this.top.data;
+  this.peek = () => this.top.data;
   this.pop = () => {
     const data = this.top.data;
     this.top = this.top.prev;
@@ -35,28 +35,28 @@ const operators = {
 
 
 // shunting yard algo
-function solve_exp(exp){
+function solve_exp(exp) {
 
   const outp = new Stack();
   const ops = new Stack();
   let operate = () => {
-    const strs = outp.top.prev.data+' '+ops.peek()+' '+outp.peek();
+    const strs = outp.top.prev.data + ' ' + ops.peek() + ' ' + outp.peek();
     outp.push(operators[ops.pop()].func(outp.pop(), outp.pop()));
     //console.log(strs + ' = ' + outp.peek());
   };
 
   exp = exp.split(' ').join('').split('');
   exp.forEach(arg => {
-    if(arg.match('[0-9]')) outp.push(parseInt(arg));
-    else if(arg == '(') ops.push(arg);
-    else if(arg == ')') {
-      while(ops.peek() != '(') operate();
+    if (arg.match('[0-9]')) outp.push(parseInt(arg));
+    else if (arg == '(') ops.push(arg);
+    else if (arg == ')') {
+      while (ops.peek() != '(') operate();
       ops.pop();
     }
-    else if(arg in operators) {
-      while(!ops.empty()) {
+    else if (arg in operators) {
+      while (!ops.empty()) {
         const ops_top = ops.peek();
-        if(!(ops_top in operators) || operators[arg].pre > operators[ops_top].pre) break;
+        if (!(ops_top in operators) || operators[arg].pre > operators[ops_top].pre) break;
         operate();
       }
       ops.push(arg);
@@ -64,14 +64,14 @@ function solve_exp(exp){
     //console.log(outp.join(','));
     //console.log(ops);
   });
-  while(!ops.empty()) operate();
+  while (!ops.empty()) operate();
 
   return outp.top.data;
 }
 
 let sum = 0;
 file.forEach(exp => sum += solve_exp(exp));
-console.log('The total sum of all Expressions is: '+sum);
+console.log('The total sum of all Expressions is: ' + sum);
 
 
 

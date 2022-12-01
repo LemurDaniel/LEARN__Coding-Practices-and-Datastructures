@@ -10,9 +10,9 @@ const dimension = Math.sqrt(len);
 
 // initialize array
 const arrangement = [];
-for(let i=0; i<dimension; i++){
+for (let i = 0; i < dimension; i++) {
   const row = [];
-  for(let i2=0; i2<dimension; i2++){
+  for (let i2 = 0; i2 < dimension; i2++) {
     row.push('');
   }
   arrangement.push(row);
@@ -21,7 +21,7 @@ for(let i=0; i<dimension; i++){
 
 
 Object.values(tile_dict).forEach(tile => {
-  if(tile.is_flipped) console.log(tile);
+  if (tile.is_flipped) console.log(tile);
 })
 
 // assume this is the rightmost corner
@@ -29,10 +29,10 @@ const up_left = tile_dict[1951];
 //console.log(up_left)
 
 // go left
-for(let i=0; i<1; i++){
+for (let i = 0; i < 1; i++) {
 
   //go right
-  for(let i2=0; i2<dimension; i2++){
-    
+  for (let i2 = 0; i2 < dimension; i2++) {
+
   }
 }

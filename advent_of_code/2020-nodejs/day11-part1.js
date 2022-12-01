@@ -26,54 +26,54 @@ const move_deltas = [
 ]
 
 
-function countSurrounding(indx, map, char){
-  
+function countSurrounding(indx, map, char) {
+
   // +row_len and -1 compensates for indx=0
-  let row = Math.floor( (indx+row_len) / row_len) - 1;
+  let row = Math.floor((indx + row_len) / row_len) - 1;
   let col = indx % row_len;
   let moves = [];
-  
+
   // col+row to absolute pos in array
   let clc_abs = (row, col) => {
     if (row < 0 || row >= col_len) return -1;
     if (col < 0 || col >= row_len) return -1;
-    return (row)*row_len + col;
+    return (row) * row_len + col;
   };
-  
+
   // generates pos for moves
   move_deltas.forEach(delta => {
-    moves.push(clc_abs(row+delta[0], col+delta[1] ))
+    moves.push(clc_abs(row + delta[0], col + delta[1]))
   });
-  
+
   let count = 0;
   moves.forEach(move => {
-    if(move <= 0 || move >= map.length) return;
-    else if(map[move] === char) count++;
+    if (move <= 0 || move >= map.length) return;
+    else if (map[move] === char) count++;
   })
   return count;
 }
 
 const Rules = {};
 Rules[floor] = (idx) => floor;
-Rules[st_ety] =  (idx, m) => (countSurrounding(idx, m, st_fl) == 0 ? st_fl:st_ety);
-Rules[st_fl] = (idx, m) => (countSurrounding(idx, m, st_fl) > 3 ? st_ety:st_fl);
+Rules[st_ety] = (idx, m) => (countSurrounding(idx, m, st_fl) == 0 ? st_fl : st_ety);
+Rules[st_fl] = (idx, m) => (countSurrounding(idx, m, st_fl) > 3 ? st_ety : st_fl);
 
 
 // len 8554; 91x94;
-function cycle(map, new_map){
+function cycle(map, new_map) {
 
   let occupied = 0;
   let count = 0;
-  
-  for(let i=0; i<map.length; i++){
-     new_map[i] = Rules[map[i]](i, map);
-    if(new_map[i] !== map[i]) count++;
-    if(new_map[i] === st_fl) occupied++;
-    
+
+  for (let i = 0; i < map.length; i++) {
+    new_map[i] = Rules[map[i]](i, map);
+    if (new_map[i] !== map[i]) count++;
+    if (new_map[i] === st_fl) occupied++;
+
   }
-  
+
   console.log('Seats: ' + occupied);
- 
+
   if (count > 0) return cycle(new_map, map);
   else return occupied;
 }

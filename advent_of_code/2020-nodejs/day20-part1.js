@@ -10,17 +10,17 @@ const Tile = function (id, data) {
   this.image = [];
 
   // create image without borders
-  for(let i=1;i<data.length-1; i++){
-    this.image.push(data[i].substring(1,data[i].length-1));
+  for (let i = 1; i < data.length - 1; i++) {
+    this.image.push(data[i].substring(1, data[i].length - 1));
   }
 
-  this.borders = ['','','','']; // up, down, left, right 
+  this.borders = ['', '', '', '']; // up, down, left, right 
   this.borders[0] = data[0];
-  this.borders[1] = data[data.length-1];
+  this.borders[1] = data[data.length - 1];
 
   data.forEach(line => {
     this.borders[2] = this.borders[2] + line[0];
-    this.borders[3] = this.borders[3] + line[line.length-1];
+    this.borders[3] = this.borders[3] + line[line.length - 1];
   });
 
   this.rotate = 0;
@@ -34,8 +34,8 @@ const Tile = function (id, data) {
   this.s_tiles = {}; // surrounding_tiles: up, down, left, right
   this.clip_tile = (id, typ, typ2, fp) => {
     this.s_tiles[typ] = { id: id, typ: typ2, flipped: fp };
-    if(fp) this.is_flipped = true;
-    const st = this.s_tiles;   
+    if (fp) this.is_flipped = true;
+    const st = this.s_tiles;
     // left, up not set ==> up, left corner
     this.is_corner_up_left = (!(2 in st) && !(0 in st));
     // left, down not set ==> up, left corner
@@ -66,26 +66,26 @@ file.forEach(data => {
 
 
 // map borders of tiles
-Object.values(tile_dict).forEach( tile => {
+Object.values(tile_dict).forEach(tile => {
 
-  for(let i=0; i<4; i++){
+  for (let i = 0; i < 4; i++) {
     const border = tile.borders[i]; // 0:up, 1:down, 2:left, 3:right
     const flipped = border.split("").reverse().join("");
-    
+
     const bd_dict = dict[border];
     const fp_dict = dict[flipped];
 
     // if no match in dict AND border of tile not already matched, put in dict
-    if(!(i in tile.s_tiles) && !bd_dict && !fp_dict) {
-      dict[border] = { id: tile.id, bordertyp: i, flipped: false};
+    if (!(i in tile.s_tiles) && !bd_dict && !fp_dict) {
+      dict[border] = { id: tile.id, bordertyp: i, flipped: false };
       continue;
     }
 
 
     // if match, set it in tile object
-    const fp = (fp_dict ? true:false);
-    const border2 = (fp ? fp_dict:bd_dict);
-    const border1 = { id: tile.id, bordertyp: i, flipped: fp};
+    const fp = (fp_dict ? true : false);
+    const border2 = (fp ? fp_dict : bd_dict);
+    const border1 = { id: tile.id, bordertyp: i, flipped: fp };
 
     tile_dict[border1.id].clip_tile(border2.id, border1.bordertyp, border2.bordertyp, fp);
     tile_dict[border2.id].clip_tile(border1.id, border2.bordertyp, border1.bordertyp, fp);
@@ -101,12 +101,12 @@ Object.values(tile_dict).forEach( tile => {
 //dict
 let product = 1;
 Object.values(tile_dict).forEach(tile => {
-  if(tile.is_corner) product *= tile.id;
+  if (tile.is_corner) product *= tile.id;
 })
 
 
 
-console.log('The product of all corner ids is: '+product);
+console.log('The product of all corner ids is: ' + product);
 
 exps = {};
 exps.tile_dict = tile_dict;

@@ -18,12 +18,12 @@ const input = {
 // Time  Complexity: (n!)
 function search_linear(arr, target) {
 
-  for(let i=0; i<arr.length; i++){
-    for(let i2=i+1; i2<arr.length; i2++){
+  for (let i = 0; i < arr.length; i++) {
+    for (let i2 = i + 1; i2 < arr.length; i2++) {
 
-        if( (arr[i] + arr[i2]) === target){
-          return arr[i] * arr[i2];
-        }
+      if ((arr[i] + arr[i2]) === target) {
+        return arr[i] * arr[i2];
+      }
     }
   }
 }
@@ -33,17 +33,17 @@ function search_linear(arr, target) {
 function search_with_dict(arr, target) {
 
   let dict = {};
-  
-  for(let i=0; i<arr.length; i++){
-    
-      if(dict[arr[i]]) return dict[arr[i]];
-      const diff = target - arr[i];
-      dict[diff] = arr[i] * diff;
+
+  for (let i = 0; i < arr.length; i++) {
+
+    if (dict[arr[i]]) return dict[arr[i]];
+    const diff = target - arr[i];
+    dict[diff] = arr[i] * diff;
   }
   return null;
 }
 
 
-console.log('The Product is: '+ search_linear(input.array, input.target) );
-console.log('The Product is: '+ search_with_dict(input.array, input.target) );
-  
+console.log('The Product is: ' + search_linear(input.array, input.target));
+console.log('The Product is: ' + search_with_dict(input.array, input.target));
+

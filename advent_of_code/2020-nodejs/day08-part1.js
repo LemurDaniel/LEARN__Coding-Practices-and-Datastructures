@@ -15,17 +15,17 @@ const instruction_set = {
 let dict = {}
 
 
-for(; prg_counter <= file.length; prg_counter++){
+for (; prg_counter <= file.length; prg_counter++) {
 
-  if(dict[prg_counter]) break;
+  if (dict[prg_counter]) break;
   dict[prg_counter] = file[prg_counter];
-  
-  const instr = file[prg_counter].split(' '); 
+
+  const instr = file[prg_counter].split(' ');
 
   instruction_set[instr[0]](parseInt(instr[1]));
 }
 
 //console.log(dict)
-console.log("Akkumulator: "+accumulator);
+console.log("Akkumulator: " + accumulator);
 
-  
+

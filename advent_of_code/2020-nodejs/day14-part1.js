@@ -20,22 +20,22 @@ fs.writeFileSync('./input/day14-input-modified.txt', test, 'utf-8');
 let mask = '';
 let mem = {};
 
-function b_mask(num){
+function b_mask(num) {
   new_int = mask.split('X').join('0').split('');
   base2 = (num).toString(2);
 
-  for(let i=0; i<base2.length; i++){
-    const mask_bit = mask[mask.length-1-i];
-    if(mask_bit !== 'X') continue;
-    new_int[mask.length-1-i] = base2[base2.length-1-i];
+  for (let i = 0; i < base2.length; i++) {
+    const mask_bit = mask[mask.length - 1 - i];
+    if (mask_bit !== 'X') continue;
+    new_int[mask.length - 1 - i] = base2[base2.length - 1 - i];
   }
 
   return parseInt(new_int.join(''), 2);
 }
 
-file.forEach( instr => eval(instr) );
+file.forEach(instr => eval(instr));
 
 let sum = 0;
-Object.keys(mem).forEach( k => sum += mem[k]);
+Object.keys(mem).forEach(k => sum += mem[k]);
 
-console.log('The sum of all memory adresses is: '+ sum)
+console.log('The sum of all memory adresses is: ' + sum)

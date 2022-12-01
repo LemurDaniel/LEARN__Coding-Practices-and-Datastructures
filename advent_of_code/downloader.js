@@ -99,11 +99,10 @@ async function downloadProblemsYear(year) {
         .filter(v => !allDays_unlocked.includes(instructionFile(v)))
         .filter(v => !fs.existsSync(`${currentFolderPath}/${solutionFile(v, 1, SOLUTION_POSTFIX)}`))
         .sort((a, b) => parseInt(a) - parseInt(b))
+        .forEach(day => downloadProblem(year, day))
 
-    console.log(allDays_unlocked)
-    console.log(allUnlockedDays_toDownload)
-
-    allUnlockedDays_toDownload.forEach(day => downloadProblem(year, day))
+    //console.log(allDays_unlocked)
+    //console.log(allUnlockedDays_toDownload)
 }
 
 async function downloadProblem(year, day) {
@@ -166,7 +165,7 @@ async function main() {
     } else {
         userInterface.close()
         console.log('Valid Session Cookie Found!')
-        downloadProblemsYear() // No Input = Current Year
+        downloadProblemsYear(2020) // No Input = Current Year
     }
 
 }
