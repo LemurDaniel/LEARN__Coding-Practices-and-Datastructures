@@ -51,6 +51,9 @@ const BLOCKS = {
 //
 //  ==> Output: At Block 14 with z-state 0: { min: 11419161313147, max: 36969794979199 }
 
+//  It does work because even though 9^14 is in the trillions (in german Billionen)
+//  after z-state collapsing only around 5.8 million are left.
+
 // Calculate from a z-state all different possible z-states by digit and collapse equal ones.
 
 function solve() {
