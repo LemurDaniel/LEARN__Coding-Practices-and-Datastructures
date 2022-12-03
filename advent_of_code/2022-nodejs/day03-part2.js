@@ -14,10 +14,9 @@ const input = fs.readFileSync('input/day03-input.txt', 'utf-8').split('\r\n');
 const doubleItemPriorities = input
   .map(v => v)
   .reduce(
-    // Group times by three
+    // Group every three iterations then split
     (acc, a, i) => acc + (i % 3 != 0 ? '#' : '###') + a)
-  .split('###')
-  .map(v => v.split('#'))
+  .split('###').map(v => v.split('#'))
   .map(arr => arr.map(v => v.split('')))
   .map(arr =>
     arr[0].filter(
