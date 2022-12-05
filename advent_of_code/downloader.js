@@ -100,7 +100,7 @@ async function downloadProblemsYear(year) {
         !fs.existsSync(`${currentFolderPath}/${solutionFile(v, 2)}`)
       ) ||
       fs.readFileSync(`${currentFolderPath}/${instructionFile(v)}`, 'utf-8')
-        .match(/<p>Your puzzle answer was <code>\d*<\/code>.<\/p>/g)?.length < 2
+        .match(/<p>Your puzzle answer was <code>[\dA-Za-z]+<\/code>.<\/p>/g)?.length < 2
     )
     .sort((a, b) => parseInt(a) - parseInt(b))
     .forEach(day => downloadProblem(year, day))
@@ -134,7 +134,7 @@ async function downloadProblem(year, day) {
     fs.writeFileSync(solutionPart1Todo, blueprint, 'utf-8')
     console.log('Downloaded Part 1 - Day ', day, instructionPath, inputPathNormal)
 
-  } else if (problemHtml.match(/<p>Your puzzle answer was <code>\d*<\/code>.<\/p>/g)?.length < 2) {
+  } else if (problemHtml.match(/<p>Your puzzle answer was <code>[\dA-Za-z]+<\/code>.<\/p>/g)?.length < 2) {
     fs.writeFileSync(solutionPart2Todo, blueprint, 'utf-8')
     console.log('Downloaded Part 2 - Day ', day, instructionPath, inputPathNormal)
     return
