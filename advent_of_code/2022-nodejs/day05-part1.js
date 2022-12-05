@@ -15,20 +15,25 @@ const input = fileContent.split('\r\n\r\n').map(v => v.split('\r\n'))
 
 // Convert Upper input in map of stacked crates => { '1': ['Z', 'N'], etc. } // Stacks stored as arrays reversed
 const stacks =
+  // Get all stacks (1 - n)
   input[0][input[0].length - 1]
     .trim().split(/\s+/)
     .map(stack =>
+      // Convert each stack (1 - n) in array of input lines without last line (1:  [['D'],['N','C'], ['Z','M','P']])
       input[0].slice(0, input[0].length - 1)
     )
     .map(
       (stack, idx) =>
+        // Get vertical Crosssection of lines for each stack
         stack.map(line => line[1 + idx * 4])
           .filter(crate => crate.trim().length > 0)
           .reverse()
     )
+    // Convert to objects {{1: ['Z', 'N'}}}
     .map(
       (stack, idx) => ({ [idx + 1]: stack })
     )
+    // Reduce to one object
     .reduce((acc, a) => ({ ...acc, ...a }))
 
 
@@ -41,6 +46,7 @@ const operations = input[1]
   )
 
 
+// Using fancy destructuring syntax
 for (const [count, from, to] of operations) {
 
   // Using splice instead of slice, so original array is also cut by same operation.
