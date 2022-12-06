@@ -15,6 +15,7 @@ const array = []
 const markerLength = 4
 
 // Overcomplicating everything with some unecessary readstream, but it makes sense with the premise of the puzzle.
+// Because said device receiving signals, won't reice all at once and then end, but continously receive from an theoratically unending input datastream.
 fileContent
   .on('readable', function () {
 
