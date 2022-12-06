@@ -14,12 +14,12 @@ let index = 0
 const array = []
 const markerLength = 4
 
-// Overcomplicating everything with some unecessary readstream
+// Overcomplicating everything with some unecessary readstream, but it makes sense with the premise of the puzzle.
 fileContent
   .on('readable', function () {
 
     let char
-    // Can't use anonymous function or else, [this.] won't be set to current
+    // Can't use anonymous function or else, [this.] won't be set to current stream
     while ((char = this.read(1)) != null) {
 
       index++
