@@ -20,6 +20,12 @@ fileContent
 
     let char
     // Can't use anonymous function or else, [this.] won't be set to current stream
+    // NOTE: For Reference - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
+    // 
+    // Arrow functions
+    // In arrow functions, this retains the value of the enclosing lexical context's this. 
+    // In other words, when evaluating an arrow function's body, the language does not create a new this binding.
+
     while ((char = this.read(1)) != null) {
 
       index++
