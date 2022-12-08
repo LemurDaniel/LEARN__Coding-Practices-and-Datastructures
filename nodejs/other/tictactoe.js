@@ -1,4 +1,9 @@
-const Helper = require("../Helper");
+const Helper = require('../Helper')
+const process = require('process')
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+})
 
 class TicTacToe {
 
@@ -11,8 +16,8 @@ class TicTacToe {
     // Functions to Convert Row,Col to Array-Position and Back
     static getPosition = (row, col) => (row - 1) * 3 + (col - 1)
     static getRowCol = pos => ({
-        col: (pos % 3 + 1),
-        row: Math.floor(pos / 3)
+        col: pos % 3 + 1,
+        row: Math.floor(pos / 3) + 1
     })
 
     ////////////////////////// Getters, Setters
@@ -42,7 +47,9 @@ class TicTacToe {
 
     constructor(initialArr, currentPlayer) {
         this.board = initialArr ?? Array(9).fill(TicTacToe.EMPTY)
-        this.currentPlayer = currentPlayer ?? 0;
+        this.currentPlayer = currentPlayer ?? 0
+        this.winner = null
+        this.wins = 0 // A move can cause two rows to be set at once
         this.evalGameState()
     }
 
@@ -57,11 +64,10 @@ class TicTacToe {
         if (this.get(row, col) != TicTacToe.EMPTY || this.gameState != 'MIDGAME')
             return false
 
-        this.board[TicTacToe.getPosition(row, col)] = this.player
-
-        // Don't change Player when Game has ended in a WIN or DRAW, so when win is set, winner is current Player.
-        if (this.evalGameState() == 'MIDGAME')
-            this.currentPlayer = (this.currentPlayer + 1) % 2
+        const move = TicTacToe.getPosition(row, col)
+        this.board[move] = this.player
+        this.currentPlayer = (this.currentPlayer + 1) % 2
+        this.evalGameState()
 
         return true
     }
@@ -81,26 +87,28 @@ class TicTacToe {
                 [this.board[2], this.board[4], this.board[6]],
             ])
             .filter(section => !section.includes(TicTacToe.EMPTY))
-            .filter(section => section.filter(v => v == section[0]).length == 3)
+            .filter(section =>
+                section.filter(v => v == section[0]).length == 3
+            )
 
-        if (wins.length > 1) {
-            console.log(this)
-            throw "shit shouldn't happen"
-        }
-        else if (wins.length == 1)
+
+        if (wins.length > 0) {
+            this.wins = wins.length
+            this.winner = wins.flat().pop()
             this.currentGameState = 2
+        }
         else if (this.emptyFields == 0)
             this.currentGameState = 1
         else
             this.currentGameState = 0
 
+
         return this.gameState
     }
 
-
     // For Testing if works properly
     print() {
-        return `${this.gameState} \n` + Helper.printMatrix(
+        return `Round ${this.setFields + 1}` + Helper.printMatrix(
             [
                 this.board.slice(0, 3),
                 this.board.slice(3, 6),
@@ -111,13 +119,11 @@ class TicTacToe {
     // For Testing if works properly
     move(row, col) {
 
-        console.log(this.print())
+        console.log('\n///// Process Turn /////\n')
 
-        console.log(`Set ${this.player} at Row: ${row} Col: ${col}`)
+        console.log(`Set '${this.player}' at Row: ${row} Col: ${col}`)
         if (!this.set(row, col))
-            console.log(`Move not Valid - Set ${this.player} at Row: ${row} Col: ${col}`)
-
-        console.log(this.print())
+            console.log(`Move not Valid - Set '${this.player}' at Row: ${row} Col: ${col}`)
 
     }
 
@@ -152,16 +158,36 @@ class TicTacToe {
 class BoardState {
 
     static REWARDS = {
-        'MIDGAME': 0,
-        'LOSS': 0,
-        'DRAW': 1,
-        'WIN': 2
+        'LOSS': -1,
+        'DRAW': 0,
+        'WIN': 1
     }
 
-    constructor(maxDepth = -1, player = TicTacToe.PLAYERS[0], game) {
+    static BOARDSTATES = {}
+    static boardStateFor(game) {
+        // The the board can be arrived at as player 'X', or player 'O' Setting a field
+        // In those cases different strategies need to be consiederd
+        const addr = [game.board, game.player]
+        if (!(addr in BoardState.BOARDSTATES))
+            throw `Not Found ${addr}`
 
+        return BoardState.BOARDSTATES[addr]
+    }
+
+    optimalMove(game) {
+        const current = BoardState.boardStateFor(game)
+        const prefered = current.preferedMove
+        prefered.board.split('').map((v, i) => i)
+            .filter(i => prefered.board[i] != current.board[i])
+            .map(i => TicTacToe.getRowCol(i))
+            .map(({ row, col }) => game.move(row, col))
+
+    }
+
+    constructor(maxDepth = -1, biasedPlayer = TicTacToe.PLAYERS[1], game) {
+
+        this.biasedPlayer = biasedPlayer
         this.validSubboards = []
-
 
         // Initialize Empty Tic Tac Toe
         if (null == game)
@@ -170,64 +196,61 @@ class BoardState {
         // The associated BoardState as a String
         this.board = game.board.join('')
         this.depth = game.setFields
-        this.player = player
+        this.player = game.player
+        this.state = game.gameState == 'WIN' && game.winner != biasedPlayer ? 'LOSS' : game.gameState
+        this.preferedMove = this
+        this.weight = BoardState.REWARDS[this.state]
 
-        if (game.gameState == 'WIN')
-            this.state = game.player == player ? 'WIN' : 'LOSS'
-        else
-            this.state = game.gameState
+        const addr = [game.board, game.player]
+        BoardState.BOARDSTATES[addr] = this
 
+        // Stop getting Subboards, when Game Ended or Max Depth reached
+        if (game.gameState == 'MIDGAME' && (maxDepth == -1 || game.setFields < maxDepth)) {
+
+            const isMaximizing = this.player == biasedPlayer
+            this.weight = isMaximizing ? -Infinity : Infinity
+
+            for (const next of game.nextStates) {
+
+                const addr = [next.board, next.player]
+                if (!(addr in BoardState.BOARDSTATES))
+                    new BoardState(maxDepth, biasedPlayer, next)
+
+                const boardState = BoardState.BOARDSTATES[addr]
+                this.validSubboards.push(boardState)
+
+                if (isMaximizing && boardState.weight > this.weight) {
+                    this.weight = boardState.weight
+                    this.preferedMove = boardState
+                } else if (!isMaximizing && boardState.weight < this.weight) {
+                    this.weight = boardState.weight
+                    this.preferedMove = boardState
+                }
+
+            }
+        }
 
         // Used for generating some stuff for Virtual Circuit board
         // 18 Bit address of current state (each two bits define wether X or O is set)
         // ( Bit 1 => First Row and Column is X, Bit 2 => First Row and Column is O, Bit 3 => First Row, Second Column is X, etc. )
         // (Concept now: 18 Bits for Addressing and 18 Bits as Output, most simple but not memory efficient, but can do optimistations later.)    
-        this.BitAddress = game.board.map(v => v == TicTacToe.PLAYERS[0] ? '10' : '01').join('')
+        this.BitAddress = game.board.map(v => {
+            switch (v) {
+                case TicTacToe.EMPTY: return '00'
+                case TicTacToe.PLAYERS[0]: return '10'
+                case TicTacToe.PLAYERS[1]: return '01'
+            }
+        }).join('')
 
-
-
-        // Stop getting Subboards, when Game Ended or Max Depth reached
-        if (game.gameState != 'MIDGAME' || (maxDepth != -1 && game.setFields >= maxDepth)) {
-            return
-        }
-
-
-        // Consider all next board states for the current one
-        for (const next of game.nextStates) {
-
-            this.validSubboards.push(
-                new BoardState(maxDepth, player, next)
-            )
-
-        }
-
-        // The prefered Move for implementing in Virtual Circuit Board with memory pointers
-        this.preferedMove = '[Not Implemented Yet]'
 
         // Note for Future me: 
         //  - Can be Found by XORING this board-address bits with prefered board address bits
         //  - The single bit of difference between both is the move taken.
-        this.preferedMoveBits = '010101010101010101'
+        this.preferedMoveBits =
+            ((parseInt(this.BitAddress, 2) ^ parseInt(this.preferedMove.BitAddress), 2) | (0b1 << 19)).toString(2).substring(2)
     }
 
-    // Wrapper to just return the iterator of the validSuboards property of the current object
-    [Symbol.iterator]() {
-        return this.validSubboards[Symbol.iterator]()
-    }
-
-
-    // For testing
-    printAllBoardStates() {
-
-        for (const boardState of this) {
-            console.log(` ${boardState.board} ${boardState.BitAddress} | Depth: ${boardState.depth} | ${boardState.player} ${boardState.state}`)
-            boardState.printAllBoardStates()
-        }
-
-    }
-
-    // For testing
-    printAllBoardStates_BreadthFirst() {
+    *[Symbol.iterator]() {
 
         const hasVisited = {}
 
@@ -242,7 +265,6 @@ class BoardState {
             const boardState = queue.shift()
 
             if (null == boardState) {
-                console.log(`\nPrinting Unique BoardStates for Depth: ${queue[0].depth}\n`)
                 queue.push(null)
                 continue
             }
@@ -252,7 +274,22 @@ class BoardState {
 
             queue.push(...boardState.validSubboards)
             hasVisited[boardState.board] = true
-            console.log(`       ${boardState.board} ${boardState.BitAddress} | Depth: ${boardState.depth} | ${boardState.player} ${boardState.state}`)
+            yield boardState
+        }
+    }
+
+
+
+    // For testing
+    printAllBoardStates_BreadthFirst() {
+
+        let depth = -1
+        for (const boardState of this) {
+            if (boardState.depth != depth) {
+                depth = boardState.depth
+                console.log(`\nPrinting Unique BoardStates for Depth: ${boardState.depth}\n`)
+            }
+            console.log(`       ${boardState.board} ${boardState.BitAddress} ${boardState.preferedMoveBits} | Weight: ${boardState.weight} | Depth: ${boardState.depth} | ${boardState.player} ${boardState.state}`)
         }
 
     }
@@ -262,31 +299,141 @@ class BoardState {
         return 1 + this.validSubboards.length + this.validSubboards.reduce((acc, board) => acc + board.totalBoardStates, 0)
     }
 
-    uniqueBoardStates(states = {}) {
+}
 
-        if (this.board in states)
-            states[this.board]++
-        else
-            states[this.board] = 1
+/////////////////////////////////////////////////////////////////////////////////////////
+// Get Userinput to test everything
+async function prompt(text, accepts, validSlice) {
 
-        for (const board of this) {
-            board.uniqueBoardStates(states)
+    PROMPT:
+    while (true) {
+
+        const input = (await new Promise(resolve => readline.question(text, resolve))).trim()
+
+        switch (accepts?.constructor) {
+            case Array:
+                if (accepts.flat().map(v => v.toUpperCase()).includes(input.toUpperCase())) {
+                    if (Array != accepts[0].constructor) return input
+                    return accepts[0].filter(v => v.toUpperCase() == input.toUpperCase()).length > 0 ? true : false
+                }
+                await prompt(`Input not Accepted. Valid Options: ${Helper.printArray(accepts)}`)
+                continue PROMPT
+
+            case Function:
+                const { accepted, transformed, hint } = accepts(input)
+                if (accepted) return transformed
+                console.log('Input not valid!')
+                await prompt(hint)
+                continue PROMPT
+
+            default:
+                return input
+
         }
-
-        return states
     }
 }
 
+async function promptPlayerMove(game) {
 
-const root = new BoardState(3)
-root.printAllBoardStates_BreadthFirst()
+    // Prompt Player for Move
+    return await prompt(`// Player '${game.player}' Turn: `, input => {
+        const obj = {
+            accepted: false,
+            transformed: input,
+            hint: 'Please Enter as space or comma seperated Row,Col like: \n' + "1,1 or 2,1 or 2 2, etc."
+        }
 
-console.log(`\nNumber of total Board States calculated: ${root.totalBoardStates}`)
+        if (input.replace(/[\d,\s]/g, '').length != 0)
+            return obj
 
-// NOTE: 
-//    A Number of 5,478 valid boards can be found online and is true.
-//    This one above is bigger, since it calculates the progression, meaning there are several paths, that will lead to the same board state
-console.log(`Number of actually unique Board States: ${Object.keys(root.uniqueBoardStates()).length}\n`)
-// NOTE for Future me
-//    The Tree can be optimised by merging Paths that lead to the same Boardstates
-//    Since any subsequent calculations should only be made once instead of multiple times
+        const move = input.split(/[,\s]+/)
+            .map(v => parseInt(v))
+
+        if (move.length != 2)
+            return obj
+
+        return {
+            ...obj,
+            transformed: { row: move[0], col: move[1] },
+            accepted: true
+        }
+    })
+
+}
+
+
+async function mainLoop(game) {
+
+    console.group()
+
+
+    if (null != game) {
+        await prompt('//')
+        console.clear()
+        console.log(game.print())
+    }
+
+    MAIN:
+    while (true) {
+
+        if (null == game || game.gameState != 'MIDGAME') {
+
+            if (null != game) {
+                const text = game.gameState == 'WIN' ? `Player '${game.winner}' has won the Game! ` : `The Game ended in a Draw`
+                console.clear()
+                console.log('/////  Game End  /////')
+                console.log(text)
+                console.log(game.print())
+                await prompt('//')
+            }
+
+            console.log()
+            if ((await prompt("Would you Like to start a new Game? (Y|N): ", [['Yes', 'Y'], ['No', 'N']]))) {
+                console.clear()
+                await prompt('\n// Starting New Game: ')
+                game = new TicTacToe()
+                console.clear()
+                console.log('/////  New Game  /////')
+                console.log(game.print())
+            } else
+                break MAIN
+
+        }
+
+        if (game.player == TicTacToe.PLAYERS[0]) {
+            const move = await promptPlayerMove(game)
+            console.clear()
+            game.move(move.row, move.col)
+        } else {
+            await prompt(`// Player '${game.player}' moves...`)
+            console.clear()
+            tictactoeSolver.optimalMove(game)
+        }
+
+        console.log(game.print())
+        await prompt('')
+    }
+    console.groupEnd()
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
+
+// For testing
+var game;
+
+/*
+game = new TicTacToe([
+    'X', '#', '#',
+    '#', '#', '#',
+    '#', '#', '#'
+], 1)
+*/
+
+console.clear()
+console.log('')
+console.log('Building Tree')
+const tictactoeSolver = new BoardState(9, TicTacToe.PLAYERS[1], game)
+console.log(`Amount of Unique calculated Boardstates: ${Object.keys(BoardState.BOARDSTATES).length}`)
+mainLoop(game)
