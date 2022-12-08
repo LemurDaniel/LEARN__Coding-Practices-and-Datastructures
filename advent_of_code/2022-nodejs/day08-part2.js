@@ -28,10 +28,10 @@ const EMPTY = '.'
 const [PI, TAU] = [Math.PI, Math.PI * 2]
 
 //  Some garbage code function
-function processScenicScore(solution, row, col) {
+function processScenicScore(solution, row, col, dunnoHowToName = 4) {
 
-  const dunnoHowToName = 4 // The Fraction-Amount of circle-circumference => angle == 2PI / dunnoHowToName
-  return Array(TAU / (TAU / dunnoHowToName))
+  // The Fraction-Amount of circle-circumference => angle == 2PI / dunnoHowToName
+  return Array(dunnoHowToName)
     .fill(TAU / dunnoHowToName)
     .map((v, idx) => [
       Math.round(Math.sin(v * idx)), // vertical
