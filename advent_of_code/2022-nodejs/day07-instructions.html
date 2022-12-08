@@ -45,7 +45,8 @@ $ ls
         the specific result depends on the argument:
         <ul>
           <li><code>cd x</code> moves <em>in</em> one level: it looks in the current directory for the directory named
-            <code>x</code> and makes it the current directory.</li>
+            <code>x</code> and makes it the current directory.
+          </li>
           <li><code>cd ..</code> moves <em>out</em> one level: it finds the directory that contains the current
             directory, then makes that directory the current directory.</li>
           <li><code>cd /</code> switches the current directory to the outermost directory, <code>/</code>.</li>
@@ -55,7 +56,8 @@ $ ls
         the current directory:
         <ul>
           <li><code>123 abc</code> means that the current directory contains a file named <code>abc</code> with size
-            <code>123</code>.</li>
+            <code>123</code>.
+          </li>
           <li><code>dir xyz</code> means that the current directory contains a directory named <code>xyz</code>.</li>
         </ul>
       </li>
@@ -108,11 +110,13 @@ $ ls
     <p>Now, you're ready to choose a directory to delete.</p>
     <p>The total disk space available to the filesystem is <code><em>70000000</em></code>. To run the update, you need
       unused space of at least <code><em>30000000</em></code>. You need to find a directory you can delete that will
-      <em>free up enough space</em> to run the update.</p>
+      <em>free up enough space</em> to run the update.
+    </p>
     <p>In the example above, the total size of the outermost directory (and thus the total amount of used space) is
       <code>48381165</code>; this means that the size of the <em>unused</em> space must currently be
       <code>21618835</code>, which isn't quite the <code>30000000</code> required by the update. Therefore, the update
-      still requires a directory with total size of at least <code>8381165</code> to be deleted before it can run.</p>
+      still requires a directory with total size of at least <code>8381165</code> to be deleted before it can run.
+    </p>
     <p>To achieve this, you have the following options:</p>
     <ul>
       <li>Delete directory <code>e</code>, which would increase unused space by <code>584</code>.</li>
@@ -122,9 +126,11 @@ $ ls
     </ul>
     <p>Directories <code>e</code> and <code>a</code> are both too small; deleting them would not free up enough space.
       However, directories <code>d</code> and <code>/</code> are both big enough! Between these, choose the
-      <em>smallest</em>: <code>d</code>, increasing unused space by <code><em>24933642</em></code>.</p>
+      <em>smallest</em>: <code>d</code>, increasing unused space by <code><em>24933642</em></code>.
+    </p>
     <p>Find the smallest directory that, if deleted, would free up enough space on the filesystem to run the update.
-      <em>What is the total size of that directory?</em></p>
+      <em>What is the total size of that directory?</em>
+    </p>
   </article>
   <p>Your puzzle answer was <code>3696336</code>.</p>
   <p class="day-success">Both parts of this puzzle are complete! They provide two gold stars: **</p>
