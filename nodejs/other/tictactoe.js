@@ -42,15 +42,6 @@ class TicTacToe {
 
     constructor(initialArr, currentPlayer) {
         this.board = initialArr ?? Array(9).fill(TicTacToe.EMPTY)
-
-        /*
-        this.board = [
-            'X', 'O', 'X',
-            'O', '#', 'O',
-            'X', '#', '#'
-
-        ]
-        */
         this.currentPlayer = currentPlayer ?? 0;
         this.evalGameState()
     }
@@ -103,7 +94,6 @@ class TicTacToe {
         else
             this.currentGameState = 0
 
-
         return this.gameState
     }
 
@@ -146,6 +136,7 @@ class TicTacToe {
         }
 
     }
+
 
 }
 
@@ -226,9 +217,39 @@ class BoardState {
     printAllBoardStates() {
 
         for (const boardState of this) {
-
             console.log(` ${boardState.board} ${boardState.BitAddress} | Depth: ${boardState.depth} | ${boardState.player} ${boardState.state}`)
             boardState.printAllBoardStates()
+        }
+
+    }
+
+    // For testing
+    printAllBoardStates_BreadthFirst() {
+
+        const hasVisited = {}
+
+        // Simple queue using array.  
+        //   Some random Note: -- More complex ones, can be for example --
+        //    - Array with predefined length. Index for enqueue increments and loops around array, index for dequeue follows and wraps around too.
+        //    - Object/hashtable. An index for Head and Tail incrementing on Queue and Dequeue and addressing the object in hashtable. Dequeue removes element from hashtable.
+        //    - Using Nodes similar like a Linked List. Head points to start Node, Tail to last node. Queue move from Head to next Node. Dequeue appends next node to Tail.
+
+        const queue = [null, this] // Null for marking next level of Depth
+        while (queue.length > 1) {
+            const boardState = queue.shift()
+
+            if (null == boardState) {
+                console.log(`\nPrinting Unique BoardStates for Depth: ${queue[0].depth}\n`)
+                queue.push(null)
+                continue
+            }
+
+            if (boardState.board in hasVisited)
+                continue
+
+            queue.push(...boardState.validSubboards)
+            hasVisited[boardState.board] = true
+            console.log(`       ${boardState.board} ${boardState.BitAddress} | Depth: ${boardState.depth} | ${boardState.player} ${boardState.state}`)
         }
 
     }
@@ -238,14 +259,14 @@ class BoardState {
         return 1 + this.validSubboards.length + this.validSubboards.reduce((acc, board) => acc + board.totalBoardStates, 0)
     }
 
-    uniqueBoardStates(states = { }) {
+    uniqueBoardStates(states = {}) {
 
-        if(this.board in states)
+        if (this.board in states)
             states[this.board]++
         else
             states[this.board] = 1
 
-        for(const board of this) {
+        for (const board of this) {
             board.uniqueBoardStates(states)
         }
 
@@ -254,8 +275,8 @@ class BoardState {
 }
 
 
-const root = new BoardState(5)
-root.printAllBoardStates()
+const root = new BoardState(3)
+root.printAllBoardStates_BreadthFirst()
 
 console.log(`\nNumber of total Board States calculated: ${root.totalBoardStates}`)
 
