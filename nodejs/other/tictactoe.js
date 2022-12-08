@@ -122,8 +122,11 @@ class TicTacToe {
     }
 
 
+    get nextStates() {
+        return this.iteratorNextStates()
+    }
     // Calculates all Valid Set of States for a given TicTacToe State (as a Generator Function)
-    *nextStates() {
+    *iteratorNextStates() {
 
         for (let row = 1; row <= 3; row++) {
             for (let col = 1; col <= 3; col++) {
@@ -190,7 +193,7 @@ class BoardState {
 
 
         // Consider all next board states for the current one
-        for (const next of game.nextStates()) {
+        for (const next of game.nextStates) {
 
             this.validSubboards.push(
                 new BoardState(maxDepth, player, next)
