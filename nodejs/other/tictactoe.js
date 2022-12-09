@@ -165,10 +165,10 @@ class BoardState {
     }
 
     static BOARDSTATES = {}
-    static boardStateFor(game) {
+    static boardStateFor(game, biasedPlayer) {
         // The the board can be arrived at as player 'X', or player 'O' Setting a field
         // In those cases different strategies need to be consiederd
-        const addr = [game.board, game.player]
+        const addr = [game.board, game.player, biasedPlayer]
         if (!(addr in BoardState.BOARDSTATES))
             throw `Not Found ${addr}`
 
@@ -176,7 +176,7 @@ class BoardState {
     }
 
     optimalMove(game) {
-        const current = BoardState.boardStateFor(game)
+        const current = BoardState.boardStateFor(game, this.biasedPlayer)
         const prefered = current.preferedMove
         prefered.board.split('').map((v, i) => i)
             .filter(i => prefered.board[i] != current.board[i])
@@ -234,7 +234,7 @@ class BoardState {
                 this.state = 'LOSS'
         }
 
-        const addr = [game.board, game.player]
+        const addr = [game.board, game.player, biasedPlayer]
         BoardState.BOARDSTATES[addr] = this
 
         // Stop getting Subboards, when Game Ended or Max boardDepth reached
@@ -242,7 +242,7 @@ class BoardState {
 
             for (const next of game.nextStates) {
 
-                const addr = [next.board, next.player]
+                const addr = [next.board, next.player, biasedPlayer]
                 if (!(addr in BoardState.BOARDSTATES))
                     new BoardState(maxboardDepth, biasedPlayer, next)
 
@@ -333,20 +333,27 @@ class BoardState {
             if (boardState.boardDepth > boardDepth)
                 return
 
-            //NOTE Virtual Circuit Board Limitation => Pointer can't be at address 0x0, not an issue yet, as long as Computer remains Player 2
-            if (boardState.boardDepth == 0)
+            //NOTE Virtual Circuit Board Limitation => Pointer can't be at address 0x0
+            // Doesn't matter since in my Virtual Circuit Board Game, Player 'O' always starts second and state can therefore never be reached
+            if (boardState.boardDepth == 0 && boardState.biasedPlayer == TicTacToe.PLAYERS[1])
+                continue
+
+            //NOTE: In my Virtual Circuit Board Implementation only the moves where the current biased player can take are needed
+            // And Player 1 is always 'X' whereas Player 2 is always 'O'
+            if (boardState.biasedPlayer != boardState.player)
                 continue
 
             // Label for identifing pointer in VCB: opt_<boardDepth>_<maximizingPlayer>_board
-            let name = `opt_${boardState.boardDepth}__${boardState.biasedPlayer}__${boardState.board.replace(/#/g, 'E')}_TO_${boardState.preferedMove.board.replace(/#/g, 'E')}`
+            let name = `opt_${boardState.boardDepth}__bias_${boardState.biasedPlayer}_player${boardState.player}__${boardState.board.replace(/#/g, 'E')}_TO_${boardState.preferedMove.board.replace(/#/g, 'E')}`
             let addr = boardState.BitAddress
             let move = boardState.preferedMoveBits
+            let biasBit = boardState.biasedPlayer == TicTacToe.PLAYERS[0] ? 1 : 0 // When Player 'O' highest bit is Zero and vice Versa
 
             if (hex) {
-                addr = `0x${parseInt(addr, 2).toString(16)}`
+                addr = `0x${parseInt(`${biasBit}${addr}`, 2).toString(16)}`
             }
             else
-                addr = `0b${addr}`
+                addr = `0b${biasBit}${addr}`
 
             yield `pointer ${name} ${addr} 0b${move}`
         }
@@ -431,6 +438,12 @@ async function mainLoop(game) {
         console.log(game.print())
     }
 
+    console.clear()
+    console.log('')
+    console.log('Building Tree')
+    const tictactoeSolver = new BoardState(9, TicTacToe.PLAYERS[1], game)
+    console.log(`Amount of Unique calculated Boardstates: ${Object.keys(BoardState.BOARDSTATES).length}`)
+
     MAIN:
     while (true) {
 
@@ -458,11 +471,6 @@ async function mainLoop(game) {
 
         }
 
-        if (game.setFields >= 1) {
-            const test = BoardState.boardStateFor(game).validSubboards.map(v => `${v.boardState.board} - ${v.weight}`)
-            console.log(test)
-        }
-
         if (game.player == TicTacToe.PLAYERS[0]) {
             const move = await promptPlayerMove(game)
             console.clear()
@@ -487,6 +495,21 @@ function getOutputForVCB() {
     // Create Writestream to append each iteration
     const stream = fs.createWriteStream(filename, { flags: 'a' });
 
+    stream.write('\n')
+    stream.write(`# Memory Addresses for all games player with bias to Player: 'O'\n`)
+    stream.write('\n')
+    // bias Player 'O'
+    tictactoeSolver = new BoardState(9, TicTacToe.PLAYERS[1])
+    for (const vcb_output of tictactoeSolver.printVCBPointersToboardDepth(9, false)) {
+        console.log(vcb_output)
+        stream.write(vcb_output + '\n')
+    }
+
+    stream.write('\n')
+    stream.write(`# Memory Addresses for all games player with bias to Player: 'X'\n`)
+    stream.write('\n')
+    // bias Player 'X'
+    tictactoeSolver = new BoardState(9, TicTacToe.PLAYERS[0])
     for (const vcb_output of tictactoeSolver.printVCBPointersToboardDepth(9, false)) {
         console.log(vcb_output)
         stream.write(vcb_output + '\n')
@@ -498,22 +521,5 @@ function getOutputForVCB() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
 
-// For testing
-var game;
-
-/*
-game = new TicTacToe([
-    'X', 'X', 'O',
-    '#', 'O', '#',
-    '#', '#', 'X'
-], 1)
-*/
-
-console.clear()
-console.log('')
-console.log('Building Tree')
-const tictactoeSolver = new BoardState(9, TicTacToe.PLAYERS[1], game)
-console.log(`Amount of Unique calculated Boardstates: ${Object.keys(BoardState.BOARDSTATES).length}`)
-
 // getOutputForVCB()
-mainLoop(game)
+mainLoop()
