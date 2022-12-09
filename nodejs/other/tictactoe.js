@@ -159,9 +159,9 @@ class TicTacToe {
 class BoardState {
 
     static REWARDS = {
-        'LOSS': -1,
+        'LOSS': -10,
         'DRAW': 0,
-        'WIN': 1
+        'WIN': 10
     }
 
     static BOARDSTATES = {}
@@ -185,10 +185,38 @@ class BoardState {
 
     }
 
-    constructor(maxDepth = -1, biasedPlayer = TicTacToe.PLAYERS[1], game) {
+    // Optimize and use depth in Calculation
+    miniMax(depth = 1) {
+
+        if (this.state == 'WIN')
+            return BoardState.REWARDS.WIN - depth
+        else if (this.state == 'LOSS')
+            return BoardState.REWARDS.LOSS + depth
+        else if (this.state == 'DRAW')
+            return BoardState.REWARDS.DRAW
+
+        if (this.validSubboards.length == 0)
+            return 0
+
+        const isMaximizing = this.player == this.biasedPlayer
+        let weight = isMaximizing ? -Infinity : Infinity
+        for (const { boardState } of this.validSubboards) {
+
+            if (isMaximizing)
+                weight = Math.max(weight, boardState.miniMax(depth + 1))
+            else if (!isMaximizing)
+                weight = Math.min(weight, boardState.miniMax(depth + 1))
+
+        }
+
+        return weight
+    }
+
+    constructor(maxboardDepth = -1, biasedPlayer = TicTacToe.PLAYERS[1], game) {
 
         this.biasedPlayer = biasedPlayer
         this.validSubboards = []
+        this.preferedMove = this
 
         // Initialize Empty Tic Tac Toe
         if (null == game)
@@ -196,39 +224,37 @@ class BoardState {
 
         // The associated BoardState as a String
         this.board = game.board.join('')
-        this.depth = game.setFields
+        this.boardDepth = game.setFields
         this.player = game.player
-        this.state = game.gameState == 'WIN' && game.winner != biasedPlayer ? 'LOSS' : game.gameState
-        this.preferedMove = this
-        this.weight = BoardState.REWARDS[this.state]
+        this.state = game.gameState
+        if (this.state == 'WIN') {
+            if (game.winner == biasedPlayer)
+                this.state = 'WIN'
+            else
+                this.state = 'LOSS'
+        }
 
         const addr = [game.board, game.player]
         BoardState.BOARDSTATES[addr] = this
 
-        // Stop getting Subboards, when Game Ended or Max Depth reached
-        if (game.gameState == 'MIDGAME' && (maxDepth == -1 || game.setFields < maxDepth)) {
-
-            const isMaximizing = this.player == biasedPlayer
-            this.weight = isMaximizing ? -Infinity : Infinity
+        // Stop getting Subboards, when Game Ended or Max boardDepth reached
+        if (game.gameState == 'MIDGAME' && (maxboardDepth == -1 || game.setFields < maxboardDepth)) {
 
             for (const next of game.nextStates) {
 
                 const addr = [next.board, next.player]
                 if (!(addr in BoardState.BOARDSTATES))
-                    new BoardState(maxDepth, biasedPlayer, next)
+                    new BoardState(maxboardDepth, biasedPlayer, next)
 
                 const boardState = BoardState.BOARDSTATES[addr]
-                this.validSubboards.push(boardState)
-
-                if (isMaximizing && boardState.weight > this.weight) {
-                    this.weight = boardState.weight
-                    this.preferedMove = boardState
-                } else if (!isMaximizing && boardState.weight < this.weight) {
-                    this.weight = boardState.weight
-                    this.preferedMove = boardState
-                }
-
+                this.validSubboards.push({
+                    boardState: boardState,
+                    weight: boardState.miniMax()
+                })
             }
+
+            this.validSubboards.sort((a, b) => b.weight - a.weight)
+            this.preferedMove = this.validSubboards[0].boardState
         }
 
         // Used for generating some stuff for Virtual Circuit board
@@ -264,7 +290,7 @@ class BoardState {
         //    - Object/hashtable. An index for Head and Tail incrementing on Queue and Dequeue and addressing the object in hashtable. Dequeue removes element from hashtable.
         //    - Using Nodes similar like a Linked List. Head points to start Node, Tail to last node. Queue move from Head to next Node. Dequeue appends next node to Tail.
 
-        const queue = [null, this] // Null for marking next level of Depth
+        const queue = [null, this] // Null for marking next level of boardDepth
         while (queue.length > 1) {
             const boardState = queue.shift()
 
@@ -276,8 +302,9 @@ class BoardState {
             if (boardState.board in hasVisited)
                 continue
 
-            queue.push(...boardState.validSubboards)
+            queue.push(...boardState.validSubboards.map(v => v.boardState))
             hasVisited[boardState.board] = true
+
             yield boardState
         }
     }
@@ -287,31 +314,31 @@ class BoardState {
     // For testing
     printAllBoardStates_BreadthFirst() {
 
-        let depth = -1
+        let boardDepth = -1
         for (const boardState of this) {
-            if (boardState.depth != depth) {
-                depth = boardState.depth
-                console.log(`\nPrinting Unique BoardStates for Depth: ${boardState.depth}\n`)
+            if (boardState.boardDepth != boardDepth) {
+                boardDepth = boardState.boardDepth
+                console.log(`\nPrinting Unique BoardStates for boardDepth: ${boardState.boardDepth}\n`)
             }
-            console.log(`       ${boardState.board} ${boardState.BitAddress} ${boardState.preferedMoveBits} | Weight: ${boardState.weight} | Depth: ${boardState.depth} | ${boardState.player} ${boardState.state}`)
+            console.log(`       ${boardState.board} ${boardState.BitAddress} ${boardState.preferedMoveBits} | Weight: ${boardState.weight} | boardDepth: ${boardState.boardDepth} | ${boardState.player} ${boardState.state}`)
         }
 
     }
 
     // Needed for VCB
-    * printVCBPointersToDepth(depth = 2, hex = false) {
+    * printVCBPointersToboardDepth(boardDepth = 2, hex = false) {
 
         for (const boardState of this) {
 
-            if (boardState.depth > depth)
+            if (boardState.boardDepth > boardDepth)
                 return
 
             //NOTE Virtual Circuit Board Limitation => Pointer can't be at address 0x0, not an issue yet, as long as Computer remains Player 2
-            if (boardState.depth == 0)
+            if (boardState.boardDepth == 0)
                 continue
 
-            // Label for identifing pointer in VCB: opt_<depth>_<maximizingPlayer>_board
-            let name = `opt_${boardState.depth}__${boardState.biasedPlayer}__${boardState.board.replace(/#/g, 'E')}_TO_${boardState.preferedMove.board.replace(/#/g, 'E')}`
+            // Label for identifing pointer in VCB: opt_<boardDepth>_<maximizingPlayer>_board
+            let name = `opt_${boardState.boardDepth}__${boardState.biasedPlayer}__${boardState.board.replace(/#/g, 'E')}_TO_${boardState.preferedMove.board.replace(/#/g, 'E')}`
             let addr = boardState.BitAddress
             let move = boardState.preferedMoveBits
 
@@ -431,6 +458,11 @@ async function mainLoop(game) {
 
         }
 
+        if (game.setFields >= 1) {
+            const test = BoardState.boardStateFor(game).validSubboards.map(v => `${v.boardState.board} - ${v.weight}`)
+            console.log(test)
+        }
+
         if (game.player == TicTacToe.PLAYERS[0]) {
             const move = await promptPlayerMove(game)
             console.clear()
@@ -448,6 +480,21 @@ async function mainLoop(game) {
 
 }
 
+function getOutputForVCB() {
+    const filename = `${__dirname}/virtualCircuitBoard_mem.txt`
+    fs.writeFileSync(filename, '') // Overwrite file with nothing
+
+    // Create Writestream to append each iteration
+    const stream = fs.createWriteStream(filename, { flags: 'a' });
+
+    for (const vcb_output of tictactoeSolver.printVCBPointersToboardDepth(9, false)) {
+        console.log(vcb_output)
+        stream.write(vcb_output + '\n')
+    }
+
+    stream.end();
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
 
@@ -456,9 +503,9 @@ var game;
 
 /*
 game = new TicTacToe([
-    'X', '#', '#',
-    '#', '#', '#',
-    '#', '#', '#'
+    'X', 'X', 'O',
+    '#', 'O', '#',
+    '#', '#', 'X'
 ], 1)
 */
 
@@ -467,24 +514,6 @@ console.log('')
 console.log('Building Tree')
 const tictactoeSolver = new BoardState(9, TicTacToe.PLAYERS[1], game)
 console.log(`Amount of Unique calculated Boardstates: ${Object.keys(BoardState.BOARDSTATES).length}`)
-// mainLoop(game)
 
-
-
-
-function getOutputForVCB() {
-    const filename = `${__dirname}/virtualCircuitBoard_mem.txt`
-    fs.writeFileSync(filename, '') // Overwrite file with nothing
-
-    // Create Writestream to append each iteration
-    const stream = fs.createWriteStream(filename, { flags: 'a' });
-
-    for (const vcb_output of tictactoeSolver.printVCBPointersToDepth(4, false)) {
-        console.log(vcb_output)
-        stream.write(vcb_output + '\n')
-    }
-
-    stream.end();
-}
-
-getOutputForVCB()
+// getOutputForVCB()
+mainLoop(game)
