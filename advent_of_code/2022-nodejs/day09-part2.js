@@ -203,11 +203,6 @@ class Rope extends Vector {
   follow(predecessor) {
 
     if (this.dist(predecessor) >= 2) {
-
-      const diff = predecessor.diff(this)
-      diff.x = diff.x ? diff.x / diff.x : diff.x
-      diff.y = diff.y ? diff.y / diff.y : diff.y
-
       this.add(predecessor.diff(this).limit())
       this.adjustGridSize()
       // Call Recursivley on following rope parts to move whole rope
