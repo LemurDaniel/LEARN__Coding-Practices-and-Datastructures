@@ -233,7 +233,7 @@ class BoardState {
         // Used for generating some stuff for Virtual Circuit board
         // 18 Bit address of current state (each two bits define wether X or O is set)
         // ( Bit 1 => First Row and Column is X, Bit 2 => First Row and Column is O, Bit 3 => First Row, Second Column is X, etc. )
-        // (Concept now: 18 Bits for Addressing and 18 Bits as Output, most simple but not memory efficient, but can do optimistations later.)    
+        // (Concept now: 18 Bits for Addressing and 9 Bits as Output, most simple but not memory efficient, but can do optimistations later.)    
         this.BitAddress = game.board.map(v => {
             switch (v) {
                 case TicTacToe.EMPTY: return '00'
@@ -243,12 +243,15 @@ class BoardState {
         }).join('')
 
 
-        // Note for Future me: 
-        //  - Can be Found by XORING this board-address bits with prefered board address bits
-        //  - The single bit of difference between both is the move taken.
+        //  XOR this and prefered Board Bits
         this.preferedMoveBits =
-            ((parseInt(this.BitAddress, 2) ^ parseInt(this.preferedMove.BitAddress), 2) | (0b1 << 19)).toString(2).substring(2)
+            ((parseInt(this.BitAddress, 2) ^ parseInt(this.preferedMove.BitAddress), 2) | (0b1 << 19))
+                .toString(2).substring(2).split('')
+                // Convoluted thing that gives me the output I need (hopefully)
+                .map(v => parseInt(v)).map((v, idx, arr) => arr.slice(idx, idx + 2))
+                .filter((v, i) => i % 2 == 0).map(v => v.includes(1) ? 1 : 0).join('')
     }
+
 
     *[Symbol.iterator]() {
 
@@ -292,6 +295,33 @@ class BoardState {
             console.log(`       ${boardState.board} ${boardState.BitAddress} ${boardState.preferedMoveBits} | Weight: ${boardState.weight} | Depth: ${boardState.depth} | ${boardState.player} ${boardState.state}`)
         }
 
+    }
+
+    // Needed for VCB
+    printVCBPointersToDepth(depth = 2, hex = false) {
+
+        for (const boardState of this) {
+
+            if (boardState.depth > depth)
+                return
+
+            //NOTE Virtual Circuit Board Limitation => Pointer can't be at address 0x0, not an issue yet, as long as Computer remains Player 2
+            if (boardState.depth == 0)
+                continue
+
+            // Label for identifing pointer in VCB: opt_<depth>_<maximizingPlayer>_board
+            let name = `opt_${boardState.depth}_${boardState.biasedPlayer}_${boardState.board.replace(/#/g, 'E')}`
+            let addr = boardState.BitAddress
+            let move = boardState.preferedMoveBits
+
+            if (hex) {
+                addr = `0x${parseInt(addr, 2).toString(16)}`
+            }
+            else
+                addr = `0b${addr}`
+
+            console.log(`pointer ${name} ${addr} 0b${move}`)
+        }
     }
 
     // For testing
@@ -436,4 +466,7 @@ console.log('')
 console.log('Building Tree')
 const tictactoeSolver = new BoardState(9, TicTacToe.PLAYERS[1], game)
 console.log(`Amount of Unique calculated Boardstates: ${Object.keys(BoardState.BOARDSTATES).length}`)
-mainLoop(game)
+// mainLoop(game)
+
+
+tictactoeSolver.printVCBPointersToDepth(2, false)
