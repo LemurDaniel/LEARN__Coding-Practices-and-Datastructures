@@ -1,3 +1,4 @@
+const fs = require('fs')
 const Helper = require('../Helper')
 const process = require('process')
 const readline = require('readline').createInterface({
@@ -298,7 +299,7 @@ class BoardState {
     }
 
     // Needed for VCB
-    printVCBPointersToDepth(depth = 2, hex = false) {
+    * printVCBPointersToDepth(depth = 2, hex = false) {
 
         for (const boardState of this) {
 
@@ -320,7 +321,7 @@ class BoardState {
             else
                 addr = `0b${addr}`
 
-            console.log(`pointer ${name} ${addr} 0b${move}`)
+            yield `pointer ${name} ${addr} 0b${move}`
         }
     }
 
@@ -469,4 +470,21 @@ console.log(`Amount of Unique calculated Boardstates: ${Object.keys(BoardState.B
 // mainLoop(game)
 
 
-tictactoeSolver.printVCBPointersToDepth(1, false)
+
+
+function getOutputForVCB() {
+    const filename = `${__dirname}/virtualCircuitBoard_mem.txt`
+    fs.writeFileSync(filename, '') // Overwrite file with nothing
+
+    // Create Writestream to append each iteration
+    const stream = fs.createWriteStream(filename, { flags: 'a' });
+
+    for (const vcb_output of tictactoeSolver.printVCBPointersToDepth(4, false)) {
+        console.log(vcb_output)
+        stream.write(vcb_output + '\n')
+    }
+
+    stream.end();
+}
+
+getOutputForVCB()
