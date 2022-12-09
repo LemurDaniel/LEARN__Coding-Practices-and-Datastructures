@@ -245,7 +245,7 @@ class BoardState {
 
         //  XOR this and prefered Board Bits
         this.preferedMoveBits =
-            ((parseInt(this.BitAddress, 2) ^ parseInt(this.preferedMove.BitAddress), 2) | (0b1 << 19))
+            ((parseInt(this.BitAddress, 2) ^ parseInt(this.preferedMove.BitAddress, 2)) | (0b1 << 19))
                 .toString(2).substring(2).split('')
                 // Convoluted thing that gives me the output I need (hopefully)
                 .map(v => parseInt(v)).map((v, idx, arr) => arr.slice(idx, idx + 2))
@@ -310,7 +310,7 @@ class BoardState {
                 continue
 
             // Label for identifing pointer in VCB: opt_<depth>_<maximizingPlayer>_board
-            let name = `opt_${boardState.depth}_${boardState.biasedPlayer}_${boardState.board.replace(/#/g, 'E')}`
+            let name = `opt_${boardState.depth}__${boardState.biasedPlayer}__${boardState.board.replace(/#/g, 'E')}_TO_${boardState.preferedMove.board.replace(/#/g, 'E')}`
             let addr = boardState.BitAddress
             let move = boardState.preferedMoveBits
 
@@ -469,4 +469,4 @@ console.log(`Amount of Unique calculated Boardstates: ${Object.keys(BoardState.B
 // mainLoop(game)
 
 
-tictactoeSolver.printVCBPointersToDepth(2, false)
+tictactoeSolver.printVCBPointersToDepth(1, false)
