@@ -115,8 +115,9 @@ async function downloadProblem(year, day) {
 
   // Solution Blueprint Files
   blueprint = fs.readFileSync('blueprint.js', 'utf-8')
-    .replace('${{INPUT_NORMAL}}', inputFileNormal(day))
-    .replace('${{INPUT_TEST}}', inputFileTest(day))
+    .replaceAll('${{INPUT_NORMAL}}', inputFileNormal(day))
+    .replaceAll('${{INPUT_TEST}}', inputFileTest(day))
+    .replaceAll('${{DAY}}', day)
 
   const solutionPart1 = `${folderPathProblems(year)}/${solutionFile(day, 1)}`
   const solutionPart1Todo = `${folderPathProblems(year)}/${solutionFile(day, 1, SOLUTION_POSTFIX)}`
@@ -131,10 +132,12 @@ async function downloadProblem(year, day) {
   fs.writeFileSync(instructionPath, problemHtml.match(/<main>[\S\s]*<\/main>/g)[0], 'utf-8')
 
   if (!(fs.existsSync(solutionPart1))) {
+    blueprint = blueprint.replaceAll('${{PART}}', 1)
     fs.writeFileSync(solutionPart1Todo, blueprint, 'utf-8')
     console.log('Downloaded Part 1 - Day ', day, instructionPath, inputPathNormal)
 
   } else if (problemHtml.match(/<p>Your puzzle answer was <code>[\dA-Za-z]+<\/code>.<\/p>/g)?.length < 2) {
+    blueprint = blueprint.replaceAll('${{PART}}', 2)
     fs.writeFileSync(solutionPart2Todo, blueprint, 'utf-8')
     console.log('Downloaded Part 2 - Day ', day, instructionPath, inputPathNormal)
     return
