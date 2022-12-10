@@ -171,9 +171,6 @@ class CPU {
     const cpuProgramm = this.#cpuProgramm
     const instructionSet = this.#intstructionSet
 
-    // Draw one time on first cylce!
-    this.#drawOnCRT()
-
     // Execute until CPU is at end of Programm
     // With the programm counter and that any loop instructions should work too!
     while (programmCounter <= cpuProgramm.length - 1) {
