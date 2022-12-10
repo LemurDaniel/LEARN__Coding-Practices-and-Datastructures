@@ -69,13 +69,18 @@ class CPU {
 
     *ADD(reg, literal) {
 
+      // Start Cycle 1 
+      yield 1 // During Cycle 1
+
+      // End of Cycle 1
       const result = this.#register[reg] + literal
 
-      yield 1 // End of first cycle still not finished
+      // Start Cycle 2 
+      yield 2 // During Cycle 2
 
+      // End of Cycle 2, value is saved
       this.#register[reg] = result
 
-      yield 2 // End of second cylce, value is saved
     }
   }
 
@@ -152,20 +157,16 @@ class CPU {
       console.group()
       // Executes Current Instruction Until all needed Cycles
       for (const cycle of instruction) {
-        if (argument.includes('TEST'))
-          console.log(`Executed Cycle: ${cycle}`)
 
-        // Increase Cylce by one
-        this.#clockCycles++
-
-        // It is importan to places block after cycle increase => so that at end of Cycle 1, increase to 2, means that the following is executed DURING the Cycle, not after the Cylce!
-        // Calculate signal Strength every 20, 60, 100, 140, etc. Cylce
+        // During Cycle
         if (this.#clockCycles % 40 == 20) {
           console.log(`Caluclate Signal Strength at Cycles ${this.#clockCycles}:  ${this.#registers['X']} * ${this.#clockCycles} == ${this.#registers['X'] * this.#clockCycles}`)
           this.#registers['SIGNAL_STRENGTH'] += this.#registers['X'] * this.#clockCycles
         }
 
-        yield // <== Only Exectues on Cycle on Iterator-Call
+        // End of Cycle
+        if (argument.includes('TEST')) console.log(`Executed Cycle: ${cycle}`)
+        yield this.#clockCycles++// <== Only Exectues on Cycle on Iterator-Call
       }
       console.groupEnd()
 
