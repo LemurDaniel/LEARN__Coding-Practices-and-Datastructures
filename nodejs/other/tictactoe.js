@@ -345,7 +345,7 @@ class BoardState {
                 continue
 
             // Label for identifing pointer in VCB: opt_<boardDepth>_<maximizingPlayer>_board
-            let name = `opt_${boardState.boardDepth}__bias_${boardState.biasedPlayer}_player${boardState.player}__${boardState.board.replace(/#/g, 'E')}_TO_${boardState.preferedMove.board.replace(/#/g, 'E')}`
+            let name = `opt_${boardState.boardDepth}__bias_${boardState.biasedPlayer}_player${boardState.player}__${boardState.board.replace(/#/g, 'E')}_${this.state.substring(0,3)}_TO_${boardState.preferedMove.board.replace(/#/g, 'E')}_${boardState.preferedMove.state.substring(0,3)}${boardState.preferedMove.wins ?? 0}`
             let addr = boardState.BitAddress
             let move = boardState.preferedMoveBits
             let biasBit = boardState.biasedPlayer == TicTacToe.PLAYERS[0] ? 1 : 0 // When Player 'O' highest bit is Zero and vice Versa
