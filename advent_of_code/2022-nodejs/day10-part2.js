@@ -91,9 +91,9 @@ class CPU {
   // Testing some new Syntax
   #intstructionSet;
 
-  // programm Counter and cpuProgramm (Input) as Array of Codelines
-  #cpuProgramm;
-  #executor;
+  // programm (Input) as Array of Codelines
+  #programm;
+  #process;
 
   #clockCycles;
   #registers;
@@ -103,6 +103,12 @@ class CPU {
   static CRT_DRAWN = '#'
   #CRTScreen;
 
+  get process() {
+    if (!this.#process)
+      this.#process = this.#executeCycles()
+
+    return this.#process
+  }
 
   get #programmCounter() {
     return this.#registers['PROGRAMM_COUNTER']
@@ -112,7 +118,7 @@ class CPU {
     return this.#registers['PROGRAMM_COUNTER'] = value
   }
 
-  constructor(cpuProgramm) {
+  constructor(programm) {
     // Initialize Registers
     this.#registers = {
       'PROGRAMM_COUNTER': 0,
@@ -120,8 +126,7 @@ class CPU {
       'X': 1
     }
 
-    this.#executor = this.#executeCycles()
-    this.#cpuProgramm = cpuProgramm
+    this.#programm = programm
 
     this.#clockCycles = 1
     this.#intstructionSet = new CPU.INSTRUCTION_SET(this.#registers)
@@ -136,10 +141,7 @@ class CPU {
   ///////////////////////////////////////////////////
 
   nextCycle() {
-    if (this.#executor.next().done)
-      return false
-    else
-      return true
+    return !this.process.next().done
   }
 
   printCurrentCRT() {
@@ -151,15 +153,15 @@ class CPU {
     const currentPixelCRT = (this.#clockCycles - 1) % CRTScreen[0].length
     const currentRowCRT = Math.floor((this.#clockCycles - 1) / CRTScreen[0].length)
 
-     // Subtract spritelength to middle, so it points to sprite position from very left
-    const currentSpritePosition = this.#registers['X'] - 1 
-    const spritePositionsCovered = Array(3).fill(currentSpritePosition).map((pos,idx) => pos + idx)
+    // Subtract spritelength to middle, so it points to sprite position from very left
+    const currentSpritePosition = this.#registers['X'] - 1
+    const spritePositionsCovered = Array(3).fill(currentSpritePosition).map((pos, idx) => pos + idx)
 
     // Draw when part of the Sprite is in the current CRT Pixel
-    if(spritePositionsCovered.includes(currentPixelCRT)) 
+    if (spritePositionsCovered.includes(currentPixelCRT))
       this.#CRTScreen[currentRowCRT][currentPixelCRT] = CPU.CRT_DRAWN
 
-    if(argument.includes('TEST')) {
+    if (argument.includes('TEST')) {
       console.log(`/////////////////////////////////////////////\nClock Cycle: ${this.#clockCycles}`)
       this.printCurrentCRT()
     }
@@ -168,15 +170,15 @@ class CPU {
   * #executeCycles() {
 
     let programmCounter = this.#programmCounter
-    const cpuProgramm = this.#cpuProgramm
+    const programm = this.#programm
     const instructionSet = this.#intstructionSet
 
     // Execute until CPU is at end of Programm
     // With the programm counter and that any loop instructions should work too!
-    while (programmCounter <= cpuProgramm.length - 1) {
+    while (programmCounter <= programm.length - 1) {
 
       // Get Code Line
-      const lineOfCode = cpuProgramm[programmCounter]
+      const lineOfCode = programm[programmCounter]
 
       // Get Corressponding Instruction
       const instruction = instructionSet.GET(lineOfCode.split(/\s+/))
@@ -184,7 +186,7 @@ class CPU {
       console.group()
       // Executes Current Instruction Until all needed Cycles
       for (const cycle of instruction) {
-             
+
         // During Cycle
         this.#drawOnCRT()
 
@@ -207,7 +209,7 @@ class CPU {
 // Create CPU with provided Programm.
 const cpu = new CPU(input)
 
-if(argument.includes('TEST'))
+if (argument.includes('TEST'))
   console.log('\n== CPU Start Executing ==\n')
 
 while (cpu.nextCycle()) { }

@@ -91,12 +91,19 @@ class CPU {
   // Testing some new Syntax
   #intstructionSet;
 
-  // programm Counter and cpuProgramm (Input) as Array of Codelines
-  #cpuProgramm;
-  #executor;
+  // programm (Input) as Array of Codelines
+  #programm;
+  #process;
 
   #clockCycles;
   #registers;
+
+  get process() {
+    if (!this.#process)
+      this.#process = this.#executeCycles()
+
+    return this.#process
+  }
 
   get signalStrength() {
     return this.#registers['SIGNAL_STRENGTH']
@@ -110,7 +117,7 @@ class CPU {
     return this.#registers['PROGRAMM_COUNTER'] = value
   }
 
-  constructor(cpuProgramm) {
+  constructor(programm) {
     // Initialize Registers
     this.#registers = {
       'PROGRAMM_COUNTER': 0,
@@ -118,8 +125,7 @@ class CPU {
       'X': 1
     }
 
-    this.#executor = this.#executeCycles()
-    this.#cpuProgramm = cpuProgramm
+    this.#programm = programm
 
     this.#clockCycles = 1
     this.#intstructionSet = new CPU.INSTRUCTION_SET(this.#registers)
@@ -130,24 +136,21 @@ class CPU {
   ///////////////////////////////////////////////////
 
   nextCycle() {
-    if (this.#executor.next().done)
-      return false
-    else
-      return true
+    return !this.process.next().done
   }
 
   * #executeCycles() {
 
     let programmCounter = this.#programmCounter
-    const cpuProgramm = this.#cpuProgramm
+    const programm = this.#programm
     const instructionSet = this.#intstructionSet
 
     // Execute until CPU is at end of Programm
     // With the programm counter and that any loop instructions should work too!
-    while (programmCounter <= cpuProgramm.length - 1) {
+    while (programmCounter <= programm.length - 1) {
 
       // Get Code Line
-      const lineOfCode = cpuProgramm[programmCounter]
+      const lineOfCode = programm[programmCounter]
 
       // Get Corressponding Instruction
       const instruction = instructionSet.GET(lineOfCode.split(/\s+/))
