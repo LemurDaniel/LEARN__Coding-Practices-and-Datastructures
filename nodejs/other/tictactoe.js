@@ -189,9 +189,9 @@ class BoardState {
     miniMax(depth = 1) {
 
         if (this.state == 'WIN')
-            return BoardState.REWARDS.WIN - depth
+            return BoardState.REWARDS.WIN * this.wins - depth
         else if (this.state == 'LOSS')
-            return BoardState.REWARDS.LOSS + depth
+            return BoardState.REWARDS.LOSS * this.wins + depth
         else if (this.state == 'DRAW')
             return BoardState.REWARDS.DRAW
 
@@ -228,6 +228,7 @@ class BoardState {
         this.player = game.player
         this.state = game.gameState
         if (this.state == 'WIN') {
+            this.wins = game.wins
             if (game.winner == biasedPlayer)
                 this.state = 'WIN'
             else
@@ -521,5 +522,5 @@ function getOutputForVCB() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
 
-// getOutputForVCB()
+getOutputForVCB()
 mainLoop()
