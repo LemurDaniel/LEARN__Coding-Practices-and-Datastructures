@@ -161,7 +161,7 @@ class Monkey {
     => One way to handle it would be using something like BigInt to handle aribtary big numbers.
 
     However skimming through the Input, one Monkey has 'Old * Old', which means exponential Growth
-    Not only that but it's every Round so actually '(((Old1 ^ Old1) ^ Old2) ^ Old3) ^ Old4) ^ ...) at 10_000 Rounds are uncomutalbe numbers.
+    Not only that but it's every Round so actually '(((Old1 ^ 2) ^ 2) ^ 2) ^ 2) ^ ...) at 10_000 Rounds are uncomutalbe numbers.
     => Apperently there is a Word for it 'Tetration'
 
   To keep the numbers down a simple modulo can be performed after each operation. To don't mess with the correct divisibilty of the 
