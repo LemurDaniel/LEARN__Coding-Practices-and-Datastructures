@@ -119,31 +119,37 @@ async function downloadProblem(year, day) {
     .replaceAll('${{INPUT_TEST}}', inputFileTest(day))
     .replaceAll('${{DAY}}', day)
 
-  const solutionPart1 = `${folderPathProblems(year)}/${solutionFile(day, 1)}`
   const solutionPart1Todo = `${folderPathProblems(year)}/${solutionFile(day, 1, SOLUTION_POSTFIX)}`
-  const solutionPart2 = `${folderPathProblems(year)}/${solutionFile(day, 2)}`
   const solutionPart2Todo = `${folderPathProblems(year)}/${solutionFile(day, 2, SOLUTION_POSTFIX)}`
 
   const instructionPath = `${folderPathProblems(year)}/${instructionFile(day)}`
   const inputPathNormal = `${folderPathInput(year)}/${inputFileNormal(day)}`
   const inputPathTest = `${folderPathInput(year)}/${inputFileTest(day)}`
 
-
   fs.writeFileSync(instructionPath, problemHtml.match(/<main>[\S\s]*<\/main>/g)[0], 'utf-8')
 
-  if (!(fs.existsSync(solutionPart1))) {
+
+  const solutionPart1Exists = fs.readdirSync(folderPathProblems(year))
+    .filter(fileName => fileName.match(solutionFile(day, 1).replace('.', '[^.]*.'))).length > 0
+
+  const solutionPart2Exists = fs.readdirSync(folderPathProblems(year))
+    .filter(fileName => fileName.match(solutionFile(day, 2).replace('.', '[^.]*.'))).length > 0
+
+  const part2Unlocked = problemHtml.match(/<p>Your puzzle answer was <code>[\dA-Za-z]+<\/code>.<\/p>/g)?.length < 2
+
+  if (!solutionPart1Exists) {
     blueprint = blueprint.replaceAll('${{PART}}', 1)
     fs.writeFileSync(solutionPart1Todo, blueprint, 'utf-8')
     console.log('Downloaded Part 1 - Day ', day, instructionPath, inputPathNormal)
 
-  } else if (problemHtml.match(/<p>Your puzzle answer was <code>[\dA-Za-z]+<\/code>.<\/p>/g)?.length < 2) {
+  } else if (!solutionPart2Exists && part2Unlocked) {
     blueprint = blueprint.replaceAll('${{PART}}', 2)
     fs.writeFileSync(solutionPart2Todo, blueprint, 'utf-8')
     console.log('Downloaded Part 2 - Day ', day, instructionPath, inputPathNormal)
     return
 
   } else {
-    console.log('Downloaded - Day ', day, 'No New Content')
+    // console.log('Downloaded - Day ', day, 'No New Content')
     return
   }
 
@@ -151,8 +157,10 @@ async function downloadProblem(year, day) {
   for (; length >= 0 && problemInput[length] == ''; length--) { }
   const problemInputContent = problemInput.slice(0, length + 1).join('\r\n') // Encode CRLF files
 
+  if (!fs.existsSync(inputPathTest))
+    fs.writeFileSync(inputPathTest, ' <<< PUT TEST DATA HERE >>> ', 'utf-8')
+
   fs.writeFileSync(inputPathNormal, problemInputContent, 'utf-8')
-  fs.writeFileSync(inputPathTest, ' <<< PUT TEST DATA HERE >>> ', 'utf-8')
 
 }
 
