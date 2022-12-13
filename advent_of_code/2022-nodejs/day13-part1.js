@@ -100,12 +100,10 @@ function comparePackets(packetLeft, packetRight, print = false, depth = 0) {
     // Compare elements at that index.
     const result = comparePackets(packetLeft[index], packetRight[index], print, depth + 1)
 
-    // console.log(result)
     // If either element is bigger or smaller, return that results.
-    if (result == 0)
-      continue
+    if (result != 0)
+      return result
 
-    return result
   }
 
   // If neither bigger nor smaller element found, both list are equals, according to the rules specified.
