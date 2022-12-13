@@ -56,14 +56,13 @@ Helper.printMatrix = function (mat, rows_vertical = true, len = 4) {
 
 Helper.printArray = function (arr, mapDepth = 0, maxLen = 100, bl = ', ', open = '[ ', close = ' ]') {
 
-    let str = '';
+    if (!Array.isArray(arr))
+        return Helper.default_StringConverter(arr, mapDepth + 2);
 
+    let str = '';
     for (let i = 0; i < arr.length; i++) {
 
-        if (Array.isArray(arr[i]))
-            str += Helper.printArray(arr[i], mapDepth, maxLen, bl, '( ', ' )');
-        else
-            str += Helper.default_StringConverter(arr[i], mapDepth + 2, typeof arr[i] === 'object');
+        str += Helper.printArray(arr[i], mapDepth, maxLen, bl, '( ', ' )');
 
         if (i > maxLen) {
             str += ' >>> ' + (arr.length - i) + ' more items ';
