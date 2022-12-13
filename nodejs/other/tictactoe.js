@@ -333,22 +333,16 @@ class BoardState {
 
             if (boardState.boardDepth > boardDepth)
                 return
-
-            //NOTE Virtual Circuit Board Limitation => Pointer can't be at address 0x0
-            // Doesn't matter since in my Virtual Circuit Board Game, Player 'O' always starts second and state can therefore never be reached
-            if (boardState.boardDepth == 0 && boardState.biasedPlayer == TicTacToe.PLAYERS[1])
-                continue
-
+                
             //NOTE: In my Virtual Circuit Board Implementation only the moves where the current biased player can take are needed
-            // And Player 1 is always 'X' whereas Player 2 is always 'O'
             if (boardState.biasedPlayer != boardState.player)
                 continue
 
             // Label for identifing pointer in VCB: opt_<boardDepth>_<maximizingPlayer>_board
-            let name = `opt_${boardState.boardDepth}__bias_${boardState.biasedPlayer}_player${boardState.player}__${boardState.board.replace(/#/g, 'E')}_${this.state.substring(0,3)}_TO_${boardState.preferedMove.board.replace(/#/g, 'E')}_${boardState.preferedMove.state.substring(0,3)}${boardState.preferedMove.wins ?? 0}`
+            let name = `opt_${boardState.boardDepth}__bias_${boardState.biasedPlayer}_player${boardState.player}__${boardState.board.replace(/#/g, 'E')}_${this.state.substring(0, 3)}_TO_${boardState.preferedMove.board.replace(/#/g, 'E')}_${boardState.preferedMove.state.substring(0, 3)}${boardState.preferedMove.wins ?? 0}`
             let addr = boardState.BitAddress
             let move = boardState.preferedMoveBits
-            let biasBit = boardState.biasedPlayer == TicTacToe.PLAYERS[0] ? 1 : 0 // When Player 'O' highest bit is Zero and vice Versa
+            let biasBit = boardState.biasedPlayer == TicTacToe.PLAYERS[0] ? 0 : 1 // When Player 'X' highest bit is Zero and vice Versa
 
             if (hex) {
                 addr = `0x${parseInt(`${biasBit}${addr}`, 2).toString(16)}`
@@ -496,21 +490,32 @@ function getOutputForVCB() {
     // Create Writestream to append each iteration
     const stream = fs.createWriteStream(filename, { flags: 'a' });
 
-    stream.write('\n')
-    stream.write(`# Memory Addresses for all games player with bias to Player: 'O'\n`)
-    stream.write('\n')
-    // bias Player 'O'
-    tictactoeSolver = new BoardState(9, TicTacToe.PLAYERS[1])
+    stream.write('#\n')
+    stream.write(`# Memory Addresses for all Gamestates with bias to Player: 'O'\n`)
+    stream.write(`# Starting Player is 'X'\n`)
+    stream.write('#\n')
+
+
+    // Bias Player 'O' wiht 'X' as Starting Player
+    let game = new TicTacToe(null, 0)
+    tictactoeSolver = new BoardState(9, TicTacToe.PLAYERS[1], game)
     for (const vcb_output of tictactoeSolver.printVCBPointersToboardDepth(9, false)) {
         console.log(vcb_output)
         stream.write(vcb_output + '\n')
     }
+ 
 
-    stream.write('\n')
-    stream.write(`# Memory Addresses for all games player with bias to Player: 'X'\n`)
-    stream.write('\n')
-    // bias Player 'X'
-    tictactoeSolver = new BoardState(9, TicTacToe.PLAYERS[0])
+    BoardState.BOARDSTATES = {} // TODO
+
+    stream.write('#\n')
+    stream.write(`# Memory Addresses for all Gamestates with bias to Player: 'O'\n`)
+    stream.write(`# Starting Player is 'O'\n`)
+    stream.write('#\n')
+
+
+    // Bias Player 'O' wiht 'O' as Starting Player
+    game = new TicTacToe(null, 1)
+    tictactoeSolver = new BoardState(9, TicTacToe.PLAYERS[1], game)
     for (const vcb_output of tictactoeSolver.printVCBPointersToboardDepth(9, false)) {
         console.log(vcb_output)
         stream.write(vcb_output + '\n')
@@ -523,4 +528,4 @@ function getOutputForVCB() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
 
 getOutputForVCB()
-mainLoop()
+// mainLoop()
