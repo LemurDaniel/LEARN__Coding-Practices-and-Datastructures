@@ -1,4 +1,3 @@
-const Helper = require('../../nodejs/Helper')
 const { Datastructures, Utils } = require('../_lib/lib.js')
 const process = require('process')
 const fs = require('fs');
@@ -31,6 +30,8 @@ const Vector = Datastructures.Vector
 ///////////////////////////////////////////////////////////
 
 const GRID_BOUNDS = {
+  EMPTY: '.',
+  VISIT: '#',
   x: {
     min: 0,
     max: 0,
@@ -86,7 +87,7 @@ function printableGrid(head, tail, visited) {
   const GRID = genGrid().map((row, rowIdx) =>
     // Invert Y-Axis since Y(Min) is Highest Row in Grid and Y(Max) row 0. 
     row.map((col, colIdx) => [rowIdx, colIdx])
-      .map(pos => pos in visitedInRange ? '#' : '.')
+      .map(pos => pos in visitedInRange ? GRID_BOUNDS.VISIT : GRID_BOUNDS.EMPTY)
   )
 
 
@@ -101,7 +102,7 @@ function printableGrid(head, tail, visited) {
   GRID[tPrint.y][tPrint.x] = 'T'
 
   // console.log(hPrint, tPrint)
-  return Helper.printMatrix(GRID, true, 2)
+  return Utils.Print.fromMatrix(GRID, 2)
 
 }
 

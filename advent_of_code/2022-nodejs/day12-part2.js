@@ -1,5 +1,3 @@
-const { NodeQueue } = require('../../nodejs/datastructures/queue')
-const Helper = require('../../nodejs/Helper')
 const { Datastructures, Utils } = require('../_lib/lib.js')
 const process = require('process')
 const fs = require('fs');
@@ -153,7 +151,7 @@ printMatrix[endVector.y][endVector.x] = END
 printMatrix[startVector.y][startVector.x] = START
 
 if (argument.includes('TEST'))
-  console.log(Helper.printMatrix(printMatrix))
+  console.log(Utils.Print.fromMatrix(printMatrix))
 
 ///////////////////////////////////////////////////////////////
 

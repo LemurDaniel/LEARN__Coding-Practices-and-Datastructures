@@ -1,4 +1,4 @@
-const Helper = require('../../nodejs/Helper')
+const { Datastructures, Utils } = require('../_lib/lib.js')
 const process = require('process')
 const fs = require('fs');
 

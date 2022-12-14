@@ -1,6 +1,5 @@
-const Helper = require('../../nodejs/Helper')
-const process = require('process')
 const { Datastructures, Utils } = require('../_lib/lib.js')
+const process = require('process')
 const fs = require('fs');
 
 // NOTE:
@@ -158,9 +157,9 @@ printMatrix[endVector.y][endVector.x] = END
 printMatrix[startVector.y][startVector.x] = START
 
 if (argument.includes('TEST'))
-  console.log(Helper.printMatrix(printMatrix))
+  console.log(Utils.Print.fromMatrix(printMatrix))
 else
-  fs.writeFileSync(`./day12-part1-1.${argument.toLowerCase()}.txt`, Helper.printMatrix(printMatrix, true, 6), 'utf-8')
+  fs.writeFileSync(`./day12-part1-1.${argument.toLowerCase()}.txt`, Utils.Print.fromMatrix(printMatrix, 6), 'utf-8')
 
 console.log(`\n The shortest Path from Start to End involves ${matrix[startVector.y][startVector.x]} Steps.\n`)
 

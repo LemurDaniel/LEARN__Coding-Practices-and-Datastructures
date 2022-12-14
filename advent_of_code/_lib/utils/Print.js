@@ -60,6 +60,8 @@ class Print {
   // Sequence is placed in center and padded on both ends.
   static UniformString(length, sequence = '', padding = ' ') {
 
+    sequence = Converter.toString(sequence)
+
     if (sequence.length >= length)
       return sequence
 
@@ -72,7 +74,7 @@ class Print {
 
   ///////////////////////////////////////////////////////////////
 
-  static fromMatrix(matrix, padding = 1, verticalRow = true) {
+  static fromMatrix(matrix, padding = 4, paddingCenter = true, verticalRow = true) {
 
     const printable = []
 
@@ -80,11 +82,13 @@ class Print {
     for (let [row, col, val, _lineEnd] of Iterator.fromMatrix(matrix, verticalRow)) {
 
       val = Converter.toString(val)
+      val = paddingCenter ? Print.UniformString(padding, val) : val
       line.push(val)
 
       if (_lineEnd) {
         line.push('\n')
-        line = line.join(Print.RepeatedString(padding))
+        const joiner = !paddingCenter ? Print.RepeatedString(padding) : ''
+        line = line.join(joiner)
         printable.push(line)
         line = []
       }
@@ -98,6 +102,10 @@ class Print {
   ///////////////////////////////////////////////////////////////
 
   static fromArray(argument, presentation = 0, maxLength = 100, depth = 0) {
+
+    if (!Array.isArray(argument))
+      return Converter.toString(argument, depth)
+
 
     switch (presentation) {
       case 0:
@@ -117,18 +125,13 @@ class Print {
     const brackets = presentation[
       Math.min(depth, presentation.length - 1)
     ]
-    const printable = [brackets[0]]
 
+    const printable = [brackets[0]]
     for (let [index, value, _end] of Iterator.fromArray(argument)) {
 
-      if (!Array.isArray(value)) {
-        value = Converter.toString(value, depth + 1);
-        printable.push(' ', value, (!_end ? brackets[1] : ' '))
-      }
-      else {
-        value = Print.fromArray(value, presentation, maxLength, depth + 1)
-        printable.push(' ', ...value, (!_end ? brackets[1] : ' '))
-      }
+      value = Print.fromArray(value, presentation, maxLength, depth + 1)
+      value = [' ', value, (!_end ? brackets[1] : ' ')].join('')
+      printable.push(value)
 
       if (lengthTracker.value-- <= 0 && argument.length - index - 1 < 0) {
         printable.push(' >>> ' + (argument.length - index - 1) + ' more items ')
@@ -138,7 +141,7 @@ class Print {
     }
     printable.push(brackets[2])
 
-    return depth == 0 ? printable.join('') : printable
+    return printable.join('')
 
   }
 
@@ -159,13 +162,13 @@ class Converter {
   static toString(object, testcase) {
 
     if (object === null || object === undefined)
-      return `${object}`;
+      return `${object}`
+
+    if (typeof object === 'number')
+      return `${object}`
 
     if (object instanceof Error)
       return { [object.name]: object };
-
-    if (typeof object === 'number')
-      return object
 
     if (typeof object === 'string')
       return Converter.fromString(object, testcase);

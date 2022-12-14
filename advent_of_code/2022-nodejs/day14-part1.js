@@ -45,10 +45,10 @@ const Bounds = {
   max: new Vector(0, 500)
 }
 const Characters = {
-  AIR: `⚪`,
-  ROCK: `🪨`,
-  SOURCE: `👾`,
-  SAND: `🥪` // Couldn't Find Sand-Emoji, but Sandwich is close enough for me.
+  AIR: argument.includes('TEST') ? '.' : `⚪`,
+  ROCK: argument.includes('TEST') ? '#' : `🪨`,
+  SOURCE: argument.includes('TEST') ? '+' : `👾`,
+  SAND: argument.includes('TEST') ? 'O' : `🥪` // Couldn't Find Sand-Emoji, but Sandwich is close enough for me.
 }
 
 const POSITIONS = {}
@@ -161,6 +161,6 @@ const visual = new Array(Bounds.max.y - Bounds.min.y + 1).fill(Characters.AIR)
   )
 
 if (argument.includes('TEST'))
-  console.log(Utils.Print.fromMatrix(visual, 1))
+  console.log(Utils.Print.fromMatrix(visual, 2))
 else
-  fs.writeFileSync(`./day14-part1.${argument.toLowerCase()}.txt`, Utils.Print.fromMatrix(visual, 1), 'utf-8')
+  fs.writeFileSync(`./day14-part1.${argument.toLowerCase()}.txt`, Utils.Print.fromMatrix(visual, 1, false), 'utf-8')

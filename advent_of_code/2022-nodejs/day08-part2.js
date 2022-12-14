@@ -1,4 +1,4 @@
-const Helper = require('../../nodejs/Helper')
+const { Datastructures, Utils } = require('../_lib/lib.js')
 const process = require('process')
 const fs = require('fs');
 
@@ -76,6 +76,6 @@ const ScenicMap = Array(input.length).fill(EMPTY)
 const heighestPossibleScore = ScenicMap.flat().reduce((max, score) => Math.max(max, score))
 
 console.log('\n Map of trees with their Heighest Scenic Score: ')
-console.log(Helper.printMatrix(ScenicMap, true, 3))
+console.log(Utils.Print.fromMatrix(ScenicMap))
 
 console.log(` Heighest Scenic Score in Treescape: ${heighestPossibleScore}\n`)

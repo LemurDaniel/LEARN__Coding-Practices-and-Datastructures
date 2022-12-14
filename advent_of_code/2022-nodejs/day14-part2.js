@@ -1,4 +1,3 @@
-const Helper = require('../../nodejs/Helper')
 const { Datastructures, Utils } = require('../_lib/lib.js')
 const process = require('process')
 const fs = require('fs');
@@ -47,10 +46,10 @@ const Bounds = {
   max: new Vector(0, 500)
 }
 const Characters = {
-  AIR: `⚪`,
-  ROCK: `🪨`,
-  SOURCE: `👾`,
-  SAND: `🥪` // Couldn't Find Sand-Emoji, but Sandwich is close enough for me.
+  AIR: argument.includes('TEST') ? '.' : `⚪`,
+  ROCK: argument.includes('TEST') ? '#' : `🪨`,
+  SOURCE: argument.includes('TEST') ? '+' : `👾`,
+  SAND: argument.includes('TEST') ? 'O' : `🥪` // Couldn't Find Sand-Emoji, but Sandwich is close enough for me.
 }
 
 const POSITIONS = {}
@@ -160,12 +159,12 @@ const visual = new Array(Bounds.max.y - Bounds.min.y + 1).fill(Characters.AIR)
       .fill(Characters.AIR)
       .map((col, colIdx) => new Vector(rowIdx + Bounds.min.y, colIdx + Bounds.min.x))
       .map(vector =>
-        vector.is(SourceVector) ? Characters.SOURCE : (POSITIONS[vector] ?? Characters.AIR))
+        vector.is(SourceVector) ? Characters.SOURCE : (vector.y == FloorVector.y ? Characters.ROCK : (POSITIONS[vector] ?? Characters.AIR)))
   )
 
 
 // With emojies the offset seem off in the output, but the file seems to work on my machine
 if (argument.includes('TEST'))
-  console.log(Utils.Print.fromMatrix(visual, 1))
+  console.log(Utils.Print.fromMatrix(visual, 2))
 else
-  fs.writeFileSync(`./day14-part2.${argument.toLowerCase()}.txt`, Utils.Print.fromMatrix(visual, 1), 'utf-8')
+  fs.writeFileSync(`./day14-part2.${argument.toLowerCase()}.txt`, Utils.Print.fromMatrix(visual, 1, false), 'utf-8')

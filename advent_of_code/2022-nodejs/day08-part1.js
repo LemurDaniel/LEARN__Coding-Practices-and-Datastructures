@@ -1,4 +1,4 @@
-const Helper = require('../../nodejs/Helper')
+const { Datastructures, Utils } = require('../_lib/lib.js')
 const fs = require('fs');
 
 const argument = process.argv[2] ?? 'TEST'
@@ -96,5 +96,5 @@ const visibleEdge = input.length * 4 - 4
 const visibleInteror = solution.flat().filter(v => v != EMPTY).length - visibleEdge
 
 
-console.log(Helper.printMatrix(solution, true, 1))
+console.log(Utils.Print.fromMatrix(solution))
 console.log(` There are a total of ${visibleEdge + visibleInteror} Trees visible. (Edge: ${visibleEdge}, Interior ${visibleInteror})\n`)

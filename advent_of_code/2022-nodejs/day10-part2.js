@@ -1,4 +1,4 @@
-const Helper = require('../../nodejs/Helper')
+const { Datastructures, Utils } = require('../_lib/lib.js')
 const process = require('process')
 const fs = require('fs');
 
@@ -145,7 +145,7 @@ class CPU {
   }
 
   printCurrentCRT() {
-    console.log(Helper.printMatrix(this.#CRTScreen, true, 2))
+    console.log(Utils.Print.fromMatrix(this.#CRTScreen, 2), '\n')
   }
   // Called 
   #drawOnCRT() {

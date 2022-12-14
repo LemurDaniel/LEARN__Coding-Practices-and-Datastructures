@@ -1,4 +1,4 @@
-const Helper = require('../../nodejs/Helper')
+const { Datastructures, Utils } = require('../_lib/lib.js')
 const process = require('process')
 const fs = require('fs');
 
@@ -52,8 +52,8 @@ Number.prototype.compareTo = function (num) {
 function comparePackets(packetLeft, packetRight, print = false, depth = 0) {
 
   if (print)
-    console.log(Helper.uniformString('', depth * 2), '- Compare: ',
-      Helper.printArray(packetLeft), ' vs ', Helper.printArray(packetRight))
+    console.log(Utils.Print.RepeatedString(depth * 2), '- Compare: ',
+      Utils.Print.fromArray(packetLeft, 1), ' vs ', Utils.Print.fromArray(packetRight, 1))
 
   // Check what type each packet is
   const packetTypes = [
@@ -141,8 +141,8 @@ if (argument.includes('TEST')) {
 
   sortedInput.forEach(packetPair => {
     console.log('------------------------------------')
-    console.log(Helper.printArray(packetPair[0]))
-    console.log(Helper.printArray(packetPair[1]))
+    console.log(Utils.Print.fromArray(packetPair[0], 1))
+    console.log(Utils.Print.fromArray(packetPair[1], 1))
   })
   console.log('------------------------------------')
 }
