@@ -1,4 +1,5 @@
 const Helper = require('../../nodejs/Helper')
+const Utils = require('../_utils/Utils')
 const process = require('process')
 const fs = require('fs');
 
@@ -16,7 +17,11 @@ switch (argument) {
     throw 'Argument not Valid'
 }
 
+// Prepare Input
 const input = fileContent.split('\r\n')
+
+// Get Needed Classes
+// const Vector = Utils.Vector
 
 /*
     ###########################################################################################
@@ -139,16 +144,16 @@ function convertRange(vector) {
   return vector
 }
 
-function print(rope) {
+function printableGrid(rope) {
 
   // Horrible garbage Code
   const visitedInRange = Object.keys(Rope.VISITED)
-      .map(v => v.split(','))
-      .map(v => new Vector(v[0], v[1]))
-      .map(v => convertRange(v))
-      .map(v => [v.y, v.x])
-      .map(v => ({ [v]: v }))
-      .reduce((acc, v) => ({ ...acc, ...v }), {})
+    .map(v => v.split(','))
+    .map(v => new Vector(v[0], v[1]))
+    .map(v => convertRange(v))
+    .map(v => [v.y, v.x])
+    .map(v => ({ [v]: v }))
+    .reduce((acc, v) => ({ ...acc, ...v }), {})
 
   const GRID = genGrid().map((row, rowIdx) =>
     // Invert Y-Axis since Y(Min) is Highest Row in Grid and Y(Max) row 0. 
@@ -165,7 +170,7 @@ function print(rope) {
     rope = rope.next
   }
 
-  console.log(Helper.printMatrix(GRID, true, 2))
+  return Helper.printMatrix(GRID, true, 2)
 
 }
 
@@ -234,13 +239,18 @@ input.map(v => v.split(' '))
 
     for (let i = 0; i < steps; i++) {
       ropeHead.step(Rope.STEPPING_DIRECTIONS[direction])
-      if (argument.includes('TEST')) print(ropeHead)
+      if (argument.includes('TEST'))
+        console.log(printableGrid(ropeHead))
     }
 
   })
 
 
 console.log('||| Finished Simulation|||')
+
+if (!argument.includes('TEST'))
+  fs.writeFileSync(`./day09-part2.${argument.toLowerCase()}.txt`, printableGrid(ropeHead), 'utf-8')
+
 
 console.log(`\n The Rope Tail has visited ${Object.keys(Rope.VISITED).length} Places.`)
 console.log()

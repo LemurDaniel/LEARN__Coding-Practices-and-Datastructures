@@ -1,4 +1,5 @@
 const Helper = require('../../nodejs/Helper')
+const Utils = require('../_utils/Utils')
 const process = require('process')
 const fs = require('fs');
 
@@ -23,7 +24,11 @@ switch (argument.toUpperCase()) {
     throw 'Argument not Valid'
 }
 
+// Prepare Input
 const input = fileContent.split('\r\n')
+
+// Get Needed Classes
+// const Vector = Utils.Vector
 
 /*
     ###########################################################################################

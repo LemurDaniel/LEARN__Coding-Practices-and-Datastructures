@@ -1,5 +1,6 @@
 const { NodeQueue } = require('../../nodejs/datastructures/queue')
 const Helper = require('../../nodejs/Helper')
+const Utils = require('../_utils/Utils')
 const process = require('process')
 const fs = require('fs');
 
@@ -24,7 +25,11 @@ switch (argument.toUpperCase()) {
     throw 'Argument not Valid'
 }
 
+// Prepare Input
 const input = fileContent.split('\r\n').map(v => v.split(''))
+
+// Get Needed Classes
+const Vector = Utils.Vector
 
 /*
     ###########################################################################################
@@ -33,44 +38,6 @@ const input = fileContent.split('\r\n').map(v => v.split(''))
     ###########################################################################################
 */
 
-
-class Vector {
-
-  #x;
-  #y;
-
-  static add(vector0, vector1) {
-    return vector0.copy.add(vector1)
-  }
-
-  get x() {
-    return this.#x
-  }
-
-  get y() {
-    return this.#y
-  }
-
-  get copy() {
-    return new Vector(this.#y, this.#x)
-  }
-
-  constructor(y, x) {
-    this.#y = y
-    this.#x = x
-  }
-
-  is(vector) {
-    return this.#x == vector.#x && this.#y == vector.#y
-  }
-
-  add(vector) {
-    this.#y += vector.#y
-    this.#x += vector.#x
-    return this
-  }
-
-}
 
 // Find Ending Position
 function* matrixIterator(mat) {

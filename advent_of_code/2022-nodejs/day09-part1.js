@@ -1,4 +1,5 @@
 const Helper = require('../../nodejs/Helper')
+const Utils = require('../_utils/Utils')
 const process = require('process')
 const fs = require('fs');
 
@@ -14,7 +15,11 @@ switch (argument.toUpperCase()) {
     throw 'Argument not Valid'
 }
 
+// Prepare Input
 const input = fileContent.split('\r\n')
+
+// Get Needed Classes
+const Vector = Utils.Vector
 
 /*
     ###########################################################################################
@@ -22,40 +27,6 @@ const input = fileContent.split('\r\n')
     ####################               Solve AOC below                  #######################
     ###########################################################################################
 */
-
-///////////////////////////////////////////////////////////
-
-class Vector {
-
-  get copy() {
-    return new Vector(this.y, this.x)
-  }
-
-  constructor(y, x) {
-    this.y = parseInt(y)
-    this.x = parseInt(x)
-  }
-
-  toString() {
-    return `(${this.y}; ${this.x})`
-  }
-
-  dist(vector) {
-    return Math.sqrt(Math.pow(this.y - vector.y, 2) + Math.pow(this.x - vector.x, 2))
-  }
-
-  set(vector) {
-    this.y = vector.y
-    this.x = vector.x
-    return
-  }
-
-  add(vector) {
-    this.y += vector.y
-    this.x += vector.x
-    return this
-  }
-}
 
 ///////////////////////////////////////////////////////////
 
@@ -96,7 +67,7 @@ function convertRange(vector) {
   return vector
 }
 
-function print(head, tail, visited) {
+function printableGrid(head, tail, visited) {
 
   // Horrible garbage Code
   const visitedInRange = Object.keys(visited)
@@ -125,7 +96,7 @@ function print(head, tail, visited) {
   GRID[tPrint.y][tPrint.x] = 'T'
 
   // console.log(hPrint, tPrint)
-  console.log(Helper.printMatrix(GRID, true, 2))
+  return Helper.printMatrix(GRID, true, 2)
 
 }
 
@@ -172,7 +143,7 @@ function step(direction, steps) {
 
 
     if (argument.includes('TEST'))
-      print(head, tail, visited)
+      console.log(printableGrid(head, tail, visited))
 
   }
 
