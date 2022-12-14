@@ -1,5 +1,4 @@
-const Helper = require('../../nodejs/Helper')
-const Utils = require('../_utils/Utils')
+const { Datastructures, Utils } = require('../_lib/lib.js')
 const process = require('process')
 const fs = require('fs');
 
@@ -28,7 +27,7 @@ switch (argument.toUpperCase()) {
 const input = fileContent.split('\r\n')
 
 // Get Needed Classes
-// const Vector = Utils.Vector
+// const Vector = Datastructures.Vector
 
 /*
     ###########################################################################################

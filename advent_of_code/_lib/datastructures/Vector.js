@@ -31,6 +31,14 @@ class Vector {
   #x;
   #y;
 
+  set x(value) {
+    this.#x = value
+  }
+
+  set y(value) {
+    this.#y = value
+  }
+
   get x() {
     return this.#x
   }

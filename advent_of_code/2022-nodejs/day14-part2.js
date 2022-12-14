@@ -1,5 +1,5 @@
 const Helper = require('../../nodejs/Helper')
-const Utils = require('../_utils/Utils')
+const { Datastructures, Utils } = require('../_lib/lib.js')
 const process = require('process')
 const fs = require('fs');
 
@@ -28,7 +28,7 @@ switch (argument.toUpperCase()) {
 const input = fileContent.split('\r\n').map(v => v.split(' -> '))
 
 // Get Needed Classes
-const Vector = Utils.Vector
+const Vector = Datastructures.Vector
 
 /*
     ###########################################################################################
@@ -47,10 +47,10 @@ const Bounds = {
   max: new Vector(0, 500)
 }
 const Characters = {
-  AIR: '.',
-  ROCK: '#',
-  SOURCE: '+',
-  SAND: 'O'
+  AIR: `⚪`,
+  ROCK: `🪨`,
+  SOURCE: `👾`,
+  SAND: `🥪` // Couldn't Find Sand-Emoji, but Sandwich is close enough for me.
 }
 
 const POSITIONS = {}
@@ -84,12 +84,15 @@ function processLine(line) {
 const Lines = input.map(
   line => line.map(
     vector => new Vector(...vector.split(',').reverse())
-  )
-    .reverse().map(
-      (v, i, arr) => v.sub(arr[i + 1] ?? Vector.NULL)
-    )
-)
-  .forEach(line => processLine(line))
+  ).reverse().map(
+    (vector, index, arr) => {
+      Bounds.max.y = Math.max(Bounds.max.y, vector.y)
+      Bounds.max.x = Math.max(Bounds.max.x, vector.x)
+      Bounds.min.y = Math.min(Bounds.min.y, vector.y)
+      Bounds.min.x = Math.min(Bounds.min.x, vector.x)
+      return vector.sub(arr[index + 1] ?? Vector.NULL)
+    })
+).forEach(line => processLine(line))
 
 ///////////////////////////////////////////////////////////////
 
@@ -117,15 +120,10 @@ function processNextSandFlock() {
 
   }
 
-  Bounds.max.set(
-    Math.max(Bounds.max.y, sandFlock.y),
-    Math.max(Bounds.max.x, sandFlock.x)
-  )
-
-  Bounds.min.set(
-    Math.min(Bounds.min.y, sandFlock.y),
-    Math.min(Bounds.min.x, sandFlock.x)
-  )
+  Bounds.max.y = Math.max(Bounds.max.y, sandFlock.y)
+  Bounds.max.x = Math.max(Bounds.max.x, sandFlock.x)
+  Bounds.min.y = Math.min(Bounds.min.y, sandFlock.y)
+  Bounds.min.x = Math.min(Bounds.min.x, sandFlock.x)
 
   // Finalize Sandflock position
   POSITIONS[sandFlock] = Characters['SAND']
@@ -153,20 +151,21 @@ console.log(`\n  There is a total of ${restingSandFlocks.length} before until th
 
 /// Visuals 
 
-Bounds.max.add(1, 2)
-Bounds.min.sub(0, 3)
+Bounds.max.add(1, 1)
+Bounds.min.sub(1, 1)
 
-const visual = new Array(Bounds.max.y + 1).fill(Characters.AIR)
+const visual = new Array(Bounds.max.y - Bounds.min.y + 1).fill(Characters.AIR)
   .map((row, rowIdx) =>
     Array(Bounds.max.x - Bounds.min.x + 1)
       .fill(Characters.AIR)
-      .map((col, colIdx) => new Vector(rowIdx, colIdx + Bounds.min.x + 1))
+      .map((col, colIdx) => new Vector(rowIdx + Bounds.min.y, colIdx + Bounds.min.x))
       .map(vector =>
-        vector.y == FloorVector.y ? Characters.ROCK :
-          (vector.is(SourceVector) ? Characters.SOURCE : (POSITIONS[vector] ?? Characters.AIR)))
+        vector.is(SourceVector) ? Characters.SOURCE : (POSITIONS[vector] ?? Characters.AIR))
   )
 
+
+// With emojies the offset seem off in the output, but the file seems to work on my machine
 if (argument.includes('TEST'))
-  console.log(Helper.printMatrix(visual, true, 1))
+  console.log(Utils.Print.fromMatrix(visual, 1))
 else
-  fs.writeFileSync(`./day14-part2.${argument.toLowerCase()}.txt`, Helper.printMatrix(visual, true, 1), 'utf-8')
+  fs.writeFileSync(`./day14-part2.${argument.toLowerCase()}.txt`, Utils.Print.fromMatrix(visual, 1), 'utf-8')
