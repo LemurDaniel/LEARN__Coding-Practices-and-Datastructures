@@ -21,7 +21,7 @@ switch (argument) {
 const input = fileContent.split('\r\n')
 
 // Get Needed Classes
-// const Vector = Utils.Vector
+const Vector = Utils.Vector
 
 /*
     ###########################################################################################
@@ -32,77 +32,18 @@ const input = fileContent.split('\r\n')
 
 ///////////////////////////////////////////////////////////
 
-class Vector {
+Vector.prototype.limit = function (vector) {
+  // Getting all numbers, especially diagonals in range [1,-1] for movement
+  const signX = this.x >= 0 ? 1 : -1
+  const signY = this.y >= 0 ? 1 : -1
+  this.set(
+    this.y != 0 ? this.y / this.y * signY : this.y,
+    this.x != 0 ? this.x / this.x * signX : this.x
+  )
 
-  get copy() {
-    return new Vector(this.y, this.x)
-  }
-
-  get heading() {
-    const [PI, TAU] = [Math.PI, Math.PI * 2]
-
-    if (this.x == 0)
-      return this.y > 0 ? (PI / 2) : (3 * PI / 2)
-
-    if (this.x > 0)
-      // Add TAU and do Modulo to not get the negative angle like -90, but 270 instead as radians in this case.
-      return (TAU + Math.atan(this.y / this.x)) % TAU
-
-    if (this.x < 0)
-      return Math.PI + Math.atan(this.y / this.x)
-  }
-
-  get magnitue() {
-    return Math.sqrt(Math.pow(this.y - this.y, 2))
-  }
-
-  constructor(y, x) {
-    this.y = parseInt(y)
-    this.x = parseInt(x)
-  }
-
-  toString() {
-    return `(${this.y}; ${this.x})`
-  }
-
-  dist(vector) {
-    return Math.sqrt(Math.pow(this.y - vector.y, 2) + Math.pow(this.x - vector.x, 2))
-  }
-
-  set(vector) {
-    this.y = vector.y
-    this.x = vector.x
-    return
-  }
-
-  add(vector) {
-    this.y += vector.y
-    this.x += vector.x
-    return this
-  }
-
-  diff(vector) {
-    return new Vector(
-      this.y - vector.y,
-      this.x - vector.x
-    )
-  }
-
-  round() {
-    this.x = Math.round(this.x)
-    this.y = Math.round(this.y)
-  }
-
-  limit() {
-    // Getting all numbers, especially diagonals in range [1,-1] for movement
-    const signX = this.x >= 0 ? 1 : -1
-    const signY = this.y >= 0 ? 1 : -1
-    this.x = this.x != 0 ? this.x / this.x * signX : this.x
-    this.y = this.y != 0 ? this.y / this.y * signY : this.y
-
-    return this
-  }
+  return this
 }
+
 
 ///////////////////////////////////////////////////////////
 
@@ -135,11 +76,16 @@ function convertRange(vector) {
 
   vector = vector.copy
   // Move Vectors in Positive Range for putting in Grid
-  vector.x += Math.abs(GRID_BOUNDS.x.min)
-  vector.y += Math.abs(GRID_BOUNDS.y.min)
+  vector.add(
+    Math.abs(GRID_BOUNDS.y.min),
+    Math.abs(GRID_BOUNDS.x.min)
+  )
 
   // Invert Y-Axis since Y(Min) is Highest Row in Grid and Y(Max) row 0. 
-  vector.y = GRID_BOUNDS.y.length - vector.y - 1
+  vector.set(
+    GRID_BOUNDS.y.length - vector.y - 1,
+    vector.x
+  )
 
   return vector
 }
@@ -208,7 +154,7 @@ class Rope extends Vector {
   follow(predecessor) {
 
     if (this.dist(predecessor) >= 2) {
-      this.add(predecessor.diff(this).limit())
+      this.add(Vector.sub(predecessor, this).limit())
       this.adjustGridSize()
       // Call Recursivley on following rope parts to move whole rope
       this.next?.follow(this)

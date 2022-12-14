@@ -58,11 +58,16 @@ function convertRange(vector) {
 
   vector = vector.copy
   // Move Vectors in Positive Range for putting in Grid
-  vector.x += Math.abs(GRID_BOUNDS.x.min)
-  vector.y += Math.abs(GRID_BOUNDS.y.min)
+  vector.add(
+    Math.abs(GRID_BOUNDS.y.min),
+    Math.abs(GRID_BOUNDS.x.min)
+  )
 
   // Invert Y-Axis since Y(Min) is Highest Row in Grid and Y(Max) row 0. 
-  vector.y = GRID_BOUNDS.y.length - vector.y - 1
+  vector.set(
+    GRID_BOUNDS.y.length - vector.y - 1,
+    vector.x
+  )
 
   return vector
 }
@@ -155,6 +160,10 @@ input.map(v => v.split(' '))
   .forEach(([direction, steps]) => step(direction, steps))
 
 console.log('||| Finished |||')
+
+if (!argument.includes('TEST'))
+  fs.writeFileSync(`./day09-part1.${argument.toLowerCase()}.txt`, printableGrid(head, tail, visited), 'utf-8')
+
 
 console.log(`\n The Rope Tail has visited ${Object.keys(visited).length} Places.`)
 console.log()

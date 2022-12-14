@@ -1,5 +1,5 @@
 
-module.exports = class Vector {
+class Vector {
 
   ////// Static Methods, Attributes, Getters, Setters
 
@@ -7,12 +7,23 @@ module.exports = class Vector {
     return new Vector(0, 0)
   }
 
-  static add(vector0, vector1) {
-    return vector0.copy.add(vector1)
+  static add(vector0, ...args) {
+    return vector0.copy.add(Vector.#processArgs(...args))
   }
 
-  static sub(vector0, vector1) {
-    return vector0.copy.sub(vector1)
+  static sub(vector0, ...args) {
+    return vector0.copy.sub(Vector.#processArgs(...args))
+  }
+
+  static #processArgs(...args) {
+
+    if (args[0] instanceof Vector)
+      return args[0]
+    else if (typeof args[0] == 'number')
+      return new Vector(...args)
+    else
+      throw `Error with Type: '${args[0].constructor.name}' || '${typeof args[0]}'`
+
   }
 
   ////// Instance Methods, Attributes, Getters, Setters
@@ -33,7 +44,7 @@ module.exports = class Vector {
   }
 
   get magnitue() {
-    return Math.sqrt(Math.pow(this.y - this.y, 2))
+    return Math.sqrt(Math.pow(this.y, 2) + Math.pow(this.x, 2))
   }
 
   get heading() {
@@ -62,49 +73,43 @@ module.exports = class Vector {
   ////// constructors
 
   constructor(y, x) {
-    this.#y = parseInt(y)
-    this.#x = parseInt(x)
+    this.#y = parseFloat(y ?? 0)
+    this.#x = parseFloat(x ?? 0)
   }
 
 
   ////// Instance Methods
 
-  is(vector) {
+  is(...args) {
+    const vector = Vector.#processArgs(...args)
     return this.#x == vector.#x && this.#y == vector.#y
   }
 
-  set(vector) {
+  set(...args) {
+    const vector = Vector.#processArgs(...args)
     this.#y = vector.#y
     this.#x = vector.#x
     return this
   }
 
-  add(vector) {
+  add(...args) {
+    const vector = Vector.#processArgs(...args)
     this.#y += vector.#y
     this.#x += vector.#x
     return this
   }
 
-  sub(vector) {
+  sub(...args) {
+    const vector = Vector.#processArgs(...args)
     this.#y -= vector.#y
     this.#x -= vector.#x
     return this
   }
 
-  mul(vector) {
-
-    switch (vector.constructor) {
-
-      case Number:
-        this.#y *= vector
-        this.#x *= vector
-        break
-
-      case Vector:
-        this.#y *= vector.#y
-        this.#x *= vector.#x
-        break
-    }
+  mul(...args) {
+    const vector = Vector.#processArgs(...args)
+    this.#y *= vector
+    this.#x *= vector
     return this
   }
 
@@ -121,9 +126,11 @@ module.exports = class Vector {
     return this
   }
 
-
   dist(vector) {
     return Math.sqrt(Math.pow(this.y - vector.y, 2) + Math.pow(this.x - vector.x, 2))
   }
 
 }
+
+
+module.exports = Vector
