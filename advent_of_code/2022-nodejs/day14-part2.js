@@ -38,10 +38,14 @@ const Vector = Utils.Vector
 */
 
 
-///////////////////////////////////////////////////////////////
-
+//////////////////////////////////////////////////////////////
 const FloorVector = new Vector(0, 0)
 const SourceVector = new Vector(0, 500)
+
+const Bounds = {
+  min: new Vector(0, 500),
+  max: new Vector(0, 500)
+}
 const Characters = {
   AIR: '.',
   ROCK: '#',
@@ -73,6 +77,7 @@ function processLine(line) {
 
     if (position.y + 2 > FloorVector.y)
       FloorVector.set(new Vector(position.y + 2, 0))
+
   }
 }
 
@@ -112,6 +117,16 @@ function processNextSandFlock() {
 
   }
 
+  Bounds.max.set(
+    Math.max(Bounds.max.y, sandFlock.y),
+    Math.max(Bounds.max.x, sandFlock.x)
+  )
+
+  Bounds.min.set(
+    Math.min(Bounds.min.y, sandFlock.y),
+    Math.min(Bounds.min.x, sandFlock.x)
+  )
+
   // Finalize Sandflock position
   POSITIONS[sandFlock] = Characters['SAND']
   return sandFlock
@@ -132,3 +147,26 @@ console.clear()
 console.log('\n///////////////////////////////////////////////////////////////')
 
 console.log(`\n  There is a total of ${restingSandFlocks.length} before until the Sandsource is covered.\n`)
+
+
+///////////////////////////////////////////////////////////////
+
+/// Visuals 
+
+Bounds.max.add(1, 2)
+Bounds.min.sub(0, 3)
+
+const visual = new Array(Bounds.max.y + 1).fill(Characters.AIR)
+  .map((row, rowIdx) =>
+    Array(Bounds.max.x - Bounds.min.x + 1)
+      .fill(Characters.AIR)
+      .map((col, colIdx) => new Vector(rowIdx, colIdx + Bounds.min.x + 1))
+      .map(vector =>
+        vector.y == FloorVector.y ? Characters.ROCK :
+          (vector.is(SourceVector) ? Characters.SOURCE : (POSITIONS[vector] ?? Characters.AIR)))
+  )
+
+if (argument.includes('TEST'))
+  console.log(Helper.printMatrix(visual, true, 1))
+else
+  fs.writeFileSync(`./day14-part2.${argument.toLowerCase()}.txt`, Helper.printMatrix(visual, true, 1), 'utf-8')
