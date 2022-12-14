@@ -9,7 +9,7 @@ const fs = require('fs');
 //    'node .\day13-part2.js INPUT'    to process Todays input from 'day13-input.txt'.
 //
 //  Enter:
-//    'node .\day13-part2.js INPUT'    to process Todays Testinput from 'day13-input-test.txt'.
+//    'node .\day13-part2.js TEST'     to process Todays Testinput from 'day13-input-test.txt'.
 //    'node .\day13-part2.js'          to process Todays Testinput from 'day13-input-test.txt'.
 
 const argument = (process.argv[2] ?? 'TEST').toUpperCase()

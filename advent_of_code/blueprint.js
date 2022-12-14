@@ -10,7 +10,7 @@ const fs = require('fs');
 //    'node .\day${{DAY}}-part${{PART}}.js INPUT'    to process Todays input from '${{INPUT_NORMAL}}'.
 //
 //  Enter:
-//    'node .\day${{DAY}}-part${{PART}}.js INPUT'    to process Todays Testinput from '${{INPUT_TEST}}'.
+//    'node .\day${{DAY}}-part${{PART}}.js TEST'     to process Todays Testinput from '${{INPUT_TEST}}'.
 //    'node .\day${{DAY}}-part${{PART}}.js'          to process Todays Testinput from '${{INPUT_TEST}}'.
 
 const argument = (process.argv[2] ?? 'TEST').toUpperCase()
