@@ -48,7 +48,7 @@ class Vector {
   }
 
   get copy() {
-    return new Vector(this.#y, this.#x)
+    return new Vector(this.#x, this.#y)
   }
 
   get magnitue() {
@@ -74,13 +74,13 @@ class Vector {
   }
 
   toString() {
-    return `(${this.#y}, ${this.#x})`
+    return `(${this.#x.toLocaleString()}, ${this.#y.toLocaleString()})`
   }
 
 
   ////// constructors
 
-  constructor(y, x) {
+  constructor(x, y) {
     this.#y = parseFloat(y ?? 0)
     this.#x = parseFloat(x ?? 0)
   }
@@ -135,7 +135,11 @@ class Vector {
   }
 
   dist(vector) {
-    return Math.sqrt(Math.pow(this.y - vector.y, 2) + Math.pow(this.x - vector.x, 2))
+    return Vector.sub(this, vector).magnitue
+  }
+
+  manhattenDist(vector) {
+    return Math.abs(this.x - vector.x) + Math.abs(this.y - vector.y)
   }
 
 }

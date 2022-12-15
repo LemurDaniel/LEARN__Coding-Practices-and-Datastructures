@@ -39,10 +39,10 @@ const Vector = Datastructures.Vector
 
 ///////////////////////////////////////////////////////////////
 
-const SourceVector = new Vector(0, 500)
+const SourceVector = new Vector(500, 0)
 const Bounds = {
-  min: new Vector(0, 500),
-  max: new Vector(0, 500)
+  min: new Vector(500, 0),
+  max: new Vector(500, 0)
 }
 const Characters = {
   AIR: argument.includes('TEST') ? '.' : `⚪`,
@@ -78,7 +78,7 @@ function processLine(line) {
 
 const Lines = input.map(
   line => line.map(
-    vector => new Vector(...vector.split(',').reverse())
+    vector => new Vector(...vector.split(','))
   ).reverse().map(
     (vector, index, arr) => {
       Bounds.max.y = Math.max(Bounds.max.y, vector.y)
@@ -96,8 +96,8 @@ function processNextSandFlock() {
   const sandFlock = SourceVector.copy
   const directions = [
     new Vector(1, 1),   // DownRiht
-    new Vector(1, -1),  // DownLeft
-    new Vector(1, 0)    // Down
+    new Vector(-1, 1),  // DownLeft
+    new Vector(0, 1)    // Down
   ]
 
   for (let i = 0; ; i++) {
@@ -155,9 +155,9 @@ const visual = new Array(Bounds.max.y - Bounds.min.y + 1).fill(Characters.AIR)
   .map((row, rowIdx) =>
     Array(Bounds.max.x - Bounds.min.x + 1)
       .fill(Characters.AIR)
-      .map((col, colIdx) => new Vector(rowIdx + Bounds.min.y, colIdx + Bounds.min.x))
+      .map((col, colIdx) => new Vector(colIdx + Bounds.min.x, rowIdx + Bounds.min.y))
       .map(vector =>
-        vector.is(SourceVector) ? Characters.SOURCE : (POSITIONS[vector] ?? Characters.AIR))
+        vector.is(SourceVector) ? Characters.SOURCE : ((POSITIONS[vector] ?? Characters.AIR)))
   )
 
 if (argument.includes('TEST'))

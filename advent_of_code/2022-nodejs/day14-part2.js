@@ -39,11 +39,11 @@ const Vector = Datastructures.Vector
 
 //////////////////////////////////////////////////////////////
 const FloorVector = new Vector(0, 0)
-const SourceVector = new Vector(0, 500)
+const SourceVector = new Vector(500, 0)
 
 const Bounds = {
-  min: new Vector(0, 500),
-  max: new Vector(0, 500)
+  min: new Vector(500, 0),
+  max: new Vector(500, 0)
 }
 const Characters = {
   AIR: argument.includes('TEST') ? '.' : `⚪`,
@@ -64,7 +64,6 @@ function processLine(line) {
   POSITIONS[position] = Characters['ROCK']
 
   while (vectors.length > 0) {
-
     const delta = vectors.pop()
     const target = Vector.add(position, delta)
     const step = delta.copy.limit()
@@ -74,15 +73,16 @@ function processLine(line) {
       POSITIONS[position] = Characters['ROCK']
     }
 
-    if (position.y + 2 > FloorVector.y)
-      FloorVector.set(new Vector(position.y + 2, 0))
-
+    if (position.y + 2 > FloorVector.y) {
+      FloorVector.y = position.y + 2
+      Bounds.max.y = FloorVector.y
+    }
   }
 }
 
 const Lines = input.map(
   line => line.map(
-    vector => new Vector(...vector.split(',').reverse())
+    vector => new Vector(...vector.split(','))
   ).reverse().map(
     (vector, index, arr) => {
       Bounds.max.y = Math.max(Bounds.max.y, vector.y)
@@ -92,7 +92,7 @@ const Lines = input.map(
       return vector.sub(arr[index + 1] ?? Vector.NULL)
     })
 ).forEach(line => processLine(line))
-
+console.log(POSITIONS)
 ///////////////////////////////////////////////////////////////
 
 function processNextSandFlock() {
@@ -100,8 +100,8 @@ function processNextSandFlock() {
   const sandFlock = SourceVector.copy
   const directions = [
     new Vector(1, 1),   // DownRiht
-    new Vector(1, -1),  // DownLeft
-    new Vector(1, 0)    // Down
+    new Vector(-1, 1),  // DownLeft
+    new Vector(0, 1)    // Down
   ]
 
   for (let i = 0; ; i++) {
@@ -157,11 +157,10 @@ const visual = new Array(Bounds.max.y - Bounds.min.y + 1).fill(Characters.AIR)
   .map((row, rowIdx) =>
     Array(Bounds.max.x - Bounds.min.x + 1)
       .fill(Characters.AIR)
-      .map((col, colIdx) => new Vector(rowIdx + Bounds.min.y, colIdx + Bounds.min.x))
+      .map((col, colIdx) => new Vector(colIdx + Bounds.min.x, rowIdx + Bounds.min.y))
       .map(vector =>
         vector.is(SourceVector) ? Characters.SOURCE : (vector.y == FloorVector.y ? Characters.ROCK : (POSITIONS[vector] ?? Characters.AIR)))
   )
-
 
 // With emojies the offset seem off in the output, but the file seems to work on my machine
 if (argument.includes('TEST'))

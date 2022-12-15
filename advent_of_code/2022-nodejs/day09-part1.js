@@ -60,15 +60,12 @@ function convertRange(vector) {
   vector = vector.copy
   // Move Vectors in Positive Range for putting in Grid
   vector.add(
-    Math.abs(GRID_BOUNDS.y.min),
-    Math.abs(GRID_BOUNDS.x.min)
+    Math.abs(GRID_BOUNDS.x.min),
+    Math.abs(GRID_BOUNDS.y.min)
   )
 
   // Invert Y-Axis since Y(Min) is Highest Row in Grid and Y(Max) row 0. 
-  vector.set(
-    GRID_BOUNDS.y.length - vector.y - 1,
-    vector.x
-  )
+  vector.y = GRID_BOUNDS.y.length - vector.y - 1
 
   return vector
 }
@@ -78,7 +75,7 @@ function printableGrid(head, tail, visited) {
   // Horrible garbage Code
   const visitedInRange = Object.keys(visited)
     .map(v => v.split(','))
-    .map(v => new Vector(v[0], v[1]))
+    .map(v => new Vector(v[1], v[0]))
     .map(v => convertRange(v))
     .map(v => [v.y, v.x])
     .map(v => ({ [v]: v }))
@@ -118,10 +115,10 @@ const tail = new Vector(0, 0)
 function step(direction, steps) {
 
   const steppingDirection = {
-    'U': new Vector(1, 0),
-    'R': new Vector(0, 1),
-    'D': new Vector(-1, 0),
-    'L': new Vector(0, -1),
+    'U': new Vector(0, 1),
+    'R': new Vector(1, 0),
+    'D': new Vector(0, -1),
+    'L': new Vector(-1, 0),
   }[direction]
 
 

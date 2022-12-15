@@ -62,10 +62,10 @@ for (const [row, col, val] of matrixIterator(input)) {
   matrix[row][col] = Infinity
 
   if (val == START)
-    startVector = new Vector(row, col)
+    startVector = new Vector(col, row)
 
   if (val == END) {
-    endVector = new Vector(row, col)
+    endVector = new Vector(col, row)
     matrix[row][col] = 0
     vectors.push(endVector)
   }
@@ -79,8 +79,8 @@ function getValidNextMoves(pos) {
   const directions = Array(4).fill(0)
     .map((v, i) => Math.PI / 2 * i)
     .map(v => new Vector(
-      Math.round(Math.sin(v)), // vert
-      Math.round(Math.cos(v))  // hori
+      Math.round(Math.cos(v)),  // hori
+      Math.round(Math.sin(v)) // vert
     ))
 
   const moves = []

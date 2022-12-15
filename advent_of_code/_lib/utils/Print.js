@@ -68,7 +68,7 @@ class Depth {
 // ######### PRINT METHODS
 // ############################################################################
 
-class Print {
+class Print extends Depth {
 
   static RepeatedString(length, sequence = ' ') {
     return Array(length).fill(sequence).join('')
@@ -120,7 +120,7 @@ class Print {
 
   ///////////////////////////////////////////////////////////////
 
-  static fromArray(argument, presentation = 0, maxLength = 100) {
+  static fromArray(argument, presentation = 0, converter = Print.fromArray, maxLength = 100) {
 
     if (!Array.isArray(argument))
       return Depth.Track(Converter.toString, argument)
@@ -148,7 +148,7 @@ class Print {
     const printable = [brackets[0]]
     for (let [index, value, _end] of Iterator.fromArray(argument)) {
 
-      value = Depth.Track(Print.fromArray, value, presentation, maxLength)
+      value = Depth.Track(converter, value, presentation, maxLength)
       value = [' ', value, (!_end ? brackets[1] : ' ')].join('')
       printable.push(value)
 
@@ -175,7 +175,7 @@ class Print {
 
 }
 
-class Converter {
+class Converter extends Depth {
 
   // Standard converter to convert arguments into string for display in console.
   static toString(object, referenceObject) {
@@ -196,7 +196,7 @@ class Converter {
       if (object.includes('\n'))
         return `\n'${object}'`;
       else
-        return `'${object}'`;
+        return object
     }
 
     if (object.constructor === Function)

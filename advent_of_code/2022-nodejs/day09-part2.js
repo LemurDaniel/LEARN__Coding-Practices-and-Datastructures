@@ -35,10 +35,8 @@ Vector.prototype.limit = function (vector) {
   // Getting all numbers, especially diagonals in range [1,-1] for movement
   const signX = this.x >= 0 ? 1 : -1
   const signY = this.y >= 0 ? 1 : -1
-  this.set(
-    this.y != 0 ? this.y / this.y * signY : this.y,
-    this.x != 0 ? this.x / this.x * signX : this.x
-  )
+  this.y = this.y != 0 ? this.y / this.y * signY : this.y
+  this.x = this.x != 0 ? this.x / this.x * signX : this.x
 
   return this
 }
@@ -77,15 +75,12 @@ function convertRange(vector) {
   vector = vector.copy
   // Move Vectors in Positive Range for putting in Grid
   vector.add(
-    Math.abs(GRID_BOUNDS.y.min),
-    Math.abs(GRID_BOUNDS.x.min)
+    Math.abs(GRID_BOUNDS.x.min),
+    Math.abs(GRID_BOUNDS.y.min)
   )
 
   // Invert Y-Axis since Y(Min) is Highest Row in Grid and Y(Max) row 0. 
-  vector.set(
-    GRID_BOUNDS.y.length - vector.y - 1,
-    vector.x
-  )
+  vector.y = GRID_BOUNDS.y.length - vector.y - 1
 
   return vector
 }
@@ -95,7 +90,7 @@ function printableGrid(rope) {
   // Horrible garbage Code
   const visitedInRange = Object.keys(Rope.VISITED)
     .map(v => v.split(','))
-    .map(v => new Vector(v[0], v[1]))
+    .map(v => new Vector(v[1], v[0]))
     .map(v => convertRange(v))
     .map(v => [v.y, v.x])
     .map(v => ({ [v]: v }))
@@ -127,10 +122,10 @@ class Rope extends Vector {
 
   static VISITED = {}
   static STEPPING_DIRECTIONS = {
-    'U': new Vector(1, 0),
-    'R': new Vector(0, 1),
-    'D': new Vector(-1, 0),
-    'L': new Vector(0, -1),
+    'U': new Vector(0, 1),
+    'R': new Vector(1, 0),
+    'D': new Vector(0, -1),
+    'L': new Vector(-1, 0),
   }
 
   constructor(len, isHead) {
