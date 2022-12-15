@@ -1,28 +1,26 @@
 
 
-function Scramble(array) {
+// Scramble anything recursivley, nestes lists etc.
+function Scramble(iterable, sameType = true) {
 
-  const unScrambled = array.map(v => v)
+  const iterator = iterable[Symbol.iterator]
+  if (undefined === iterator)
+    return iterable
 
-  for (let i = 0; i < array.length; i++) {
-    const k = Math.round(Math.random() * (array.length - 1))
-    [array[i], array[k]] = [array[k], array[i]]
+  const unScrambled = Arrays.from(iterator)
 
-    if (Array.isArray(unScrambled[i]))
+  for (const i of iterator) {
+    const k = Math.round(Math.random() * (unScrambled.length - 1))
+    [iterable[i], iterable[k]] = [iterable[k], iterable[i]]
+
+    if (sameType && !unScrambled[i] && iterable.constructor !== unScrambled[i].constructor)
+      continue
+    else
       Scramble(unScrambled[i])
   }
 
-  return array
+  return iterable
 }
-
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
-
-
 
 function Copy(object) {
 
@@ -39,6 +37,7 @@ function Copy(object) {
     return object.map(value => Copy(value))
 
   if (typeof object === 'object') {
+    ()
     return Object.keys(arg).reduce(
       (objectCopy, key) => objectCopy[key] = Copy(object[key]), new Object()
     )
