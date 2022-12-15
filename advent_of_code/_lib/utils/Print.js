@@ -1,5 +1,5 @@
 
-
+const Vector = require('../datastructures/Vector')
 
 
 class Iterator {
@@ -55,6 +55,7 @@ class Depth {
   }
 
   static Track(func, ...args) {
+    if (Depth.#depth < 0) throw 'Error'
     Depth.#depth++
     const result = func.call(null, ...args)
     Depth.#depth--
@@ -239,34 +240,91 @@ class Converter {
 
     if (string[0] !== '&') return string
 
-    // TODO Not implemened
-    const keychars = {
-      '&NA': str => Helper.string_toArray(str),
-      '&NI': str => Helper.string_toIntArray(str, ''),
-      '&AR': str => Helper.string_toIntArray(str),
-      '&PT': str => Helper.string_toIntArray(str).map(v => new Vector(v[0], v[1])),
-      '&LL': str => LinkedList.LinkedListFromString(str),
-      '&BT': str => BTree.BinaryTree.GenerateIntPreorderFromString(str),
-      '&FS': str => {
-        const args = Helper.string_toArray(str);
-        const file = fs.readFileSync(args[0], 'utf-8');
-        return convertString(args[1] + ' ' + file);
-      },
-      '&RF': str => str.split('.').reduce((obj, key) => obj[key], referenceObject)
+    // Try Converting String to specified Datatype
+    const keyChars = string.substring(0, 3)
+    string = string.substring(3).trim()
+    switch (keyChars) {
+
+      case '&NA':
+        return Converter.IntArrayFromString(string)
+      case '&NI':
+        return string.split('').map(num => parseInt(num))
+      case '&AR':
+        return Converter.BaseArrayFromString(string)
+      case '&PT':
+        return Converter.IntArrayFromString(string).map(v => new Vector(v[0], v[1]))
+      case '&LL':
+        return LinkedList.LinkedListFromString(string)
+      case '&BT':
+        return BTree.BinaryTree.GenerateIntPreorderFromString(string)
+      case '&FS':
+        const args = Converter.BaseArrayFromString(string)
+        return Converter.fromString(args[1] + fs.readFileSync(args[0], 'utf-8'))
+      case '&RF':
+        return Converter.BaseArrayFromString(string)
+
+      default:
+        throw `Not Supported '${keyChars}'`
     }
-
-    const chars = str.substr(0, 3);
-    const substr = str.substr((str[3] == ' ' ? 4 : 3), str.length);
-
-    if (chars in keychars)
-      return keychars[chars](substr);
-    else
-      return str;
 
   }
 
-  static ArrayFromString() {
-    throw "Not Implemented" // TODO
+  static BaseArrayFromString(string, converter = Converter.fromString, splitOrder = '\r\n\r\n´\r\n´|´;´,´ ') {
+
+    if (typeof string !== 'string')
+      throw 'Invalid Operation'
+    else if (string[0] === '&' && Depth.current > 0)
+      return Depth.Track(Converter.fromString, string)
+
+
+    // Try splitting and parsing array
+    const splitter = splitOrder.split('´').reverse()
+      .filter(splitter => string.includes(splitter))
+
+    if (splitter.length > 0) {
+      const array = string.split(splitter.pop())
+      for (const index in array) {
+        array[index] = Depth.Track(Converter.BaseArrayFromString, array[index], converter, splitOrder)
+      }
+      return array
+    }
+
+    // Special if array is sequence of characters and not an entry of a subarray.
+    else if (Depth.current === 0)
+      return string.split('').map(converter)
+
+    // If string can't be split further, return
+    // console.log(string)
+    return converter(string)
+
+
+  }
+
+  static IntArrayFromString(string) {
+
+    const intConverter = value => {
+
+      // Parse Binary-Encoded values
+      // parseInt ignores 0b and reads as normal int
+      // 0x gets interpreted as Hex correctly
+      if (/0b\d+/.test(value))
+        return parseInt(value.substr(2), 2)
+
+      // Special parse number as any base
+      else if (/^-{0,1}\d+#{1}b{1}\d+$/.test(value))
+        return parseInt(...value.split('#b'))
+
+      else if (value.includes('.'))
+        return isNaN(parseFloat(value)) ? value : parseFloat(value)
+
+      else if (/^-{0,1}\d+$/.test(value))
+        return parseInt(value)
+
+      else
+        return value
+    }
+
+    return Depth.Track(Converter.BaseArrayFromString, string, intConverter)
   }
 }
 
@@ -276,3 +334,5 @@ module.exports = {
   Print,
   Converter
 }
+
+// console.log(Converter.fromString('&AR &NI 123456789|&NI 123456789|&PT 1,2;2,3|&AR 1,2;2,3|&NA 1,2;2,3'))
