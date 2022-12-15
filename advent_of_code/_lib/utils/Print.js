@@ -45,6 +45,24 @@ class Iterator {
 
 }
 
+
+class Depth {
+
+  static #depth = 0
+
+  static get current() {
+    return Depth.#depth
+  }
+
+  static Track(func, ...args) {
+    Depth.#depth++
+    const result = func.call(null, ...args)
+    Depth.#depth--
+    return result
+  }
+
+}
+
 // ############################################################################
 // ######### PRINT METHODS
 // ############################################################################
@@ -81,7 +99,7 @@ class Print {
     let line = []
     for (let [row, col, val, _lineEnd] of Iterator.fromMatrix(matrix, verticalRow)) {
 
-      val = Converter.toString(val)
+      val = Depth.Track(Converter.toString, val)
       val = paddingCenter ? Print.UniformString(padding, val) : val
       line.push(val)
 
@@ -101,10 +119,10 @@ class Print {
 
   ///////////////////////////////////////////////////////////////
 
-  static fromArray(argument, presentation = 0, maxLength = 100, depth = 0) {
+  static fromArray(argument, presentation = 0, maxLength = 100) {
 
     if (!Array.isArray(argument))
-      return Converter.toString(argument, depth)
+      return Depth.Track(Converter.toString, argument)
 
 
     switch (presentation) {
@@ -123,13 +141,13 @@ class Print {
 
     // Loop through Array
     const brackets = presentation[
-      Math.min(depth, presentation.length - 1)
+      Math.min(Depth.current, presentation.length - 1)
     ]
 
     const printable = [brackets[0]]
     for (let [index, value, _end] of Iterator.fromArray(argument)) {
 
-      value = Print.fromArray(value, presentation, maxLength, depth + 1)
+      value = Depth.Track(Print.fromArray, value, presentation, maxLength)
       value = [' ', value, (!_end ? brackets[1] : ' ')].join('')
       printable.push(value)
 
@@ -158,35 +176,67 @@ class Print {
 
 class Converter {
 
-  // Converts all strings in an object to the desired object
-  static toString(object, testcase) {
+  // Standard converter to convert arguments into string for display in console.
+  static toString(object, referenceObject) {
 
-    if (object === null || object === undefined)
-      return `${object}`
+    if (object === undefined)
+      return '<undefined>'
 
-    if (typeof object === 'number')
-      return `${object}`
+    if (object === null)
+      return '<null>'
+
+    if (object.print)
+      return arg.print()
 
     if (object instanceof Error)
-      return { [object.name]: object };
+      return arg.message
+
+    if (object.constructor === String) {
+      if (object.includes('\n'))
+        return `\n'${object}'`;
+      else
+        return `'${object}'`;
+    }
+
+    if (object.constructor === Function)
+      return `[Function (${!object.name ? 'anonymous' : object.name})]`
+
+    if (Array.isArray(object))
+      return Depth.Track(Print.fromArray, object)
+
+    if (typeof object === 'object')
+      return Depth.Track(Print.fromObject, object, referenceObject)
+
+    return object.toString();
+  }
+
+  // Converts All Objects and any Substrings to the specified Datatype
+  static fromObject(object, referenceObject) {
+
+    if (object === null || object === undefined)
+      return object
+
+    if (typeof object === 'number')
+      return object
+
+    if (object instanceof Error)
+      return { [object.name]: object }
 
     if (typeof object === 'string')
-      return Converter.fromString(object, testcase);
-
+      return Depth.Track(Converter.fromString, object, referenceObject)
 
     for (const key of Object.keys(object)) {
-
-      object[key] = Converter.fromString(object[key], testcase);
-      object[key] = Converter.toString(object[key], testcase);
-
+      object[key] = Depth.Track(Converter.fromObject, object[key], referenceObject)
     }
 
   }
 
-  // Converts string to the desired object
-  static fromString(string, testcase) {
+  // Converts All Strings to the specified Datatype
+  static fromString(string, referenceObject) {
 
-    if (typeof string !== 'string') return string
+    if (typeof string !== 'string')
+      throw `Argument invalid ${string}`
+
     if (string[0] !== '&') return string
 
     // TODO Not implemened
@@ -202,11 +252,7 @@ class Converter {
         const file = fs.readFileSync(args[0], 'utf-8');
         return convertString(args[1] + ' ' + file);
       },
-      '&RF': str => {
-        let obj = testcase;
-        for (ref of str.split('.')) obj = obj[ref];
-        return obj;
-      }
+      '&RF': str => str.split('.').reduce((obj, key) => obj[key], referenceObject)
     }
 
     const chars = str.substr(0, 3);
