@@ -3,14 +3,14 @@ const process = require('process')
 const fs = require('fs');
 
 // NOTE:
-//  node .\day16-part1.js [INPUT|TEST]
+//  node .\day16-part2.js [INPUT|TEST]
 //
 //  Enter:
-//    'node .\day16-part1.js INPUT'    to process Todays input from 'day16-input.txt'.
+//    'node .\day16-part2.js INPUT'    to process Todays input from 'day16-input.txt'.
 //
 //  Enter:
-//    'node .\day16-part1.js TEST'     to process Todays Testinput from 'day16-input-test.txt'.
-//    'node .\day16-part1.js'          to process Todays Testinput from 'day16-input-test.txt'.
+//    'node .\day16-part2.js TEST'     to process Todays Testinput from 'day16-input-test.txt'.
+//    'node .\day16-part2.js'          to process Todays Testinput from 'day16-input-test.txt'.
 
 const argument = (process.argv[2] ?? 'TEST').toUpperCase()
 switch (argument.toUpperCase()) {
@@ -25,7 +25,7 @@ switch (argument.toUpperCase()) {
 
 // Prepare Input
 const Input = fileContent.split('\r\n')
-const MaxTime = 30 // minutes
+const MaxTime = 26 // minutes
 
 // Get Needed Classes
 const Queue = Datastructures.NodeQueue
@@ -143,64 +143,97 @@ Array.from(Valve).forEach(valve => valve.shortestPaths())
 
 ///////////////////////////////////////////////////////////////
 
+
 class Node {
 
-  static GetOptimalFor(valve) {
-    const root = new Node(valve)
-    return root.maximise()
+  get minute() {
+    return this.el[1] + this.me[1]
   }
 
-  constructor(valve, minute, openedValves, sumOfReleasedPressure) {
-    this.valve = valve
-    this.minute = minute ?? 0
+  constructor(me, el, openedValves, pressureSum) {
+    this.me = me
+    this.el = el
+
     this.openedValves = openedValves ?? {}
-    this.sumOfReleasedPressure = sumOfReleasedPressure ?? 0
-  }
-
-  // Do some recursion
-  maximise() {
-
-    let maximised = null
-    const previous = this
-    for (const currentValve of Valve) {
-
-      // Only consider valves, which are not already opened and have flowrates above 0
-      if (currentValve.flowRate == 0)
-        continue
-      if (currentValve in previous.openedValves)
-        continue
-
-      const [released, minute] = currentValve.realeasedPressureWhen(previous.valve, previous.minute)
-      const sumOfReleasedPressure = previous.sumOfReleasedPressure + released
-      // Cancel recursion if max time is reached
-      // Might end already sooner when no more valves are left
-      if (minute > MaxTime) continue
-      const openedValves = {
-        ...previous.openedValves,
-        [currentValve]: true
-      }
-
-
-      // Create new Node with calculated values and recurse further on it
-      const node = new Node(
-        currentValve,
-        minute,
-        openedValves,
-        sumOfReleasedPressure
-      ).maximise()
-
-      if (null == maximised || node.sumOfReleasedPressure > maximised.sumOfReleasedPressure) {
-        maximised = node
-      }
-    }
-
-    return maximised ?? this
+    this.pressureSum = pressureSum ?? 0
   }
 
 }
 
+const valve = Valve.getByName('AA')
+const root = new Node([valve, 0], [valve, 0])
+const queue = new Queue()
+queue.enqueue(root, 0)
+let maximum = root
+let test = 0
 
-// Node.GetOptimalFor(Valve.START_VALVE)
-const optimal = Node.GetOptimalFor(Valve.getByName('AA'))
+const bla = {}
 
-console.log(`\n The Most pressure which can be released in ${MaxTime} minutes is ${optimal.sumOfReleasedPressure} \n`)
+console.log('\nThis will take a bit...')
+console.log('\nNot a good one, but it is a solution')
+
+console.group()
+
+while (!queue.isEmpty) {
+
+  const nodeCurr = queue.dequeue()
+
+  if (test++ % 250_000 == 0)
+    console.log(`Nodes enqueued: ${queue.count.toLocaleString()} | Current Maximum: ${maximum.pressureSum} | Current Node: ${nodeCurr.pressureSum}`)
+
+  if (nodeCurr.minute > Math.ceil(MaxTime * 0.85) && nodeCurr.pressureSum in bla) {
+    if (nodeCurr.minute < bla[nodeCurr.pressureSum].minute)
+      bla[nodeCurr.pressureSum] = nodeCurr
+    else
+      continue
+  }
+  else
+    bla[nodeCurr.pressureSum] = nodeCurr
+
+  // Blatantly disregard any pressure sums below a certain treshhold of the current found maximum, to not totally run ot of memory
+  if (maximum.pressureSum > 0 && nodeCurr.pressureSum <= 0.1 * maximum.pressureSum)
+    continue
+
+  const el = nodeCurr.el
+  const me = nodeCurr.me
+
+  const valves = Array.from(Valve).filter(v => !(v in nodeCurr.openedValves) && v.flowRate > 0)
+  const valvesM = valves.map(v => [v, ...v.realeasedPressureWhen(...me)])
+  const valvesE = valves.map(v => [v, ...v.realeasedPressureWhen(...el)])
+
+  for (const [valveM, releasedM, minuteM] of valvesM) {
+    for (const [valveE, releasedE, minuteE] of valvesE) {
+      if (valveM == valveE) continue
+      if (minuteM > MaxTime && minuteE > MaxTime) continue
+
+      let meNew = me
+      let elNew = el
+      let pressureSum = nodeCurr.pressureSum
+      let minute = Math.min(minuteM, minuteE)
+      const openedValves = { ...nodeCurr.openedValves }
+
+      if (minuteM <= MaxTime) {
+        pressureSum += releasedM
+        openedValves[valveM] = me
+        meNew = [valveM, minuteM]
+      }
+      if (minuteE <= MaxTime) {
+        pressureSum += releasedE
+        openedValves[valveE] = el
+        elNew = [valveE, minuteE]
+      }
+
+      // Create new Node with calculated values and recurse further on it
+      const node = new Node(meNew, elNew, openedValves, pressureSum)
+      queue.enqueue(node)
+
+      if (node.pressureSum > maximum.pressureSum) {
+        maximum = node
+      }
+    }
+  }
+}
+
+
+console.log(`\nThe Most pressure which can be released in ${MaxTime} minutes is ${maximum.pressureSum}\n`)
+console.groupEnd()
