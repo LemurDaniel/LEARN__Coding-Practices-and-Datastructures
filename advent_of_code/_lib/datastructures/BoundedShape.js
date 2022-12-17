@@ -80,7 +80,7 @@ class BoundedShape extends UniqueObjectId {
 
   // Other BoundedShapes with offest drawn when drawing this one.
   // Must be withing Bounds off this shape or else not drawn.
-  #referencedShapes
+  referencedShapes
 
   constructor() {
     super()
@@ -92,7 +92,7 @@ class BoundedShape extends UniqueObjectId {
     this.enableWalls = [false, false, false, false]
     this.translation = Vector.NULL
     this.rotation = 0
-    this.#referencedShapes = {}
+    this.referencedShapes = {}
   }
 
   extendBoundsMultiple(...vector) {
@@ -151,7 +151,7 @@ class BoundedShape extends UniqueObjectId {
   }
 
   mergeShape(boundedShape, kind = BoundedShape.ROCK.STILL) {
-    delete this.#referencedShapes[boundedShape.id]
+    delete this.referencedShapes[boundedShape.id]
     this.extendBounds(boundedShape)
     for (const pos of boundedShape.iterator(BoundedShape.ITERATION.TRANSLATED)) {
       pos.kind = kind ?? pos.kind
@@ -160,7 +160,7 @@ class BoundedShape extends UniqueObjectId {
   }
 
   refrenceShape(boundedShape) {
-    this.#referencedShapes[boundedShape.id] = boundedShape
+    this.referencedShapes[boundedShape.id] = boundedShape
   }
 
   // Only collisions for non-referenced shapes
@@ -224,7 +224,7 @@ class BoundedShape extends UniqueObjectId {
     const [wup, wright, wdown, wleft] = this.enableWalls.map(Number)
     let [max, min] = [this.max.copy, this.min.copy]
 
-    for (const refShape of Object.values(this.#referencedShapes)) {
+    for (const refShape of Object.values(this.referencedShapes)) {
       if (!wup && refShape.max.y + refShape.translation.y > max.y) max.y = refShape.max.y + refShape.translation.y
       if (!wdown && refShape.min.y + refShape.translation.y > min.y) min.y = refShape.min.y + refShape.translation.y
       if (!wleft && refShape.min.x + refShape.translation.x > min.x) min.x = refShape.min.x + refShape.translation.y
@@ -240,7 +240,7 @@ class BoundedShape extends UniqueObjectId {
     }
 
     // Draw referenced bounded Shapes
-    for (const refShape of Object.values(this.#referencedShapes)) {
+    for (const refShape of Object.values(this.referencedShapes)) {
       for (const pos of refShape.iterator(BoundedShape.ITERATION.TRANSLATED)) {
         emptyGrid[max.y - pos.y - wup][pos.x + wleft + min.x] = pos.kind
       }
@@ -248,14 +248,14 @@ class BoundedShape extends UniqueObjectId {
 
     // Draw Walls left and right
     if (wleft || wright) {
-      for (let row = 0; row <= max.y + wup + wdown; row++) {
+      for (let row = 0; row < emptyGrid.length; row++) {
         if (wleft) emptyGrid[row][0] = BoundedShape.WALL.VERTICAL
         if (wright) emptyGrid[row][max.x + wleft + wright] = BoundedShape.WALL.VERTICAL
       }
     }
     // Draw Walls up and down
     if (wup || wdown) {
-      for (let col = 0; col <= max.x + wleft + wright; col++) {
+      for (let col = 0; col < emptyGrid[0].length; col++) {
         if (wup && col == 0 && wleft)
           emptyGrid[0][col] = BoundedShape.WALL.CORNER
         else if (wup && col == max.x + wleft + wright && wright)
@@ -264,11 +264,11 @@ class BoundedShape extends UniqueObjectId {
           emptyGrid[0][col] = BoundedShape.WALL.HORIZONTAL
 
         if (wdown && col == 0 && wleft)
-          emptyGrid[max.y + wup + wdown][col] = BoundedShape.WALL.CORNER
+          emptyGrid[emptyGrid[0].length - 1][col] = BoundedShape.WALL.CORNER
         else if (wdown && col == max.x + wleft + wright && wright)
-          emptyGrid[max.y + wup + wdown][col] = BoundedShape.WALL.CORNER
+          emptyGrid[emptyGrid[0].length - 1][col] = BoundedShape.WALL.CORNER
         else if (wdown)
-          emptyGrid[max.y + wup + wdown][col] = BoundedShape.WALL.HORIZONTAL
+          emptyGrid[emptyGrid[0].length - 1][col] = BoundedShape.WALL.HORIZONTAL
       }
     }
 
