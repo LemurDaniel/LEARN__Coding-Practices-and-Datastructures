@@ -153,7 +153,7 @@ while (rockCount < fallenRocks) {
   if (queue.isFull) {
     const delRock = queue.dequeue()
     for (let i = 0; i < delRock.length; i++) {
-      delete positions[delRock]
+      delete positions[delRock[i]]
     }
   }
 
