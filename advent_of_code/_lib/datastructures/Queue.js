@@ -1,126 +1,243 @@
-// Queue implementation using nodes
-// Start <== val <== val <== val <== end
-class NodeQueue {
+const { Converter } = require("../utils/Print")
+const { MinHeap, MaxHeap } = require("./Heap")
 
-  static newNode(val, next) {
-    return { val: val, next: next };
+class Queue {
+
+  #count
+
+  get count() {
+    return this.#count
   }
 
-  constructor(val) {
-    this.start = null;
-    this.end = null;
-    this.count = 0;
-    if (val) this.enqueue(val);
-  }
-
-  get isEmpty() {
-    return this.end == null;
-  }
-
-  enqueue(val) {
-
-    const insert = NodeQueue.newNode(val);
-
-    if (!this.start)
-      this.start = this.end = insert;
-    else {
-      this.start.next = insert;
-      this.start = this.start.next;
-    }
-    this.count++;
-  }
-
-  peek() {
-    if (!this.end) throw 'Queue is empty';
-    else return this.end.val;
-  }
-
-  dequeue() {
-    const val = this.peek();
-    if (this.end == this.start) this.start = null;
-    this.end = this.end.next;
-    this.count--;
-    return val;
-  }
-
-  toString(converter = v => (v != null ? v.toString() : '<NULL>')) {
-    let str = '<OUT';
-    let node = this.end;
-    while (node) {
-      str += ' | ' + converter(node.val);
-      node = node.next;
-    }
-    return str + ' | <IN';
-  }
-
-
-  print() {
-    return this.toString()
-  };
-}
-
-
-// Queue implementation using an array with a fixed length
-class ArrayQueue {
-
-  constructor(len = 100) {
-    this.arr = [];
-    this.arr.length = len + 1;
-
-    this.ptr_start = 0;
-    this.ptr_end = 0;
+  get length() {
+    return this.#count
   }
 
   get isEmpty() {
-    return this.ptr_start == this.ptr_end;
+    return this.#count === 0
   }
 
   get isFull() {
-    return (this.ptr_start + 1) % this.arr.length == this.ptr_end;
+    throw 'Not Implemented'
   }
 
-  count() {
-    let ptr_start = this.ptr_start;
-    if (ptr_start < this.ptr_end) ptr_start += this.arr.length;
-    return ptr_start - this.ptr_end;
+  constructor() {
+    this.#count = 0
   }
 
-  enqueue(val) {
-    if (this.isFull) throw 'Queue is Full';
-
-    this.arr[this.ptr_start] = val;
-    this.ptr_start = (this.ptr_start + 1) % this.arr.length
+  enqueue() {
+    this.#count++
   }
 
   peek() {
-    if (this.isEmpty) throw 'Queue is Empty';
-    else return this.arr[this.ptr_end];
+    if (this.#count <= 0) throw 'Invalid Operation: Queue is Empty!'
   }
 
   dequeue() {
-    const val = this.peek();
-    this.ptr_end = (this.ptr_end + 1) % this.arr.length;
-    return val;
+    this.peek()
+    this.#count--
+  }
+
+}
+
+///////////////////////////////////////////////////////////////
+
+// Queue implementation using nodes
+// Head <== val <== val <== val <== Tail
+class NodeQueue extends Queue {
+
+  static #Node = class Node {
+    constructor(value, next = null) {
+      this.value = value
+      this.next = next
+    }
+  }
+
+  constructor() {
+    super()
+    // Follows FiFo
+    this.head = null  // <== Elements get enqueued to head
+    this.tail = null  // <== Elements get dequeued from tail
+  }
+
+  enqueue(value) {
+    super.enqueue()
+
+    if (null === this.head) {
+      this.head = new NodeQueue.#Node(value)
+      this.tail = this.head
+    } else {
+      this.head.next = new NodeQueue.#Node(value)
+      this.head = this.head.next
+    }
+  }
+
+  peek() {
+    super.peek()
+    return this.tail.value
+  }
+
+  dequeue() {
+    super.dequeue()
+    const value = this.tail.value
+
+    this.tail = this.tail.next
+    this.head = this.tail === null ? null : this.head
+
+    return value
+  }
+
+  toString() {
+    const array = ['<OUT']
+
+    let node = this.tail
+    while (null != node) {
+      const str = Converter.toString(node.value)
+      array.push(str)
+      node = node.next
+    }
+
+    array.push('<IN')
+    return array.join(' <= ')
+  }
+
+}
+
+///////////////////////////////////////////////////////////////
+
+// Queue implementation using a Dictionary/Hashtable
+class DictionaryQueue extends Queue {
+
+  constructor(length = 100) {
+    super()
+    this.dictionary = {}
+    this.ptrHead = 0
+    this.ptrTail = 0
+  }
+
+  enqueue(value) {
+    super.enqueue()
+    this.dictionary[this.ptrHead++] = value
+  }
+
+  peek() {
+    super.peek()
+    return this.dictionary[this.ptrTail]
+  }
+
+  dequeue() {
+    super.dequeue()
+    const value = this.dictionary[this.ptrTail]
+    delete this.dictionary[this.ptrTail++]
+    return value
+  }
+
+  toString() {
+    const array = ['<OUT']
+    for (const key of Object.keys(this.dictionary)) {
+      const str = Converter.toString(this.dictionary[key])
+      array.push(str)
+    }
+    array.push('<IN')
+    return array.join(' <= ')
+  }
+
+}
+
+///////////////////////////////////////////////////////////////
+
+// Queue implementation using an array with a fixed length
+class ArrayQueue extends Queue {
+
+  get isFull() {
+    // head + 1 accounting for wrapping from array end to start
+    return (this.ptrHead + 1) % this.array.length == this.ptrTail
+  }
+
+  constructor(length = 100) {
+    super()
+    this.array = []
+    this.array.length = length + 1
+
+    this.ptrHead = 0
+    this.ptrTail = 0
+  }
+
+  enqueue(value) {
+    if (this.isFull) throw 'Queue is Full'
+    super.enqueue()
+
+    this.array[this.ptrHead] = value
+    this.ptrHead = (this.ptrHead + 1) % this.array.length
+  }
+
+  peek() {
+    super.peek()
+    return this.array[this.ptrTail]
+  }
+
+  dequeue() {
+    super.dequeue()
+    const value = this.array[this.ptrTail]
+    this.ptrTail = (this.ptrTail + 1) % this.array.length
+    return value
   }
 
   toString() {
 
-    let end = this.ptr_end;
-    let str = 'End';
+    let ptrHead = this.ptrHead
+    let ptr = this.ptrTail
 
-    while (end != this.ptr_start) {
-      str += ' | ' + this.arr[end].toString();
-      end = (end + 1) % this.arr.length;
+    const array = ['<OUT']
+    while (ptr != ptrHead) {
+      const str = Converter.toString(this.array[ptr])
+      ptr = (ptr + 1) % this.array.length
+      array.push(str)
     }
-    return str + ' | Start';
+
+    array.push('<IN')
+    return array.join(' <= ')
   }
 
-  print() {
-    return this.toString()
-  };
 }
 
+///////////////////////////////////////////////////////////////
+
+class PriorityQueue extends Queue {
+
+  static ASCENDING_ORDER = 'ASCENDING_ORDER'
+  static DESCENDING_ORDER = 'DESCENDING_ORDER'
+
+  constructor(mode = PriorityQueue.ASCENDING_ORDER) {
+    super()
+    this.heap
+
+    if (mode === PriorityQueue.ASCENDING_ORDER)
+      this.heap = new MinHeap()
+    else if (mode === PriorityQueue.DESCENDING_ORDER)
+      this.heap = new MaxHeap()
+  }
+
+  enqueue(value, priority) {
+    super.enqueue()
+    this.heap.insert(value, priority)
+  }
+
+  peek() {
+    super.peek()
+    return this.heap.peek()
+  }
+
+  dequeue() {
+    super.dequeue()
+    return this.heap.extract()
+  }
+}
+
+
 module.exports = {
+  PriorityQueue,
+  DictionaryQueue,
   ArrayQueue,
   NodeQueue
-};
+}

@@ -1,4 +1,6 @@
 
+const { Converter } = require("../utils/Print")
+
 // A heap is a binary tree like structure that either stores the minimum value as a root node, called a min heap, or the maximum value as a max heap.
 // Insertion:
 //      Every new value gets inserted at the bottom of the tree after the lefmost node.
@@ -15,143 +17,136 @@
 //      - LeftChild = ParentIndex * 2 + 1;
 //      - RightChild = ParentIndex * 2 + 2;
 
-class BaseHeapPayload {
+class BaseHeap {
 
-  #priority;
-  #payload;
+  static Node = class Node {
 
-  get payload() {
-    return this.#payload
-  }
+    priority
+    payload
 
-  get priority() {
+    toString() {
+      return Converter.toString(this.payload)
+    }
 
-    switch (typeof this.#priority) {
-
-      case 'number':
-        return this.#priority
-
-      case 'function':
-        return this.#priority(this.payload)
-
-      default:
-        throw 'Not Supported'
+    constructor(payload, priority) {
+      this.payload = payload
+      this.priority = priority
     }
 
   }
 
-  [Symbol.for('nodejs.util.inspect.custom')](depth, inspectOptions, inspect) {
-    return this.toString()
-  }
+  ///////////////////////////////////////////////////////////////
 
-  toString() {
-    return this.#payload
-  }
 
-  constructor(payload, priority) {
-    this.#payload = payload;
-    this.#priority = priority;
+  // Get Index
+  leftChildIndex(parentIndex) {
+    return parentIndex * 2 + 1;
   }
-
-}
-
-class BaseHeap {
-
-  getleftChildIndex(parentIndex) {
-    const left = parentIndex * 2 + 1;
-    if (left >= this.size) return -1;
-    else return left;
+  rightChildIndex(parentIndex) {
+    return parentIndex * 2 + 2;
   }
-  getRightChildIndex(parentIndex) {
-    const right = parentIndex * 2 + 2;
-    if (right >= this.size) return -1;
-    else return right;
-  }
-  getParentIndex(childIndex) {
+  parentIndex(childIndex) {
     return Math.floor((childIndex - 1) / 2);
   }
 
-  getleftChild(idx) {
-    return idx => this.heap[this.getleftChildIndex(idx)]
+  // Get Node by Index
+  leftChild(idx) {
+    return this.heap[this.leftChildIndex(idx)]
   }
-  getRightChild(idx) {
-    return this.heap[this.getRightChildIndex(idx)]
+  rightChild(idx) {
+    return this.heap[this.rightChildIndex(idx)]
   }
-  getParent(idx) {
-    return this.heap[this.getParentIndex(idx)]
+  parent(idx) {
+    return this.heap[this.parentIndex(idx)]
   }
 
-  hasleftChild(idx) {
-    return this.getleftChildIndex(idx) > 0
+  // Has Node by Index
+  hasLeftChild(idx) {
+    return null != this.leftChild(idx)
   }
   hasRightChild(idx) {
-    return this.getRightChildIndex(idx) > 0
+    return null != this.rightChild(idx)
   }
   hasParent(idx) {
-    return this.getParentIndex(idx) > 0
+    return null != this.parent(idx)
   }
 
   comparePriority(idx, idx2) {
-    if (idx < 0 || idx >= this.size) throw 'Illegal Operation'
-    if (idx2 < 0 || idx2 >= this.size) throw 'Illegal Operation'
+    if (idx < 0 || idx >= this.count) throw 'Invalid Operation: Index Out of Bounds'
+    if (idx2 < 0 || idx >= this.count) throw 'Invalid Operation: Index Out of Bounds'
 
-    const priority = this.heap[idx].priority;
-    const priority2 = this.heap[idx2].priority;
-
-    const comparison = priority - priority2;
-    if (comparison === 0) return comparison;
-    else if (comparison > 0) return 1;
-    else return -1;
-  }
-
-  [Symbol.for('nodejs.util.inspect.custom')](depth, inspectOptions, inspect) {
-    return this.toString()
+    const comparison = this.heap[idx].priority - this.heap[idx2].priority
+    if (comparison === 0)
+      return 0
+    else if (comparison > 0)
+      return 1
+    else
+      return -1
   }
 
   toString() {
     return this.heap
   }
 
-  get size() {
-    return this.heap.length;
+
+  ///////////////////////////////////////////////////////////////
+
+  heap
+  count
+
+  get length() {
+    return this.count
   }
 
-  heap;
-  defaultPiotizer;
-
-  constructor(defaultPiotizer) {
+  constructor() {
     this.heap = []
-    this.defaultPiotizer = defaultPiotizer
+    this.count = 0
+    this.heap.length = 100
   }
 
   swap(idx, idx2) {
-    const heap = this.heap;
-    [heap[idx], heap[idx2]] = [heap[idx2], heap[idx]];
+    // Destructuring syntax throws errors
+    // [this.heap[idx], this.heap[idx2]] = [this.heap[idx2], this.heap[idx]]
+    const temp = this.heap[idx]
+    this.heap[idx] = this.heap[idx2]
+    this.heap[idx2] = temp
   }
 
   peek() {
-    if (this.heap.length === 0) throw 'Empty'
-    else return this.heap[0].payload;
+    if (null == this.heap[0])
+      throw 'Invalid Operation: Heap is Empty!'
+    else
+      return this.heap[0].payload
   }
 
   // Remove root value an set last added value as root.
-  poll() {
-    const payload = this.peek();
-    const last = this.heap.pop();
+  extract() {
+    const payload = this.peek()
+    const heap = this.heap
+    const last = heap[this.count - 1]
+    delete heap[--this.count]
 
-    if (this.size > 0) {
-      this.heap[0] = last;
-      this.heapifyDown();
+    // When heap still has elements, then heapify down.
+    if (this.count > 0) {
+      this.heap[0] = last
+      this.heapifyDown()
     }
 
-    return payload;
+    return payload
   }
 
-  add(payload, priority = null) {
-    const insert = new BaseHeapPayload(payload, priority ?? this.defaultPiotizer ?? payload);
-    this.heap.push(insert);
-    this.heapifyUp();
+  // When adding numbers priorty is set to the number itself
+  insert(payload, priority = null) {
+    if (this.count >= this.heap.length)
+      this.heap.length = this.heap.length * 2
+
+    const node = new BaseHeap.Node(payload, priority ?? payload)
+    this.heap[this.count++] = node
+    this.heapifyUp()
   }
+
+  // TODO
+  // changePriority(i,p)
 
   heapifyDown() {
     throw new 'Not Implemented'
@@ -162,22 +157,34 @@ class BaseHeap {
   }
 }
 
+
+///////////////////////////////////////////////////////////////
+
 class MinHeap extends BaseHeap {
+
+  getMin() {
+    return super.peek()
+  }
+
+  extractMin() {
+    return super.extract()
+  }
 
   // Start from the bottom last inserted node and move upwards comparing it to its parent.
   // If it is smaller than its parent, swap both values else return.
   // If it became the root node and therefore no parents are left then return.
   heapifyUp() {
 
-    const heap = this.heap;
-    let idx = super.size - 1;
-    while (idx > 0) {
-      const parentIdx = this.getParentIndex(idx);
-      if (this.comparePriority(idx, parentIdx) >= 0)
-        return;
+    let index = this.count - 1
+    while (this.hasParent(index)) {
+      const parentIdx = this.parentIndex(index)
+      if (this.comparePriority(index, parentIdx) < 0) {
+        this.swap(parentIdx, index)
+        index = parentIdx
+      }
 
-      this.swap(parentIdx, idx);
-      idx = parentIdx;
+      // Stop heapinfying up, when parent is already smaller than the child node.
+      else return
     }
   }
 
@@ -185,63 +192,80 @@ class MinHeap extends BaseHeap {
   // If both childs are of higher priority or there are no child then return.
   heapifyDown() {
 
-    const heap = this.heap;
-    let idx = 0;
-    while (this.hasleftChild(idx)) {
-      const idxLeft = this.getleftChildIndex(idx);
-      const idxRight = this.getRightChildIndex(idx);
-      let smallerIndex = idxLeft;
+    let parentIndex = 0
+    // If no left child is present, then there can't be a right child then, so additional check would be redundant.
+    while (this.hasLeftChild(parentIndex)) {
 
-      if (idxRight !== -1 && this.comparePriority(idxRight, idxLeft) < 0)
-        smallerIndex = idxRight
+      const indexLeft = this.leftChildIndex(parentIndex)
+      const indexRight = this.rightChildIndex(parentIndex)
 
-      if (this.comparePriority(idx, smallerIndex) > 0)
-        this.swap(idx, smallerIndex);
-      else
-        return;
+      let lowestPriorityIndex = indexLeft
+      if (this.hasRightChild(parentIndex) && this.comparePriority(indexRight, indexLeft) < 0)
+        lowestPriorityIndex = indexRight
 
-      idx = smallerIndex;
+      // Switch parent with smaller of both child nodes.
+      if (this.comparePriority(parentIndex, lowestPriorityIndex) > 0) {
+        this.swap(parentIndex, lowestPriorityIndex)
+        parentIndex = lowestPriorityIndex
+      }
+
+      else return
     }
   }
 
 }
 
+
+///////////////////////////////////////////////////////////////
+
 class MaxHeap extends BaseHeap {
+
+  getMax() {
+    return super.peek()
+  }
+
+  extractMax() {
+    return super.extract()
+  }
 
   heapifyUp() {
 
-    const heap = this.heap;
-    let idx = super.size - 1;
-    while (idx > 0) {
-      const parentIdx = this.getParentIndex(idx);
-      if (this.comparePriority(idx, parentIdx) <= 0)
-        return;
+    let index = this.count - 1
+    while (this.hasParent(index)) {
+      const parentIdx = this.parentIndex(index)
+      if (this.comparePriority(index, parentIdx) > 0) {
+        this.swap(parentIdx, index)
+        index = parentIdx
+      }
 
-      this.swap(parentIdx, idx);
-      idx = parentIdx;
+      // Stop heapinfying up, when parent is already smaller than the child node.
+      else return
     }
   }
 
   heapifyDown() {
 
-    let idx = 0;
+    let parentIndex = 0
+    // If no left child is present, then there can't be a right child then, so additional check would be redundant.
+    while (this.hasLeftChild(parentIndex)) {
 
-    while (this.hasleftChild(idx)) {
-      const idxLeft = this.getleftChildIndex(idx);
-      const idxRight = this.getRightChildIndex(idx);
-      let biggerIndex = idxLeft;
+      const indexLeft = this.leftChildIndex(parentIndex)
+      const indexRight = this.rightChildIndex(parentIndex)
 
-      if (idxRight !== -1 && this.comparePriority(idxRight, idxLeft) > 0)
-        biggerIndex = idxRight
+      let lowestPriorityIndex = indexLeft
+      if (this.hasRightChild(parentIndex) && this.comparePriority(indexRight, indexLeft) > 0)
+        lowestPriorityIndex = indexRight
 
-      if (this.comparePriority(idx, biggerIndex) < 0)
-        this.swap(idx, biggerIndex);
-      else
-        return;
+      // Switch parent with smaller of both child nodes.
+      if (this.comparePriority(parentIndex, lowestPriorityIndex) < 0) {
+        this.swap(parentIndex, lowestPriorityIndex)
+        parentIndex = lowestPriorityIndex
+      }
 
-      idx = biggerIndex;
+      else return
     }
   }
+
 }
 
 
