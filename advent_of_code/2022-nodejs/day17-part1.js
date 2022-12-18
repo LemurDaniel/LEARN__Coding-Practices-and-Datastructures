@@ -53,7 +53,7 @@ class JetPattern {
 
 class Shape extends BoundedShape {
 
-  static #ROCKS = fs.readFileSync('./day17-rocks.txt', 'utf-8').split('\r\n\r\n')
+  static #ROCKS = fs.readFileSync('./day17-part1.rocks.txt', 'utf-8').split('\r\n\r\n')
     .map(rock => rock.split('\r\n')
       .flatMap((line, rowIdx, lines) => line.split('')
         .map((col, colIdx) => col == Shape.ROCK.STILL ? new Vector(colIdx, lines.length - rowIdx - 1) : null)

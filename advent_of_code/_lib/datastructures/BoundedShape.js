@@ -264,11 +264,11 @@ class BoundedShape extends UniqueObjectId {
           emptyGrid[0][col] = BoundedShape.WALL.HORIZONTAL
 
         if (wdown && col == 0 && wleft)
-          emptyGrid[emptyGrid[0].length - 1][col] = BoundedShape.WALL.CORNER
+          emptyGrid[emptyGrid.length - 1][col] = BoundedShape.WALL.CORNER
         else if (wdown && col == max.x + wleft + wright && wright)
-          emptyGrid[emptyGrid[0].length - 1][col] = BoundedShape.WALL.CORNER
+          emptyGrid[emptyGrid.length - 1][col] = BoundedShape.WALL.CORNER
         else if (wdown)
-          emptyGrid[emptyGrid[0].length - 1][col] = BoundedShape.WALL.HORIZONTAL
+          emptyGrid[emptyGrid.length - 1][col] = BoundedShape.WALL.HORIZONTAL
       }
     }
 
