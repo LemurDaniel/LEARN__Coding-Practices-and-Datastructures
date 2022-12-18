@@ -20,7 +20,7 @@ switch (argument) {
 const input = fileContent.split('\r\n')
 
 // Get Needed Classes
-const Vector = Datastructures.Vector
+const Vector2D = Datastructures.Vector2D
 
 /*
     ###########################################################################################
@@ -31,7 +31,7 @@ const Vector = Datastructures.Vector
 
 ///////////////////////////////////////////////////////////
 
-Vector.prototype.limit = function (vector) {
+Vector2D.prototype.limit = function () {
   // Getting all numbers, especially diagonals in range [1,-1] for movement
   const signX = this.x >= 0 ? 1 : -1
   const signY = this.y >= 0 ? 1 : -1
@@ -90,7 +90,7 @@ function printableGrid(rope) {
   // Horrible garbage Code
   const visitedInRange = Object.keys(Rope.VISITED)
     .map(v => v.split(','))
-    .map(v => new Vector(v[1], v[0]))
+    .map(v => new Vector2D(v[1], v[0]))
     .map(v => convertRange(v))
     .map(v => [v.y, v.x])
     .map(v => ({ [v]: v }))
@@ -118,14 +118,14 @@ function printableGrid(rope) {
 
 ///////////////////////////////////////////////////////////
 
-class Rope extends Vector {
+class Rope extends Vector2D {
 
   static VISITED = {}
   static STEPPING_DIRECTIONS = {
-    'U': new Vector(0, 1),
-    'R': new Vector(1, 0),
-    'D': new Vector(0, -1),
-    'L': new Vector(-1, 0),
+    'U': new Vector2D(0, 1),
+    'R': new Vector2D(1, 0),
+    'D': new Vector2D(0, -1),
+    'L': new Vector2D(-1, 0),
   }
 
   constructor(len, isHead) {
@@ -147,9 +147,8 @@ class Rope extends Vector {
   }
 
   follow(predecessor) {
-
     if (this.dist(predecessor) >= 2) {
-      this.add(Vector.sub(predecessor, this).limit())
+      this.add(Vector2D.sub(predecessor, this).limit())
       this.adjustGridSize()
       // Call Recursivley on following rope parts to move whole rope
       this.next?.follow(this)
@@ -160,10 +159,8 @@ class Rope extends Vector {
   }
 
   step(vector) {
-
     this.add(vector)
     this.adjustGridSize()
-
     // Running recursivley on all Nodes
     this.next?.follow(this)
 
@@ -182,6 +179,7 @@ input.map(v => v.split(' '))
       ropeHead.step(Rope.STEPPING_DIRECTIONS[direction])
       if (argument.includes('TEST'))
         console.log(printableGrid(ropeHead))
+
     }
 
   })

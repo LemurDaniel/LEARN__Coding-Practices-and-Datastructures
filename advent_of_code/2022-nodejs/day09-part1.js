@@ -18,7 +18,7 @@ switch (argument.toUpperCase()) {
 const input = fileContent.split('\r\n')
 
 // Get Needed Classes
-const Vector = Datastructures.Vector
+const Vector2D = Datastructures.Vector2D
 
 /*
     ###########################################################################################
@@ -75,7 +75,7 @@ function printableGrid(head, tail, visited) {
   // Horrible garbage Code
   const visitedInRange = Object.keys(visited)
     .map(v => v.split(','))
-    .map(v => new Vector(v[1], v[0]))
+    .map(v => new Vector2D(v[1], v[0]))
     .map(v => convertRange(v))
     .map(v => [v.y, v.x])
     .map(v => ({ [v]: v }))
@@ -107,18 +107,18 @@ function printableGrid(head, tail, visited) {
 ///////////////////////////////////////////////////////////
 
 const visited = {}
-const head = new Vector(0, 0)
-const tail = new Vector(0, 0)
+const head = new Vector2D(0, 0)
+const tail = new Vector2D(0, 0)
 
 ///////////////////////////////////////////////////////////
 
 function step(direction, steps) {
 
   const steppingDirection = {
-    'U': new Vector(0, 1),
-    'R': new Vector(1, 0),
-    'D': new Vector(0, -1),
-    'L': new Vector(-1, 0),
+    'U': new Vector2D(0, 1),
+    'R': new Vector2D(1, 0),
+    'D': new Vector2D(0, -1),
+    'L': new Vector2D(-1, 0),
   }[direction]
 
 

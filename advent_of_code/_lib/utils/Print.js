@@ -1,5 +1,5 @@
 
-const Vector = require('../datastructures/Vector')
+const { Vector2D } = require('../datastructures/Vector')
 const Iterator = require('./Iterator')
 
 class Depth {
@@ -208,7 +208,7 @@ class Converter extends Depth {
       case '&AR':
         return Converter.BaseArrayFromString(string)
       case '&PT':
-        return Converter.IntArrayFromString(string).map(v => new Vector(v[0], v[1]))
+        return Converter.IntArrayFromString(string).map(v => new Vector2D(v[0], v[1]))
       case '&LL':
         return LinkedList.LinkedListFromString(string)
       case '&BT':

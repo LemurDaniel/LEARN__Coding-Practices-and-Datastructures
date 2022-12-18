@@ -27,7 +27,7 @@ switch (argument.toUpperCase()) {
 const Input = fileContent.split('\r\n')
 
 // Get Needed Classes
-// const Vector = Datastructures.Vector
+// const Vector2D = Datastructures.Vector2D
 
 /*
     ###########################################################################################

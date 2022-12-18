@@ -27,7 +27,7 @@ switch (argument.toUpperCase()) {
 const input = fileContent.split('\r\n')
 
 // Get Needed Classes
-const Vector = Datastructures.Vector
+const Vector2D = Datastructures.Vector2D
 
 /*
     ###########################################################################################
@@ -36,17 +36,17 @@ const Vector = Datastructures.Vector
     ###########################################################################################
 */
 
-class Beacon extends Vector { }
-class Sensor extends Vector { }
-Vector.prototype.toString = function toString() {
+class Beacon extends Vector2D { }
+class Sensor extends Vector2D { }
+Vector2D.prototype.toString = function toString() {
   return `${this.constructor.name}(${this.x.toLocaleString()}, ${this.y.toLocaleString()})`
 }
 
 const SENSORS = {}
 const BEACONS = {}
 const BOUNDS = {
-  max: Vector.NULL,
-  min: Vector.NULL
+  max: Vector2D.NULL,
+  min: Vector2D.NULL
 
 }
 
@@ -151,7 +151,7 @@ function bruteForceFindHiddenBeacon() {
     const beacon = BEACONS[sensor]
     const signalReach = sensor.manhattenDist(beacon)
 
-    // Using array, instead of Vector class, to make things a bit faster.
+    // Using array, instead of Vector2D class, to make things a bit faster.
     const signalReachUp = [sensor.x, sensor.y + signalReach + 1]
     const signalReachRight = [sensor.x + signalReach + 1, sensor.y]
     const signalReachDown = [sensor.x, sensor.y - signalReach - 1]

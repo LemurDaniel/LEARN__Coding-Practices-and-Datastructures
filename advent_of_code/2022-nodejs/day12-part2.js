@@ -27,7 +27,7 @@ switch (argument.toUpperCase()) {
 const input = fileContent.split('\r\n').map(v => v.split(''))
 
 // Get Needed Classes
-const Vector = Datastructures.Vector
+const Vector2D = Datastructures.Vector2D
 
 /*
     ###########################################################################################
@@ -62,10 +62,10 @@ for (const [row, col, val] of matrixIterator(input)) {
   matrix[row][col] = Infinity
 
   if (val == START)
-    startVector = new Vector(col, row)
+    startVector = new Vector2D(col, row)
 
   if (val == END) {
-    endVector = new Vector(col, row)
+    endVector = new Vector2D(col, row)
     matrix[row][col] = 0
     vectors.push(endVector)
   }
@@ -78,7 +78,7 @@ function getValidNextMoves(pos) {
   // Walk all directions
   const directions = Array(4).fill(0)
     .map((v, i) => Math.PI / 2 * i)
-    .map(v => new Vector(
+    .map(v => new Vector2D(
       Math.round(Math.cos(v)),  // hori
       Math.round(Math.sin(v)) // vert
     ))
@@ -88,7 +88,7 @@ function getValidNextMoves(pos) {
 
   for (let i = 0; i < directions.length; i++) {
 
-    const posNew = Vector.add(pos, directions[i])
+    const posNew = Vector2D.add(pos, directions[i])
 
     // Out of Bounds
     if (posNew.y < 0 || posNew.x < 0 || posNew.y >= matrix.length || posNew.x >= matrix[0].length)
@@ -165,7 +165,7 @@ const scenicPaths = Array.from(matrixIterator(input))
   // Filter out all dead-'a'-inifinty-valleys
   .filter(([row, col, val]) => matrix[row][col] != Infinity)
   .map(([row, col, val]) => ({
-    pos: new Vector(row, col),
+    pos: new Vector2D(row, col),
     steps: matrix[row][col]
   }))
   .sort((a, b) => a.steps - b.steps)

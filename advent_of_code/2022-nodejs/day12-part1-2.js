@@ -29,7 +29,7 @@ switch (argument.toUpperCase()) {
 const input = fileContent.split('\r\n').map(v => v.split(''))
 
 // Get Needed Classes
-const Vector = Datastructures.Vector
+const Vector2D = Datastructures.Vector2D
 
 /*
     ###########################################################################################
@@ -68,10 +68,10 @@ for (const [row, col, val] of matrixIterator(input)) {
   matrix[row][col] = Infinity
 
   if (val == END)
-    endVector = new Vector(col, row)
+    endVector = new Vector2D(col, row)
 
   if (val == START) {
-    startVector = new Vector(col, row)
+    startVector = new Vector2D(col, row)
     matrix[row][col] = 0
     vectors.push(startVector)
   }
@@ -93,14 +93,14 @@ while (!queue.isEmpty) {
   // Walk all directions
   const directions = Array(4).fill(0)
     .map((v, i) => Math.PI / 2 * i)
-    .map(v => new Vector(
+    .map(v => new Vector2D(
       Math.round(Math.cos(v)),  // hori
       Math.round(Math.sin(v)) // vert
     ))
 
   for (let i = 0; i < directions.length; i++) {
 
-    const posNew = Vector.add(posCurr, directions[i])
+    const posNew = Vector2D.add(posCurr, directions[i])
 
     // Out of Bounds
     if (posNew.y < 0 || posNew.x < 0 || posNew.y >= matrix.length || posNew.x >= matrix[0].length)

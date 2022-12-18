@@ -27,7 +27,7 @@ switch (argument.toUpperCase()) {
 const input = fileContent.split('\r\n')
 
 // Get Needed Classes
-const Vector = Datastructures.Vector
+const Vector2D = Datastructures.Vector2D
 
 /*
     ###########################################################################################
@@ -37,17 +37,17 @@ const Vector = Datastructures.Vector
 */
 
 
-class Beacon extends Vector { }
-class Sensor extends Vector { }
-Vector.prototype.toString = function toString() {
+class Beacon extends Vector2D { }
+class Sensor extends Vector2D { }
+Vector2D.prototype.toString = function toString() {
   return `${this.constructor.name}(${this.x.toLocaleString()}, ${this.y.toLocaleString()})`
 }
 
 const SENSORS = {}
 const BEACONS = {}
 const BOUNDS = {
-  max: Vector.NULL,
-  min: Vector.NULL
+  max: Vector2D.NULL,
+  min: Vector2D.NULL
 
 }
 
@@ -70,7 +70,6 @@ const test = input.map(
   SENSORS[sensor] = sensor
   BEACONS[sensor] = beacon
 })
-
 
 
 ///////////////////////////////////////////////////////////////
@@ -101,8 +100,8 @@ for (let sensor of Object.values(SENSORS)) {
 
   // On the Y-Axis of the Sensor the covered X-Positions Reach from 
   // 'sensorPosX - SignalStrengt' on the Left and 'sensorPosX + signalStrength' on the Right
-  const signalReachXLeft = Vector.sub(sensor, signalStrength)
-  const signalReachXRight = Vector.add(sensor, signalStrength)
+  const signalReachXLeft = Vector2D.sub(sensor, signalStrength)
+  const signalReachXRight = Vector2D.add(sensor, signalStrength)
 
   // The signalStrengthRange on the Y-Axis decreases by one, the Further the distance between the 'sensorY' and 'targetY' by 1
   const diffY = Math.abs(targetY - sensor.y)
@@ -111,7 +110,6 @@ for (let sensor of Object.values(SENSORS)) {
   signalReachXRight.sub(diffY)
   signalReachXLeft.y = targetY
   signalReachXRight.y = targetY
-
   // The Manhattendistance of both Vectors to the Sensor is now equal to the signalStrength and both of them mark 
   // the Start and End of the Range of SignalIntersection on the targetY.
 

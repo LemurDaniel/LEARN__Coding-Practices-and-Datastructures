@@ -26,7 +26,7 @@ switch (argument.toUpperCase()) {
 const Input = fileContent.split('\r\n').join('').split('')
 
 // Get Needed Classes
-const Vector = Datastructures.Vector
+const Vector2D = Datastructures.Vector2D
 const BoundedShape = Datastructures.BoundedShape
 
 /*
@@ -56,7 +56,7 @@ class Shape extends BoundedShape {
   static #ROCKS = fs.readFileSync('./day17-part1.rocks.txt', 'utf-8').split('\r\n\r\n')
     .map(rock => rock.split('\r\n')
       .flatMap((line, rowIdx, lines) => line.split('')
-        .map((col, colIdx) => col == Shape.ROCK.STILL ? new Vector(colIdx, lines.length - rowIdx - 1) : null)
+        .map((col, colIdx) => col == Shape.ROCK.STILL ? new Vector2D(colIdx, lines.length - rowIdx - 1) : null)
         .filter(vector => vector != null)
       )
     )

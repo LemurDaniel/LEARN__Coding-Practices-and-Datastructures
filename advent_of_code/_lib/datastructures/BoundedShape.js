@@ -1,5 +1,5 @@
 const { Print } = require('../utils/Print')
-const Vector = require('./Vector')
+const { Vector2D } = require('./Vector')
 const crypto = require('crypto')
 
 class UniqueObjectId {
@@ -44,7 +44,7 @@ class BoundedShape extends UniqueObjectId {
   }
 
 
-  static Position = class Position extends Vector {
+  static Position = class Position extends Vector2D {
 
     kind
 
@@ -84,13 +84,13 @@ class BoundedShape extends UniqueObjectId {
 
   constructor() {
     super()
-    this.min = Vector.NULL
-    this.max = Vector.NULL
+    this.min = Vector2D.NULL
+    this.max = Vector2D.NULL
     this.positions = {}
 
     // Up, Right, Down, Left
     this.enableWalls = [false, false, false, false]
-    this.translation = Vector.NULL
+    this.translation = Vector2D.NULL
     this.rotation = 0
     this.referencedShapes = {}
   }

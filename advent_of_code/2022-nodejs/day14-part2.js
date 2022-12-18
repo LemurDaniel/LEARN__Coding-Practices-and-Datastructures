@@ -27,7 +27,7 @@ switch (argument.toUpperCase()) {
 const input = fileContent.split('\r\n').map(v => v.split(' -> '))
 
 // Get Needed Classes
-const Vector = Datastructures.Vector
+const Vector2D = Datastructures.Vector2D
 
 /*
     ###########################################################################################
@@ -38,12 +38,12 @@ const Vector = Datastructures.Vector
 
 
 //////////////////////////////////////////////////////////////
-const FloorVector = new Vector(0, 0)
-const SourceVector = new Vector(500, 0)
+const FloorVector = new Vector2D(0, 0)
+const SourceVector = new Vector2D(500, 0)
 
 const Bounds = {
-  min: new Vector(500, 0),
-  max: new Vector(500, 0)
+  min: new Vector2D(500, 0),
+  max: new Vector2D(500, 0)
 }
 const Characters = {
   AIR: argument.includes('TEST') ? '.' : `⚪`,
@@ -65,14 +65,14 @@ function processLine(line) {
 
   while (vectors.length > 0) {
     const delta = vectors.pop()
-    const target = Vector.add(position, delta)
+    const target = Vector2D.add(position, delta)
     const step = delta.copy.limit()
 
     while (!position.is(target)) {
       position.add(step)
       POSITIONS[position] = Characters['ROCK']
     }
-
+    
     if (position.y + 2 > FloorVector.y) {
       FloorVector.y = position.y + 2
       Bounds.max.y = FloorVector.y
@@ -82,33 +82,33 @@ function processLine(line) {
 
 const Lines = input.map(
   line => line.map(
-    vector => new Vector(...vector.split(','))
+    vector => new Vector2D(...vector.split(','))
   ).reverse().map(
     (vector, index, arr) => {
       Bounds.max.y = Math.max(Bounds.max.y, vector.y)
       Bounds.max.x = Math.max(Bounds.max.x, vector.x)
       Bounds.min.y = Math.min(Bounds.min.y, vector.y)
       Bounds.min.x = Math.min(Bounds.min.x, vector.x)
-      return vector.sub(arr[index + 1] ?? Vector.NULL)
+      return vector.sub(arr[index + 1] ?? Vector2D.NULL)
     })
 ).forEach(line => processLine(line))
-console.log(POSITIONS)
+
 ///////////////////////////////////////////////////////////////
 
 function processNextSandFlock() {
 
   const sandFlock = SourceVector.copy
   const directions = [
-    new Vector(1, 1),   // DownRiht
-    new Vector(-1, 1),  // DownLeft
-    new Vector(0, 1)    // Down
+    new Vector2D(1, 1),   // DownRiht
+    new Vector2D(-1, 1),  // DownLeft
+    new Vector2D(0, 1)    // Down
   ]
 
   for (let i = 0; ; i++) {
 
     // Filter out next valid positions
     const nextPositions = directions
-      .map(vector => Vector.add(sandFlock, vector))
+      .map(vector => Vector2D.add(sandFlock, vector))
       .filter(vector => POSITIONS.is(vector, 'AIR'))
 
     //console.log(nextPositions)
@@ -157,7 +157,7 @@ const visual = new Array(Bounds.max.y - Bounds.min.y + 1).fill(Characters.AIR)
   .map((row, rowIdx) =>
     Array(Bounds.max.x - Bounds.min.x + 1)
       .fill(Characters.AIR)
-      .map((col, colIdx) => new Vector(colIdx + Bounds.min.x, rowIdx + Bounds.min.y))
+      .map((col, colIdx) => new Vector2D(colIdx + Bounds.min.x, rowIdx + Bounds.min.y))
       .map(vector =>
         vector.is(SourceVector) ? Characters.SOURCE : (vector.y == FloorVector.y ? Characters.ROCK : (POSITIONS[vector] ?? Characters.AIR)))
   )

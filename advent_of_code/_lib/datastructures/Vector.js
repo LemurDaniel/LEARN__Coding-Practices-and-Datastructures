@@ -1,58 +1,157 @@
 
-class Vector {
+
+class VectorBase {
 
   ////// Static Methods, Attributes, Getters, Setters
 
   static get NULL() {
-    return new Vector(0, 0)
+    throw 'Not Implemented'
   }
 
   static add(vector0, ...args) {
-    return vector0.copy.add(Vector.#processArgs(...args))
+    return vector0.copy.add(...args)
   }
 
   static sub(vector0, ...args) {
-    return vector0.copy.sub(Vector.#processArgs(...args))
-  }
-
-  static #processArgs(...args) {
-
-    if (args[0] instanceof Vector)
-      return args[0]
-    else if (typeof args[0] == 'number')
-      return new Vector(...args)
-    else
-      throw `Error with Type: '${args[0].constructor.name}' || '${typeof args[0]}'`
-
+    return vector0.copy.sub(...args)
   }
 
   ////// Instance Methods, Attributes, Getters, Setters
 
-  #x;
-  #y;
-
-  set x(value) {
-    this.#x = value
-  }
-
-  set y(value) {
-    this.#y = value
-  }
-
-  get x() {
-    return this.#x
-  }
-
-  get y() {
-    return this.#y
-  }
+  dimensions;
 
   get copy() {
-    return new Vector(this.#x, this.#y)
+    return new VectorBase(...this.dimension)
   }
 
   get magnitue() {
-    return Math.sqrt(Math.pow(this.y, 2) + Math.pow(this.x, 2))
+    return Math.sqrt(
+      this.dimension.map(num => Math.pow(num, 2)).reduce((acc, a) => acc + a)
+    )
+  }
+
+  [Symbol.for('nodejs.util.inspect.custom')](depth, inspectOptions, inspect) {
+    return this.toString()
+  }
+
+  toString() {
+    return `(${this.dimension.join(', ')})`
+  }
+
+
+  ////// constructors
+
+  constructor(...args) {
+    this.dimension = args.map(num => parseFloat(num))
+  }
+
+
+  ////// Instance Methods
+
+  #processArgs(...args) {
+    if (args[0] instanceof VectorBase)
+      return args[0].dimension
+    else if (args.length <= this.dimension.length && args.reduce((bool, v) => bool = bool && (typeof v == 'number'), true))
+      return args
+
+    throw `Not supporrted ${args}`
+  }
+
+  manhattenDist(vector) {
+    return this.dimension
+      .map((num, idx) => Math.abs(num - vector.dimension[idx]))
+      .reduce((acc, a) => acc + a)
+  }
+
+  dist(vector) {
+    return this.constructor.sub(this, vector).magnitue
+  }
+
+  is(...args) {
+    const vector = this.#processArgs(...args)
+    return this.dimension.join(',') == vector.join(',')
+  }
+
+  set(...args) {
+    const vector = this.#processArgs(...args)
+    for (let i = 0; i < this.dimension.length; i++) {
+      this.dimension[i] = vector[i]
+    }
+    return this
+  }
+
+  add(...args) {
+    const vector = this.#processArgs(...args)
+    for (let i = 0; i < this.dimension.length; i++) {
+      this.dimension[i] += vector[i]
+    }
+    return this
+  }
+
+  sub(...args) {
+    const vector = this.#processArgs(...args)
+    for (let i = 0; i < this.dimension.length; i++) {
+      this.dimension[i] -= vector[i]
+    }
+    return this
+  }
+
+  mul(...args) {
+    const vector = this.#processArgs(...args)
+    for (let i = 0; i < this.dimension.length; i++) {
+      this.dimension[i] *= vector[i]
+    }
+    return this
+  }
+
+  round() {
+    for (let i = 0; i < this.dimension.length; i++) {
+      this.dimension[i] = Math.round(this.dimension[i])
+    }
+    return this
+  }
+
+  limit(limit = 1) {
+    for (let i = 0; i < this.dimension.length; i++) {
+      this.dimension[i] = this.dimension[i] > limit ? limit : (this.dimension[i] < -limit ? -limit : this.dimension[i])
+    }
+    return this
+  }
+
+}
+
+
+///////////////////////////////////////////////////////////////
+
+
+class Vector2D extends VectorBase {
+
+  ////// Static Methods, Attributes, Getters, Setters
+
+  static get NULL() {
+    return new Vector2D(0, 0)
+  }
+
+  ////// Instance Methods, Attributes, Getters, Setters
+
+  get copy() {
+    return new Vector2D(...this.dimension)
+  }
+
+  set x(value) {
+    this.dimension[0] = value
+  }
+
+  set y(value) {
+    this.dimension[1] = value
+  }
+
+  get x() {
+    return this.dimension[0]
+  }
+
+  get y() {
+    return this.dimension[1]
   }
 
   get heading() {
@@ -69,80 +168,64 @@ class Vector {
       return Math.PI + Math.atan(this.y / this.x)
   }
 
-  [Symbol.for('nodejs.util.inspect.custom')](depth, inspectOptions, inspect) {
-    return this.toString()
-  }
-
-  toString() {
-    return `(${this.#x.toLocaleString()}, ${this.#y.toLocaleString()})`
-  }
-
 
   ////// constructors
 
   constructor(x, y) {
-    this.#y = parseFloat(y ?? 0)
-    this.#x = parseFloat(x ?? 0)
-  }
-
-
-  ////// Instance Methods
-
-  is(...args) {
-    const vector = Vector.#processArgs(...args)
-    return this.#x == vector.#x && this.#y == vector.#y
-  }
-
-  set(...args) {
-    const vector = Vector.#processArgs(...args)
-    this.#y = vector.#y
-    this.#x = vector.#x
-    return this
-  }
-
-  add(...args) {
-    const vector = Vector.#processArgs(...args)
-    this.#y += vector.#y
-    this.#x += vector.#x
-    return this
-  }
-
-  sub(...args) {
-    const vector = Vector.#processArgs(...args)
-    this.#y -= vector.#y
-    this.#x -= vector.#x
-    return this
-  }
-
-  mul(...args) {
-    const vector = Vector.#processArgs(...args)
-    this.#y *= vector
-    this.#x *= vector
-    return this
-  }
-
-
-  round() {
-    this.#y = Math.round(this.#y)
-    this.#x = Math.round(this.#x)
-    return this
-  }
-
-  limit(limit = 1) {
-    this.#y = this.#y > limit ? limit : (this.#y < -limit ? -limit : this.#y)
-    this.#x = this.#x > limit ? limit : (this.#x < -limit ? -limit : this.#x)
-    return this
-  }
-
-  dist(vector) {
-    return Vector.sub(this, vector).magnitue
-  }
-
-  manhattenDist(vector) {
-    return Math.abs(this.x - vector.x) + Math.abs(this.y - vector.y)
+    super(x, y)
   }
 
 }
 
 
-module.exports = Vector
+class Vector3D extends VectorBase {
+
+  ////// Static Methods, Attributes, Getters, Setters
+
+  static get NULL() {
+    return new Vector3D(0, 0, 0)
+  }
+
+  ////// Instance Methods, Attributes, Getters, Setters
+
+  get copy() {
+    return new Vector3D(...this.dimension)
+  }
+
+  set x(value) {
+    this.dimension[0] = value
+  }
+
+  set y(value) {
+    this.dimension[1] = value
+  }
+
+  set z(value) {
+    this.dimension[2] = value
+  }
+
+  get x() {
+    return this.dimension[0]
+  }
+
+  get y() {
+    return this.dimension[1]
+  }
+
+  get z() {
+    return this.dimension[2]
+  }
+
+  ////// constructors
+
+  constructor(x, y, z) {
+    super(x, y, z)
+  }
+
+}
+
+
+module.exports = {
+  Vector2D,
+  Vector3D
+}
