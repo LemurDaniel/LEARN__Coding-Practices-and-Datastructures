@@ -118,6 +118,15 @@ class VectorBase {
     return this
   }
 
+  transform(method, ...vectors) {
+    const dimensions = Array(this.dimension.length).fill(0)
+      .map((d, idx) => vectors.map(vector => vector.dimension[idx]))
+
+    for (let i = 0; i < this.dimension.length; i++) {
+      this.dimension[i] = method(this.dimension[i], ...dimensions[i])
+    }
+    return this
+  }
 }
 
 
