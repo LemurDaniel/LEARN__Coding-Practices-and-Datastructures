@@ -38,6 +38,22 @@ class Queue {
     this.#count--
   }
 
+  toString() {
+    const array = ['<OUT']
+
+    for (const element of this) {
+      array.push(Converter.toString(element))
+    }
+
+    array.push('<IN')
+    return array.join(' <= ')
+  }
+
+
+  *[Symbol.iterator]() {
+    throw 'Not implemented'
+  }
+
 }
 
 ///////////////////////////////////////////////////////////////
@@ -87,18 +103,12 @@ class NodeQueue extends Queue {
     return value
   }
 
-  toString() {
-    const array = ['<OUT']
-
+  *[Symbol.iterator]() {
     let node = this.tail
     while (null != node) {
-      const str = Converter.toString(node.value)
-      array.push(str)
+      yield node.value
       node = node.next
     }
-
-    array.push('<IN')
-    return array.join(' <= ')
   }
 
 }
@@ -108,7 +118,7 @@ class NodeQueue extends Queue {
 // Queue implementation using a Dictionary/Hashtable
 class DictionaryQueue extends Queue {
 
-  constructor(length = 100) {
+  constructor() {
     super()
     this.dictionary = {}
     this.ptrHead = 0
@@ -132,14 +142,10 @@ class DictionaryQueue extends Queue {
     return value
   }
 
-  toString() {
-    const array = ['<OUT']
-    for (const key of Object.keys(this.dictionary)) {
-      const str = Converter.toString(this.dictionary[key])
-      array.push(str)
+  *[Symbol.iterator]() {
+    for (let i = this.ptrTail; i < this.ptrHead; i++) {
+      yield this.dictionary[i]
     }
-    array.push('<IN')
-    return array.join(' <= ')
   }
 
 }
@@ -183,20 +189,12 @@ class ArrayQueue extends Queue {
     return value
   }
 
-  toString() {
-
-    let ptrHead = this.ptrHead
+  *[Symbol.iterator]() {
     let ptr = this.ptrTail
-
-    const array = ['<OUT']
-    while (ptr != ptrHead) {
-      const str = Converter.toString(this.array[ptr])
+    while (ptr != this.ptrHead) {
+      yield this.array[ptr]
       ptr = (ptr + 1) % this.array.length
-      array.push(str)
     }
-
-    array.push('<IN')
-    return array.join(' <= ')
   }
 
 }
@@ -234,8 +232,52 @@ class PriorityQueue extends Queue {
   }
 }
 
+///////////////////////////////////////////////////////////////
+
+class WindowSlidingQueue extends DictionaryQueue {
+
+  get idxHead() {
+    return this.ptrHead - 1
+  }
+
+  get idxTail() {
+    return this.ptrTail
+  }
+
+  constructor(windowSize = 100) {
+    super()
+    this.windowSize = windowSize
+  }
+
+  cutList() {
+    while (this.ptrTail < (this.ptrHead - this.windowSize)) {
+      delete this.hashtable[this.ptrTail++]
+    }
+  }
+
+  enqueue(value) {
+    if (this.count == this.windowSize)
+      super.dequeue()
+
+    super.enqueue(value)
+  }
+
+  set(idx, value) {
+    if (idx >= this.ptrHead)
+      throw 'Can\'t insert outside window range'
+
+    this.dictionary[idx] = value
+  }
+
+  get(idx) {
+    return this.dictionary[idx] ?? null
+  }
+
+}
+
 
 module.exports = {
+  WindowSlidingQueue,
   PriorityQueue,
   DictionaryQueue,
   ArrayQueue,

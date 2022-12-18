@@ -1,6 +1,6 @@
 const { Datastructures, Utils } = require('../_lib/lib.js')
 const process = require('process')
-const fs = require('fs');
+const fs = require('fs')
 
 // NOTE:
 //  node .\day17-part2.js [INPUT|TEST]
@@ -27,7 +27,7 @@ switch (argument.toUpperCase()) {
 const Input = fileContent.split('\r\n').join('').split('')
 
 // Get Needed Classes
-const ArrayQueue = Datastructures.ArrayQueue
+const WindowSlidingQueue = Datastructures.WindowSlidingQueue
 const BoundedShape = Datastructures.BoundedShape
 
 /*
@@ -46,46 +46,6 @@ class JetPattern {
     const pattern = JetPattern.Pattern[JetPattern.ptrPattern]
     JetPattern.ptrPattern = (JetPattern.ptrPattern + 1) % JetPattern.Pattern.length
     return pattern
-  }
-
-}
-
-///////////////////////////////////////////////////////////////
-
-class WindowList {
-
-  get asArray() {
-    return Array(this.windowSize).fill(this.ptrTail)
-      .map((ptr, idx) => this.hashtable[ptr + idx] ?? null)
-  }
-
-  constructor(windowSize = 100) {
-    this.windowSize = windowSize
-    this.hashtable = {}
-    this.ptrHead = 0
-    this.ptrTail = 0
-  }
-
-  cutList() {
-    while (this.ptrTail < (this.ptrHead - this.windowSize)) {
-      delete this.hashtable[this.ptrTail++]
-    }
-  }
-
-  push(value) {
-    this.hashtable[this.ptrHead++] = value
-    this.cutList()
-  }
-
-  setAtIndex(idx, value) {
-    if (idx >= this.ptrHead)
-      throw 'Can\'t insert outside window range'
-
-    this.hashtable[idx] = value
-  }
-
-  getAtIndex(idx) {
-    return this.hashtable[idx] ?? null
   }
 
 }
@@ -146,7 +106,7 @@ class Rock {
     if (this.y == 0) return false
 
     for (let i = 0; i < this.shape.length; i++) {
-      const rowAtHeight = positions.getAtIndex(this.y - 1 + i)
+      const rowAtHeight = positions.get(this.y - 1 + i)
       if (null == Rock.maximumHeight)
         break
       // If the  XOR is the NOT the same as OR then collision detected.
@@ -183,8 +143,8 @@ class Rock {
       }
 
       // Check for collision with other elements.
-      if (null != positions.getAtIndex(this.y + i)) {
-        const rowAtIndex = positions.getAtIndex(this.y + i)
+      if (null != positions.get(this.y + i)) {
+        const rowAtIndex = positions.get(this.y + i)
         //console.log('YYYY', (rowAtIndex | 0b10000000).toString(2).substring(1), (copy[i] | 0b10000000).toString(2).substring(1), (rowAtIndex ^ copy[i]) | 0b10000000).toString(2).substring(1), (rowAtIndex | copy[i]) | 0b10000000).toString(2).substring(1))
         if ((rowAtIndex ^ copy[i]) != (rowAtIndex | copy[i]))
           return this
@@ -198,11 +158,11 @@ class Rock {
   mergeRock(positions) {
     for (let i = 0; i < this.shape.length; i++) {
 
-      if (null == positions.getAtIndex(this.y + i))
-        positions.push(this.shape[i])
+      if (null == positions.get(this.y + i))
+        positions.enqueue(this.shape[i])
       else {
-        const rowAtIndex = positions.getAtIndex(this.y + i)
-        positions.setAtIndex(this.y + i, rowAtIndex | this.shape[i])
+        const rowAtIndex = positions.get(this.y + i)
+        positions.set(this.y + i, rowAtIndex | this.shape[i])
       }
 
     }
@@ -214,51 +174,45 @@ class Rock {
 
 ///////////////////////////////////////////////////////////////
 
-function print(rockCurrent, positions) {
+function print(rockCurrent, positions, patternSkippedHeight) {
 
-  const emptyGrid = Array.from(positions.windowSize).fill(0b0000000)
-
-  const positionsArray = positions.asArray
-  for (const index in positionsArray) {
-    emptyGrid[index] = (positionsArray[index] | 0b10000000).toString(2).substring(1)
-      .split('').map(bit => bit == '0' ? BoundedShape.EMPTY : BoundedShape.ROCK.STILL)
+  let grid = Array.from(positions)
+  const heightDiff = Math.max(0, rockCurrent.y + rockCurrent.shape.length - positions.idxHead - 1)
+  for (let i = 0; i < heightDiff; i++) {
+    grid.push(0b0000000)
   }
+
+  grid = grid.map(row => (row | 0b10000000).toString(2).substring(1)
+    .split('').map(bit => bit == '0' ? BoundedShape.EMPTY : BoundedShape.ROCK.STILL)
+  )
 
   for (let i = 0; i < rockCurrent.shape.length; i++) {
     const bitstring = (rockCurrent.shape[i] | 0b10000000).toString(2).substring(1)
       .split('').map(bit => bit == '0' ? BoundedShape.EMPTY : BoundedShape.ROCK.MOVE)
 
-    const index = (rockCurrent.y + i) % emptyGrid.length
-    emptyGrid[index] = emptyGrid[index].map((char, idx) => char == BoundedShape.EMPTY ? bitstring[idx] : char)
+    const index = (rockCurrent.y + i) - positions.idxTail
+    grid[index] = grid[index].map((char, idx) => char == BoundedShape.EMPTY ? bitstring[idx] : char)
   }
 
-  console.log('Window-End ==> Height:', positions.ptrHead)
-  console.log(Utils.Print.fromMatrix(emptyGrid.reverse(), 2))
-  console.log('Window-Start ==> Height: ', positions.ptrTail)
+
+  console.log('Window-End ==> Height:', (positions.ptrHead + heightDiff + patternSkippedHeight).toLocaleString())
+  console.log(Utils.Print.fromMatrix(grid.reverse(), 2))
+  console.log('Window-Start ==> Height: ', (positions.ptrTail + patternSkippedHeight).toLocaleString())
 }
 
 
 ///////////////////////////////////////////////////////////////
 
 const Cache = {}
-const positions = new WindowList(100)
-const rocksToSimulate = 1_000_000_000_000 // 1_000_000_000_000 //1_000_000
+const positions = new WindowSlidingQueue(50)
+const rocksToSimulate = 1_000_000_000_000
 let patternSkippedHeight = 0
 let currentRock = Rock.nextRock
 let alternate = 0 /// 0 => jetpush, 1 => fall down
 
-let test = 0
-
 console.log()
 console.group()
 while (Rock.rockCount <= rocksToSimulate) {
-
-  //print(rockCurrent)
-  //console.log('------------------------------------')
-  if (Rock.rockCount % 500 == 0 && test != Rock.rockCount) {
-    test = Rock.rockCount
-    console.log(`Processed ${Rock.rockCount.toLocaleString()} - ${(Rock.rockCount / rocksToSimulate * 100).toLocaleString()}% - rocks - h: ${(patternSkippedHeight + Rock.maximumHeight + 1).toLocaleString()}`)
-  }
 
   if (alternate == 0) {
     if (currentRock.y > 100000000)
@@ -273,7 +227,7 @@ while (Rock.rockCount <= rocksToSimulate) {
       currentRock.mergeRock(positions)
 
       // After each rock merged, search for repeatable pattern.
-      const cacheKey = positions.asArray.join(',')
+      const cacheKey = Array.from(positions).join(',')
       if (cacheKey in Cache) {
 
         const savedMaxHeight = Rock.maximumHeight
@@ -302,6 +256,6 @@ while (Rock.rockCount <= rocksToSimulate) {
 
 }
 
-//print(currentRock, positions)
+print(currentRock, positions, patternSkippedHeight)
 console.log(`\nAfter ${(Rock.rockCount - 1).toLocaleString()} fallen rocks the height of the tower is ${(patternSkippedHeight + Rock.maximumHeight + 1).toLocaleString()}\n`)
 console.groupEnd()
