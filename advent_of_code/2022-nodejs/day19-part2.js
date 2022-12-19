@@ -237,8 +237,8 @@ if (Thread.isMainThread) {
     }).on('message', res => {
 
       results.push(res)
-      console.log(`${res.blueprint} finished`)
-
+      console.log(`Finished Blueprint ${(res.index + 1).toString().padStart(2, '0')} | ${parseInt(results.length / notEatenBlueprints.length * 100).toLocaleString()}%`)
+      
       if (results.length == notEatenBlueprints.length) {
         console.log(results)
         console.log(`\n The Product of all Maximum Geodes is ${results.reduce((acc, a) => acc * a.geodes, 1).toLocaleString()}\n`)
@@ -256,12 +256,11 @@ if (Thread.isMainThread) {
   Thread.parentPort.once('message', ([maximumTime, index]) => {
     const tree = new Tree(maximumTime, Blueprint.ALL[index])
     console.group()
-    console.log(`Processing ${Blueprint.ALL[index].name}`)
+    console.log(`Processing Blueprint ${Blueprint.ALL[index].id.toString().padStart(2, '0')}`)
     console.groupEnd()
     const maximum = tree.maximum()
     Thread.parentPort.postMessage({
-      index: index,
-      blueprint: Blueprint.ALL[index].name,
+      index: parseInt(index),
       resources: maximum.dimension,
       geodes: maximum.geode
     })
