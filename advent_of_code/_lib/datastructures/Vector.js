@@ -18,10 +18,8 @@ class VectorBase {
 
   ////// Instance Methods, Attributes, Getters, Setters
 
-  dimensions;
-
   get copy() {
-    return new VectorBase(...this.dimension)
+    return new this.constructor(...this.dimension)
   }
 
   get magnitue() {
@@ -42,7 +40,7 @@ class VectorBase {
   ////// constructors
 
   constructor(...args) {
-    this.dimension = args.map(num => parseFloat(num))
+    this.dimension = args.map(num => num.constructor == String ? parseFloat(num) : num)
   }
 
 
@@ -235,6 +233,7 @@ class Vector3D extends VectorBase {
 
 
 module.exports = {
+  VectorBase,
   Vector2D,
   Vector3D
 }
