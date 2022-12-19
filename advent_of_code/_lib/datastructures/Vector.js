@@ -24,7 +24,7 @@ class VectorBase {
 
   get magnitue() {
     return Math.sqrt(
-      this.dimension.map(num => Math.pow(num, 2)).reduce((acc, a) => acc + a)
+      this.dimension.reduce((acc, num) => acc + (num * num))
     )
   }
 
@@ -49,7 +49,7 @@ class VectorBase {
   #processArgs(...args) {
     if (args[0] instanceof VectorBase)
       return args[0].dimension
-    else if (args.length <= this.dimension.length && args.reduce((bool, v) => bool = bool && (typeof v == 'number'), true))
+    else if (args.length <= this.dimension.length)// && args.reduce((bool, v) => bool = bool && (typeof v == 'number'), true))
       return args
 
     throw `Not supporrted ${args}`
@@ -67,7 +67,10 @@ class VectorBase {
 
   is(...args) {
     const vector = this.#processArgs(...args)
-    return this.dimension.join(',') == vector.join(',')
+    for (let i = 0; i < this.dimension.length; i++) {
+      if (this.dimension[i] != vector[i]) return false
+    }
+    return true
   }
 
   set(...args) {
