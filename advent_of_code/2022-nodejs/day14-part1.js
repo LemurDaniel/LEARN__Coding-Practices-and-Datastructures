@@ -44,7 +44,11 @@ const Bounds = {
   min: new Vector2D(500, 0),
   max: new Vector2D(500, 0)
 }
+
 const Characters = {
+  DARKMODE: '⚫',
+  //TEST: `${String.fromCharCode(0x2000)}${String.fromCharCode(0x2000)}${String.fromCharCode(0x2006)}${String.fromCharCode(0x2009)}`,
+  TEST: `${String.fromCharCode(0x2003)}${String.fromCharCode(0x2005)}${String.fromCharCode(0x200A)}${String.fromCharCode(0x200A)}`,
   AIR: argument.includes('TEST') ? '.' : `⚪`,
   ROCK: argument.includes('TEST') ? '#' : `🪨`,
   SOURCE: argument.includes('TEST') ? '+' : `👾`,
@@ -162,5 +166,21 @@ const visual = new Array(Bounds.max.y - Bounds.min.y + 1).fill(Characters.AIR)
 
 if (argument.includes('TEST'))
   console.log(Utils.Print.fromMatrix(visual, 2))
-else
-  fs.writeFileSync(`./day14-part1.${argument.toLowerCase()}.txt`, Utils.Print.fromMatrix(visual, 1, false), 'utf-8')
+else {
+  fs.writeFileSync(`./day14-part1.${argument.toLowerCase()}.light.txt`, Utils.Print.fromMatrix(visual, 1, false), 'utf-8')
+
+  for (let i = 0; i < visual.length; i++) {
+    for (let y = 0; y < visual[i].length; y++) {
+      visual[i][y] = visual[i][y] == Characters.AIR ? Characters.DARKMODE : visual[i][y]
+    }
+  }
+  fs.writeFileSync(`./day14-part1.${argument.toLowerCase()}.dark.txt`, Utils.Print.fromMatrix(visual, 0, false), 'utf-8')
+
+  for (let i = 0; i < visual.length; i++) {
+    for (let y = 0; y < visual[i].length; y++) {
+      visual[i][y] = visual[i][y] == Characters.DARKMODE ? Characters.TEST : visual[i][y]
+    }
+  }
+  fs.writeFileSync(`./day14-part1.${argument.toLowerCase()}.test.txt`, Utils.Print.fromMatrix(visual, 0, false), 'utf-8')
+
+}
