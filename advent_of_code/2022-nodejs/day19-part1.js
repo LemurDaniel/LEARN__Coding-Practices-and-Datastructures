@@ -178,25 +178,26 @@ class Tree {
 
 
       // Purchasing no robot
-      const buyables = parseInt([canBuyOre, canBuyClay, canBuyObsidian, canBuyGeode].map(Number).join(''), 2)
-      const node = new Node(minute, this.tree, this.robots, resources, buyables)
-      node.maximum()
+      if (!canBuyObsidian && !canBuyGeode) {
+        const buyables = parseInt([canBuyOre, canBuyClay, canBuyObsidian, canBuyGeode].map(Number).join(''), 2)
+        const node = new Node(minute, this.tree, this.robots, resources, buyables)
+        node.maximum()
+      }
 
-
-      // Attempt building robots
-      if (canBuyOre) {
+      // Attempt building robots only when geode robot can't be build, seems to work with this input
+      if (canBuyOre && !canBuyGeode) {
         const resNext = Resources.sub(resources, blueprint.robotOre)
         const robots = Robots.add(this.robots, 1, 0, 0, 0)
         const node = new Node(minute, this.tree, robots, resNext)
         node.maximum()
       }
-      if (canBuyClay) {
+      if (canBuyClay && !canBuyGeode) {
         const resNext = Resources.sub(resources, blueprint.robotClay)
         const robots = Robots.add(this.robots, 0, 1, 0, 0)
         const node = new Node(minute, this.tree, robots, resNext)
         node.maximum()
       }
-      if (canBuyObsidian) {
+      if (canBuyObsidian && !canBuyGeode) {
         const resNext = Resources.sub(resources, blueprint.robotObsidian)
         const robots = Robots.add(this.robots, 0, 0, 1, 0)
         const node = new Node(minute, this.tree, robots, resNext)
