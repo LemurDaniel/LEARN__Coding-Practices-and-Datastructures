@@ -26,7 +26,7 @@ class BoundedShape extends UniqueObjectId {
   static WALL = {
     CORNER: '+',
     VERTICAL: '|',
-    HORIZONTAL: '–'
+    HORIZONTAL: '—'
   }
   static ROCK = {
     STILL: '#',
