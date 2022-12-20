@@ -147,6 +147,7 @@ function isCovered(array) {
 function bruteForceFindHiddenBeacon() {
 
   let positionsProcessed = 0
+  let milli = performance.now()
   for (const sensor of Object.values(SENSORS)) {
 
     const beacon = BEACONS[sensor]
@@ -160,8 +161,11 @@ function bruteForceFindHiddenBeacon() {
 
     for (let i = signalReach + 1; i >= 0; i--) {
 
-      if (positionsProcessed % 200_000 == 0)
-        console.log('...Still looping some loops ', sensor, positionsProcessed.toLocaleString())
+      if (positionsProcessed % 200_000 == 0) {
+        const now = performance.now()
+        console.log('...Still looping some loops ', sensor, ` | Positions Processed: ${positionsProcessed.toLocaleString()}`, ` | in ${((now - milli) / 1000).toLocaleString()} seconds`)
+        milli = now
+      }
 
       if (!isCovered(signalReachUp)) return signalReachUp
       if (!isCovered(signalReachRight)) return signalReachRight
@@ -190,6 +194,8 @@ function bruteForceFindHiddenBeacon() {
 
 console.log('\n This kinda takes a while:')
 console.group()
+const now = performance.now()
 const coord = bruteForceFindHiddenBeacon()
+console.log(`\nTotal Time Taken: ${((performance.now() - now) / 1000).toLocaleString()} seconds`)
 console.log(`\nThe hidden Distressbeacon is at Location (${coord[0].toLocaleString()}, ${coord[1].toLocaleString()}) with a tuning frequency of ${(coord[0] * 4_000_000 + coord[1]).toLocaleString()}\n`)
 console.groupEnd()
