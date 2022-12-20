@@ -125,7 +125,7 @@ function isCovered(target) {
              (0,-4)
 */
 
-function sensorSurroundings(sensor) {
+function* sensorSurroundings(sensor) {
 
   const signalStrength = sensor.manhattenDist(BEACONS[sensor])
   const sg = signalStrength + 1
@@ -136,7 +136,7 @@ function sensorSurroundings(sensor) {
     [1, 1, -sg, 0] // Left to up
   ]
 
-  const iterators = [0, 0, 0, 0]
+  const subIterators = [0, 0, 0, 0]
   for (let index = 0; index < directions.length; index++) {
 
     const direction = directions[index]
@@ -161,103 +161,48 @@ function sensorSurroundings(sensor) {
         if (index == 3 && (position[1] >= (sensor.y + signalStrength + 1))) break INNER
       }
     }
-    iterators[index] = sub()
+    subIterators[index] = sub()
   }
 
-  return iterators
+  // Choose another from one of the four corners going to the next
+  for (let i = 0; subIterators.length > 0; i = (i + 1) % subIterators.length) {
+    const res = subIterators[i].next()
+    if (res.done)
+      subIterators.splice(i, 1)
+    else
+      yield res.value
+  }
 
 }
 
 ///////////////////////////////////////////////////////////////
 
-function bruteForceFindHiddenBeacon(callback) {
+function bruteForceFindHiddenBeacon() {
 
-  let positionsProcessed = [0, 0, 0, 0]
-  let sensorIndex = [0, 0, 0, 0]
-  let workers = [0, 0, 0, 0]
-  const sensors = Object.values(SENSORS)
+  let positionsProcessed = 0
+  for (const sensor of Object.values(SENSORS)) {
 
-  let isFinished = false
-  let milli = performance.now()
+    let milli = performance.now()
+    const iterator = sensorSurroundings(sensor)
+    for (const pos of iterator) {
 
-  for (let index = 0; index < 4; index++) {
-    workers[index] = new Thread.Worker(__filename, {
-      argv: [argument]
-    })
+      if (positionsProcessed % 200_000 == 0) {
+        const now = performance.now()
+        console.log('...Still looping some loops ', sensor, ` | Positions Processed: ${positionsProcessed.toLocaleString()}`, ` | in ${((now - milli) / 1000).toLocaleString()} seconds`)
+        milli = now
+      }
 
-    workers[index]
-      .on('message', result => {
-
-        positionsProcessed[result.myIndex] = result.processed
-        const totalPositionsProcessed = positionsProcessed.reduce((acc, a) => acc + a)
-        if (totalPositionsProcessed % 200_000 == 0 && totalPositionsProcessed > 0) {
-          const now = performance.now()
-
-          const sensorsProcessed = [...(new Set(sensorIndex))].map(i => sensors[i])
-          console.log(`Positions Processed: ${totalPositionsProcessed.toLocaleString()}  in ${((now - milli) / 1000).toLocaleString()} seconds`)
-          console.group()
-          console.log(sensorsProcessed.reduce((str, s) => str + s.toString(), 'on Sensors: '))
-          console.groupEnd()
-          milli = now
-        }
-
-        if (result.done && result.hasCoord && !isFinished) {
-          isFinished = true
-          workers.forEach(w => w.terminate())
-          callback(result.coord)
-        }
-        // If another worker hasn't finished yet.
-        else if (result.done && !isFinished) {
-          sensorIndex[result.myIndex]++
-          const myIndex = result.myIndex
-          const mySensor = sensors[sensorIndex[myIndex]]
-          if (null != mySensor)
-            workers[result.myIndex].postMessage([mySensor.toString(), myIndex])
-          else {
-            workers[myIndex].terminate()
-          }
-        }
-
-      })
-
-    workers[index].postMessage([sensors[sensorIndex[index]].toString(), index])
-
+      if (!isCovered(pos)) return pos
+      positionsProcessed++
+    }
   }
 }
 
 
-const Thread = require('node:worker_threads');
-
-if (Thread.isMainThread) {
-
-  console.log()
-  const now = performance.now()
-  const coord = bruteForceFindHiddenBeacon(
-    coord => {
-      console.group()
-      console.log(`\nTotal Time Taken: ${((performance.now() - now) / 1000).toLocaleString()} seconds`)
-      console.log(`\nThe hidden Distress-beacon is at Location (${coord[0].toLocaleString()}, ${coord[1].toLocaleString()}) with a tuning frequency of ${(coord[0] * 4_000_000 + coord[1]).toLocaleString()}\n`)
-      console.groupEnd()
-      //process.exit()
-    }
-  )
-
-} else {
-
-  Thread.parentPort.on('message', ([sensor, index]) => {
-
-    const iterator = sensorSurroundings(SENSORS[sensor])[index]
-    let poistionsCount = 0
-    for (const pos of iterator) {
-      poistionsCount++
-      if (poistionsCount % 50_000 == 0)
-        Thread.parentPort.postMessage({ processed: poistionsCount, done: false, myIndex: index })
-
-      if (!isCovered(pos)) {
-        Thread.parentPort.postMessage({ processed: poistionsCount, done: true, hasCoord: true, coord: pos })
-        return
-      }
-    }
-    Thread.parentPort.postMessage({ processed: poistionsCount, done: true, hasCoord: false, myIndex: index })
-  })
-}
+console.log('\n This kinda takes a while:')
+console.group()
+const now = performance.now()
+const coord = bruteForceFindHiddenBeacon()
+console.log(`\nTotal Time Taken: ${((performance.now() - now) / 1000).toLocaleString()} seconds`)
+console.log(`\nThe hidden Distress-beacon is at Location (${coord[0].toLocaleString()}, ${coord[1].toLocaleString()}) with a tuning frequency of ${(coord[0] * 4_000_000 + coord[1]).toLocaleString()}\n`)
+console.groupEnd()
