@@ -39,14 +39,7 @@ class Queue {
   }
 
   toString() {
-    const array = ['<OUT']
-
-    for (const element of this) {
-      array.push(Converter.toString(element))
-    }
-
-    array.push('<IN')
-    return array.join(' <= ')
+    return ['<OUT', ...array.from(this).map(el => Converter.toString(el)), '<IN'].join(' <= ')
   }
 
 
