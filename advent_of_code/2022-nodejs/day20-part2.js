@@ -61,4 +61,5 @@ for (let i = 0, node = list.search(0); i <= offsetMax; i++, node = node.next) {
 
 const sum = Object.values(offsets).reduce((acc, nth) => acc + nth.value, 0)
 
+console.clear()
 console.log(`\n The Sum of the three Numbers forming the Groove Coordinate is: '${sum.toLocaleString()}'\n`)

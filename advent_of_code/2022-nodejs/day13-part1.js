@@ -126,7 +126,8 @@ const sumOfCorrectOrderPairs = input.map((packetPair, index) => [packetPair, ind
 ///////////////////////////////////////////////////////////////
 
 
-
+console.clear()
+console.log('\n///////////////////////////////////////////////////////////////')
 // Some visually nice output for the Testdata and Debugging.
 
 if (argument.includes('TEST')) {

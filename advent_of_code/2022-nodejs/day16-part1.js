@@ -203,4 +203,5 @@ class Node {
 // Node.GetOptimalFor(Valve.START_VALVE)
 const optimal = Node.GetOptimalFor(Valve.getByName('AA'))
 
+console.clear()
 console.log(`\n The Most pressure which can be released in ${MaxTime} minutes is ${optimal.sumOfReleasedPressure} \n`)

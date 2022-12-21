@@ -165,6 +165,7 @@ intersectionRanges = mergeRanges(intersectionRanges)
 // Get final count of covered positions by processed ranges.
 const coveredPositions = intersectionRanges.reduce((covered, range) => covered + Math.abs(range[0].x - range[1].x), 0)
 
+console.clear()
 console.group()
 console.log('\nCalculated and merged intersection ranges: ')
 console.log(Utils.Print.fromArray(intersectionRanges, 0, value => `${value[0].toString()} ==> ${value[1].toString()}`))

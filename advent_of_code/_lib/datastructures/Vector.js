@@ -24,7 +24,7 @@ class VectorBase {
 
   get magnitue() {
     return Math.sqrt(
-      this.dimension.reduce((acc, num) => acc + (num * num))
+      this.dimension.reduce((acc, num) => acc + (num * num), 0) // Needs to be initalized at 0, or first value won't be squared
     )
   }
 

@@ -226,6 +226,7 @@ if (Thread.isMainThread) {
 
   let results = []
   console.group()
+  console.clear()
   console.log('\n...This will take a few seconds.')
   for (const index in notEatenBlueprints) {
 
@@ -238,7 +239,7 @@ if (Thread.isMainThread) {
 
       results.push(res)
       console.log(`Finished Blueprint ${(res.index + 1).toString().padStart(2, '0')} | ${parseInt(results.length / notEatenBlueprints.length * 100).toLocaleString()}%`)
-      
+
       if (results.length == notEatenBlueprints.length) {
         console.log(results)
         console.log(`\n The Product of all Maximum Geodes is ${results.reduce((acc, a) => acc * a.geodes, 1).toLocaleString()}\n`)

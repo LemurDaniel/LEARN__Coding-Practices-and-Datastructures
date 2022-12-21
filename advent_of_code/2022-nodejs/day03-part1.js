@@ -1,7 +1,17 @@
 const fs = require('fs');
 
-const input = fs.readFileSync('input/day03-input.txt', 'utf-8').split('\r\n');
-// const input = fs.readFileSync('input/day03-input-test.txt', 'utf-8').split('\r\n');
+const argument = process.argv[2] ?? 'TEST'
+switch (argument.toUpperCase()) {
+  case 'TEST':
+    fileContent = fs.readFileSync('input/day03-input-test.txt', 'utf-8'); break
+  case 'INPUT':
+    fileContent = fs.readFileSync('input/day03-input.txt', 'utf-8'); break
+
+  default:
+    throw 'Argument not Valid'
+}
+
+const input = fileContent.split('\r\n')
 
 /*
     ###########################################################################################
@@ -25,4 +35,6 @@ const doubleItemPriorities = input
   .reduce((acc, a) => acc + a)
 
 
-console.log(`The Sum of Priorites of all double items is: ${doubleItemPriorities}`)
+console.clear()
+console.log('\n///////////////////////////////////////////////////////////////\n')
+console.log(`The Sum of Priorites of all double items is: ${doubleItemPriorities}\n`)

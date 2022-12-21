@@ -144,14 +144,19 @@ function step(direction, steps) {
 
     visited[[tail.y, tail.x]] = true
 
-
-    if (argument.includes('TEST'))
+    if (argument.includes('TEST')) {
+      console.log('--------------------------------')
       console.log(printableGrid(head, tail, visited))
+    }
 
   }
 
 }
 
+
+///////////////////////////////////////////////////////////
+
+console.clear()
 
 // Step through instructions
 input.map(v => v.split(' '))

@@ -168,6 +168,10 @@ class Rope extends Vector2D {
 
 }
 
+
+///////////////////////////////////////////////////////////
+
+console.clear()
 const ropeHead = new Rope(10)
 
 // Step through instructions
@@ -183,6 +187,7 @@ input.map(v => v.split(' '))
     }
 
   })
+
 
 
 console.log('||| Finished Simulation|||')

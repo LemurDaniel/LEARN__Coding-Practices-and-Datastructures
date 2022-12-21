@@ -140,10 +140,8 @@ while (processNextSandFlock()) { }
 
 const restingSandFlocks = Object.keys(POSITIONS).filter(v => POSITIONS[v] == Characters['SAND'])
 
+console.clear()
 console.log('\n///////////////////////////////////////////////////////////////')
-
-console.log(restingSandFlocks)
-
 console.log(`\n  There is a total of ${restingSandFlocks.length} before the Start falling into the Abyss\n`)
 
 

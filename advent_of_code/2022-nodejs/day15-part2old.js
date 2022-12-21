@@ -191,7 +191,7 @@ function bruteForceFindHiddenBeacon() {
 
 }
 
-
+console.clear()
 console.log('\n This kinda takes a while:')
 console.group()
 const now = performance.now()

@@ -202,6 +202,7 @@ class Cluster {
 ///////////////////////////////////////////////////////////////
 
 // Process all Cubes
+console.clear()
 
 Input.map(cube => new Cube(...cube.split(',')))
   .forEach(cube => Cluster.Add(cube))

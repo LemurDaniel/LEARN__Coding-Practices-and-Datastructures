@@ -96,5 +96,7 @@ const visibleEdge = input.length * 4 - 4
 const visibleInteror = solution.flat().filter(v => v != EMPTY).length - visibleEdge
 
 
+console.clear()
+console.log('\n///////////////////////////////////////////////////////////////\n')
 console.log(Utils.Print.fromMatrix(solution))
 console.log(` There are a total of ${visibleEdge + visibleInteror} Trees visible. (Edge: ${visibleEdge}, Interior ${visibleInteror})\n`)

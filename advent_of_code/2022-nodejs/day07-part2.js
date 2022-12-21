@@ -1,7 +1,15 @@
 const fs = require('fs');
 
-var fileContent = fs.readFileSync('input/day07-input.txt', 'utf-8')
-// fileContent = fs.readFileSync('input/day07-input-test.txt', 'utf-8')
+const argument = process.argv[2] ?? 'TEST'
+switch (argument.toUpperCase()) {
+  case 'TEST':
+    fileContent = fs.readFileSync('input/day07-input-test.txt', 'utf-8'); break
+  case 'INPUT':
+    fileContent = fs.readFileSync('input/day07-input.txt', 'utf-8'); break
+
+  default:
+    throw 'Argument not Valid'
+}
 
 const input = fileContent.split('\r\n')
 
@@ -130,7 +138,8 @@ const smallestDeletebleDirectory = Object.entries(directorySizes)
     minimum = directory.size > minimum.size ? minimum : directory
   )
 
-console.log()
+console.clear()
+console.log('\n///////////////////////////////////////////////////////////////\n')
 console.log(` - A Total of '${neededSpace.toLocaleString()}' is needed for the Update`)
 console.log(` - There is still '${unusedSpace.toLocaleString()}' unused Space available`)
 console.log(` - To install the Update an additional '${spaceToFree.toLocaleString()}' need to be freed`)

@@ -230,6 +230,7 @@ const Thread = require('node:worker_threads');
 
 if (Thread.isMainThread) {
 
+  console.clear()
   console.log()
   const now = performance.now()
   const coord = bruteForceFindHiddenBeacon(

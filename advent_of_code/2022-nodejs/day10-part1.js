@@ -187,6 +187,7 @@ class CPU {
 // Create CPU with provided Programm.
 const cpu = new CPU(input)
 
+console.clear()
 console.log('\n== CPU Start Executing ==\n')
 while (cpu.nextCycle()) { }
 console.log('\n== CPU Finised Executing ==\n')

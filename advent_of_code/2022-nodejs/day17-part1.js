@@ -149,4 +149,5 @@ else
   fs.writeFileSync(`./day17-part1.${argument.toLowerCase()}.txt`, chamber.toString(), 'utf-8')
 
 // Overengineered nonsense solution
+console.clear()
 console.log(`\n After 2022 fallen rocks the height of the tower is ${chamber.max.y + 1}\n`) // +1 since, max.y is the highest Point of a Rock and one above that

@@ -62,9 +62,7 @@ class Monkey {
 
   static printCurrentMonkeyBags() {
 
-    console.log('\n/////////////////////////////////////')
-
-    console.log(`After Round ${Monkey.#ROUND}, the monkeys are holding following items: \n`)
+    console.log(`The monkeys are holding following items:`)
     console.group()
     Object.values(Monkey.#MONKEY_ARMY).forEach(monkey => console.log(monkey))
     console.groupEnd()
@@ -73,9 +71,7 @@ class Monkey {
 
   static printMonkeyBusinessLevel() {
 
-    console.log('\n/////////////////////////////////////')
-
-    console.log(`After Round ${Monkey.#ROUND}, the monkeys have each inspected a total of: \n`)
+    console.log(`The monkeys have each inspected a total of:`)
     console.group()
     Object.values(Monkey.#MONKEY_ARMY).forEach(monkey =>
       console.log(`${monkey.name} inspected items ${monkey.totalInspections} times.`)
@@ -86,7 +82,7 @@ class Monkey {
       .sort((a, b) => b - a).slice(0, 2)
       .reduce((acc, a) => acc * a)
 
-    console.log(`The Current Monkey Business Level is at ${monkeyLevelBusiness}`)
+    console.log(`\nThe Current Monkey Business Level is at ${monkeyLevelBusiness}`)
     console.groupEnd()
 
   }
@@ -175,6 +171,11 @@ while (Monkey.Round < 10_000) {
   Monkey.goOneRound()
 }
 
+console.clear()
+console.log('\n///////////////////////////////////////////////////////////////')
+console.log(`After Round ${Monkey.Round}\n`)
+
 Monkey.printCurrentMonkeyBags()
+console.log()
 Monkey.printMonkeyBusinessLevel()
 console.log()

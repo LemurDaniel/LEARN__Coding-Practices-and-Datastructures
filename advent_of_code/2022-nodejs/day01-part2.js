@@ -1,7 +1,18 @@
 const fs = require('fs');
 
-const input = fs.readFileSync('input/day01-input.txt', 'utf-8');
-// const input = fs.readFileSync('input/day01-input-test.txt', 'utf-8');
+const argument = process.argv[2] ?? 'TEST'
+switch (argument.toUpperCase()) {
+  case 'TEST':
+    fileContent = fs.readFileSync('input/day01-input-test.txt', 'utf-8'); break
+  case 'INPUT':
+    fileContent = fs.readFileSync('input/day01-input.txt', 'utf-8'); break
+
+  default:
+    throw 'Argument not Valid'
+}
+
+const input = fileContent.split('\r\n\r\n')
+  .map(elf => elf.split('\r\n').map(cals => parseInt(cals)))
 
 // Find the top three Elf carrying the most Calories.
 
@@ -13,13 +24,12 @@ const input = fs.readFileSync('input/day01-input.txt', 'utf-8');
 */
 
 
-const totalCaloriesTopThree = input.split('\r\n\r\n')
-  .map(v => v.split('\r\n')
-    .map(v => parseInt(v))
-    .reduce(
-      (acc, a) => acc + a)
-  ).sort((a, b) => b - a)
+const totalCaloriesTopThree = input
+  .map(elf => elf.reduce((acc, a) => acc + a))
+  .sort((a, b) => b - a)
   .slice(0, 3)
   .reduce((acc, a) => acc + a)
 
-console.log(`The top three elfs with the most calories carry a total of ${totalCaloriesTopThree} calories.`)
+console.clear()
+console.log('\n///////////////////////////////////////////////////////////////\n')
+console.log(`The top three elfs with the most calories carry a total of ${totalCaloriesTopThree} calories.\n`)

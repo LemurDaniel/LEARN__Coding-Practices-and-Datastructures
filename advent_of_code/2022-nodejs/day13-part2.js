@@ -131,4 +131,6 @@ const dividerPacketSum = input
   .reduce((product, actualIndex) => product * actualIndex)
 
 
+console.clear()
+console.log('\n///////////////////////////////////////////////////////////////')
 console.log(`\n The Decoder-Key for the Distress Signal is: ${dividerPacketSum}\n`)

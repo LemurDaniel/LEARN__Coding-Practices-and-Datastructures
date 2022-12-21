@@ -1,8 +1,18 @@
 const fs = require('fs');
 
-const input = fs.readFileSync('input/day01-input.txt', 'utf-8')
-// const input = fs.readFileSync('input/day01-input-test.txt', 'utf-8')
+const argument = process.argv[2] ?? 'TEST'
+switch (argument.toUpperCase()) {
+  case 'TEST':
+    fileContent = fs.readFileSync('input/day01-input-test.txt', 'utf-8'); break
+  case 'INPUT':
+    fileContent = fs.readFileSync('input/day01-input.txt', 'utf-8'); break
 
+  default:
+    throw 'Argument not Valid'
+}
+
+const input = fileContent.split('\r\n\r\n')
+  .map(elf => elf.split('\r\n').map(cals => parseInt(cals)))
 
 // Find the Elf carrying the most Calories.
 
@@ -14,11 +24,9 @@ const input = fs.readFileSync('input/day01-input.txt', 'utf-8')
 */
 
 
-const mostCalories = input.split('\r\n\r\n')
-  .map(v => v.split('\r\n')
-    .map(v => parseInt(v))
-    .reduce(
-      (acc, a) => acc + a)
-  ).sort((a, b) => b - a)[0]
+const mostCalories = input
+  .map(elf => elf.reduce((acc, a) => acc + a)).reduce((a, b) => Math.max(a, b))
 
-console.log(`The elf with the most calories carries a total of ${mostCalories} calories.`)
+console.clear()
+console.log('\n///////////////////////////////////////////////////////////////\n')
+console.log(`The elf with the most calories carries a total of ${mostCalories} calories.\n`)

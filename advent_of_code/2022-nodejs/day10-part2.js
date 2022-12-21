@@ -209,6 +209,7 @@ class CPU {
 // Create CPU with provided Programm.
 const cpu = new CPU(input)
 
+console.clear()
 if (argument.includes('TEST'))
   console.log('\n== CPU Start Executing ==\n')
 

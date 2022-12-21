@@ -1,7 +1,17 @@
 const fs = require('fs');
 
-const input = fs.readFileSync('input/day04-input.txt', 'utf-8').split('\r\n');
-//const input = fs.readFileSync('input/day04-input-test.txt', 'utf-8').split('\r\n');
+const argument = process.argv[2] ?? 'TEST'
+switch (argument.toUpperCase()) {
+  case 'TEST':
+    fileContent = fs.readFileSync('input/day04-input-test.txt', 'utf-8'); break
+  case 'INPUT':
+    fileContent = fs.readFileSync('input/day04-input.txt', 'utf-8'); break
+
+  default:
+    throw 'Argument not Valid'
+}
+
+const input = fileContent.split('\r\n')
 
 /*
     ###########################################################################################
@@ -19,4 +29,7 @@ const numberOfOverlappingSections = input
     (sectionPair[0].min <= sectionPair[1].max && sectionPair[0].min >= sectionPair[1].min)
   ).length
 
-console.log(`${numberOfOverlappingSections} of Section Pairs have overlapping sections.`)
+
+console.clear()
+console.log('\n///////////////////////////////////////////////////////////////\n')
+console.log(`${numberOfOverlappingSections} of Section Pairs have overlapping sections.\n`)

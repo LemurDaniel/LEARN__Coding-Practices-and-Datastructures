@@ -1,7 +1,15 @@
 const fs = require('fs')
 
-var fileContent = fs.readFileSync('input/day05-input-test.txt', 'utf-8')
-fileContent = fs.readFileSync('input/day05-input.txt', 'utf-8')
+const argument = process.argv[2] ?? 'TEST'
+switch (argument.toUpperCase()) {
+  case 'TEST':
+    fileContent = fs.readFileSync('input/day05-input-test.txt', 'utf-8'); break
+  case 'INPUT':
+    fileContent = fs.readFileSync('input/day05-input.txt', 'utf-8'); break
+
+  default:
+    throw 'Argument not Valid'
+}
 
 const input = fileContent.split('\r\n\r\n').map(v => v.split('\r\n'))
 
@@ -54,4 +62,6 @@ for (const [count, from, to] of operations) {
 
 const topCrates = Object.values(stacks).map(stack => stack.pop()).join('')
 
-console.log(`The Topmost crates on Stack after all Operations are: ${topCrates}`)
+console.clear()
+console.log('\n///////////////////////////////////////////////////////////////\n')
+console.log(`The Topmost crates on Stack after all Operations are: ${topCrates}\n`)

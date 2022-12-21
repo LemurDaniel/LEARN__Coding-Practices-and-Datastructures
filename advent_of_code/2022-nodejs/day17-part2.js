@@ -256,6 +256,8 @@ while (Rock.rockCount <= rocksToSimulate) {
 
 }
 
+
+console.clear()
 print(currentRock, positions, patternSkippedHeight)
 console.log(`\nAfter ${(Rock.rockCount - 1).toLocaleString()} fallen rocks the height of the tower is ${(patternSkippedHeight + Rock.maximumHeight + 1).toLocaleString()}\n`)
 console.groupEnd()

@@ -1,7 +1,15 @@
 const fs = require('fs');
 
-var fileContent = fs.readFileSync('input/day07-input.txt', 'utf-8')
-// fileContent = fs.readFileSync('input/day07-input-test.txt', 'utf-8')
+const argument = process.argv[2] ?? 'TEST'
+switch (argument.toUpperCase()) {
+  case 'TEST':
+    fileContent = fs.readFileSync('input/day07-input-test.txt', 'utf-8'); break
+  case 'INPUT':
+    fileContent = fs.readFileSync('input/day07-input.txt', 'utf-8'); break
+
+  default:
+    throw 'Argument not Valid'
+}
 
 const input = fileContent.split('\r\n')
 
@@ -116,10 +124,12 @@ input
 // Get Map of All Directories with their sizes
 const { directorySizes } = root.getDirectorySizes()
 
+
+console.clear()
 root.printAllFiles()
 console.log(directorySizes)
 
-console.log()
+console.log('\n///////////////////////////////////////////////////////////////\n')
 // Filter out directory sizes smaller than 100_000
 console.log(`The sum of directories with at most 100.000 size is ${Object.values(directorySizes)
   .filter(size => size <= 100_000)

@@ -1,14 +1,25 @@
 const fs = require('fs');
 
-var fileContent = fs.createReadStream('input/day06-input.txt', 'utf-8')
-// fileContent = fs.createReadStream('input/day06-input-test.txt', 'utf-8')
+const argument = process.argv[2] ?? 'TEST'
+switch (argument.toUpperCase()) {
+  case 'TEST':
+    fileContent = fs.createReadStream('input/day06-input-test.txt', 'utf-8'); break
+  case 'INPUT':
+    fileContent = fs.createReadStream('input/day06-input.txt', 'utf-8'); break
 
-  /*
-      ###########################################################################################
-      ###########################################################################################
-      ####################               Solve AOC below                  #######################
-      ###########################################################################################
-  */
+  default:
+    throw 'Argument not Valid'
+}
+
+console.clear()
+console.log('\n///////////////////////////////////////////////////////////////\n')
+
+/*
+    ###########################################################################################
+    ###########################################################################################
+    ####################               Solve AOC below                  #######################
+    ###########################################################################################
+*/
 
 let index = 0
 const array = []
@@ -36,14 +47,15 @@ fileContent
       if (array.length < markerLength) {
         array.push(char)
         continue;
-      } 
+      }
 
       array.shift()
       array.push(char)
 
       const charsUnique = array.filter(n => array.filter(v => v == n).length > 1).length == 0
-      if(charsUnique) {
+      if (charsUnique) {
         console.log(`First unique packet-marker Found at ${index} ${array.join('')}`)
+        console.log()
         fileContent.destroy()
         return
       }

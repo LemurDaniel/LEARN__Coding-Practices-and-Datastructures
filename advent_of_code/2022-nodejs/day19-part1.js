@@ -224,6 +224,7 @@ const Thread = require('node:worker_threads')
 if (Thread.isMainThread) {
 
   let results = []
+  console.clear()
   console.group()
   for (const index in Blueprint.ALL) {
 
@@ -235,7 +236,7 @@ if (Thread.isMainThread) {
     }).on('message', res => {
 
       results.push(res)
-      console.log(`Finished Blueprint ${(res.index+1).toString().padStart(2, '0')} | ${parseInt(results.length / Blueprint.ALL.length * 100).toLocaleString()}%`)
+      console.log(`Finished Blueprint ${(res.index + 1).toString().padStart(2, '0')} | ${parseInt(results.length / Blueprint.ALL.length * 100).toLocaleString()}%`)
 
       if (results.length == Blueprint.ALL.length) {
         console.log(results)

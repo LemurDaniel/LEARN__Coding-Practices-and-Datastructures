@@ -169,6 +169,7 @@ let test = 0
 
 const bla = {}
 
+console.clear()
 console.log('\nThis will take a bit...')
 console.log('\nNot a good one, but it is a solution')
 

@@ -104,7 +104,7 @@ class Print extends Depth {
     const printable = [brackets[0]]
     for (let [index, value, _end] of Iterator.fromArray(argument)) {
 
-      value = Depth.Track(converter, value, presentation, maxLength)
+      value = Depth.Track(converter, value, presentation, converter, maxLength)
       value = [' ', value, (!_end ? brackets[1] : ' ')].join('')
       printable.push(value)
 

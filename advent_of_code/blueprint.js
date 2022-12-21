@@ -35,3 +35,24 @@ const Input = fileContent.split('\r\n')
     ####################               Solve AOC below                  #######################
     ###########################################################################################
 */
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////
+
+const solution = 0
+console.clear()
+console.log('\n///////////////////////////////////////////////////////////////\n')
+console.group()
+console.log(`The Solution is ... ${solution.toLocaleString()}`)
+console.log()
+console.groupEnd()
