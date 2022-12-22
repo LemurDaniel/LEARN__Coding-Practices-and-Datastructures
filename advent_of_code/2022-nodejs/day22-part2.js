@@ -101,27 +101,27 @@ class Mover extends Vector2D {
     const nextPos = this.copy
 
     while (number--) {
+      const face = this.cubeFaceCurr
       const direction = this.direction
       nextPos.add(direction)
-      console.log('------')
-      console.log(nextPos, this.facing)
-      const face = this.cubeFaceCurr
+
+      // tempory cubeFaceNext and facingNext, which get disregarded, when the next movement was invalid.
       let cubeFaceNext = null
       let facingNext = null
       let distToLow = null
 
       if (nextPos.x > face.rightMax) {
         cubeFaceNext = face.right
-        distToLow = nextPos.y - this.cubeFaceCurr.upMin
+        distToLow = nextPos.y - this.cubeFaceCurr.upMin  // Dist to Low is on Y-Axis, since walking out on X-Axis.
       } else if (nextPos.x < face.leftMin) {
         cubeFaceNext = face.left
-        distToLow = nextPos.y - this.cubeFaceCurr.upMin
+        distToLow = nextPos.y - this.cubeFaceCurr.upMin  // Dist to Low is on Y-Axis, since walking out on X-Axis.
       } else if (nextPos.y > face.downMax) {
         cubeFaceNext = face.down
-        distToLow = nextPos.x - this.cubeFaceCurr.leftMin
+        distToLow = nextPos.x - this.cubeFaceCurr.leftMin // Dist to Low is on X-Axis, since walking out on Y-Axis.
       } else if (nextPos.y < face.upMin) {
         cubeFaceNext = face.up
-        distToLow = nextPos.x - this.cubeFaceCurr.leftMin
+        distToLow = nextPos.x - this.cubeFaceCurr.leftMin // Dist to Low is on X-Axis, since walking out on Y-Axis.
       }
 
       // When walking right outside of the face, you might be walking down in the next cubeface, etc.
@@ -131,66 +131,111 @@ class Mover extends Vector2D {
       //  - Left
       //  - Right
       // Then change direction an position based on that information.
+      // 
+
+
+      // Changing the the Y-Axis, when walking in Down or UP is easy, since its then maxDown or minUp.
+      // Changing the X-Axis when walking in Right or Left is easy to, since its then maxRight or minLeft.
+      // The upper too are simply dependent on which side of the face we are walking into.
+
+
+      // When Moving in from Down or Up, the X-Axis needs to be changed, depending on the layout and and how it connects to the other side. 
+      // The Face, which is unfolded the Y-Axis, might also be connecting to a side of a Face, which is unfolded the X-Axis!
+      // This is then calculated depending on which Side of the Face we are walking out of.
+      // The what the 'distToLow' is calculated for. It's depending on the side the difference of the Point to either minUp or minLeft.
+
+
+
+      /// If no next face was entered, skip every check.
       if (null != cubeFaceNext) {
 
-        // When walking in from the right, then need to walk left.
+
         if (cubeFaceNext.right == this.cubeFaceCurr) {
+          // When walking in from the right, then movment changes to left.
+          // (In case we are not moving from a left-side to right, but for example an up-side)
           facingNext = 2
-          nextPos.x = cubeFaceNext.rightMax // Y is now leftmost-side of new face
-          if (cubeFaceNext.rightLowToLow) {
+          // X is now leftmost-side of new face
+          nextPos.x = cubeFaceNext.rightMax
+
+          // The position on the Y-Axis is calculated depending on the previous face distance to either minLeft or minUp.
+          // Depending how the face is oriented and connected in 3D-Space,
+          //  => the Lowest and Highest Point of both Faces might be connect in Reverse to each other or not. 
+          //  => This is what the 'true' and 'false' on each side in the Layout refers to.
+          if (cubeFaceNext.rightLowToLow)
             nextPos.y = cubeFaceNext.upMin + distToLow
-          }
-          else {
+          else
             nextPos.y = cubeFaceNext.downMax - distToLow
-          }
+
         }
 
-        // When walking in from the left, then need to walk right.
+
         else if (cubeFaceNext.left == this.cubeFaceCurr) {
+          // When walking in from the right, then movment changes to left.
+          // (In case we are not moving from a right-side to left, but for example an up-side)
           facingNext = 0
-          nextPos.x = cubeFaceNext.leftMin // Y is now rightmost-side of new face
-          if (cubeFaceNext.leftLowToLow) {
+          // X is now rightmost-side of new face
+          nextPos.x = cubeFaceNext.leftMin
+
+          // The position on the Y-Axis is calculated depending on the previous face distance to either minLeft or minUp.
+          // Depending how the face is oriented and connected in 3D-Space,
+          //  => the Lowest and Highest Point of both Faces might be connect in Reverse to each other or not. 
+          //  => This is what the 'true' and 'false' on each side in the Layout refers to.
+          if (cubeFaceNext.leftLowToLow)
             nextPos.y = cubeFaceNext.upMin + distToLow
-          }
-          else {
+          else
             nextPos.y = cubeFaceNext.downMax - distToLow
-          }
         }
 
-        // When walking in from up, then need to walk down.
+
         else if (cubeFaceNext.up == this.cubeFaceCurr) {
+          // When walking in from up, then movment changes to down.
+          // (In case we are not moving from a down-side to up, but for example an left-side)
           facingNext = 1
-          nextPos.y = cubeFaceNext.upMin // Y is now upper-side of new face
-          if (cubeFaceNext.upLowToLow) {
+          // Y is now upper-side of new face
+          nextPos.y = cubeFaceNext.upMin
+
+          // The position on the X-Axis is calculated depending on the previous face distance to either minLeft or minUp.
+          // Depending how the face is oriented and connected in 3D-Space,
+          //  => the Lowest and Highest Point of both Faces might be connect in Reverse to each other or not. 
+          //  => This is what the 'true' and 'false' on each side in the Layout refers to.
+          if (cubeFaceNext.upLowToLow)
             nextPos.x = cubeFaceNext.leftMin + distToLow
-          }
-          else {
+          else
             nextPos.x = cubeFaceNext.rightMax - distToLow
-          }
         }
 
-        // When walking in from down, then need to walk up.
+
         else if (cubeFaceNext.down == this.cubeFaceCurr) {
+          // When walking in from down, then movment changes to up.
+          // (In case we are not moving from a up-side to down, but for example an left-side)
           facingNext = 3
-          nextPos.y = cubeFaceNext.downMax // Y is now lower-side of new face
-          if (cubeFaceNext.downLowToLow) {
+          // Y is now lower-side of new face
+          nextPos.y = cubeFaceNext.downMax
+
+          // The position on the X-Axis is calculated depending on the previous face distance to either minLeft or minUp.
+          // Depending how the face is oriented and connected in 3D-Space,
+          //  => the Lowest and Highest Point of both Faces might be connect in Reverse to each other or not. 
+          //  => This is what the 'true' and 'false' on each side in the Layout refers to.
+          if (cubeFaceNext.downLowToLow)
             nextPos.x = cubeFaceNext.leftMin + distToLow
-          }
-          else {
+          else
             nextPos.x = cubeFaceNext.rightMax - distToLow
-          }
         }
 
       }
 
-      console.log(nextPos, this.facing)
-      console.log('------')
+
+      // If the next calucalted positon, even after switching faces, is hindered by a wall.
+      // => then stop moving and remain on the previous field.
       if (Positions[nextPos] == Characters.WALL)
         return
 
+      // The cubeface and and facing, as well as the x and y, only need to be updated
+      // => when the movement was valid and not hindered by a wall.
+
       this.x = nextPos.x
       this.y = nextPos.y
-      // When movement to other cubeface occured, then change current to other cubeface. 
+
       this.cubeFaceCurr = cubeFaceNext ?? this.cubeFaceCurr
       this.facing = facingNext ?? this.facing
     }
@@ -263,12 +308,12 @@ class Cube {
         [6]
     */
     {
-      1: new Cube.Face(6, 4, 3, 2),
-      2: new Cube.Face(6, 4, 3, 2),
-      3: new Cube.Face(6, 4, 3, 2),
-      4: new Cube.Face(6, 4, 3, 2),
-      5: new Cube.Face(6, 4, 3, 2),
-      6: new Cube.Face(6, 4, 3, 2)
+      1: new Cube.Face(2, true, 3, true, 4, false, 6, true),
+      2: new Cube.Face(5, false, 3, true, 1, true, 6, true),
+      3: new Cube.Face(2, true, 5, true, 4, true, 1, true),
+      4: new Cube.Face(5, true, 6, true, 1, false, 3, true),
+      5: new Cube.Face(2, false, 6, true, 4, true, 3, true),
+      6: new Cube.Face(5, true, 2, true, 1, true, 4, true)
     }
   ]
 
@@ -301,7 +346,7 @@ class Cube {
 
           //console.log(row, startCol, endCol, endCol-startCol, sideLength)
           if (endCol - startCol == sideLength - 1) {
-            console.log(currentCubeface, row, startCol, endCol)
+            //console.log(currentCubeface, row, startCol, endCol)
 
             this.layout[currentCubeface].upMin = row
             this.layout[currentCubeface].downMax = row + sideLength - 1
@@ -313,8 +358,8 @@ class Cube {
           }
         }
       }
-      console.log('####################')
-      console.log(this.layout)
+      //console.log('####################')
+      //console.log(this.layout)
     }
 
   }
@@ -324,17 +369,16 @@ class Cube {
 
 ///////////////////////////////////////////////////////////////
 
-const cube = new Cube(Cube.Layouts[0])
+const layout = argument.includes('TEST') ? Cube.Layouts[0] : Cube.Layouts[1]
+const cube = new Cube(layout)
 const mover = new Mover(startPosition.x, startPosition.y, cube)
 
 
 for (const instr of instructions) {
 
-  if ('LR'.includes(instr)) {
+  if ('LR'.includes(instr))
     mover.rotate(instr)
-    console.log(mover)
-    console.log('######################################')
-  } else
+  else
     mover.move(instr)
 
 }
