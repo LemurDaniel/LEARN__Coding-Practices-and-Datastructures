@@ -289,9 +289,14 @@ class Cube {
 
   static Layouts = [
     /*
+
+      All Faces are simply named after the ordering of the Faces as they appear in the layout from Up-Left to Down-Right.
+      Thats also how the Input is parsed, naming the Faces in the order they appear.
+
             [1]
       [2][3][4]
             [5][6]
+
     */
     {
       1: new Cube.Face(6, false, 4, true, 3, true, 2, false),
@@ -317,6 +322,8 @@ class Cube {
     }
   ]
 
+  // A static block, replacing the numbers on the Faces, with the actual reference to the Cube.Face Objects.
+  // This can obviously only be done, after they have been created first.
   static {
     for (const layout of Cube.Layouts) {
       for (const face of Object.values(layout)) {
@@ -328,32 +335,51 @@ class Cube {
     }
   }
 
+
+
   constructor(layout) {
+    // The chosen Layout for the cube.
     this.layout = layout
 
 
-    // Calculate right and leftMin for cubeface, based on cube-length.
-    let currentCubeface = 1
+    // Calculating for each face the corresponding portions of the X-Axis on the Y-Axis.
+    //  ==> The minLeft, maxRight, minUp, maxDown.
+
+    // Starting at Up-Right with Face 1.
+    let currentCubeface = 1 
+
+    // Parsing down through the board, starting an null, and then jumping columns by the 'sidelength' down to the Y-Start of the next Face.
     for (let row = 0; row < board.length; row += sideLength) {
 
+      // Starting and ending for the current Face.
       let startCol = null
       let endCol = null
+
+      // Goging through the current Y-Axis left to rigth and cutting all Faces.
       for (let col = 0; col < board[row].length; col++) {
         if (board[row][col] != Characters.EMPTY) {
 
+          // Startcol ist first non empty Character, endcol gets continuosly updated.
           startCol = startCol ?? col
           endCol = col
 
           //console.log(row, startCol, endCol, endCol-startCol, sideLength)
+          // If a block has ended, becauso of the caluclated sidelength is reach.
+          // => Set the upMin, downMax, rightMax, leftMins on the Face to the correct Y and X-Axis portions.
           if (endCol - startCol == sideLength - 1) {
             //console.log(currentCubeface, row, startCol, endCol)
 
+            // Up is the current top-Row (The jumps are in the increments of the sidelenght)
+            // down is the toprow + sidelength - 1, to get the last index.
             this.layout[currentCubeface].upMin = row
             this.layout[currentCubeface].downMax = row + sideLength - 1
+            // Left and right are the start and end of the column.
             this.layout[currentCubeface].rightMax = endCol
             this.layout[currentCubeface].leftMin = startCol
 
+            // If a cubeface is found, increment to the next cubeface. (There are always 6)
             currentCubeface++
+            // Start the next to the endcol+1, if there is no more, the loop will end and jump down by a sidelength to the next starting row.
             startCol = endCol + 1
           }
         }
@@ -369,11 +395,15 @@ class Cube {
 
 ///////////////////////////////////////////////////////////////
 
+// Choose the Layount. Solution only works for Inputs with the specific layout of 'Test' or 'Input'!
 const layout = argument.includes('TEST') ? Cube.Layouts[0] : Cube.Layouts[1]
+
+// Create Cube based on layout and then mover along the cube.
 const cube = new Cube(layout)
 const mover = new Mover(startPosition.x, startPosition.y, cube)
 
 
+// Go through all instructions.
 for (const instr of instructions) {
 
   if ('LR'.includes(instr))
@@ -385,7 +415,7 @@ for (const instr of instructions) {
 
 ///////////////////////////////////////////////////////////////
 
-// Plus 1, since Grid in Puzzle start at 1 not 0, but grid here is zerobased.
+// Plus 1, since Puzzle expects Row and Column starting at 1 not 0, but grid here is zero-based.
 const finalCol = mover.x + 1
 const finalRow = mover.y + 1
 const solution = 1_000 * finalRow + 4 * finalCol + mover.facing
