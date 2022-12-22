@@ -98,36 +98,101 @@ class Mover extends Vector2D {
   }
 
   move(number) {
-    const direction = this.direction
     const nextPos = this.copy
 
     while (number--) {
+      const direction = this.direction
       nextPos.add(direction)
-
+      console.log('------')
+      console.log(nextPos, this.facing)
       const face = this.cubeFaceCurr
+      let cubeFaceNext = null
+      let facingNext = null
+      let distToLow = null
 
       if (nextPos.x > face.rightMax) {
-        this.cubeFaceCurr = face.right
-        nextPos.x = face.right.leftMin
-      }
-      else if (nextPos.x < face.leftMin) {
-        this.cubeFaceCurr = face.left
-        nextPos.x = face.left.rightMax
-      }
-      else if (nextPos.y > face.downMax) {
-        this.cubeFaceCurr = face.down
-        nextPos.y = face.down.upMin
-      }
-      else if (nextPos.y < face.upMin) {
-        this.cubeFaceCurr = face.up
-        nextPos.y = face.up.downMax
+        cubeFaceNext = face.right
+        distToLow = nextPos.y - this.cubeFaceCurr.upMin
+      } else if (nextPos.x < face.leftMin) {
+        cubeFaceNext = face.left
+        distToLow = nextPos.y - this.cubeFaceCurr.upMin
+      } else if (nextPos.y > face.downMax) {
+        cubeFaceNext = face.down
+        distToLow = nextPos.x - this.cubeFaceCurr.leftMin
+      } else if (nextPos.y < face.upMin) {
+        cubeFaceNext = face.up
+        distToLow = nextPos.x - this.cubeFaceCurr.leftMin
       }
 
+      // When walking right outside of the face, you might be walking down in the next cubeface, etc.
+      // To Account for that, check which side the current side connects to:
+      //  - Up
+      //  - Down
+      //  - Left
+      //  - Right
+      // Then change direction an position based on that information.
+      if (null != cubeFaceNext) {
+
+        // When walking in from the right, then need to walk left.
+        if (cubeFaceNext.right == this.cubeFaceCurr) {
+          facingNext = 2
+          nextPos.x = cubeFaceNext.rightMax // Y is now leftmost-side of new face
+          if (cubeFaceNext.rightLowToLow) {
+            nextPos.y = cubeFaceNext.upMin + distToLow
+          }
+          else {
+            nextPos.y = cubeFaceNext.downMax - distToLow
+          }
+        }
+
+        // When walking in from the left, then need to walk right.
+        else if (cubeFaceNext.left == this.cubeFaceCurr) {
+          facingNext = 0
+          nextPos.x = cubeFaceNext.leftMin // Y is now rightmost-side of new face
+          if (cubeFaceNext.leftLowToLow) {
+            nextPos.y = cubeFaceNext.upMin + distToLow
+          }
+          else {
+            nextPos.y = cubeFaceNext.downMax - distToLow
+          }
+        }
+
+        // When walking in from up, then need to walk down.
+        else if (cubeFaceNext.up == this.cubeFaceCurr) {
+          facingNext = 1
+          nextPos.y = cubeFaceNext.upMin // Y is now upper-side of new face
+          if (cubeFaceNext.upLowToLow) {
+            nextPos.x = cubeFaceNext.leftMin + distToLow
+          }
+          else {
+            nextPos.x = cubeFaceNext.rightMax - distToLow
+          }
+        }
+
+        // When walking in from down, then need to walk up.
+        else if (cubeFaceNext.down == this.cubeFaceCurr) {
+          facingNext = 3
+          nextPos.y = cubeFaceNext.downMax // Y is now lower-side of new face
+          if (cubeFaceNext.downLowToLow) {
+            nextPos.x = cubeFaceNext.leftMin + distToLow
+          }
+          else {
+            nextPos.x = cubeFaceNext.rightMax - distToLow
+          }
+        }
+
+      }
+
+      console.log(nextPos, this.facing)
+      console.log('------')
       if (Positions[nextPos] == Characters.WALL)
         return
 
       this.x = nextPos.x
       this.y = nextPos.y
+      // When movement to other cubeface occured, then change current to other cubeface. 
+      this.cubeFaceCurr = cubeFaceNext ?? this.cubeFaceCurr
+      this.facing = facingNext ?? this.facing
     }
   }
 }
@@ -160,11 +225,15 @@ class Mover extends Vector2D {
 class Cube {
 
   static Face = class Face {
-    constructor(right, down, left, up) {
+    constructor(right, rightLowToLow, down, downLowToLow, left, leftLowToLow, up, upLowToLow) {
       this.right = right
+      this.rightLowToLow = rightLowToLow // I can't think of something else to do it right now. 
       this.down = down
+      this.downLowToLow = downLowToLow
       this.left = left
+      this.leftLowToLow = leftLowToLow
       this.up = up
+      this.upLowToLow = upLowToLow
 
       this.rightMax = null
       this.downMax = null
@@ -180,12 +249,12 @@ class Cube {
             [5][6]
     */
     {
-      1: new Cube.Face(6, 4, 3, 2),
-      2: new Cube.Face(3, 5, 6, 2),
-      3: new Cube.Face(4, 5, 2, 1),
-      4: new Cube.Face(6, 5, 3, 1),
-      5: new Cube.Face(6, 2, 3, 4),
-      6: new Cube.Face(1, 2, 5, 4)
+      1: new Cube.Face(6, false, 4, true, 3, true, 2, false),
+      2: new Cube.Face(3, true, 5, false, 6, false, 2, false),
+      3: new Cube.Face(4, true, 5, false, 2, true, 1, true),
+      4: new Cube.Face(6, false, 5, true, 3, true, 1, true),
+      5: new Cube.Face(6, true, 2, false, 3, false, 4, true),
+      6: new Cube.Face(1, false, 2, false, 5, true, 4, false)
     },
     /*
            [1][2]
@@ -226,8 +295,6 @@ class Cube {
       let endCol = null
       for (let col = 0; col < board[row].length; col++) {
         if (board[row][col] != Characters.EMPTY) {
-          // Make a dictionary for all Positions.
-          const pos = new Vector2D(col, row)
 
           startCol = startCol ?? col
           endCol = col
@@ -254,24 +321,24 @@ class Cube {
 
 }
 
+
 ///////////////////////////////////////////////////////////////
 
 const cube = new Cube(Cube.Layouts[0])
 const mover = new Mover(startPosition.x, startPosition.y, cube)
 
+
 for (const instr of instructions) {
 
-  if ('LR'.includes(instr)){
+  if ('LR'.includes(instr)) {
     mover.rotate(instr)
     console.log(mover)
     console.log('######################################')
-   } else
+  } else
     mover.move(instr)
 
 }
 
-
-return
 ///////////////////////////////////////////////////////////////
 
 // Plus 1, since Grid in Puzzle start at 1 not 0, but grid here is zerobased.
@@ -282,5 +349,6 @@ console.clear()
 console.log('\n///////////////////////////////////////////////////////////////\n')
 console.group()
 console.log(`After following the Monkeys' notes, the resulting password is: '${solution.toLocaleString()}'`)
+console.log(`Your final Position is at (${finalCol}, ${finalRow})`)
 console.log()
 console.groupEnd()
