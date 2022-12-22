@@ -142,6 +142,13 @@ class Vector2D extends VectorBase {
     return new Vector2D(0, 0)
   }
 
+  static fromAngle(angle, magnitue = 1) {
+    return new Vector2D(
+      Math.cos(angle) * magnitue,
+      Math.sin(angle) * magnitue
+    )
+  }
+
   ////// Instance Methods, Attributes, Getters, Setters
 
   get copy() {
