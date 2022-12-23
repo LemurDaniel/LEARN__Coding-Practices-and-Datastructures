@@ -47,6 +47,24 @@ class Print extends Depth {
 
   }
 
+
+  ///////////////////////////////////////////////////////////////
+
+  // Generates a 2D Matrix from a dictionary containing Vectors as Key.
+  static fromCoordinates(dictionary, padding, empty = '.', maxRow = 50, maxCol = 50, minRow = 0, minCol = 0) {
+
+    const visual = new Array(maxRow - minRow + 1).fill(0)
+      .map((row, rowIdx) =>
+        Array(maxCol - minCol + 1).fill(0)
+          .map((col, colIdx) =>
+            new Vector2D(colIdx + minCol, rowIdx + minRow)
+          )
+          .map(vector => dictionary[vector] ?? empty)
+      )
+
+    return Print.fromMatrix(visual, padding)
+  }
+
   ///////////////////////////////////////////////////////////////
 
   static fromMatrix(matrix, padding = 4, paddingCenter = true, verticalRow = true) {
@@ -143,7 +161,7 @@ class Converter extends Depth {
       return '<null>'
 
     if (object.print)
-      return arg.print()
+      return object.print()
 
     if (object instanceof Error)
       return arg.message
@@ -164,7 +182,7 @@ class Converter extends Depth {
     if (typeof object === 'object')
       return Depth.Track(Print.fromObject, object, referenceObject)
 
-    return object.toString();
+    return object.toString()
   }
 
   // Converts All Objects and any Substrings to the specified Datatype

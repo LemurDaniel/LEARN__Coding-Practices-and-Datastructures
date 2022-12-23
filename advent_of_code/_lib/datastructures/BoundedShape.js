@@ -277,4 +277,6 @@ class BoundedShape extends UniqueObjectId {
 
 }
 
-module.exports = BoundedShape
+module.exports = {
+  BoundedShape
+}

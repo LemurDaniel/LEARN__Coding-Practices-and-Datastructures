@@ -4,10 +4,11 @@ module.exports = {
 
   Datastructures: {
     ...require('./datastructures/Vector'),
-    BoundedShape: require('./datastructures/BoundedShape'),
+    ...require('./datastructures/BoundedShape'),
     ...require('./datastructures/Heap'),
     ...require('./datastructures/Queue'),
-    ...require('./datastructures/LinkedList')
+    ...require('./datastructures/LinkedList'),
+    ...require('./datastructures/CoordinateGrid')
   },
 
   Utils: {
