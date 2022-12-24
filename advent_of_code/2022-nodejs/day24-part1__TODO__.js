@@ -29,6 +29,7 @@ const Input = fileContent.split('\r\n').map(v => v.split(''))
 // Get Needed Classes
 const Vector2D = Datastructures.Vector2D
 const CoordinateGrid = Datastructures.CoordinateGrid
+const Queue = Datastructures.NodeQueue
 
 /*
     ###########################################################################################
@@ -74,15 +75,17 @@ class Blizzard extends CoordinateGrid {
 
     this.walls = []
     this.snow = []
+    this.entry = null
+    this.exit = null
 
     for (let row = 0; row < input.length; row++) {
       for (let col = 0; col < input[0].length; col++) {
 
         const value = input[row][col]
-        if ('.' == value)
-          continue
-
-        if (Blizzard.Wall.Character == value) {
+        if ('.' == value) {
+          this.entry = this.entry ?? new Vector2D(col, row)
+          this.exit = new Vector2D(col, row)
+        } else if (Blizzard.Wall.Character == value) {
           const wall = new Blizzard.Wall(col, row)
           this.walls.push(wall)
           this.set(wall)
@@ -93,9 +96,30 @@ class Blizzard extends CoordinateGrid {
         }
       }
     }
+
   }
 
-  progress() {
+  cacheProgess() {
+    this.initial = this.snow.join('-')
+    this.cache = []
+    do {
+      const currentState = new CoordinateGrid()
+      currentState.boundsMax = this.boundsMax.copy
+      currentState.boundsMin = this.boundsMin.copy
+      currentState.positions = {}
+      Object.keys(this.positions).map(
+        key => currentState.positions[key] = this.get(key)
+      )
+
+      this.cache.push(currentState)
+      this.#progress()
+    } while (this.snow.join('-') != this.initial)
+
+    //console.log(this.toString())
+    //console.log(this.initial)
+  }
+
+  #progress() {
 
     this.snow.forEach(snow => this.remove(snow))
 
@@ -123,22 +147,85 @@ class Blizzard extends CoordinateGrid {
 
   }
 
+  getTime(time) {
+    return this.cache[time % this.cache.length]
+  }
+
 }
 
+///////////////////////////////////////////////////////////////
+
+class Node extends Vector2D {
+
+  constructor(x, y, steps = 0) {
+    super(x, y)
+    this.steps = steps
+  }
+
+}
+
+///////////////////////////////////////////////////////////////
+
 const blizzard = new Blizzard(Input)
-console.log(blizzard.toString())
-blizzard.progress()
-console.log(blizzard.toString())
-blizzard.progress()
-console.log(blizzard.toString())
-blizzard.progress()
-console.log(blizzard.toString())
-blizzard.progress()
-console.log(blizzard.toString())
+console.log('Creating Cache')
+blizzard.cacheProgess()
+console.log('Finished Cache')
 
+///////////////////////////////////////////////////////////////
 
+const start = new Node(blizzard.entry.x, blizzard.entry.y)
+const directions = Array(4).fill(Math.PI / 2)
+  .map((angle, idx) => Vector2D.fromAngle(angle * idx).round())
+  .concat([0, 0]) // Add possibility for no movement
 
+let minimum = null
+const exit = blizzard.exit
+const queue = new Queue()
+queue.enqueue(start)
+const visited = {}
 
+while (!queue.isEmpty) {
+
+  const node = queue.dequeue()
+  const key = [blizzard.getTime(node.steps).toString, node]
+
+  // Skip node, if there was another visit by lower steps with the same blizzard configuration.
+  if (key in visited && visited[key] <= node.steps)
+    continue
+  // Else save node as visited with step count.
+  else
+    visited[key] = node.steps
+
+  // Check if exit was reached.
+  if (node.is(exit)) {
+    console.log(node, node.steps, key in visited)
+    minimum = null == minimum || minimum.steps > node.steps ? node : minimum
+    continue
+  }
+
+  // Consider one time ahead of where the Blizzard will be.
+  const nextBlizzard = blizzard.getTime(node.steps + 1)
+
+  for (const direction of directions) {
+
+    // Next node for direction
+    const next = new Node(node.x + direction.x, node.y + direction.y, node.steps + 1)
+
+    // Skip if node is Out Of Bounds
+    if (next.x > nextBlizzard.boundsMax.x || next.x < nextBlizzard.boundsMin.x
+      || next.y > nextBlizzard.boundsMax.y || next.y < nextBlizzard.boundsMin.y)
+      continue
+
+    // If it's blocked, then skip position
+    if (nextBlizzard.exists(next)) continue
+
+    // else enque positions in queue
+    queue.enqueue(next)
+  }
+
+}
+
+console.log('#####')
 
 ///////////////////////////////////////////////////////////////
 
