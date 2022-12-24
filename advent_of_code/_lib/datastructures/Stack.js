@@ -2,6 +2,8 @@
 
 class Stack {
 
+  #size
+
   get size() {
     return this.#size
   }
@@ -71,6 +73,9 @@ class NodeStack extends Stack {
 ///////////////////////////////////////////////////////////////
 
 class FixedStack extends Stack {
+
+  #stack
+  #ptr
 
   get capacity() {
     return this.#stack.length

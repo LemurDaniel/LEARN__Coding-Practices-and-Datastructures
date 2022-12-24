@@ -27,6 +27,10 @@ class CoordinateGrid {
     return pos in this.positions
   }
 
+  get(pos) {
+    return this.positions[pos]
+  }
+
   set(pos, value) {
     if (null == this.boundsMin)
       this.boundsMin = pos.copy
@@ -41,8 +45,8 @@ class CoordinateGrid {
     this.positions[pos] = value ?? pos
   }
 
-  toString() {
-    return Print.fromCoordinates(this.positions, 1, CoordinateGrid.Default,
+  toString(padding = 1) {
+    return Print.fromCoordinates(this.positions, padding, CoordinateGrid.Default,
       this.boundsMax.y, this.boundsMax.x, this.boundsMin.y, this.boundsMin.x
     )
   }
