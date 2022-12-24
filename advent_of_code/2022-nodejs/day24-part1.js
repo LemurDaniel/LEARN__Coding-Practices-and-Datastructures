@@ -176,7 +176,7 @@ console.log('Finished Cache')
 const start = new Node(blizzard.entry.x, blizzard.entry.y)
 const directions = Array(4).fill(Math.PI / 2)
   .map((angle, idx) => Vector2D.fromAngle(angle * idx).round())
-  .concat([0, 0]) // Add possibility for no movement
+  .concat(new Vector2D(0, 0)) // Add possibility for no movement
 
 let minimum = null
 const exit = blizzard.exit
@@ -184,24 +184,22 @@ const queue = new Queue()
 queue.enqueue(start)
 const visited = {}
 
-while (!queue.isEmpty) {
+while (!queue.isEmpty && null == minimum) {
 
   const node = queue.dequeue()
-  const key = [blizzard.getTime(node.steps).toString, node]
+  const key = [node.steps, node]
 
-  // Skip node, if there was another visit by lower steps with the same blizzard configuration.
-  if (key in visited && visited[key] <= node.steps)
+  // visited dependent on position and steps to stop revisiting
+  if (key in visited)
     continue
-  // Else save node as visited with step count.
   else
-    visited[key] = node.steps
+    visited[key] = true
 
   // Check if exit was reached.
-  if (node.is(exit)) {
-    console.log(node, node.steps, key in visited)
-    minimum = null == minimum || minimum.steps > node.steps ? node : minimum
-    continue
-  }
+  // Since breadth first search, first hit should be shortest path
+  if (node.is(exit))
+    minimum = node
+
 
   // Consider one time ahead of where the Blizzard will be.
   const nextBlizzard = blizzard.getTime(node.steps + 1)
@@ -225,15 +223,12 @@ while (!queue.isEmpty) {
 
 }
 
-console.log('#####')
-
 ///////////////////////////////////////////////////////////////
 
-return
-const solution = 0
+const solution = minimum.steps
 console.clear()
 console.log('\n///////////////////////////////////////////////////////////////\n')
 console.group()
-console.log(`The Solution is ...: '${solution.toLocaleString()}'`)
+console.log(`The shortest path to exit involves '${solution.toLocaleString()}' steps.`)
 console.log()
 console.groupEnd()
