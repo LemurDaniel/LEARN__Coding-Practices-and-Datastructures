@@ -7,6 +7,7 @@ module.exports = {
     ...require('./datastructures/BoundedShape'),
     ...require('./datastructures/Heap'),
     ...require('./datastructures/Queue'),
+    ...require('./datastructures/Stack'),
     ...require('./datastructures/LinkedList'),
     ...require('./datastructures/CoordinateGrid')
   },
