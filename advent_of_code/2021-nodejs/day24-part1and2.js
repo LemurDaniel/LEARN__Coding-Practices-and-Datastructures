@@ -82,13 +82,15 @@ function solve() {
       for (let d = 1; d <= 9; d++) {
         const zRes = parse(i - 1, d, zState);
 
+        // check if the z-state result is in current results
+        // Keep only max and min to calculate in the next block
         if (!(zRes in currentStates)) {
           currentStates[zRes] = {
             min: prevStates[zState].min * 10 + d,
             max: prevStates[zState].max * 10 + d,
           }
         } else {
-
+          // If its in the z-states, adjust stored max, min sequence, since those are wanted by the puzzle.
           if (d >= currentStates[zRes].max % 10) {
             currentStates[zRes].max =
               prevStates[zState].max * 10 + d;
