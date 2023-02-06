@@ -54,6 +54,16 @@ const BLOCKS = {
 //  It does work because even though 9^14 is in the trillions (in german Billionen)
 //  after z-state collapsing only around 5.8 million are left.
 
+// The z-state collapse means that several sequences
+//    Examole with random numbers
+//       1466
+//       1238   => same z-state
+//       6799
+//  Since each block is only dependant on the z-stat inpute,
+//  it can be concluded that all those sequences will result in the same numbers in the next block.
+//  im shitty at explaining things via text. But this means those 3 Caculstions become one
+//  with all blocks 9^14 possibilities go down to a few million calculations.
+
 // Calculate from a z-state all different possible z-states by digit and collapse equal ones.
 
 function solve() {
