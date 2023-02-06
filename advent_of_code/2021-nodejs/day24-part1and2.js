@@ -63,7 +63,7 @@ const BLOCKS = {
 //  it can be concluded that all those sequences will result in the same numbers in the next block.
 //  im shitty at explaining things via text. But this means those 3 Caculstions become one
 //  with all blocks 9^14 possibilities go down to a few million calculations.
-
+// makes bruteforce possible and does work.
 // Calculate from a z-state all different possible z-states by digit and collapse equal ones.
 
 function solve() {
