@@ -57,7 +57,7 @@ const BLOCKS = {
 // The z-state collapse means that several sequences
 //    Examole with random numbers
 //       1466
-//       1238   => same z-state
+//       1238   => same z-state => all subsequent calculations the same and need only be done once.
 //       6799
 //  Since each block is only dependant on the z-stat inpute,
 //  it can be concluded that all those sequences will result in the same numbers in the next block.
