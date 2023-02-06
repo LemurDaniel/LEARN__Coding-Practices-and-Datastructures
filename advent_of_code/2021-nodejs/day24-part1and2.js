@@ -54,21 +54,24 @@ const BLOCKS = {
 //  It does work because even though 9^14 is in the trillions (in german Billionen)
 //  after z-state collapsing only around 5.8 million are left.
 
-// The z-state collapse means that several sequences
-//    Examole with random numbers
+// The z-state collapse means that several sequences can result in one state and can be continued as one calculation.
+//    Example with random numbers
 //       1466
 //       1238   => same z-state => all subsequent calculations the same and need only be done once.
 //       6799
+
 //  Since each block is only dependant on the z-stat inpute,
 //  it can be concluded that all those sequences will result in the same numbers in the next block.
-//  im shitty at explaining things via text. But this means those 3 Caculstions become one
+//  I'm shitty at explaining things via text. But this means those 3 Caculaions become one
 //  with all blocks 9^14 possibilities go down to a few million calculations.
-// makes bruteforce possible and does work.
+//  Makes bruteforce possible and it does work.
+
 // Calculate from a z-state all different possible z-states by digit and collapse equal ones.
 
 function solve() {
 
   console.log();
+  // Iterate over all 14-Blocks
   for (let i = 1; i <= 14; i++) {
 
     prevStates = BLOCKS[i - 1]
@@ -76,14 +79,16 @@ function solve() {
     BLOCKS[i] = currentStates;
 
     const timeStart = Date.now();
+    // Iterate over all collapsed Z-states in the previous Block.
     for (const key of Object.keys(prevStates)) {
 
       const zState = Number(key);
+      // Calculate all possible next z-states for digits 1-9 and collapse equal ones.
       for (let d = 1; d <= 9; d++) {
         const zRes = parse(i - 1, d, zState);
 
-        // check if the z-state result is in current results
-        // Keep only max and min to calculate in the next block
+        // check if the z-state result is in current results.
+        // Keep only max and min to calculate in the next block.
         if (!(zRes in currentStates)) {
           currentStates[zRes] = {
             min: prevStates[zState].min * 10 + d,
@@ -101,7 +106,9 @@ function solve() {
           }
 
         }
+        
       }
+      
     }
 
     delete BLOCKS[i - 1];
