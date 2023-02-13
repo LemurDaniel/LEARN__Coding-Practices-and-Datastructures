@@ -26,6 +26,7 @@ for (const block of inputBlocks) {
   wDeltas.push(Number(block[14][2]));
 }
 
+
 function parse(i, w, zPast) {
 
   const x = zPast % 26 + xDeltas[i] !== w ? 1 : 0;
@@ -71,6 +72,7 @@ const BLOCKS = {
 function solve() {
 
   console.log();
+  console.group()
   // Iterate over all 14-Blocks
   for (let i = 1; i <= 14; i++) {
 
@@ -86,6 +88,8 @@ function solve() {
       // Calculate all possible next z-states for digits 1-9 and collapse equal ones.
       for (let d = 1; d <= 9; d++) {
         const zRes = parse(i - 1, d, zState);
+
+        // Of all collapsed z-states, it only keeps the sequence of digits for the minimum and the maximum number.
 
         // check if the z-state result is in current results.
         // Keep only max and min to calculate in the next block.
@@ -106,28 +110,37 @@ function solve() {
           }
 
         }
-        
+
       }
-      
+
     }
 
-    delete BLOCKS[i - 1];
+    const zStates = Object.keys(BLOCKS[i]).length
+    const actualIncrease = zStates - Object.keys(BLOCKS[i - 1]).length
+    delete BLOCKS[i - 1]; // Release memory
+
     const timestamp = Date.now() - timeStart;
     const seconds = timestamp / 1000 % 60
     const minutes = Math.floor(timestamp / 1000 / 60);
+
+    // Since on eacht Iteration of a Block, all equal Calculations are collapsed into one, and continued as one z-state => one calculation
+    // the numbers don't increase anymore exponentially, which is the main hinderence of a bruteforce approach for this.
+    // Below the the increase on each Block after z-state collapse is shown, as well as the the amount of states the normal exponatial growth would have been.
     console.log(
-      '   ', 'Processed Digit Block ', i,
-      '   ', ' States: ', Object.keys(BLOCKS[i]).length,
-      '   - in', minutes, ' minutes ', seconds, ' seconds');
+      `${minutes} m ${seconds.toString().substring(0, 3).padStart(5, " ")} s | `,
+      `Digit Block ${`${i}`.padStart(2, " ")}   `,
+      `${zStates.toLocaleString().padStart(10, " ")} States`,
+      ` - ${actualIncrease <= 0 ? "decrease" : "increase"} ${actualIncrease.toLocaleString().padStart(10, " ")}`,
+      ` - exponantial Growth ${Math.pow(9, i).toLocaleString().padStart(18, " ")} (9^${i})`
+      );
   }
+  console.groupEnd()
 
   delete BLOCKS[13] // Release Memory
-  console.log();
-  // console.log(Object.entries(BLOCKS[14])) // Console.loggin it can also cause reaching heap limit.
-  console.log('Number of z-states left', Object.keys(BLOCKS[14]).length)
+
+  console.log()
+  console.log('Number of z-states left', Object.keys(BLOCKS[14]).length.toLocaleString())
   console.log(BLOCKS[14][0])
-  //console.log(Object.entries(BLOCKS[Object.keys(BLOCKS).sort()[0]]))
-  //console.log(BLOCKS[Object.keys(BLOCKS).sort()[0]][0])
 
 }
 
