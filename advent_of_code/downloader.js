@@ -145,7 +145,7 @@ class Downloader {
 
 
   async #isSessionValid() {
-    return await this.#get("/settings").then(({response}) => response.statusCode == 200)
+    return await this.#get("/settings").then(({ response }) => response.statusCode == 200)
   }
 
   async #get(path) {
@@ -168,18 +168,74 @@ class Downloader {
 
   }
 
+  async #hasStarted() {
+
+    if (this.#year.match(/^\d{4}$/) == null) {
+      throw new Error(`'${YEAR}' is not a valid year. | Must be a four digit year like: 2023`)
+    }
+    if (parseInt(this.#year) < 2015) {
+      throw new Error(`'${YEAR}' is not a valid year. | Advent Of Code dates back to 2015`)
+    }
+
+    const StartEST = (new Date(new Date("2023-12-01").toUTCString()))
 
 
+    let CurrentEST = (new Date(new Date().toUTCString()))
+    CurrentEST.setUTCHours(CurrentEST.getUTCHours() - 5)
+
+    if (this.#year < CurrentEST.getFullYear()) {
+      return true
+    }
+    if (this.#year > CurrentEST.getFullYear()) {
+      return false
+    }
+
+    let timespan = StartEST.getTime() - CurrentEST.getTime()
+    if (Math.floor(timespan / (1000 * 60 * 60 * 24)) > 0) {
+      return false
+    }
+
+
+    while (StartEST.getTime() - CurrentEST.getTime()) {
+
+      CurrentEST = (new Date(new Date().toUTCString()))
+      CurrentEST.setUTCHours(CurrentEST.getUTCHours() - 5)
+      timespan = StartEST.getTime() - CurrentEST.getTime()
+
+      const hours = Math.floor(timespan / (1000 * 60 * 60))
+      timespan -= hours * 1000 * 60 * 60
+
+      const mins = Math.floor(timespan / (1000 * 60))
+      timespan -= mins * 1000 * 60
+
+      const seconds = Math.floor(timespan / 1000)
+      timespan -= seconds * 1000
+
+      process.stdout.write(` Timer until AOC starts: ${hours.toString().padStart(2, 0)}:${mins.toString().padStart(2, 0)}:${seconds.toString().padStart(2, 0)}`)
+
+      // wait a second for each loop
+      await new Promise((resolve, reject) => setTimeout(() => resolve(), 1000))
+      process.stdout.clearLine(0)
+      process.stdout.cursorTo(0)
+    }
+
+    return true
+  }
 
   async #downloadYear() {
 
     console.log(`\x1b[38;2;0;255;0m Download Problems for Year: ${this.#year}! \x1b[0m`)
 
+    const hasStarted = await this.#hasStarted()
+    if (!hasStarted) {
+      return console.log(`\x1b[38;2;0;0;255m AOC for ${this.#year} hasn't started :( \x1b[0m`)
+    }
+
     const calendarHtml = await this.#get(`/${this.#year}`).then(({ content }) => content)
     const matches = calendarHtml.match(/\/\d{4}\/day\/\d{1,2}/g)
 
     if (matches == null) {
-      return console.log(`\x1b[38;2;0;0;255m AOC for ${this.#year} hasn't started :( \x1b[0m`)
+      return console.log(`\x1b[38;2;0;0;255m No Problems were found \x1b[0m`)
     }
 
     matches
@@ -269,13 +325,6 @@ class Downloader {
 */
 
 const YEAR = process.argv[2] ?? (new Date()).getFullYear().toString()
-
-if (YEAR.match(/^\d{4}$/) == null) {
-  throw new Error(`'${YEAR}' is not a valid year. | Must be a four digit year like: 2023`)
-}
-if (parseInt(YEAR) < 2015) {
-  throw new Error(`'${YEAR}' is not a valid year. | Advent Of Code dates back to 2015`)
-}
 
 const downloader = new Downloader(YEAR)
 downloader.download()
