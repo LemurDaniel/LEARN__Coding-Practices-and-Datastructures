@@ -15,6 +15,7 @@ class Downloader {
   static INSTRUCTIONS_FILE = 'instructions.html'
   static FOLDER_POSTFIX = 'nodejs'
   static INPUT_FILE = 'input.txt'
+  static INPUT_FILE_TEST = 'input-test.txt'
   static DAY_25_NAME = 'part_final'
 
 
@@ -113,7 +114,7 @@ class Downloader {
         return `${inputFolderPath}/day${day}-${Downloader.INPUT_FILE}`
 
       case Downloader.FILE_TYPES.INPUT_FILE_TEST:
-        return `${inputFolderPath}/day${day}-${Downloader.INPUT_FILE}`
+        return `${inputFolderPath}/day${day}-${Downloader.INPUT_FILE_TEST}`
     }
 
   }
@@ -196,7 +197,7 @@ class Downloader {
     }
 
 
-    while (StartEST.getTime() - CurrentEST.getTime()) {
+    while (StartEST.getTime() - CurrentEST.getTime() > 0) {
 
       CurrentEST = (new Date(new Date().toUTCString()))
       CurrentEST.setUTCHours(CurrentEST.getUTCHours() - 5)
@@ -272,8 +273,8 @@ class Downloader {
 
     // Solution Blueprint Files
     const blueprint = fs.readFileSync('blueprint.js', 'utf-8')
-      .replaceAll('${{INPUT_NORMAL}}', this.getFileName(Downloader.FILE_TYPES.INPUT_FILE_NORMAL, day))
-      .replaceAll('${{INPUT_TEST}}', this.getFileName(Downloader.FILE_TYPES.INPUT_FILE_TEST, day))
+      .replaceAll('${{INPUT_NORMAL}}', this.getFileName(Downloader.FILE_TYPES.INPUT_FILE_NORMAL, day).split('/').reverse()[0])
+      .replaceAll('${{INPUT_TEST}}', this.getFileName(Downloader.FILE_TYPES.INPUT_FILE_TEST, day).split('/').reverse()[0])
       .replaceAll('${{DAY}}', day)
 
 
