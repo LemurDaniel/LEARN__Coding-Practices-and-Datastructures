@@ -12,7 +12,7 @@ const userInterface = require('readline')
 class Downloader {
 
   static SOLUTION_POSTFIX = '__TODO__'
-  static INSTRUCTIONS_FILE = 'instructions.html'
+  static INSTRUCTIONS_FILE = 'instructions.html.md'
   static FOLDER_POSTFIX = 'nodejs'
   static INPUT_FILE = 'input.txt'
   static INPUT_FILE_TEST = 'input-test.txt'
