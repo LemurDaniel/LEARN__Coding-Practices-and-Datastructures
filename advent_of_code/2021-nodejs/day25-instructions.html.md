@@ -1,24 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8"/>
+<title>Day 25 - Advent of Code 2021</title>
+<link rel="stylesheet" type="text/css" href=".static/style.css"/>
+<link rel="stylesheet alternate" type="text/css" href=".static/highcontrast.css" title="High Contrast"/>
+<link rel="shortcut icon" href="https://adventofcode.com/favicon.png"/>
+<script>window.addEventListener('click', function(e,s,r){if(e.target.nodeName==='CODE'&&e.detail===3){s=window.getSelection();s.removeAllRanges();r=document.createRange();r.selectNodeContents(e.target);s.addRange(r);}});</script>
+</head><!--
+
+
+
+
+Oh, hello!  Funny seeing you here.
+
+I appreciate your enthusiasm, but you aren't going to find much down here.
+There certainly aren't clues to any of the puzzles.  The best surprises don't
+even appear in the source until you unlock them for real.
+
+Please be careful with automated requests; I'm not a massive company, and I can
+only take so much traffic.  Please be considerate so that everyone gets to play.
+
+If you're curious about how Advent of Code works, it's running on some custom
+Perl code. Other than a few integrations (auth, analytics, social media), I
+built the whole thing myself, including the design, animations, prose, and all
+of the puzzles.
+
+The puzzles are most of the work; preparing a new calendar and a new set of
+puzzles each year takes all of my free time for 4-5 months. A lot of effort
+went into building this thing - I hope you're enjoying playing it as much as I
+enjoyed making it for you!
+
+If you'd like to hang out, I'm @ericwastl@hachyderm.io on Mastodon and
+@ericwastl on Twitter.
+
+- Eric Wastl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->
+<body>
+<header><div><h1 class="title-global"><a href="https://adventofcode.com/">Advent of Code</a></h1><nav><ul><li><a href="https://adventofcode.com/2021/about">[About]</a></li><li><a href="https://adventofcode.com/2021/events">[Events]</a></li><li><a href="https://teespring.com/stores/advent-of-code" target="_blank">[Shop]</a></li><li><a href="https://adventofcode.com/2021/settings">[Settings]</a></li><li><a href="https://adventofcode.com/2021/auth/logout">[Log Out]</a></li></ul></nav><div class="user">LemurDaniel <span class="star-count">41*</span></div></div><div><h1 class="title-event">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="title-event-wrap">/*</span><a href="https://adventofcode.com/2021">2021</a><span class="title-event-wrap">*/</span></h1><nav><ul><li><a href="https://adventofcode.com/2021">[Calendar]</a></li><li><a href="https://adventofcode.com/2021/support">[AoC++]</a></li><li><a href="https://adventofcode.com/2021/sponsors">[Sponsors]</a></li><li><a href="https://adventofcode.com/2021/leaderboard">[Leaderboard]</a></li><li><a href="https://adventofcode.com/2021/stats">[Stats]</a></li></ul></nav></div></header>
+
+<div id="sidebar">
+<div id="sponsor"><div class="quiet">Our <a href="https://adventofcode.com/2021/sponsors">sponsors</a> help make Advent of Code possible:</div><div class="sponsor"><a href="https://www.ing.jobs/Global/Careers/expertise/Tech.htm" target="_blank" onclick="if(ga)ga('send','event','sponsor','sidebar',this.href);" rel="noopener">ING</a> - At ING, you develop software and yourself</div></div>
+</div><!--/sidebar-->
+
 <main>
-  <article class="day-desc">
-    <h2>--- Day 25: Sea Cucumber ---</h2>
-    <p>This is it: the bottom of the ocean trench, the last place the sleigh keys could be. Your submarine's
-      experimental antenna <em>still isn't boosted enough</em> to detect the keys, but they <em>must</em> be here. All
-      you need to do is <em>reach the seafloor</em> and find them.</p>
-    <p>At least, you'd touch down on the seafloor if you could; unfortunately, it's completely covered by two large
-      herds of <a href="https://en.wikipedia.org/wiki/Sea_cucumber" target="_blank">sea cucumbers</a>, and there isn't
-      an open space large enough for your submarine.</p>
-    <p>You suspect that the Elves must have done this before, because just then you discover the phone number of a
-      deep-sea marine biologist on a handwritten note taped to the wall of the submarine's cockpit.</p>
-    <p>"Sea cucumbers? Yeah, they're probably hunting for food. But don't worry, they're predictable critters: they move
-      in perfectly straight lines, only moving forward when there's space to do so. They're actually quite polite!"</p>
-    <p>You explain that you'd like to predict when you could land your submarine.</p>
-    <p>"Oh that's easy, they'll eventually pile up and leave enough space for-- wait, did you say submarine? And the
-      only place with that many sea cucumbers would be at the very bottom of the Mariana--" You hang up the phone.</p>
-    <p>There are two herds of sea cucumbers sharing the same region; one always moves <em>east</em> (<code>&gt;</code>),
-      while the other always moves <em>south</em> (<code>v</code>). Each location can contain at most one sea cucumber;
-      the remaining locations are <em>empty</em> (<code>.</code>). The submarine helpfully generates a map of the
-      situation (your puzzle input). For example:</p>
-    <pre><code>v...&gt;&gt;.vv&gt;
+<article class="day-desc"><h2>--- Day 25: Sea Cucumber ---</h2><p>This is it: the bottom of the ocean trench, the last place the sleigh keys could be. Your submarine's experimental antenna <em>still isn't boosted enough</em> to detect the keys, but they <em>must</em> be here. All you need to do is <em>reach the seafloor</em> and find them.</p>
+<p>At least, you'd touch down on the seafloor if you could; unfortunately, it's completely covered by two large herds of <a href="https://en.wikipedia.org/wiki/Sea_cucumber" target="_blank">sea cucumbers</a>, and there isn't an open space large enough for your submarine.</p>
+<p>You suspect that the Elves must have done this before, because just then you discover the phone number of a deep-sea marine biologist on a handwritten note taped to the wall of the submarine's cockpit.</p>
+<p>"Sea cucumbers? Yeah, they're probably hunting for food. But don't worry, they're predictable critters: they move in perfectly straight lines, only moving forward when there's space to do so. They're actually quite polite!"</p>
+<p>You explain that you'd like to predict when you could land your submarine.</p>
+<p>"Oh that's easy, they'll eventually pile up and leave enough space for-- wait, did you say submarine? And the only place with that many sea cucumbers would be at the very bottom of the Mariana--" You hang up the phone.</p>
+<p>There are two herds of sea cucumbers sharing the same region; one always moves <em>east</em> (<code>&gt;</code>), while the other always moves <em>south</em> (<code>v</code>). Each location can contain at most one sea cucumber; the remaining locations are <em>empty</em> (<code>.</code>). The submarine helpfully generates a map of the situation (your puzzle input). For example:</p>
+<pre><code>v...&gt;&gt;.vv&gt;
 .vv&gt;&gt;.vv..
 &gt;&gt;.&gt;v&gt;...v
 &gt;&gt;v&gt;&gt;.&gt;.v.
@@ -28,37 +111,27 @@ v&gt;v.vv.v..
 v.v..&gt;&gt;v.v
 ....v..v.&gt;
 </code></pre>
-    <p>Every <em>step</em>, the sea cucumbers in the east-facing herd attempt to move forward one location, then the sea
-      cucumbers in the south-facing herd attempt to move forward one location. When a herd moves forward, every sea
-      cucumber in the herd first simultaneously considers whether there is a sea cucumber in the adjacent location it's
-      facing (even another sea cucumber facing the same direction), and then every sea cucumber facing an empty location
-      simultaneously moves into that location.</p>
-    <p>So, in a situation like this:</p>
-    <pre><code>...&gt;&gt;&gt;&gt;&gt;...</code></pre>
-    <p>After one step, only the rightmost sea cucumber would have moved:</p>
-    <pre><code>...&gt;&gt;&gt;&gt;.&gt;..</code></pre>
-    <p>After the next step, two sea cucumbers move:</p>
-    <pre><code>...&gt;&gt;&gt;.&gt;.&gt;.</code></pre>
-    <p>During a single step, the east-facing herd moves first, then the south-facing herd moves. So, given this
-      situation:</p>
-    <pre><code>..........
+<p>Every <em>step</em>, the sea cucumbers in the east-facing herd attempt to move forward one location, then the sea cucumbers in the south-facing herd attempt to move forward one location. When a herd moves forward, every sea cucumber in the herd first simultaneously considers whether there is a sea cucumber in the adjacent location it's facing (even another sea cucumber facing the same direction), and then every sea cucumber facing an empty location simultaneously moves into that location.</p>
+<p>So, in a situation like this:</p>
+<pre><code>...&gt;&gt;&gt;&gt;&gt;...</code></pre>
+<p>After one step, only the rightmost sea cucumber would have moved:</p>
+<pre><code>...&gt;&gt;&gt;&gt;.&gt;..</code></pre>
+<p>After the next step, two sea cucumbers move:</p>
+<pre><code>...&gt;&gt;&gt;.&gt;.&gt;.</code></pre>
+<p>During a single step, the east-facing herd moves first, then the south-facing herd moves. So, given this situation:</p>
+<pre><code>..........
 .&gt;v....v..
 .......&gt;..
 ..........
 </code></pre>
-    <p>After a single step, of the sea cucumbers on the left, only the south-facing sea cucumber has moved (as it wasn't
-      out of the way in time for the east-facing cucumber on the left to move), but both sea cucumbers on the right have
-      moved (as the east-facing sea cucumber moved out of the way of the south-facing sea cucumber):</p>
-    <pre><code>..........
+<p>After a single step, of the sea cucumbers on the left, only the south-facing sea cucumber has moved (as it wasn't out of the way in time for the east-facing cucumber on the left to move), but both sea cucumbers on the right have moved (as the east-facing sea cucumber moved out of the way of the south-facing sea cucumber):</p>
+<pre><code>..........
 .&gt;........
 ..v....v&gt;.
 ..........
 </code></pre>
-    <p>Due to <em>strong water currents</em> in the area, sea cucumbers that move off the right edge of the map appear
-      on the left edge, and sea cucumbers that move off the bottom edge of the map appear on the top edge. Sea cucumbers
-      always check whether their destination location is empty before moving, even if that destination is on the
-      opposite side of the map:</p>
-    <pre><code>Initial state:
+<p>Due to <em>strong water currents</em> in the area, sea cucumbers that move off the right edge of the map appear on the left edge, and sea cucumbers that move off the bottom edge of the map appear on the top edge. Sea cucumbers always check whether their destination location is empty before moving, even if that destination is on the opposite side of the map:</p>
+<pre><code>Initial state:
 ...&gt;...
 .......
 ......&gt;
@@ -103,9 +176,8 @@ After 4 steps:
 .......
 v......
 </code></pre>
-    <p>To find a safe place to land your submarine, the sea cucumbers need to stop moving. Again consider the first
-      example:</p>
-    <pre><code>Initial state:
+<p>To find a safe place to land your submarine, the sea cucumbers need to stop moving. Again consider the first example:</p>
+<pre><code>Initial state:
 v...&gt;&gt;.vv&gt;
 .vv&gt;&gt;.vv..
 &gt;&gt;.&gt;v&gt;...v
@@ -282,40 +354,42 @@ vvv.....&gt;&gt;
 &gt;vv......&gt;
 .&gt;v.vv.v..
 </code></pre>
-    <p>In this example, the sea cucumbers stop moving after <code><em>58</em></code> steps.</p>
-    <p>Find somewhere safe to land your submarine. <em>What is the first step on which no sea cucumbers move?</em></p>
-  </article>
-  <p>Your puzzle answer was <code>492</code>.</p>
-  <p class="day-success">The first half of this puzzle is complete! It provides one gold star: *</p>
-  <article class="day-desc">
-    <h2 id="part2">--- Part Two ---</h2>
-    <p>Suddenly, the experimental antenna control console lights up:</p>
-    <pre><code><em>Sleigh keys detected!</em></code></pre>
-    <p>According to the console, the keys are <em>directly under the submarine</em>. <span
-        title="Thanks to the deep-sea marine biologist, who apparently works at the Biham-Middleton-Levine oceanic research institute.">You
-        landed</span> right on them! Using a robotic arm on the submarine, you move the sleigh keys into the airlock.
-    </p>
-    <p>Now, you just need to get them to Santa in time to save Christmas! You check your clock - it <em>is</em>
-      Christmas. There's no way you can get them back to the surface in time.</p>
-    <p>Just as you start to lose hope, you notice a button on the sleigh keys: <em>remote start</em>. You can start the
-      sleigh from the bottom of the ocean! You just need some way to <em>boost the signal</em> from the keys so it
-      actually reaches the sleigh. Good thing the submarine has that experimental antenna! You'll definitely need <em
-        class="star">50 stars</em> to boost it that far, though.</p>
-    <p>The experimental antenna control console lights up again:</p>
-    <pre><code><em>Energy source detected.
+<p>In this example, the sea cucumbers stop moving after <code><em>58</em></code> steps.</p>
+<p>Find somewhere safe to land your submarine. <em>What is the first step on which no sea cucumbers move?</em></p>
+</article>
+<p>Your puzzle answer was <code>492</code>.</p><p class="day-success">The first half of this puzzle is complete! It provides one gold star: *</p>
+<article class="day-desc"><h2 id="part2">--- Part Two ---</h2><p>Suddenly, the experimental antenna control console lights up:</p>
+<pre><code><em>Sleigh keys detected!</em></code></pre>
+<p>According to the console, the keys are <em>directly under the submarine</em>. <span title="Thanks to the deep-sea marine biologist, who apparently works at the Biham-Middleton-Levine oceanic research institute.">You landed</span> right on them! Using a robotic arm on the submarine, you move the sleigh keys into the airlock.</p>
+<p>Now, you just need to get them to Santa in time to save Christmas! You check your clock - it <em>is</em> Christmas. There's no way you can get them back to the surface in time.</p>
+<p>Just as you start to lose hope, you notice a button on the sleigh keys: <em>remote start</em>. You can start the sleigh from the bottom of the ocean! You just need some way to <em>boost the signal</em> from the keys so it actually reaches the sleigh. Good thing the submarine has that experimental antenna! You'll definitely need <em class="star">50 stars</em> to boost it that far, though.</p>
+<p>The experimental antenna control console lights up again:</p>
+<pre><code><em>Energy source detected.
 Integrating energy source from device "sleigh keys"...done.
 Installing device drivers...done.
 Recalibrating experimental antenna...done.
 Boost strength due to matching signal phase: <em class="star">1 star</em>
 </em></code></pre>
-    <p>Only <em class="star">49 stars</em> to go.</p>
-  </article>
-  <p>You don't have enough stars to boost the signal, though. You need 8 more.</p>
-  <p>Although it hasn't changed, you can still <a href="25/input" target="_blank">get your puzzle input</a>.</p>
-  <p>You can <span class="share">[Share<span class="share-content">on
-        <a href="https://twitter.com/intent/tweet?text=I%27ve+completed+Part+One+of+%22Sea+Cucumber%22+%2D+Day+25+%2D+Advent+of+Code+2021&amp;url=https%3A%2F%2Fadventofcode%2Ecom%2F2021%2Fday%2F25&amp;related=ericwastl&amp;hashtags=AdventOfCode"
-          target="_blank">Twitter</a>
-        <a href="javascript:void(0);"
-          onclick="var mastodon_instance=prompt('Mastodon Instance / Server Name?'); if(typeof mastodon_instance==='string' && mastodon_instance.length){this.href='https://'+mastodon_instance+'/share?text=I%27ve+completed+Part+One+of+%22Sea+Cucumber%22+%2D+Day+25+%2D+Advent+of+Code+2021+%23AdventOfCode+https%3A%2F%2Fadventofcode%2Ecom%2F2021%2Fday%2F25'}else{return false;}"
-          target="_blank">Mastodon</a></span>]</span> this puzzle.</p>
+<p>Only <em class="star">49 stars</em> to go.</p>
+</article>
+<p>You don't have enough stars to boost the signal, though.  You need 8 more.</p>
+<p>Although it hasn't changed, you can still <a href="https://adventofcode.com/2021/day/25/input" target="_blank">get your puzzle input</a>.</p>
+<p>You can <span class="share">[Share<span class="share-content">on
+  <a href="https://twitter.com/intent/tweet?text=I%27ve+completed+Part+One+of+%22Sea+Cucumber%22+%2D+Day+25+%2D+Advent+of+Code+2021&amp;url=https%3A%2F%2Fadventofcode%2Ecom%2F2021%2Fday%2F25&amp;related=ericwastl&amp;hashtags=AdventOfCode" target="_blank">Twitter</a>
+  <a href="https://adventofcode.com/2021/day/javascript:void(0);" onclick="var ms; try{ms=localStorage.getItem('mastodon.server')}finally{} if(typeof ms!=='string')ms=''; ms=prompt('Mastodon Server?',ms); if(typeof ms==='string' && ms.length){this.href='https://'+ms+'/share?text=I%27ve+completed+Part+One+of+%22Sea+Cucumber%22+%2D+Day+25+%2D+Advent+of+Code+2021+%23AdventOfCode+https%3A%2F%2Fadventofcode%2Ecom%2F2021%2Fday%2F25';try{localStorage.setItem('mastodon.server',ms);}finally{}}else{return false;}" target="_blank">Mastodon</a
+></span>]</span> this puzzle.</p>
 </main>
+
+<!-- ga -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-69522494-1', 'auto');
+ga('set', 'anonymizeIp', true);
+ga('send', 'pageview');
+</script>
+<!-- /ga -->
+</body>
+</html>

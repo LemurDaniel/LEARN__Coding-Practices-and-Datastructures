@@ -1,5 +1,6 @@
 
 const https = require('https');
+const { URL } = require('url')
 const fs = require('fs');
 const userInterface = require('readline')
   .createInterface({
@@ -27,11 +28,14 @@ class Downloader {
     INSTRUCTIONS_FILE: 4,
     INPUT_FILE_NORMAL: 5,
     INPUT_FILE_TEST: 6,
+    STYLE_SHEET_MAIN: 7,
+    STYLE_SHEET_CONTRAST: 8
   }
 
   static FOLDER_TYPES = {
     PROBLEMS: 0,
-    INPUTS: 1
+    INPUTS: 1,
+    STYLE_SHEETS: 2
   }
 
 
@@ -87,6 +91,7 @@ class Downloader {
 
     const problemFolderPath = this.getFolderName(Downloader.FOLDER_TYPES.PROBLEMS)
     const inputFolderPath = this.getFolderName(Downloader.FOLDER_TYPES.INPUTS)
+    const styleFolderPath = this.getFolderName(Downloader.FOLDER_TYPES.STYLE_SHEETS)
 
     // Advent of Code - Day 25 on Christmas is only one final puzzle.
     const part1 = day != 25 ? "part1" : Downloader.DAY_25_NAME
@@ -115,6 +120,12 @@ class Downloader {
 
       case Downloader.FILE_TYPES.INPUT_FILE_TEST:
         return `${inputFolderPath}/day${day}-${Downloader.INPUT_FILE_TEST}`
+
+      case Downloader.FILE_TYPES.STYLE_SHEET_MAIN:
+        return `${styleFolderPath}/style.css`
+
+      case Downloader.FILE_TYPES.STYLE_SHEET_CONTRAST:
+        return `${styleFolderPath}/highcontrast.css`
     }
 
   }
@@ -123,12 +134,16 @@ class Downloader {
 
     const folderPath = `${__dirname}/${this.#year}-${Downloader.FOLDER_POSTFIX}`
     const inputsPath = `${folderPath}/input`
+    const stylePath = `${folderPath}/.static`
 
     if (!fs.existsSync(folderPath)) {
       fs.mkdirSync(folderPath)
     }
     if (!fs.existsSync(inputsPath)) {
       fs.mkdirSync(inputsPath)
+    }
+    if (!fs.existsSync(stylePath)) {
+      fs.mkdirSync(stylePath)
     }
 
     switch (type) {
@@ -138,6 +153,9 @@ class Downloader {
 
       case Downloader.FOLDER_TYPES.INPUTS:
         return inputsPath
+
+      case Downloader.FOLDER_TYPES.STYLE_SHEETS:
+        return stylePath
     }
 
   }
@@ -151,9 +169,20 @@ class Downloader {
 
   async #get(path) {
 
+    let options = {}
+    if (path.includes('http')) {
+      const url = new URL(path)
+      options.host = url.host
+      options = {
+        host: url.host,
+        path: url.pathname
+      }
+    }
+
     return new Promise((resolve, reject) => {
       https.get({
         ...this.#options,
+        ...options,
         path: path
       }, response => {
         let content = ''
@@ -242,15 +271,16 @@ class Downloader {
     matches
       .map(path => path.split('/')[3])
       .map(day => day.padStart(2, '0'))
-      .filter(day =>
-        (
-          !fs.existsSync(this.getFileName(Downloader.FILE_TYPES.SOLUTION_FILE_PART_1_TODO, day)) &&
-          !fs.existsSync(this.getFileName(Downloader.FILE_TYPES.SOLUTION_FILE_PART_2_TODO, day)) &&
-          !fs.existsSync(this.getFileName(Downloader.FILE_TYPES.SOLUTION_FILE_PART_2, day))
-        ) || day != 25 &&
-        fs.readFileSync(this.getFileName(Downloader.FILE_TYPES.INSTRUCTIONS_FILE, day), 'utf-8')
-          .match(/<p>Your puzzle answer was <code>[\dA-Za-z]+<\/code>.<\/p>/g)?.length < 2
-      )
+      // Not needed anymore
+      //.filter(day =>
+      //  (
+      //    !fs.existsSync(this.getFileName(Downloader.FILE_TYPES.SOLUTION_FILE_PART_1_TODO, day)) &&
+      //    !fs.existsSync(this.getFileName(Downloader.FILE_TYPES.SOLUTION_FILE_PART_2_TODO, day)) &&
+      //    !fs.existsSync(this.getFileName(Downloader.FILE_TYPES.SOLUTION_FILE_PART_2, day))
+      //  ) || day != 25 &&
+      //  fs.readFileSync(this.getFileName(Downloader.FILE_TYPES.INSTRUCTIONS_FILE, day), 'utf-8')
+      //    .match(/<p>Your puzzle answer was <code>[\dA-Za-z]+<\/code>.<\/p>/g)?.length < 2
+      //)
       .sort((a, b) => parseInt(a) - parseInt(b))
       .forEach(day => this.#downloadDay(day))
 
@@ -260,43 +290,12 @@ class Downloader {
 
     day = parseInt(day)
 
-    const problemHtml = await this.#get(`/${this.#year}/day/${day}`).then(({ content }) => content)
 
-    const solutionPart1Todo = this.getFileName(Downloader.FILE_TYPES.SOLUTION_FILE_PART_1_TODO, day)
-    const solutionPart2Todo = this.getFileName(Downloader.FILE_TYPES.SOLUTION_FILE_PART_2_TODO, day)
-    const solutionPart1 = this.getFileName(Downloader.FILE_TYPES.SOLUTION_FILE_PART_1, day)
-    const solutionPart2 = this.getFileName(Downloader.FILE_TYPES.SOLUTION_FILE_PART_2, day)
-
-    const instructionPath = this.getFileName(Downloader.FILE_TYPES.INSTRUCTIONS_FILE, day)
+    // Get input file paths
     const inputPathNormal = this.getFileName(Downloader.FILE_TYPES.INPUT_FILE_NORMAL, day)
     const inputPathTest = this.getFileName(Downloader.FILE_TYPES.INPUT_FILE_TEST, day)
 
-    // Solution Blueprint Files
-    const blueprint = fs.readFileSync('blueprint.js', 'utf-8')
-      .replaceAll('${{INPUT_NORMAL}}', this.getFileName(Downloader.FILE_TYPES.INPUT_FILE_NORMAL, day).split('/').reverse()[0])
-      .replaceAll('${{INPUT_TEST}}', this.getFileName(Downloader.FILE_TYPES.INPUT_FILE_TEST, day).split('/').reverse()[0])
-      .replaceAll('${{DAY}}', day)
-
-
-    // Write main problem to file
-    fs.writeFileSync(instructionPath, problemHtml.match(/<main>[\S\s]*<\/main>/g)[0], 'utf-8')
-
-
-    const solutionPart1Exists = fs.existsSync(solutionPart1) || fs.existsSync(solutionPart1Todo)
-    const solutionPart2Exists = fs.existsSync(solutionPart2) || fs.existsSync(solutionPart2Todo)
-    const part2Unlocked = problemHtml.match(/<p>Your puzzle answer was <code>[\dA-Za-z]+<\/code>.<\/p>/g)?.length < 2
-
-    if (!solutionPart1Exists) {
-      fs.writeFileSync(solutionPart1Todo, blueprint.replaceAll('${{PART}}', 1), 'utf-8')
-      console.log('Downloaded Part 1 - Day ', day, instructionPath, inputPathNormal)
-
-    }
-
-    if (!solutionPart2Exists && part2Unlocked) {
-      fs.writeFileSync(solutionPart2Todo, blueprint.replaceAll('${{PART}}', 2), 'utf-8')
-      console.log('Downloaded Part 2 - Day ', day, instructionPath, inputPathNormal)
-    }
-
+    // Write input files, if they not exist
     if (!fs.existsSync(inputPathNormal)) {
       const problemInput = await this.#get(`/${this.#year}/day/${day}/input`).then(({ content }) => content.split('\n'))
       let length = problemInput.length - 1
@@ -307,6 +306,89 @@ class Downloader {
 
     if (!fs.existsSync(inputPathTest)) {
       fs.writeFileSync(inputPathTest, ' <<< PUT TEST DATA HERE >>> ', 'utf-8')
+    }
+
+
+
+
+    // Get solution file paths
+    const instructionPath = this.getFileName(Downloader.FILE_TYPES.INSTRUCTIONS_FILE, day)
+    const solutionPart1Todo = this.getFileName(Downloader.FILE_TYPES.SOLUTION_FILE_PART_1_TODO, day)
+    const solutionPart2Todo = this.getFileName(Downloader.FILE_TYPES.SOLUTION_FILE_PART_2_TODO, day)
+    const solutionPart1 = this.getFileName(Downloader.FILE_TYPES.SOLUTION_FILE_PART_1, day)
+    const solutionPart2 = this.getFileName(Downloader.FILE_TYPES.SOLUTION_FILE_PART_2, day)
+
+    const solutionPart1Exists = fs.existsSync(solutionPart1) || fs.existsSync(solutionPart1Todo)
+    const solutionPart2Exists = fs.existsSync(solutionPart2) || fs.existsSync(solutionPart2Todo)
+
+    // Prepare solution Blueprint Files
+    const blueprint = fs.readFileSync('blueprint.js', 'UTF-8')
+      .replaceAll('${{INPUT_NORMAL}}', this.getFileName(Downloader.FILE_TYPES.INPUT_FILE_NORMAL, day).split('/').reverse()[0])
+      .replaceAll('${{INPUT_TEST}}', this.getFileName(Downloader.FILE_TYPES.INPUT_FILE_TEST, day).split('/').reverse()[0])
+      .replaceAll('${{DAY}}', day)
+
+    if (
+      solutionPart1Exists && solutionPart2Exists && fs.existsSync(instructionPath) &&
+      fs.readFileSync(instructionPath, 'UTF-8').match(/<p>Your puzzle answer was <code>[\dA-Za-z]+<\/code>.<\/p>/g)?.length > 1
+    ) {
+      return // return when both parts are downloaded and solved
+    }
+
+
+    // Download instruction file
+    let problemHtml = await this.#get(`/${this.#year}/day/${day}`).then(({ content }) => content)
+    for (const match of problemHtml.match(/href="[^"]*"/g)) {
+      if (match.includes('http')) continue
+
+      const linkPath = match.replace('href="', '').replace('"', '')
+      if (linkPath[0] == '/') {
+        problemHtml = problemHtml.replace(match, `href="https://adventofcode.com${linkPath}"`)
+      } else {
+        problemHtml = problemHtml.replace(match, `href="https://adventofcode.com/${this.#year}/day/${linkPath}"`)
+      }
+    }
+
+    // Download stylesheets information
+    const stylesheetMain = problemHtml.match(/<link[^>]*rel="stylesheet"[^>]*href="[^"]*"[^>]*\/>/)
+    const stylesheetContrast = problemHtml.match(/<link[^>]*rel="stylesheet alternate"[^>]*href="[^"]*"[^>]*\/>/)
+    if (stylesheetMain) {
+      const filepath = this.getFileName(Downloader.FILE_TYPES.STYLE_SHEET_MAIN)
+      const styleUrl = stylesheetMain[0].match(/href="[^"]*"/)[0].replace('href="', '').replace('"', '')
+
+      if (!fs.existsSync(filepath)) {
+        const styleData = await this.#get(styleUrl).then(({ content }) => content)
+        fs.writeFileSync(filepath, styleData, 'UTF-8')
+      }
+
+      const styleUrlLocal = filepath.replace(instructionPath.split('/').reverse().slice(1).reverse().join('/'), '')
+      problemHtml = problemHtml.replace(stylesheetMain[0], stylesheetMain[0].replace(styleUrl, styleUrlLocal).replace('href="/', 'href="'))
+    }
+    if (stylesheetContrast) {
+      const filepath = this.getFileName(Downloader.FILE_TYPES.STYLE_SHEET_CONTRAST)
+      const styleUrl = stylesheetContrast[0].match(/href="[^"]*"/)[0].replace('href="', '').replace('"', '')
+
+      if (!fs.existsSync(filepath)) {
+        const styleData = await this.#get(styleUrl).then(({ content }) => content)
+        fs.writeFileSync(filepath, styleData, 'UTF-8')
+      }
+
+      const styleUrlLocal = filepath.replace(instructionPath.split('/').reverse().slice(1).reverse().join('/'), '')
+      problemHtml = problemHtml.replace(stylesheetContrast[0], stylesheetContrast[0].replace(styleUrl, styleUrlLocal).replace('href="/', 'href="'))
+    }
+
+
+    // Write instruction file and generate template .js files
+    fs.writeFileSync(instructionPath, problemHtml, 'UTF-8')
+
+    if (!solutionPart1Exists) {
+      fs.writeFileSync(solutionPart1Todo, blueprint.replaceAll('${{PART}}', 1), 'UTF-8')
+      console.log('Downloaded Part 1 - Day ', day, instructionPath, inputPathNormal)
+    }
+
+    const part2Unlocked = problemHtml.match(/<p>Your puzzle answer was <code>[\dA-Za-z]+<\/code>.<\/p>/g)?.length < 2
+    if (!solutionPart2Exists && part2Unlocked) {
+      fs.writeFileSync(solutionPart2Todo, blueprint.replaceAll('${{PART}}', 2), 'UTF-8')
+      console.log('Downloaded Part 2 - Day ', day, instructionPath, inputPathNormal)
     }
 
   }

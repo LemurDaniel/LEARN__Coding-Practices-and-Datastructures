@@ -1,25 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8"/>
+<title>Day 19 - Advent of Code 2022</title>
+<link rel="stylesheet" type="text/css" href=".static/style.css"/>
+<link rel="stylesheet alternate" type="text/css" href=".static/highcontrast.css" title="High Contrast"/>
+<link rel="shortcut icon" href="https://adventofcode.com/favicon.png"/>
+<script>window.addEventListener('click', function(e,s,r){if(e.target.nodeName==='CODE'&&e.detail===3){s=window.getSelection();s.removeAllRanges();r=document.createRange();r.selectNodeContents(e.target);s.addRange(r);}});</script>
+</head><!--
+
+
+
+
+Oh, hello!  Funny seeing you here.
+
+I appreciate your enthusiasm, but you aren't going to find much down here.
+There certainly aren't clues to any of the puzzles.  The best surprises don't
+even appear in the source until you unlock them for real.
+
+Please be careful with automated requests; I'm not a massive company, and I can
+only take so much traffic.  Please be considerate so that everyone gets to play.
+
+If you're curious about how Advent of Code works, it's running on some custom
+Perl code. Other than a few integrations (auth, analytics, social media), I
+built the whole thing myself, including the design, animations, prose, and all
+of the puzzles.
+
+The puzzles are most of the work; preparing a new calendar and a new set of
+puzzles each year takes all of my free time for 4-5 months. A lot of effort
+went into building this thing - I hope you're enjoying playing it as much as I
+enjoyed making it for you!
+
+If you'd like to hang out, I'm @ericwastl@hachyderm.io on Mastodon and
+@ericwastl on Twitter.
+
+- Eric Wastl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->
+<body>
+<header><div><h1 class="title-global"><a href="https://adventofcode.com/">Advent of Code</a></h1><nav><ul><li><a href="https://adventofcode.com/2022/about">[About]</a></li><li><a href="https://adventofcode.com/2022/events">[Events]</a></li><li><a href="https://teespring.com/stores/advent-of-code" target="_blank">[Shop]</a></li><li><a href="https://adventofcode.com/2022/settings">[Settings]</a></li><li><a href="https://adventofcode.com/2022/auth/logout">[Log Out]</a></li></ul></nav><div class="user">LemurDaniel <a href="https://adventofcode.com/2022/support" class="supporter-badge" title="Advent of Code Supporter">(AoC++)</a> <span class="star-count">50*</span></div></div><div><h1 class="title-event">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="title-event-wrap">/*</span><a href="https://adventofcode.com/2022">2022</a><span class="title-event-wrap">*/</span></h1><nav><ul><li><a href="https://adventofcode.com/2022">[Calendar]</a></li><li><a href="https://adventofcode.com/2022/support">[AoC++]</a></li><li><a href="https://adventofcode.com/2022/sponsors">[Sponsors]</a></li><li><a href="https://adventofcode.com/2022/leaderboard">[Leaderboard]</a></li><li><a href="https://adventofcode.com/2022/stats">[Stats]</a></li></ul></nav></div></header>
+
+<div id="sidebar">
+<div id="sponsor"><div class="quiet">Our <a href="https://adventofcode.com/2022/sponsors">sponsors</a> help make Advent of Code possible:</div><div class="sponsor"><a href="https://www.bjss.com/" target="_blank" onclick="if(ga)ga('send','event','sponsor','sidebar',this.href);" rel="noopener">BJSS</a> - Our people are a team of problem solvers, experienced in evolving technologies and delivering world-class technology solutions.</div></div>
+</div><!--/sidebar-->
+
 <main>
-  <article class="day-desc">
-    <h2>--- Day 19: Not Enough Minerals ---</h2>
-    <p>Your scans show that the lava did indeed form obsidian!</p>
-    <p>The wind has changed direction enough to stop sending lava droplets toward you, so you and the elephants exit the
-      cave. As you do, you notice a collection of <a href="https://en.wikipedia.org/wiki/Geode"
-        target="_blank">geodes</a> around the pond. Perhaps you could use the obsidian to create some <em>geode-cracking
-        robots</em> and break them open?</p>
-    <p>To collect the obsidian from the bottom of the pond, you'll need waterproof <em>obsidian-collecting robots</em>.
-      Fortunately, there is an abundant amount of clay nearby that you can use to make them waterproof.</p>
-    <p>In order to harvest the clay, you'll need special-purpose <em>clay-collecting robots</em>. To make any type of
-      robot, you'll need <em>ore</em>, which is also plentiful but in the opposite direction from the clay.</p>
-    <p>Collecting ore requires <em>ore-collecting robots</em> with big drills. Fortunately, <em>you have exactly one
-        ore-collecting robot</em> in your pack that you can use to <span
-        title="If You Give A Mouse An Ore-Collecting Robot">kickstart</span> the whole operation.</p>
-    <p>Each robot can collect 1 of its resource type per minute. It also takes one minute for the robot factory (also
-      conveniently from your pack) to construct any type of robot, although it consumes the necessary resources
-      available when construction begins.</p>
-    <p>The robot factory has many <em>blueprints</em> (your puzzle input) you can choose from, but once you've
-      configured it with a blueprint, you can't change it. You'll need to work out which blueprint is best.</p>
-    <p>For example:</p>
-    <pre><code>Blueprint 1:
+<style>article *[title]{border-bottom:1px dotted #ffff66;}</style><article class="day-desc"><h2>--- Day 19: Not Enough Minerals ---</h2><p>Your scans show that the lava did indeed form obsidian!</p>
+<p>The wind has changed direction enough to stop sending lava droplets toward you, so you and the elephants exit the cave. As you do, you notice a collection of <a href="https://en.wikipedia.org/wiki/Geode" target="_blank">geodes</a> around the pond. Perhaps you could use the obsidian to create some <em>geode-cracking robots</em> and break them open?</p>
+<p>To collect the obsidian from the bottom of the pond, you'll need waterproof <em>obsidian-collecting robots</em>. Fortunately, there is an abundant amount of clay nearby that you can use to make them waterproof.</p>
+<p>In order to harvest the clay, you'll need special-purpose <em>clay-collecting robots</em>. To make any type of robot, you'll need <em>ore</em>, which is also plentiful but in the opposite direction from the clay.</p>
+<p>Collecting ore requires <em>ore-collecting robots</em> with big drills. Fortunately, <em>you have exactly one ore-collecting robot</em> in your pack that you can use to <span title="If You Give A Mouse An Ore-Collecting Robot">kickstart</span> the whole operation.</p>
+<p>Each robot can collect 1 of its resource type per minute. It also takes one minute for the robot factory (also conveniently from your pack) to construct any type of robot, although it consumes the necessary resources available when construction begins.</p>
+<p>The robot factory has many <em>blueprints</em> (your puzzle input) you can choose from, but once you've configured it with a blueprint, you can't change it. You'll need to work out which blueprint is best.</p>
+<p>For example:</p>
+<pre><code>Blueprint 1:
   Each ore robot costs 4 ore.
   Each clay robot costs 2 ore.
   Each obsidian robot costs 3 ore and 14 clay.
@@ -31,15 +114,10 @@ Blueprint 2:
   Each obsidian robot costs 3 ore and 8 clay.
   Each geode robot costs 3 ore and 12 obsidian.
 </code></pre>
-    <p>(Blueprints have been line-wrapped here for legibility. The robot factory's actual assortment of blueprints are
-      provided one blueprint per line.)</p>
-    <p>The elephants are starting to look hungry, so you shouldn't take too long; you need to figure out which blueprint
-      would maximize the number of opened geodes after <em>24 minutes</em> by figuring out which robots to build and
-      when to build them.</p>
-    <p>Using blueprint 1 in the example above, the largest number of geodes you could open in 24 minutes is
-      <code><em>9</em></code>. One way to achieve that is:
-    </p>
-    <pre><code>== Minute 1 ==
+<p>(Blueprints have been line-wrapped here for legibility. The robot factory's actual assortment of blueprints are provided one blueprint per line.)</p>
+<p>The elephants are starting to look hungry, so you shouldn't take too long; you need to figure out which blueprint would maximize the number of opened geodes after <em>24 minutes</em> by figuring out which robots to build and when to build them.</p>
+<p>Using blueprint 1 in the example above, the largest number of geodes you could open in 24 minutes is <code><em>9</em></code>. One way to achieve that is:</p>
+<pre><code>== Minute 1 ==
 1 ore-collecting robot collects 1 ore; you now have 1 ore.
 
 == Minute 2 ==
@@ -167,29 +245,14 @@ The new geode-cracking robot is ready; you now have 2 of them.
 2 obsidian-collecting robots collect 2 obsidian; you now have 8 obsidian.
 2 geode-cracking robots crack 2 geodes; you now have 9 open geodes.
 </code></pre>
-    <p>However, by using blueprint 2 in the example above, you could do even better: the largest number of geodes you
-      could open in 24 minutes is <code><em>12</em></code>.</p>
-    <p>Determine the <em>quality level</em> of each blueprint by <em>multiplying that blueprint's ID number</em> with
-      the largest number of geodes that can be opened in 24 minutes using that blueprint. In this example, the first
-      blueprint has ID 1 and can open 9 geodes, so its quality level is <code><em>9</em></code>. The second blueprint
-      has ID 2 and can open 12 geodes, so its quality level is <code><em>24</em></code>. Finally, if you <em>add up the
-        quality levels</em> of all of the blueprints in the list, you get <code><em>33</em></code>.</p>
-    <p>Determine the quality level of each blueprint using the largest number of geodes it could produce in 24 minutes.
-      <em>What do you get if you add up the quality level of all of the blueprints in your list?</em>
-    </p>
-  </article>
-  <p>Your puzzle answer was <code>1262</code>.</p>
-  <article class="day-desc">
-    <h2 id="part2">--- Part Two ---</h2>
-    <p>While you were choosing the best blueprint, the elephants found some food on their own, so you're not in as much
-      of a hurry; you figure you probably have <em>32 minutes</em> before the wind changes direction again and you'll
-      need to get out of range of the erupting volcano.</p>
-    <p>Unfortunately, one of the elephants <em>ate most of your blueprint list</em>! Now, only the first three
-      blueprints in your list are intact.</p>
-    <p>In 32 minutes, the largest number of geodes blueprint 1 (from the example above) can open is
-      <code><em>56</em></code>. One way to achieve that is:
-    </p>
-    <pre><code>== Minute 1 ==
+<p>However, by using blueprint 2 in the example above, you could do even better: the largest number of geodes you could open in 24 minutes is <code><em>12</em></code>.</p>
+<p>Determine the <em>quality level</em> of each blueprint by <em>multiplying that blueprint's ID number</em> with the largest number of geodes that can be opened in 24 minutes using that blueprint. In this example, the first blueprint has ID 1 and can open 9 geodes, so its quality level is <code><em>9</em></code>. The second blueprint has ID 2 and can open 12 geodes, so its quality level is <code><em>24</em></code>. Finally, if you <em>add up the quality levels</em> of all of the blueprints in the list, you get <code><em>33</em></code>.</p>
+<p>Determine the quality level of each blueprint using the largest number of geodes it could produce in 24 minutes. <em>What do you get if you add up the quality level of all of the blueprints in your list?</em></p>
+</article>
+<p>Your puzzle answer was <code>1262</code>.</p><article class="day-desc"><h2 id="part2">--- Part Two ---</h2><p>While you were choosing the best blueprint, the elephants found some food on their own, so you're not in as much of a hurry; you figure you probably have <em>32 minutes</em> before the wind changes direction again and you'll need to get out of range of the erupting volcano.</p>
+<p>Unfortunately, one of the elephants <em>ate most of your blueprint list</em>! Now, only the first three blueprints in your list are intact.</p>
+<p>In 32 minutes, the largest number of geodes blueprint 1 (from the example above) can open is <code><em>56</em></code>. One way to achieve that is:</p>
+<pre><code>== Minute 1 ==
 1 ore-collecting robot collects 1 ore; you now have 1 ore.
 
 == Minute 2 ==
@@ -384,21 +447,29 @@ The new geode-cracking robot is ready; you now have 9 of them.
 5 obsidian-collecting robots collect 5 obsidian; you now have 10 obsidian.
 9 geode-cracking robots crack 9 geodes; you now have 56 open geodes.
 </code></pre>
-    <p>However, blueprint 2 from the example above is still better; using it, the largest number of geodes you could
-      open in 32 minutes is <code><em>62</em></code>.</p>
-    <p>You <em>no longer have enough blueprints to worry about quality levels</em>. Instead, for each of the first three
-      blueprints, determine the largest number of geodes you could open; then, multiply these three values together.</p>
-    <p>Don't worry about quality levels; instead, just determine the largest number of geodes you could open using each
-      of the first three blueprints. <em>What do you get if you multiply these numbers together?</em></p>
-  </article>
-  <p>Your puzzle answer was <code>37191</code>.</p>
-  <p class="day-success">Both parts of this puzzle are complete! They provide two gold stars: **</p>
-  <p>At this point, you should <a href="/2022">return to your Advent calendar</a> and try another puzzle.</p>
-  <p>If you still want to see it, you can <a href="19/input" target="_blank">get your puzzle input</a>.</p>
-  <p>You can also <span class="share">[Share<span class="share-content">on
-        <a href="https://twitter.com/intent/tweet?text=I%27ve+completed+%22Not+Enough+Minerals%22+%2D+Day+19+%2D+Advent+of+Code+2022&amp;url=https%3A%2F%2Fadventofcode%2Ecom%2F2022%2Fday%2F19&amp;related=ericwastl&amp;hashtags=AdventOfCode"
-          target="_blank">Twitter</a>
-        <a href="javascript:void(0);"
-          onclick="var mastodon_instance=prompt('Mastodon Instance / Server Name?'); if(typeof mastodon_instance==='string' && mastodon_instance.length){this.href='https://'+mastodon_instance+'/share?text=I%27ve+completed+%22Not+Enough+Minerals%22+%2D+Day+19+%2D+Advent+of+Code+2022+%23AdventOfCode+https%3A%2F%2Fadventofcode%2Ecom%2F2022%2Fday%2F19'}else{return false;}"
-          target="_blank">Mastodon</a></span>]</span> this puzzle.</p>
+<p>However, blueprint 2 from the example above is still better; using it, the largest number of geodes you could open in 32 minutes is <code><em>62</em></code>.</p>
+<p>You <em>no longer have enough blueprints to worry about quality levels</em>. Instead, for each of the first three blueprints, determine the largest number of geodes you could open; then, multiply these three values together.</p>
+<p>Don't worry about quality levels; instead, just determine the largest number of geodes you could open using each of the first three blueprints. <em>What do you get if you multiply these numbers together?</em></p>
+</article>
+<p>Your puzzle answer was <code>37191</code>.</p><p class="day-success">Both parts of this puzzle are complete! They provide two gold stars: **</p>
+<p>At this point, all that is left is for you to <a href="https://adventofcode.com/2022">admire your Advent calendar</a>.</p>
+<p>If you still want to see it, you can <a href="https://adventofcode.com/2022/day/19/input" target="_blank">get your puzzle input</a>.</p>
+<p>You can also <span class="share">[Share<span class="share-content">on
+  <a href="https://twitter.com/intent/tweet?text=I%27ve+completed+%22Not+Enough+Minerals%22+%2D+Day+19+%2D+Advent+of+Code+2022&amp;url=https%3A%2F%2Fadventofcode%2Ecom%2F2022%2Fday%2F19&amp;related=ericwastl&amp;hashtags=AdventOfCode" target="_blank">Twitter</a>
+  <a href="https://adventofcode.com/2022/day/javascript:void(0);" onclick="var ms; try{ms=localStorage.getItem('mastodon.server')}finally{} if(typeof ms!=='string')ms=''; ms=prompt('Mastodon Server?',ms); if(typeof ms==='string' && ms.length){this.href='https://'+ms+'/share?text=I%27ve+completed+%22Not+Enough+Minerals%22+%2D+Day+19+%2D+Advent+of+Code+2022+%23AdventOfCode+https%3A%2F%2Fadventofcode%2Ecom%2F2022%2Fday%2F19';try{localStorage.setItem('mastodon.server',ms);}finally{}}else{return false;}" target="_blank">Mastodon</a
+></span>]</span> this puzzle.</p>
 </main>
+
+<!-- ga -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-69522494-1', 'auto');
+ga('set', 'anonymizeIp', true);
+ga('send', 'pageview');
+</script>
+<!-- /ga -->
+</body>
+</html>

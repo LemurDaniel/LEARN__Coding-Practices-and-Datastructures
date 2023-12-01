@@ -1,28 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8"/>
+<title>Day 19 - Advent of Code 2021</title>
+<link rel="stylesheet" type="text/css" href=".static/style.css"/>
+<link rel="stylesheet alternate" type="text/css" href=".static/highcontrast.css" title="High Contrast"/>
+<link rel="shortcut icon" href="https://adventofcode.com/favicon.png"/>
+<script>window.addEventListener('click', function(e,s,r){if(e.target.nodeName==='CODE'&&e.detail===3){s=window.getSelection();s.removeAllRanges();r=document.createRange();r.selectNodeContents(e.target);s.addRange(r);}});</script>
+</head><!--
+
+
+
+
+Oh, hello!  Funny seeing you here.
+
+I appreciate your enthusiasm, but you aren't going to find much down here.
+There certainly aren't clues to any of the puzzles.  The best surprises don't
+even appear in the source until you unlock them for real.
+
+Please be careful with automated requests; I'm not a massive company, and I can
+only take so much traffic.  Please be considerate so that everyone gets to play.
+
+If you're curious about how Advent of Code works, it's running on some custom
+Perl code. Other than a few integrations (auth, analytics, social media), I
+built the whole thing myself, including the design, animations, prose, and all
+of the puzzles.
+
+The puzzles are most of the work; preparing a new calendar and a new set of
+puzzles each year takes all of my free time for 4-5 months. A lot of effort
+went into building this thing - I hope you're enjoying playing it as much as I
+enjoyed making it for you!
+
+If you'd like to hang out, I'm @ericwastl@hachyderm.io on Mastodon and
+@ericwastl on Twitter.
+
+- Eric Wastl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->
+<body>
+<header><div><h1 class="title-global"><a href="https://adventofcode.com/">Advent of Code</a></h1><nav><ul><li><a href="https://adventofcode.com/2021/about">[About]</a></li><li><a href="https://adventofcode.com/2021/events">[Events]</a></li><li><a href="https://teespring.com/stores/advent-of-code" target="_blank">[Shop]</a></li><li><a href="https://adventofcode.com/2021/settings">[Settings]</a></li><li><a href="https://adventofcode.com/2021/auth/logout">[Log Out]</a></li></ul></nav><div class="user">LemurDaniel <span class="star-count">41*</span></div></div><div><h1 class="title-event">&nbsp;&nbsp;&nbsp;<span class="title-event-wrap">$year=</span><a href="https://adventofcode.com/2021">2021</a><span class="title-event-wrap">;</span></h1><nav><ul><li><a href="https://adventofcode.com/2021">[Calendar]</a></li><li><a href="https://adventofcode.com/2021/support">[AoC++]</a></li><li><a href="https://adventofcode.com/2021/sponsors">[Sponsors]</a></li><li><a href="https://adventofcode.com/2021/leaderboard">[Leaderboard]</a></li><li><a href="https://adventofcode.com/2021/stats">[Stats]</a></li></ul></nav></div></header>
+
+<div id="sidebar">
+<div id="sponsor"><div class="quiet">Our <a href="https://adventofcode.com/2021/sponsors">sponsors</a> help make Advent of Code possible:</div><div class="sponsor"><a href="https://www.rewe-digital.com/" target="_blank" onclick="if(ga)ga('send','event','sponsor','sidebar',this.href);" rel="noopener">REWE digital</a> - Java, Kotlin or Scala, we don&apos;t like Coding Drama. From Germany to Bulgaria, we&apos;re some kind of retail Santa. Give yourself a gift: put us on your list!</div></div>
+</div><!--/sidebar-->
+
 <main>
-  <article class="day-desc">
-    <h2>--- Day 19: Beacon Scanner ---</h2>
-    <p>As your <a href="17">probe</a> drifted down through this area, it released an assortment of <em>beacons</em> and
-      <em>scanners</em> into the water. It's difficult to navigate in the pitch black open waters of the ocean trench,
-      but if you can build a map of the trench using data from the scanners, you should be able to safely reach the
-      bottom.</p>
-    <p>The beacons and scanners float motionless in the water; they're designed to maintain the same position for long
-      periods of time. Each scanner is capable of detecting all beacons in a large cube centered on the scanner; beacons
-      that are at most 1000 units away from the scanner in each of the three axes (<code>x</code>, <code>y</code>, and
-      <code>z</code>) have their precise position determined relative to the scanner. However, scanners cannot detect
-      other scanners. The submarine has automatically summarized the relative positions of beacons detected by each
-      scanner (your puzzle input).</p>
-    <p>For example, if a scanner is at <code>x,y,z</code> coordinates <code>500,0,-500</code> and there are beacons at
-      <code>-500,1000,-1500</code> and <code>1501,0,-500</code>, the scanner could report that the first beacon is at
-      <code>-1000,1000,-1000</code> (relative to the scanner) but would not detect the second beacon at all.</p>
-    <p>Unfortunately, while each scanner can report the positions of all detected beacons relative to itself, <em>the
-        scanners do not know their own position</em>. You'll need to determine the positions of the beacons and scanners
-      yourself.</p>
-    <p>The scanners and beacons map a single contiguous 3d region. This region can be reconstructed by finding pairs of
-      scanners that have overlapping detection regions such that there are <em>at least 12 beacons</em> that both
-      scanners detect within the overlap. By establishing 12 common beacons, you can precisely determine where the
-      scanners are relative to each other, allowing you to reconstruct the beacon map one scanner at a time.</p>
-    <p>For a moment, consider only two dimensions. Suppose you have the following scanner reports:</p>
-    <pre><code>--- scanner 0 ---
+<article class="day-desc"><h2>--- Day 19: Beacon Scanner ---</h2><p>As your <a href="https://adventofcode.com/2021/day/17">probe</a> drifted down through this area, it released an assortment of <em>beacons</em> and <em>scanners</em> into the water. It's difficult to navigate in the pitch black open waters of the ocean trench, but if you can build a map of the trench using data from the scanners, you should be able to safely reach the bottom.</p>
+<p>The beacons and scanners float motionless in the water; they're designed to maintain the same position for long periods of time. Each scanner is capable of detecting all beacons in a large cube centered on the scanner; beacons that are at most 1000 units away from the scanner in each of the three axes (<code>x</code>, <code>y</code>, and <code>z</code>) have their precise position determined relative to the scanner. However, scanners cannot detect other scanners. The submarine has automatically summarized the relative positions of beacons detected by each scanner (your puzzle input).</p>
+<p>For example, if a scanner is at <code>x,y,z</code> coordinates <code>500,0,-500</code> and there are beacons at <code>-500,1000,-1500</code> and <code>1501,0,-500</code>, the scanner could report that the first beacon is at <code>-1000,1000,-1000</code> (relative to the scanner) but would not detect the second beacon at all.</p>
+<p>Unfortunately, while each scanner can report the positions of all detected beacons relative to itself, <em>the scanners do not know their own position</em>. You'll need to determine the positions of the beacons and scanners yourself.</p>
+<p>The scanners and beacons map a single contiguous 3d region. This region can be reconstructed by finding pairs of scanners that have overlapping detection regions such that there are <em>at least 12 beacons</em> that both scanners detect within the overlap. By establishing 12 common beacons, you can precisely determine where the scanners are relative to each other, allowing you to reconstruct the beacon map one scanner at a time.</p>
+<p>For a moment, consider only two dimensions. Suppose you have the following scanner reports:</p>
+<pre><code>--- scanner 0 ---
 0,2
 4,1
 3,3
@@ -32,36 +110,26 @@
 -5,0
 -2,1
 </code></pre>
-    <p>Drawing <code>x</code> increasing rightward, <code>y</code> increasing upward, scanners as <code>S</code>, and
-      beacons as <code>B</code>, scanner <code>0</code> detects this:</p>
-    <pre><code>...B.
+<p>Drawing <code>x</code> increasing rightward, <code>y</code> increasing upward, scanners as <code>S</code>, and beacons as <code>B</code>, scanner <code>0</code> detects this:</p>
+<pre><code>...B.
 B....
 ....B
 S....
 </code></pre>
-    <p>Scanner <code>1</code> detects this:</p>
-    <pre><code>...B..
+<p>Scanner <code>1</code> detects this:</p>
+<pre><code>...B..
 B....S
 ....B.
 </code></pre>
-    <p>For this example, assume scanners only need 3 overlapping beacons. Then, the beacons visible to both scanners
-      overlap to produce the following complete map:</p>
-    <pre><code>...B..
+<p>For this example, assume scanners only need 3 overlapping beacons. Then, the beacons visible to both scanners overlap to produce the following complete map:</p>
+<pre><code>...B..
 B....S
 ....B.
 S.....
 </code></pre>
-    <p>Unfortunately, there's a second problem: the scanners also don't know their <em>rotation or facing
-        direction</em>. Due to magnetic alignment, each scanner is rotated some integer number of 90-degree turns around
-      all of the <code>x</code>, <code>y</code>, and <code>z</code> axes. That is, one scanner might call a direction
-      positive <code>x</code>, while another scanner might call that direction negative <code>y</code>. Or, two scanners
-      might agree on which direction is positive <code>x</code>, but one scanner might be upside-down from the
-      perspective of the other scanner. In total, each scanner could be in any of 24 different orientations: facing
-      positive or negative <code>x</code>, <code>y</code>, or <code>z</code>, and considering any of four directions
-      "up" from that facing.</p>
-    <p>For example, here is an arrangement of beacons as seen from a scanner in the same position but in different
-      orientations:</p>
-    <pre><code>--- scanner 0 ---
+<p>Unfortunately, there's a second problem: the scanners also don't know their <em>rotation or facing direction</em>. Due to magnetic alignment, each scanner is rotated some integer number of 90-degree turns around all of the <code>x</code>, <code>y</code>, and <code>z</code> axes. That is, one scanner might call a direction positive <code>x</code>, while another scanner might call that direction negative <code>y</code>. Or, two scanners might agree on which direction is positive <code>x</code>, but one scanner might be upside-down from the perspective of the other scanner. In total, each scanner could be in any of 24 different orientations: facing positive or negative <code>x</code>, <code>y</code>, or <code>z</code>, and considering any of four directions "up" from that facing.</p>
+<p>For example, here is an arrangement of beacons as seen from a scanner in the same position but in different orientations:</p>
+<pre><code>--- scanner 0 ---
 -1,-1,1
 -2,-2,2
 -3,-3,3
@@ -101,9 +169,8 @@ S.....
 -6,-4,-5
 0,7,-8
 </code></pre>
-    <p>By finding pairs of scanners that both see at least 12 of the same beacons, you can assemble the entire map. For
-      example, consider the following report:</p>
-    <pre><code>--- scanner 0 ---
+<p>By finding pairs of scanners that both see at least 12 of the same beacons, you can assemble the entire map. For example, consider the following report:</p>
+<pre><code>--- scanner 0 ---
 404,-588,-901
 528,-643,409
 -838,591,734
@@ -240,12 +307,9 @@ S.....
 -652,-548,-490
 30,-46,-14
 </code></pre>
-    <p>Because all coordinates are relative, in this example, all "absolute" positions will be expressed relative to
-      scanner <code>0</code> (using the orientation of scanner <code>0</code> and as if scanner <code>0</code> is at
-      coordinates <code>0,0,0</code>).</p>
-    <p>Scanners <code>0</code> and <code>1</code> have overlapping detection cubes; the 12 beacons they both detect
-      (relative to scanner <code>0</code>) are at the following coordinates:</p>
-    <pre><code>-618,-824,-621
+<p>Because all coordinates are relative, in this example, all "absolute" positions will be expressed relative to scanner <code>0</code> (using the orientation of scanner <code>0</code> and as if scanner <code>0</code> is at coordinates <code>0,0,0</code>).</p>
+<p>Scanners <code>0</code> and <code>1</code> have overlapping detection cubes; the 12 beacons they both detect (relative to scanner <code>0</code>) are at the following coordinates:</p>
+<pre><code>-618,-824,-621
 -537,-823,-458
 -447,-329,318
 404,-588,-901
@@ -258,8 +322,8 @@ S.....
 459,-707,401
 -485,-357,347
 </code></pre>
-    <p>These same 12 beacons (in the same order) but from the perspective of scanner <code>1</code> are:</p>
-    <pre><code>686,422,578
+<p>These same 12 beacons (in the same order) but from the perspective of scanner <code>1</code> are:</p>
+<pre><code>686,422,578
 605,423,415
 515,917,-361
 -336,658,858
@@ -272,11 +336,9 @@ S.....
 -391,539,-444
 553,889,-390
 </code></pre>
-    <p>Because of this, scanner <code>1</code> must be at <code>68,-1246,-43</code> (relative to scanner
-      <code>0</code>).</p>
-    <p>Scanner <code>4</code> overlaps with scanner <code>1</code>; the 12 beacons they both detect (relative to scanner
-      <code>0</code>) are:</p>
-    <pre><code>459,-707,401
+<p>Because of this, scanner <code>1</code> must be at <code>68,-1246,-43</code> (relative to scanner <code>0</code>).</p>
+<p>Scanner <code>4</code> overlaps with scanner <code>1</code>; the 12 beacons they both detect (relative to scanner <code>0</code>) are:</p>
+<pre><code>459,-707,401
 -739,-1745,668
 -485,-357,347
 432,-2009,850
@@ -289,12 +351,10 @@ S.....
 -447,-329,318
 -635,-1737,486
 </code></pre>
-    <p>So, scanner <code>4</code> is at <code>-20,-1133,1061</code> (relative to scanner <code>0</code>).</p>
-    <p>Following this process, scanner <code>2</code> must be at <code>1105,-1205,1229</code> (relative to scanner
-      <code>0</code>) and scanner <code>3</code> must be at <code>-92,-2380,-20</code> (relative to scanner
-      <code>0</code>).</p>
-    <p>The full list of beacons (relative to scanner <code>0</code>) is:</p>
-    <pre><code>-892,524,684
+<p>So, scanner <code>4</code> is at <code>-20,-1133,1061</code> (relative to scanner <code>0</code>).</p>
+<p>Following this process, scanner <code>2</code> must be at <code>1105,-1205,1229</code> (relative to scanner <code>0</code>) and scanner <code>3</code> must be at <code>-92,-2380,-20</code> (relative to scanner <code>0</code>).</p>
+<p>The full list of beacons (relative to scanner <code>0</code>) is:</p>
+<pre><code>-892,524,684
 -876,649,763
 -838,591,734
 -789,900,-551
@@ -374,17 +434,27 @@ S.....
 1889,-1729,1762
 1994,-1805,1792
 </code></pre>
-    <p>In total, there are <code><em>79</em></code> beacons.</p>
-    <p>Assemble the full map of beacons. <em>How many beacons are there?</em></p>
-  </article>
-  <p>To begin, <a href="19/input" target="_blank">get your puzzle input</a>.</p>
-  <form method="post" action="19/answer"><input type="hidden" name="level" value="1" />
-    <p>Answer: <input type="text" name="answer" autocomplete="off" /> <input type="submit" value="[Submit]" /></p>
-  </form>
-  <p>You can also <span class="share">[Share<span class="share-content">on
-        <a href="https://twitter.com/intent/tweet?text=%22Beacon+Scanner%22+%2D+Day+19+%2D+Advent+of+Code+2021&amp;url=https%3A%2F%2Fadventofcode%2Ecom%2F2021%2Fday%2F19&amp;related=ericwastl&amp;hashtags=AdventOfCode"
-          target="_blank">Twitter</a>
-        <a href="javascript:void(0);"
-          onclick="var mastodon_instance=prompt('Mastodon Instance / Server Name?'); if(typeof mastodon_instance==='string' && mastodon_instance.length){this.href='https://'+mastodon_instance+'/share?text=%22Beacon+Scanner%22+%2D+Day+19+%2D+Advent+of+Code+2021+%23AdventOfCode+https%3A%2F%2Fadventofcode%2Ecom%2F2021%2Fday%2F19'}else{return false;}"
-          target="_blank">Mastodon</a></span>]</span> this puzzle.</p>
+<p>In total, there are <code><em>79</em></code> beacons.</p>
+<p>Assemble the full map of beacons. <em>How many beacons are there?</em></p>
+</article>
+<p>To begin, <a href="https://adventofcode.com/2021/day/19/input" target="_blank">get your puzzle input</a>.</p>
+<form method="post" action="19/answer"><input type="hidden" name="level" value="1"/><p>Answer: <input type="text" name="answer" autocomplete="off"/> <input type="submit" value="[Submit]"/></p></form>
+<p>You can also <span class="share">[Share<span class="share-content">on
+  <a href="https://twitter.com/intent/tweet?text=%22Beacon+Scanner%22+%2D+Day+19+%2D+Advent+of+Code+2021&amp;url=https%3A%2F%2Fadventofcode%2Ecom%2F2021%2Fday%2F19&amp;related=ericwastl&amp;hashtags=AdventOfCode" target="_blank">Twitter</a>
+  <a href="https://adventofcode.com/2021/day/javascript:void(0);" onclick="var ms; try{ms=localStorage.getItem('mastodon.server')}finally{} if(typeof ms!=='string')ms=''; ms=prompt('Mastodon Server?',ms); if(typeof ms==='string' && ms.length){this.href='https://'+ms+'/share?text=%22Beacon+Scanner%22+%2D+Day+19+%2D+Advent+of+Code+2021+%23AdventOfCode+https%3A%2F%2Fadventofcode%2Ecom%2F2021%2Fday%2F19';try{localStorage.setItem('mastodon.server',ms);}finally{}}else{return false;}" target="_blank">Mastodon</a
+></span>]</span> this puzzle.</p>
 </main>
+
+<!-- ga -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-69522494-1', 'auto');
+ga('set', 'anonymizeIp', true);
+ga('send', 'pageview');
+</script>
+<!-- /ga -->
+</body>
+</html>

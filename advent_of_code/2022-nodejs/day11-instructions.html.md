@@ -1,14 +1,103 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8"/>
+<title>Day 11 - Advent of Code 2022</title>
+<link rel="stylesheet" type="text/css" href=".static/style.css"/>
+<link rel="stylesheet alternate" type="text/css" href=".static/highcontrast.css" title="High Contrast"/>
+<link rel="shortcut icon" href="https://adventofcode.com/favicon.png"/>
+<script>window.addEventListener('click', function(e,s,r){if(e.target.nodeName==='CODE'&&e.detail===3){s=window.getSelection();s.removeAllRanges();r=document.createRange();r.selectNodeContents(e.target);s.addRange(r);}});</script>
+</head><!--
+
+
+
+
+Oh, hello!  Funny seeing you here.
+
+I appreciate your enthusiasm, but you aren't going to find much down here.
+There certainly aren't clues to any of the puzzles.  The best surprises don't
+even appear in the source until you unlock them for real.
+
+Please be careful with automated requests; I'm not a massive company, and I can
+only take so much traffic.  Please be considerate so that everyone gets to play.
+
+If you're curious about how Advent of Code works, it's running on some custom
+Perl code. Other than a few integrations (auth, analytics, social media), I
+built the whole thing myself, including the design, animations, prose, and all
+of the puzzles.
+
+The puzzles are most of the work; preparing a new calendar and a new set of
+puzzles each year takes all of my free time for 4-5 months. A lot of effort
+went into building this thing - I hope you're enjoying playing it as much as I
+enjoyed making it for you!
+
+If you'd like to hang out, I'm @ericwastl@hachyderm.io on Mastodon and
+@ericwastl on Twitter.
+
+- Eric Wastl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->
+<body>
+<header><div><h1 class="title-global"><a href="https://adventofcode.com/">Advent of Code</a></h1><nav><ul><li><a href="https://adventofcode.com/2022/about">[About]</a></li><li><a href="https://adventofcode.com/2022/events">[Events]</a></li><li><a href="https://teespring.com/stores/advent-of-code" target="_blank">[Shop]</a></li><li><a href="https://adventofcode.com/2022/settings">[Settings]</a></li><li><a href="https://adventofcode.com/2022/auth/logout">[Log Out]</a></li></ul></nav><div class="user">LemurDaniel <a href="https://adventofcode.com/2022/support" class="supporter-badge" title="Advent of Code Supporter">(AoC++)</a> <span class="star-count">50*</span></div></div><div><h1 class="title-event">&nbsp;<span class="title-event-wrap">{&apos;year&apos;:</span><a href="https://adventofcode.com/2022">2022</a><span class="title-event-wrap">}</span></h1><nav><ul><li><a href="https://adventofcode.com/2022">[Calendar]</a></li><li><a href="https://adventofcode.com/2022/support">[AoC++]</a></li><li><a href="https://adventofcode.com/2022/sponsors">[Sponsors]</a></li><li><a href="https://adventofcode.com/2022/leaderboard">[Leaderboard]</a></li><li><a href="https://adventofcode.com/2022/stats">[Stats]</a></li></ul></nav></div></header>
+
+<div id="sidebar">
+<div id="sponsor"><div class="quiet">Our <a href="https://adventofcode.com/2022/sponsors">sponsors</a> help make Advent of Code possible:</div><div class="sponsor"><a href="https://www.creetion.nl/publicaties/advent-of-code-2022/" target="_blank" onclick="if(ga)ga('send','event','sponsor','sidebar',this.href);" rel="noopener">Creetion</a> - Coding en consultancy combineren in een leuke job? Kom langs!</div></div>
+</div><!--/sidebar-->
+
 <main>
-  <article class="day-desc">
-    <h2>--- Day 11: Monkey in the Middle ---</h2>
-    <p>As you finally start making your way upriver, you realize your pack is much lighter than you remember. Just then,
-      one of the items from your pack goes flying overhead. Monkeys are playing <a
-        href="https://en.wikipedia.org/wiki/Keep_away" target="_blank">Keep Away</a> with your missing things!</p>
-    <p>To get your stuff back, you need to be able to predict where the monkeys will throw your items. After some
-      careful observation, you realize the monkeys operate based on <em>how worried you are about each item</em>.</p>
-    <p>You take some notes (your puzzle input) on the items each monkey currently has, how worried you are about those
-      items, and how the monkey makes decisions based on your worry level. For example:</p>
-    <pre><code>Monkey 0:
+<style>article *[title]{border-bottom:1px dotted #ffff66;}</style><article class="day-desc"><h2>--- Day 11: Monkey in the Middle ---</h2><p>As you finally start making your way upriver, you realize your pack is much lighter than you remember. Just then, one of the items from your pack goes flying overhead. Monkeys are playing <a href="https://en.wikipedia.org/wiki/Keep_away" target="_blank">Keep Away</a> with your missing things!</p>
+<p>To get your stuff back, you need to be able to predict where the monkeys will throw your items. After some careful observation, you realize the monkeys operate based on <em>how worried you are about each item</em>.</p>
+<p>You take some notes (your puzzle input) on the items each monkey currently has, how worried you are about those items, and how the monkey makes decisions based on your worry level. For example:</p>
+<pre><code>Monkey 0:
   Starting items: 79, 98
   Operation: new = old * 19
   Test: divisible by 23
@@ -36,33 +125,22 @@ Monkey 3:
     If true: throw to monkey 0
     If false: throw to monkey 1
 </code></pre>
-    <p>Each monkey has several attributes:</p>
-    <ul>
-      <li><code>Starting items</code> lists your <em>worry level</em> for each item the monkey is currently holding in
-        the order they will be inspected.</li>
-      <li><code>Operation</code> shows how your worry level changes as that monkey inspects an item. (An operation like
-        <code>new = old * 5</code> means that your worry level after the monkey inspected the item is five times
-        whatever your worry level was before inspection.)
-      </li>
-      <li><code>Test</code> shows how the monkey uses your worry level to decide where to throw an item next.
-        <ul>
-          <li><code>If true</code> shows what happens with an item if the <code>Test</code> was true.</li>
-          <li><code>If false</code> shows what happens with an item if the <code>Test</code> was false.</li>
-        </ul>
-      </li>
-    </ul>
-    <p>After each monkey inspects an item but before it tests your worry level, your relief that the monkey's inspection
-      didn't damage the item causes your worry level to be <em>divided by three</em> and rounded down to the nearest
-      integer.</p>
-    <p>The monkeys take turns inspecting and throwing items. On a single monkey's <em>turn</em>, it inspects and throws
-      all of the items it is holding one at a time and in the order listed. Monkey <code>0</code> goes first, then
-      monkey <code>1</code>, and so on until each monkey has had one turn. The process of each monkey taking a single
-      turn is called a <em>round</em>.</p>
-    <p>When a monkey throws an item to another monkey, the item goes on the <em>end</em> of the recipient monkey's list.
-      A monkey that starts a round with no items could end up inspecting and throwing many items by the time its turn
-      comes around. If a monkey is holding no items at the start of its turn, its turn ends.</p>
-    <p>In the above example, the first round proceeds as follows:</p>
-    <pre><code>Monkey 0:
+<p>Each monkey has several attributes:</p>
+<ul>
+<li><code>Starting items</code> lists your <em>worry level</em> for each item the monkey is currently holding in the order they will be inspected.</li>
+<li><code>Operation</code> shows how your worry level changes as that monkey inspects an item. (An operation like <code>new = old * 5</code> means that your worry level after the monkey inspected the item is five times whatever your worry level was before inspection.)</li>
+<li><code>Test</code> shows how the monkey uses your worry level to decide where to throw an item next.
+  <ul>
+  <li><code>If true</code> shows what happens with an item if the <code>Test</code> was true.</li>
+  <li><code>If false</code> shows what happens with an item if the <code>Test</code> was false.</li>
+  </ul>
+</li>
+</ul>
+<p>After each monkey inspects an item but before it tests your worry level, your relief that the monkey's inspection didn't damage the item causes your worry level to be <em>divided by three</em> and rounded down to the nearest integer.</p>
+<p>The monkeys take turns inspecting and throwing items. On a single monkey's <em>turn</em>, it inspects and throws all of the items it is holding one at a time and in the order listed. Monkey <code>0</code> goes first, then monkey <code>1</code>, and so on until each monkey has had one turn. The process of each monkey taking a single turn is called a <em>round</em>.</p>
+<p>When a monkey throws an item to another monkey, the item goes on the <em>end</em> of the recipient monkey's list. A monkey that starts a round with no items could end up inspecting and throwing many items by the time its turn comes around. If a monkey is holding no items at the start of its turn, its turn ends.</p>
+<p>In the above example, the first round proceeds as follows:</p>
+<pre><code>Monkey 0:
   Monkey inspects an item with a worry level of 79.
     Worry level is multiplied by 19 to 1501.
     Monkey gets bored with item. Worry level is divided by 3 to 500.
@@ -137,16 +215,15 @@ Monkey 3:
     Current worry level is not divisible by 17.
     Item with worry level 1046 is thrown to monkey 1.
 </code></pre>
-    <p>After round 1, the monkeys are holding items with these worry levels:</p>
-    <pre><code>Monkey 0: 20, 23, 27, 26
+<p>After round 1, the monkeys are holding items with these worry levels:</p>
+<pre><code>Monkey 0: 20, 23, 27, 26
 Monkey 1: 2080, 25, 167, 207, 401, 1046
 Monkey 2: 
 Monkey 3: 
 </code></pre>
-    <p>Monkeys 2 and 3 aren't holding any items at the end of the round; they both inspected items during the round and
-      threw them all before the round ended.</p>
-    <p>This process continues for a few more rounds:</p>
-    <pre><code>After round 2, the monkeys are holding items with these worry levels:
+<p>Monkeys 2 and 3 aren't holding any items at the end of the round; they both inspected items during the round and threw them all before the round ended.</p>
+<p>This process continues for a few more rounds:</p>
+<pre><code>After round 2, the monkeys are holding items with these worry levels:
 Monkey 0: 695, 10, 71, 135, 350
 Monkey 1: 43, 49, 58, 55, 362
 Monkey 2: 
@@ -216,33 +293,20 @@ Monkey 1: 245, 93, 53, 199, 115
 Monkey 2: 
 Monkey 3: 
 </code></pre>
-    <p>Chasing all of the monkeys at once is impossible; you're going to have to focus on the <em>two most active</em>
-      monkeys if you want any hope of getting your stuff back. Count the <em>total number of times each monkey inspects
-        items</em> over 20 rounds:</p>
-    <pre><code><em>Monkey 0 inspected items 101 times.</em>
+<p>Chasing all of the monkeys at once is impossible; you're going to have to focus on the <em>two most active</em> monkeys if you want any hope of getting your stuff back. Count the <em>total number of times each monkey inspects items</em> over 20 rounds:</p>
+<pre><code><em>Monkey 0 inspected items 101 times.</em>
 Monkey 1 inspected items 95 times.
 Monkey 2 inspected items 7 times.
 <em>Monkey 3 inspected items 105 times.</em>
 </code></pre>
-    <p>In this example, the two most active monkeys inspected items 101 and 105 times. The level of <em>monkey
-        business</em> in this situation can be found by multiplying these together: <code><em>10605</em></code>.</p>
-    <p>Figure out which monkeys to chase by counting how many items they inspect over 20 rounds. <em>What is the level
-        of monkey business after 20 rounds of stuff-slinging simian shenanigans?</em></p>
-  </article>
-  <p>Your puzzle answer was <code>55216</code>.</p>
-  <article class="day-desc">
-    <h2 id="part2">--- Part Two ---</h2>
-    <p>You're worried you might not ever get your items back. So worried, in fact, that your relief that a monkey's
-      inspection didn't damage an item <em>no longer causes your worry level to be divided by three</em>.</p>
-    <p>Unfortunately, that relief was all that was keeping your worry levels from reaching <em>ridiculous levels</em>.
-      You'll need to <em>find another way to keep your worry levels manageable</em>.</p>
-    <p>At this rate, you might be putting up with these monkeys for a <em>very long time</em> - possibly
-      <em><code>10000</code> rounds</em>!
-    </p>
-    <p>With these new rules, you can still figure out the <span
-        title="Monkey business monkey business monkey business, monkey numbers... is this working?">monkey
-        business</span> after 10000 rounds. Using the same example above:</p>
-    <pre><code>== After round 1 ==
+<p>In this example, the two most active monkeys inspected items 101 and 105 times. The level of <em>monkey business</em> in this situation can be found by multiplying these together: <code><em>10605</em></code>.</p>
+<p>Figure out which monkeys to chase by counting how many items they inspect over 20 rounds. <em>What is the level of monkey business after 20 rounds of stuff-slinging simian shenanigans?</em></p>
+</article>
+<p>Your puzzle answer was <code>55216</code>.</p><article class="day-desc"><h2 id="part2">--- Part Two ---</h2><p>You're worried you might not ever get your items back. So worried, in fact, that your relief that a monkey's inspection didn't damage an item <em>no longer causes your worry level to be divided by three</em>.</p>
+<p>Unfortunately, that relief was all that was keeping your worry levels from reaching <em>ridiculous levels</em>. You'll need to <em>find another way to keep your worry levels manageable</em>.</p>
+<p>At this rate, you might be putting up with these monkeys for a <em>very long time</em> - possibly <em><code>10000</code> rounds</em>!</p>
+<p>With these new rules, you can still figure out the <span title="Monkey business monkey business monkey business, monkey numbers... is this working?">monkey business</span> after 10000 rounds. Using the same example above:</p>
+<pre><code>== After round 1 ==
 Monkey 0 inspected items 2 times.
 Monkey 1 inspected items 4 times.
 Monkey 2 inspected items 3 times.
@@ -314,20 +378,28 @@ Monkey 1 inspected items 47830 times.
 Monkey 2 inspected items 1938 times.
 <em>Monkey 3 inspected items 52013 times.</em>
 </code></pre>
-    <p>After 10000 rounds, the two most active monkeys inspected items 52166 and 52013 times. Multiplying these
-      together, the level of <em>monkey business</em> in this situation is now <code><em>2713310158</em></code>.</p>
-    <p>Worry levels are no longer divided by three after each item is inspected; you'll need to find another way to keep
-      your worry levels manageable. Starting again from the initial state in your puzzle input, <em>what is the level of
-        monkey business after 10000 rounds?</em></p>
-  </article>
-  <p>Your puzzle answer was <code>12848882750</code>.</p>
-  <p class="day-success">Both parts of this puzzle are complete! They provide two gold stars: **</p>
-  <p>At this point, you should <a href="/2022">return to your Advent calendar</a> and try another puzzle.</p>
-  <p>If you still want to see it, you can <a href="11/input" target="_blank">get your puzzle input</a>.</p>
-  <p>You can also <span class="share">[Share<span class="share-content">on
-        <a href="https://twitter.com/intent/tweet?text=I%27ve+completed+%22Monkey+in+the+Middle%22+%2D+Day+11+%2D+Advent+of+Code+2022&amp;url=https%3A%2F%2Fadventofcode%2Ecom%2F2022%2Fday%2F11&amp;related=ericwastl&amp;hashtags=AdventOfCode"
-          target="_blank">Twitter</a>
-        <a href="javascript:void(0);"
-          onclick="var mastodon_instance=prompt('Mastodon Instance / Server Name?'); if(typeof mastodon_instance==='string' && mastodon_instance.length){this.href='https://'+mastodon_instance+'/share?text=I%27ve+completed+%22Monkey+in+the+Middle%22+%2D+Day+11+%2D+Advent+of+Code+2022+%23AdventOfCode+https%3A%2F%2Fadventofcode%2Ecom%2F2022%2Fday%2F11'}else{return false;}"
-          target="_blank">Mastodon</a></span>]</span> this puzzle.</p>
+<p>After 10000 rounds, the two most active monkeys inspected items 52166 and 52013 times. Multiplying these together, the level of <em>monkey business</em> in this situation is now <code><em>2713310158</em></code>.</p>
+<p>Worry levels are no longer divided by three after each item is inspected; you'll need to find another way to keep your worry levels manageable. Starting again from the initial state in your puzzle input, <em>what is the level of monkey business after 10000 rounds?</em></p>
+</article>
+<p>Your puzzle answer was <code>12848882750</code>.</p><p class="day-success">Both parts of this puzzle are complete! They provide two gold stars: **</p>
+<p>At this point, all that is left is for you to <a href="https://adventofcode.com/2022">admire your Advent calendar</a>.</p>
+<p>If you still want to see it, you can <a href="https://adventofcode.com/2022/day/11/input" target="_blank">get your puzzle input</a>.</p>
+<p>You can also <span class="share">[Share<span class="share-content">on
+  <a href="https://twitter.com/intent/tweet?text=I%27ve+completed+%22Monkey+in+the+Middle%22+%2D+Day+11+%2D+Advent+of+Code+2022&amp;url=https%3A%2F%2Fadventofcode%2Ecom%2F2022%2Fday%2F11&amp;related=ericwastl&amp;hashtags=AdventOfCode" target="_blank">Twitter</a>
+  <a href="https://adventofcode.com/2022/day/javascript:void(0);" onclick="var ms; try{ms=localStorage.getItem('mastodon.server')}finally{} if(typeof ms!=='string')ms=''; ms=prompt('Mastodon Server?',ms); if(typeof ms==='string' && ms.length){this.href='https://'+ms+'/share?text=I%27ve+completed+%22Monkey+in+the+Middle%22+%2D+Day+11+%2D+Advent+of+Code+2022+%23AdventOfCode+https%3A%2F%2Fadventofcode%2Ecom%2F2022%2Fday%2F11';try{localStorage.setItem('mastodon.server',ms);}finally{}}else{return false;}" target="_blank">Mastodon</a
+></span>]</span> this puzzle.</p>
 </main>
+
+<!-- ga -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-69522494-1', 'auto');
+ga('set', 'anonymizeIp', true);
+ga('send', 'pageview');
+</script>
+<!-- /ga -->
+</body>
+</html>

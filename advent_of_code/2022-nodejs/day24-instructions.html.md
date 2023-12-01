@@ -1,18 +1,105 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8"/>
+<title>Day 24 - Advent of Code 2022</title>
+<link rel="stylesheet" type="text/css" href=".static/style.css"/>
+<link rel="stylesheet alternate" type="text/css" href=".static/highcontrast.css" title="High Contrast"/>
+<link rel="shortcut icon" href="https://adventofcode.com/favicon.png"/>
+<script>window.addEventListener('click', function(e,s,r){if(e.target.nodeName==='CODE'&&e.detail===3){s=window.getSelection();s.removeAllRanges();r=document.createRange();r.selectNodeContents(e.target);s.addRange(r);}});</script>
+</head><!--
+
+
+
+
+Oh, hello!  Funny seeing you here.
+
+I appreciate your enthusiasm, but you aren't going to find much down here.
+There certainly aren't clues to any of the puzzles.  The best surprises don't
+even appear in the source until you unlock them for real.
+
+Please be careful with automated requests; I'm not a massive company, and I can
+only take so much traffic.  Please be considerate so that everyone gets to play.
+
+If you're curious about how Advent of Code works, it's running on some custom
+Perl code. Other than a few integrations (auth, analytics, social media), I
+built the whole thing myself, including the design, animations, prose, and all
+of the puzzles.
+
+The puzzles are most of the work; preparing a new calendar and a new set of
+puzzles each year takes all of my free time for 4-5 months. A lot of effort
+went into building this thing - I hope you're enjoying playing it as much as I
+enjoyed making it for you!
+
+If you'd like to hang out, I'm @ericwastl@hachyderm.io on Mastodon and
+@ericwastl on Twitter.
+
+- Eric Wastl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->
+<body>
+<header><div><h1 class="title-global"><a href="https://adventofcode.com/">Advent of Code</a></h1><nav><ul><li><a href="https://adventofcode.com/2022/about">[About]</a></li><li><a href="https://adventofcode.com/2022/events">[Events]</a></li><li><a href="https://teespring.com/stores/advent-of-code" target="_blank">[Shop]</a></li><li><a href="https://adventofcode.com/2022/settings">[Settings]</a></li><li><a href="https://adventofcode.com/2022/auth/logout">[Log Out]</a></li></ul></nav><div class="user">LemurDaniel <a href="https://adventofcode.com/2022/support" class="supporter-badge" title="Advent of Code Supporter">(AoC++)</a> <span class="star-count">50*</span></div></div><div><h1 class="title-event">&nbsp;&nbsp;&nbsp;<span class="title-event-wrap">var y=</span><a href="https://adventofcode.com/2022">2022</a><span class="title-event-wrap">;</span></h1><nav><ul><li><a href="https://adventofcode.com/2022">[Calendar]</a></li><li><a href="https://adventofcode.com/2022/support">[AoC++]</a></li><li><a href="https://adventofcode.com/2022/sponsors">[Sponsors]</a></li><li><a href="https://adventofcode.com/2022/leaderboard">[Leaderboard]</a></li><li><a href="https://adventofcode.com/2022/stats">[Stats]</a></li></ul></nav></div></header>
+
+<div id="sidebar">
+<div id="sponsor"><div class="quiet">Our <a href="https://adventofcode.com/2022/sponsors">sponsors</a> help make Advent of Code possible:</div><div class="sponsor"><a href="https://1337.life" target="_blank" onclick="if(ga)ga('send','event','sponsor','sidebar',this.href);" rel="noopener">13|37</a> - Happy Holidays from all of us at 13|37 to all of you participating in Advent of Code &apos;22!</div></div>
+</div><!--/sidebar-->
+
 <main>
-  <article class="day-desc">
-    <h2>--- Day 24: Blizzard Basin ---</h2>
-    <p>With everything replanted for next year (and with elephants and monkeys to tend the grove), you and the Elves
-      leave for the extraction point.</p>
-    <p>Partway up the mountain that shields the grove is a flat, open area that serves as the extraction point. It's a
-      bit of a climb, but nothing the expedition can't handle.</p>
-    <p>At least, that would normally be true; now that the mountain is covered in snow, things have become more
-      difficult than the Elves are used to.</p>
-    <p>As the expedition reaches a valley that must be traversed to reach the extraction site, you find that strong,
-      turbulent winds are pushing small <em>blizzards</em> of snow and sharp ice around the valley. It's a good thing
-      everyone packed warm clothes! To make it across safely, you'll need to find a way to avoid them.</p>
-    <p>Fortunately, it's easy to see all of this from the entrance to the valley, so you make a map of the valley and
-      the blizzards (your puzzle input). For example:</p>
-    <pre><code>#.#####
+<style>article *[title]{border-bottom:1px dotted #ffff66;}</style><article class="day-desc"><h2>--- Day 24: Blizzard Basin ---</h2><p>With everything replanted for next year (and with elephants and monkeys to tend the grove), you and the Elves leave for the extraction point.</p>
+<p>Partway up the mountain that shields the grove is a flat, open area that serves as the extraction point. It's a bit of a climb, but nothing the expedition can't handle.</p>
+<p>At least, that would normally be true; now that the mountain is covered in snow, things have become more difficult than the Elves are used to.</p>
+<p>As the expedition reaches a valley that must be traversed to reach the extraction site, you find that strong, turbulent winds are pushing small <em>blizzards</em> of snow and sharp ice around the valley. It's a good thing everyone packed warm clothes! To make it across safely, you'll need to find a way to avoid them.</p>
+<p>Fortunately, it's easy to see all of this from the entrance to the valley, so you make a map of the valley and the blizzards (your puzzle input). For example:</p>
+<pre><code>#.#####
 #.....#
 #&gt;....#
 #.....#
@@ -20,13 +107,9 @@
 #.....#
 #####.#
 </code></pre>
-    <p>The walls of the valley are drawn as <code>#</code>; everything else is ground. Clear ground - where there is
-      currently no blizzard - is drawn as <code>.</code>. Otherwise, blizzards are drawn with an arrow indicating their
-      direction of motion: up (<code>^</code>), down (<code>v</code>), left (<code>&lt;</code>), or right
-      (<code>&gt;</code>).</p>
-    <p>The above map includes two blizzards, one moving right (<code>&gt;</code>) and one moving down (<code>v</code>).
-      In one minute, each blizzard moves one position in the direction it is pointing:</p>
-    <pre><code>#.#####
+<p>The walls of the valley are drawn as <code>#</code>; everything else is ground. Clear ground - where there is currently no blizzard - is drawn as <code>.</code>. Otherwise, blizzards are drawn with an arrow indicating their direction of motion: up (<code>^</code>), down (<code>v</code>), left (<code>&lt;</code>), or right (<code>&gt;</code>).</p>
+<p>The above map includes two blizzards, one moving right (<code>&gt;</code>) and one moving down (<code>v</code>). In one minute, each blizzard moves one position in the direction it is pointing:</p>
+<pre><code>#.#####
 #.....#
 #.&gt;...#
 #.....#
@@ -34,11 +117,8 @@
 #...v.#
 #####.#
 </code></pre>
-    <p>Due to <span title="I think, anyway. Do I look like a theoretical blizzacist?">conservation of blizzard
-        energy</span>, as a blizzard reaches the wall of the valley, a new blizzard forms on the opposite side of the
-      valley moving in the same direction. After another minute, the bottom downward-moving blizzard has been replaced
-      with a new downward-moving blizzard at the top of the valley instead:</p>
-    <pre><code>#.#####
+<p>Due to <span title="I think, anyway. Do I look like a theoretical blizzacist?">conservation of blizzard energy</span>, as a blizzard reaches the wall of the valley, a new blizzard forms on the opposite side of the valley moving in the same direction. After another minute, the bottom downward-moving blizzard has been replaced with a new downward-moving blizzard at the top of the valley instead:</p>
+<pre><code>#.#####
 #...v.#
 #..&gt;..#
 #.....#
@@ -46,9 +126,8 @@
 #.....#
 #####.#
 </code></pre>
-    <p>Because blizzards are made of tiny snowflakes, they pass right through each other. After another minute, both
-      blizzards temporarily occupy the same position, marked <code>2</code>:</p>
-    <pre><code>#.#####
+<p>Because blizzards are made of tiny snowflakes, they pass right through each other. After another minute, both blizzards temporarily occupy the same position, marked <code>2</code>:</p>
+<pre><code>#.#####
 #.....#
 #...2.#
 #.....#
@@ -56,8 +135,8 @@
 #.....#
 #####.#
 </code></pre>
-    <p>After another minute, the situation resolves itself, giving each blizzard back its personal space:</p>
-    <pre><code>#.#####
+<p>After another minute, the situation resolves itself, giving each blizzard back its personal space:</p>
+<pre><code>#.#####
 #.....#
 #....&gt;#
 #...v.#
@@ -65,9 +144,8 @@
 #.....#
 #####.#
 </code></pre>
-    <p>Finally, after yet another minute, the rightward-facing blizzard on the right is replaced with a new one on the
-      left facing the same direction:</p>
-    <pre><code>#.#####
+<p>Finally, after yet another minute, the rightward-facing blizzard on the right is replaced with a new one on the left facing the same direction:</p>
+<pre><code>#.#####
 #.....#
 #&gt;....#
 #.....#
@@ -75,21 +153,18 @@
 #.....#
 #####.#
 </code></pre>
-    <p>This process repeats at least as long as you are observing it, but probably forever.</p>
-    <p>Here is a more complex example:</p>
-    <pre><code>#.######
+<p>This process repeats at least as long as you are observing it, but probably forever.</p>
+<p>Here is a more complex example:</p>
+<pre><code>#.######
 #&gt;&gt;.&lt;^&lt;#
 #.&lt;..&lt;&lt;#
 #&gt;v.&gt;&lt;&gt;#
 #&lt;^v^^&gt;#
 ######.#
 </code></pre>
-    <p>Your expedition begins in the only non-wall position in the top row and needs to reach the only non-wall position
-      in the bottom row. On each minute, you can <em>move</em> up, down, left, or right, or you can <em>wait</em> in
-      place. You and the blizzards act <em>simultaneously</em>, and you cannot share a position with a blizzard.</p>
-    <p>In the above example, the fastest way to reach your goal requires <code><em>18</em></code> steps. Drawing the
-      position of the expedition as <code>E</code>, one way to achieve this is:</p>
-    <pre><code>Initial state:
+<p>Your expedition begins in the only non-wall position in the top row and needs to reach the only non-wall position in the bottom row. On each minute, you can <em>move</em> up, down, left, or right, or you can <em>wait</em> in place. You and the blizzards act <em>simultaneously</em>, and you cannot share a position with a blizzard.</p>
+<p>In the above example, the fastest way to reach your goal requires <code><em>18</em></code> steps. Drawing the position of the expedition as <code>E</code>, one way to achieve this is:</p>
+<pre><code>Initial state:
 #<em>E</em>######
 #&gt;&gt;.&lt;^&lt;#
 #.&lt;..&lt;&lt;#
@@ -241,31 +316,33 @@ Minute 18, move down:
 #&lt;....&gt;#
 ######<em>E</em>#
 </code></pre>
-    <p><em>What is the fewest number of minutes required to avoid the blizzards and reach the goal?</em></p>
-  </article>
-  <p>Your puzzle answer was <code>262</code>.</p>
-  <article class="day-desc">
-    <h2 id="part2">--- Part Two ---</h2>
-    <p>As the expedition reaches the far side of the valley, one of the Elves looks especially dismayed:</p>
-    <p>He <em>forgot his snacks</em> at the entrance to the valley!</p>
-    <p>Since you're so good at dodging blizzards, the Elves humbly request that you go back for his snacks. From the
-      same initial conditions, how quickly can you make it from the start to the goal, then back to the start, then back
-      to the goal?</p>
-    <p>In the above example, the first trip to the goal takes <code>18</code> minutes, the trip back to the start takes
-      <code>23</code> minutes, and the trip back to the goal again takes <code>13</code> minutes, for a total time of
-      <code><em>54</em></code> minutes.
-    </p>
-    <p><em>What is the fewest number of minutes required to reach the goal, go back to the start, then reach the goal
-        again?</em></p>
-  </article>
-  <p>Your puzzle answer was <code>785</code>.</p>
-  <p class="day-success">Both parts of this puzzle are complete! They provide two gold stars: **</p>
-  <p>At this point, you should <a href="/2022">return to your Advent calendar</a> and try another puzzle.</p>
-  <p>If you still want to see it, you can <a href="24/input" target="_blank">get your puzzle input</a>.</p>
-  <p>You can also <span class="share">[Share<span class="share-content">on
-        <a href="https://twitter.com/intent/tweet?text=I%27ve+completed+%22Blizzard+Basin%22+%2D+Day+24+%2D+Advent+of+Code+2022&amp;url=https%3A%2F%2Fadventofcode%2Ecom%2F2022%2Fday%2F24&amp;related=ericwastl&amp;hashtags=AdventOfCode"
-          target="_blank">Twitter</a>
-        <a href="javascript:void(0);"
-          onclick="var mastodon_instance=prompt('Mastodon Instance / Server Name?'); if(typeof mastodon_instance==='string' && mastodon_instance.length){this.href='https://'+mastodon_instance+'/share?text=I%27ve+completed+%22Blizzard+Basin%22+%2D+Day+24+%2D+Advent+of+Code+2022+%23AdventOfCode+https%3A%2F%2Fadventofcode%2Ecom%2F2022%2Fday%2F24'}else{return false;}"
-          target="_blank">Mastodon</a></span>]</span> this puzzle.</p>
+<p><em>What is the fewest number of minutes required to avoid the blizzards and reach the goal?</em></p>
+</article>
+<p>Your puzzle answer was <code>262</code>.</p><article class="day-desc"><h2 id="part2">--- Part Two ---</h2><p>As the expedition reaches the far side of the valley, one of the Elves looks especially dismayed:</p>
+<p>He <em>forgot his snacks</em> at the entrance to the valley!</p>
+<p>Since you're so good at dodging blizzards, the Elves humbly request that you go back for his snacks. From the same initial conditions, how quickly can you make it from the start to the goal, then back to the start, then back to the goal?</p>
+<p>In the above example, the first trip to the goal takes <code>18</code> minutes, the trip back to the start takes <code>23</code> minutes, and the trip back to the goal again takes <code>13</code> minutes, for a total time of <code><em>54</em></code> minutes.</p>
+<p><em>What is the fewest number of minutes required to reach the goal, go back to the start, then reach the goal again?</em></p>
+</article>
+<p>Your puzzle answer was <code>785</code>.</p><p class="day-success">Both parts of this puzzle are complete! They provide two gold stars: **</p>
+<p>At this point, all that is left is for you to <a href="https://adventofcode.com/2022">admire your Advent calendar</a>.</p>
+<p>If you still want to see it, you can <a href="https://adventofcode.com/2022/day/24/input" target="_blank">get your puzzle input</a>.</p>
+<p>You can also <span class="share">[Share<span class="share-content">on
+  <a href="https://twitter.com/intent/tweet?text=I%27ve+completed+%22Blizzard+Basin%22+%2D+Day+24+%2D+Advent+of+Code+2022&amp;url=https%3A%2F%2Fadventofcode%2Ecom%2F2022%2Fday%2F24&amp;related=ericwastl&amp;hashtags=AdventOfCode" target="_blank">Twitter</a>
+  <a href="https://adventofcode.com/2022/day/javascript:void(0);" onclick="var ms; try{ms=localStorage.getItem('mastodon.server')}finally{} if(typeof ms!=='string')ms=''; ms=prompt('Mastodon Server?',ms); if(typeof ms==='string' && ms.length){this.href='https://'+ms+'/share?text=I%27ve+completed+%22Blizzard+Basin%22+%2D+Day+24+%2D+Advent+of+Code+2022+%23AdventOfCode+https%3A%2F%2Fadventofcode%2Ecom%2F2022%2Fday%2F24';try{localStorage.setItem('mastodon.server',ms);}finally{}}else{return false;}" target="_blank">Mastodon</a
+></span>]</span> this puzzle.</p>
 </main>
+
+<!-- ga -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-69522494-1', 'auto');
+ga('set', 'anonymizeIp', true);
+ga('send', 'pageview');
+</script>
+<!-- /ga -->
+</body>
+</html>

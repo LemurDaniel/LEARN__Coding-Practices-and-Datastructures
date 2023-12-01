@@ -1,14 +1,102 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8"/>
+<title>Day 15 - Advent of Code 2021</title>
+<link rel="stylesheet" type="text/css" href=".static/style.css"/>
+<link rel="stylesheet alternate" type="text/css" href=".static/highcontrast.css" title="High Contrast"/>
+<link rel="shortcut icon" href="https://adventofcode.com/favicon.png"/>
+<script>window.addEventListener('click', function(e,s,r){if(e.target.nodeName==='CODE'&&e.detail===3){s=window.getSelection();s.removeAllRanges();r=document.createRange();r.selectNodeContents(e.target);s.addRange(r);}});</script>
+</head><!--
+
+
+
+
+Oh, hello!  Funny seeing you here.
+
+I appreciate your enthusiasm, but you aren't going to find much down here.
+There certainly aren't clues to any of the puzzles.  The best surprises don't
+even appear in the source until you unlock them for real.
+
+Please be careful with automated requests; I'm not a massive company, and I can
+only take so much traffic.  Please be considerate so that everyone gets to play.
+
+If you're curious about how Advent of Code works, it's running on some custom
+Perl code. Other than a few integrations (auth, analytics, social media), I
+built the whole thing myself, including the design, animations, prose, and all
+of the puzzles.
+
+The puzzles are most of the work; preparing a new calendar and a new set of
+puzzles each year takes all of my free time for 4-5 months. A lot of effort
+went into building this thing - I hope you're enjoying playing it as much as I
+enjoyed making it for you!
+
+If you'd like to hang out, I'm @ericwastl@hachyderm.io on Mastodon and
+@ericwastl on Twitter.
+
+- Eric Wastl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->
+<body>
+<header><div><h1 class="title-global"><a href="https://adventofcode.com/">Advent of Code</a></h1><nav><ul><li><a href="https://adventofcode.com/2021/about">[About]</a></li><li><a href="https://adventofcode.com/2021/events">[Events]</a></li><li><a href="https://teespring.com/stores/advent-of-code" target="_blank">[Shop]</a></li><li><a href="https://adventofcode.com/2021/settings">[Settings]</a></li><li><a href="https://adventofcode.com/2021/auth/logout">[Log Out]</a></li></ul></nav><div class="user">LemurDaniel <span class="star-count">41*</span></div></div><div><h1 class="title-event">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="title-event-wrap">y(</span><a href="https://adventofcode.com/2021">2021</a><span class="title-event-wrap">)</span></h1><nav><ul><li><a href="https://adventofcode.com/2021">[Calendar]</a></li><li><a href="https://adventofcode.com/2021/support">[AoC++]</a></li><li><a href="https://adventofcode.com/2021/sponsors">[Sponsors]</a></li><li><a href="https://adventofcode.com/2021/leaderboard">[Leaderboard]</a></li><li><a href="https://adventofcode.com/2021/stats">[Stats]</a></li></ul></nav></div></header>
+
+<div id="sidebar">
+<div id="sponsor"><div class="quiet">Our <a href="https://adventofcode.com/2021/sponsors">sponsors</a> help make Advent of Code possible:</div><div class="sponsor"><a href="https://www.mheducation.com/about.html" target="_blank" onclick="if(ga)ga('send','event','sponsor','sidebar',this.href);" rel="noopener">McGraw Hill</a> - Join us in transforming education. We are looking for talented, passionate, mission-driven software engineers and leaders looking to make a difference globally. COVID has provided the inflection point, come set the direction.</div></div>
+</div><!--/sidebar-->
+
 <main>
-  <article class="day-desc">
-    <h2>--- Day 15: Chiton ---</h2>
-    <p>You've almost reached the exit of the cave, but the walls are getting closer together. Your submarine can barely
-      still fit, though; the main problem is that the walls of the cave are covered in <a
-        href="https://en.wikipedia.org/wiki/Chiton" target="_blank">chitons</a>, and it would be best not to bump any of
-      them.</p>
-    <p>The cavern is large, but has a very low ceiling, restricting your motion to two dimensions. The shape of the
-      cavern resembles a square; a quick scan of chiton density produces a map of <em>risk level</em> throughout the
-      cave (your puzzle input). For example:</p>
-    <pre><code>1163751742
+<article class="day-desc"><h2>--- Day 15: Chiton ---</h2><p>You've almost reached the exit of the cave, but the walls are getting closer together. Your submarine can barely still fit, though; the main problem is that the walls of the cave are covered in <a href="https://en.wikipedia.org/wiki/Chiton" target="_blank">chitons</a>, and it would be best not to bump any of them.</p>
+<p>The cavern is large, but has a very low ceiling, restricting your motion to two dimensions. The shape of the cavern resembles a square; a quick scan of chiton density produces a map of <em>risk level</em> throughout the cave (your puzzle input). For example:</p>
+<pre><code>1163751742
 1381373672
 2136511328
 3694931569
@@ -19,14 +107,9 @@
 1293138521
 2311944581
 </code></pre>
-    <p>You start in the top left position, your destination is the bottom right position, and you <span
-        title="Can't go diagonal until we can repair the caterpillar unit. Could be the liquid helium or the superconductors.">cannot
-        move diagonally</span>. The number at each position is its <em>risk level</em>; to determine the total risk of
-      an entire path, add up the risk levels of each position you <em>enter</em> (that is, don't count the risk level of
-      your starting position unless you enter it; leaving it adds no risk to your total).</p>
-    <p>Your goal is to find a path with the <em>lowest total risk</em>. In this example, a path with the lowest total
-      risk is highlighted here:</p>
-    <pre><code><em>1</em>163751742
+<p>You start in the top left position, your destination is the bottom right position, and you <span title="Can't go diagonal until we can repair the caterpillar unit. Could be the liquid helium or the superconductors.">cannot move diagonally</span>. The number at each position is its <em>risk level</em>; to determine the total risk of an entire path, add up the risk levels of each position you <em>enter</em> (that is, don't count the risk level of your starting position unless you enter it; leaving it adds no risk to your total).</p>
+<p>Your goal is to find a path with the <em>lowest total risk</em>. In this example, a path with the lowest total risk is highlighted here:</p>
+<pre><code><em>1</em>163751742
 <em>1</em>381373672
 <em>2136511</em>328
 369493<em>15</em>69
@@ -37,32 +120,20 @@
 12931385<em>21</em>
 231194458<em>1</em>
 </code></pre>
-    <p>The total risk of this path is <code><em>40</em></code> (the starting position is never entered, so its risk is
-      not counted).</p>
-    <p><em>What is the lowest total risk of any path from the top left to the bottom right?</em></p>
-  </article>
-  <p>Your puzzle answer was <code>562</code>.</p>
-  <article class="day-desc">
-    <h2 id="part2">--- Part Two ---</h2>
-    <p>Now that you know how to find low-risk paths in the cave, you can try to find your way out.</p>
-    <p>The entire cave is actually <em>five times larger in both dimensions</em> than you thought; the area you
-      originally scanned is just one tile in a 5x5 tile area that forms the full map. Your original map tile repeats to
-      the right and downward; each time the tile repeats to the right or downward, all of its risk levels <em>are 1
-        higher</em> than the tile immediately up or left of it. However, risk levels above <code>9</code> wrap back
-      around to <code>1</code>. So, if your original map had some position with a risk level of <code>8</code>, then
-      that same position on each of the 25 total tiles would be as follows:</p>
-    <pre><code>8 9 1 2 3
+<p>The total risk of this path is <code><em>40</em></code> (the starting position is never entered, so its risk is not counted).</p>
+<p><em>What is the lowest total risk of any path from the top left to the bottom right?</em></p>
+</article>
+<p>Your puzzle answer was <code>562</code>.</p><article class="day-desc"><h2 id="part2">--- Part Two ---</h2><p>Now that you know how to find low-risk paths in the cave, you can try to find your way out.</p>
+<p>The entire cave is actually <em>five times larger in both dimensions</em> than you thought; the area you originally scanned is just one tile in a 5x5 tile area that forms the full map. Your original map tile repeats to the right and downward; each time the tile repeats to the right or downward, all of its risk levels <em>are 1 higher</em> than the tile immediately up or left of it. However, risk levels above <code>9</code> wrap back around to <code>1</code>. So, if your original map had some position with a risk level of <code>8</code>, then that same position on each of the 25 total tiles would be as follows:</p>
+<pre><code>8 9 1 2 3
 9 1 2 3 4
 1 2 3 4 5
 2 3 4 5 6
 3 4 5 6 7
 </code></pre>
-    <p>Each single digit above corresponds to the example position with a value of <code>8</code> on the top-left tile.
-      Because the full map is actually five times larger in both dimensions, that position appears a total of 25 times,
-      once in each duplicated tile, with the values shown above.</p>
-    <p>Here is the full five-times-as-large version of the first example above, with the original map in the top left
-      corner highlighted:</p>
-    <pre><code><em>1163751742</em>2274862853338597396444961841755517295286
+<p>Each single digit above corresponds to the example position with a value of <code>8</code> on the top-left tile. Because the full map is actually five times larger in both dimensions, that position appears a total of 25 times, once in each duplicated tile, with the values shown above.</p>
+<p>Here is the full five-times-as-large version of the first example above, with the original map in the top left corner highlighted:</p>
+<pre><code><em>1163751742</em>2274862853338597396444961841755517295286
 <em>1381373672</em>2492484783351359589446246169155735727126
 <em>2136511328</em>3247622439435873354154698446526571955763
 <em>3694931569</em>4715142671582625378269373648937148475914
@@ -113,9 +184,8 @@
 56475739656758684176786979528789718163989182927419
 67554889357866599146897761125791887223681299833479
 </code></pre>
-    <p>Equipped with the full map, you can now find a path from the top left corner to the bottom right corner with the
-      lowest total risk:</p>
-    <pre><code><em>1</em>1637517422274862853338597396444961841755517295286
+<p>Equipped with the full map, you can now find a path from the top left corner to the bottom right corner with the lowest total risk:</p>
+<pre><code><em>1</em>1637517422274862853338597396444961841755517295286
 <em>1</em>3813736722492484783351359589446246169155735727126
 <em>2</em>1365113283247622439435873354154698446526571955763
 <em>3</em>6949315694715142671582625378269373648937148475914
@@ -166,18 +236,28 @@
 564757396567586841767869795287897181639891829<em>2</em>7419
 675548893578665991468977611257918872236812998<em>33479</em>
 </code></pre>
-    <p>The total risk of this path is <code><em>315</em></code> (the starting position is still never entered, so its
-      risk is not counted).</p>
-    <p>Using the full map, <em>what is the lowest total risk of any path from the top left to the bottom right?</em></p>
-  </article>
-  <p>Your puzzle answer was <code>2874</code>.</p>
-  <p class="day-success">Both parts of this puzzle are complete! They provide two gold stars: **</p>
-  <p>At this point, you should <a href="/2021">return to your Advent calendar</a> and try another puzzle.</p>
-  <p>If you still want to see it, you can <a href="15/input" target="_blank">get your puzzle input</a>.</p>
-  <p>You can also <span class="share">[Share<span class="share-content">on
-        <a href="https://twitter.com/intent/tweet?text=I%27ve+completed+%22Chiton%22+%2D+Day+15+%2D+Advent+of+Code+2021&amp;url=https%3A%2F%2Fadventofcode%2Ecom%2F2021%2Fday%2F15&amp;related=ericwastl&amp;hashtags=AdventOfCode"
-          target="_blank">Twitter</a>
-        <a href="javascript:void(0);"
-          onclick="var mastodon_instance=prompt('Mastodon Instance / Server Name?'); if(typeof mastodon_instance==='string' && mastodon_instance.length){this.href='https://'+mastodon_instance+'/share?text=I%27ve+completed+%22Chiton%22+%2D+Day+15+%2D+Advent+of+Code+2021+%23AdventOfCode+https%3A%2F%2Fadventofcode%2Ecom%2F2021%2Fday%2F15'}else{return false;}"
-          target="_blank">Mastodon</a></span>]</span> this puzzle.</p>
+<p>The total risk of this path is <code><em>315</em></code> (the starting position is still never entered, so its risk is not counted).</p>
+<p>Using the full map, <em>what is the lowest total risk of any path from the top left to the bottom right?</em></p>
+</article>
+<p>Your puzzle answer was <code>2874</code>.</p><p class="day-success">Both parts of this puzzle are complete! They provide two gold stars: **</p>
+<p>At this point, you should <a href="https://adventofcode.com/2021">return to your Advent calendar</a> and try another puzzle.</p>
+<p>If you still want to see it, you can <a href="https://adventofcode.com/2021/day/15/input" target="_blank">get your puzzle input</a>.</p>
+<p>You can also <span class="share">[Share<span class="share-content">on
+  <a href="https://twitter.com/intent/tweet?text=I%27ve+completed+%22Chiton%22+%2D+Day+15+%2D+Advent+of+Code+2021&amp;url=https%3A%2F%2Fadventofcode%2Ecom%2F2021%2Fday%2F15&amp;related=ericwastl&amp;hashtags=AdventOfCode" target="_blank">Twitter</a>
+  <a href="https://adventofcode.com/2021/day/javascript:void(0);" onclick="var ms; try{ms=localStorage.getItem('mastodon.server')}finally{} if(typeof ms!=='string')ms=''; ms=prompt('Mastodon Server?',ms); if(typeof ms==='string' && ms.length){this.href='https://'+ms+'/share?text=I%27ve+completed+%22Chiton%22+%2D+Day+15+%2D+Advent+of+Code+2021+%23AdventOfCode+https%3A%2F%2Fadventofcode%2Ecom%2F2021%2Fday%2F15';try{localStorage.setItem('mastodon.server',ms);}finally{}}else{return false;}" target="_blank">Mastodon</a
+></span>]</span> this puzzle.</p>
 </main>
+
+<!-- ga -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-69522494-1', 'auto');
+ga('set', 'anonymizeIp', true);
+ga('send', 'pageview');
+</script>
+<!-- /ga -->
+</body>
+</html>

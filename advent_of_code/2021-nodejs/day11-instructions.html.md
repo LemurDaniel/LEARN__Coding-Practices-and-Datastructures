@@ -1,16 +1,103 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8"/>
+<title>Day 11 - Advent of Code 2021</title>
+<link rel="stylesheet" type="text/css" href=".static/style.css"/>
+<link rel="stylesheet alternate" type="text/css" href=".static/highcontrast.css" title="High Contrast"/>
+<link rel="shortcut icon" href="https://adventofcode.com/favicon.png"/>
+<script>window.addEventListener('click', function(e,s,r){if(e.target.nodeName==='CODE'&&e.detail===3){s=window.getSelection();s.removeAllRanges();r=document.createRange();r.selectNodeContents(e.target);s.addRange(r);}});</script>
+</head><!--
+
+
+
+
+Oh, hello!  Funny seeing you here.
+
+I appreciate your enthusiasm, but you aren't going to find much down here.
+There certainly aren't clues to any of the puzzles.  The best surprises don't
+even appear in the source until you unlock them for real.
+
+Please be careful with automated requests; I'm not a massive company, and I can
+only take so much traffic.  Please be considerate so that everyone gets to play.
+
+If you're curious about how Advent of Code works, it's running on some custom
+Perl code. Other than a few integrations (auth, analytics, social media), I
+built the whole thing myself, including the design, animations, prose, and all
+of the puzzles.
+
+The puzzles are most of the work; preparing a new calendar and a new set of
+puzzles each year takes all of my free time for 4-5 months. A lot of effort
+went into building this thing - I hope you're enjoying playing it as much as I
+enjoyed making it for you!
+
+If you'd like to hang out, I'm @ericwastl@hachyderm.io on Mastodon and
+@ericwastl on Twitter.
+
+- Eric Wastl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->
+<body>
+<header><div><h1 class="title-global"><a href="https://adventofcode.com/">Advent of Code</a></h1><nav><ul><li><a href="https://adventofcode.com/2021/about">[About]</a></li><li><a href="https://adventofcode.com/2021/events">[Events]</a></li><li><a href="https://teespring.com/stores/advent-of-code" target="_blank">[Shop]</a></li><li><a href="https://adventofcode.com/2021/settings">[Settings]</a></li><li><a href="https://adventofcode.com/2021/auth/logout">[Log Out]</a></li></ul></nav><div class="user">LemurDaniel <span class="star-count">41*</span></div></div><div><h1 class="title-event">&nbsp;&nbsp;&nbsp;<span class="title-event-wrap">$year=</span><a href="https://adventofcode.com/2021">2021</a><span class="title-event-wrap">;</span></h1><nav><ul><li><a href="https://adventofcode.com/2021">[Calendar]</a></li><li><a href="https://adventofcode.com/2021/support">[AoC++]</a></li><li><a href="https://adventofcode.com/2021/sponsors">[Sponsors]</a></li><li><a href="https://adventofcode.com/2021/leaderboard">[Leaderboard]</a></li><li><a href="https://adventofcode.com/2021/stats">[Stats]</a></li></ul></nav></div></header>
+
+<div id="sidebar">
+<div id="sponsor"><div class="quiet">Our <a href="https://adventofcode.com/2021/sponsors">sponsors</a> help make Advent of Code possible:</div><div class="sponsor"><a href="https://dynatr.ac/aoc" target="_blank" onclick="if(ga)ga('send','event','sponsor','sidebar',this.href);" rel="noopener">Dynatrace</a> - *** ODE TO THE CODE *** In a world that runs on software, Dynatrace ensures that software works perfectly. Join our mission.</div></div>
+</div><!--/sidebar-->
+
 <main>
-  <article class="day-desc">
-    <h2>--- Day 11: Dumbo Octopus ---</h2>
-    <p>You enter a large cavern full of rare bioluminescent <a href="https://www.youtube.com/watch?v=eih-VSaS2g0"
-        target="_blank">dumbo octopuses</a>! They seem to not like the Christmas lights on your submarine, so you turn
-      them off for now.</p>
-    <p>There are 100 <span title="I know it's weird; I grew up saying 'octopi' too.">octopuses</span> arranged neatly in
-      a 10 by 10 grid. Each octopus slowly gains <em>energy</em> over time and <em>flashes</em> brightly for a moment
-      when its energy is full. Although your lights are off, maybe you could navigate through the cave without
-      disturbing the octopuses if you could predict when the flashes of light will happen.</p>
-    <p>Each octopus has an <em>energy level</em> - your submarine can remotely measure the energy level of each octopus
-      (your puzzle input). For example:</p>
-    <pre><code>5483143223
+<article class="day-desc"><h2>--- Day 11: Dumbo Octopus ---</h2><p>You enter a large cavern full of rare bioluminescent <a href="https://www.youtube.com/watch?v=eih-VSaS2g0" target="_blank">dumbo octopuses</a>! They seem to not like the Christmas lights on your submarine, so you turn them off for now.</p>
+<p>There are 100 <span title="I know it's weird; I grew up saying 'octopi' too.">octopuses</span> arranged neatly in a 10 by 10 grid. Each octopus slowly gains <em>energy</em> over time and <em>flashes</em> brightly for a moment when its energy is full. Although your lights are off, maybe you could navigate through the cave without disturbing the octopuses if you could predict when the flashes of light will happen.</p>
+<p>Each octopus has an <em>energy level</em> - your submarine can remotely measure the energy level of each octopus (your puzzle input). For example:</p>
+<pre><code>5483143223
 2745854711
 5264556173
 6141336146
@@ -21,23 +108,15 @@
 4846848554
 5283751526
 </code></pre>
-    <p>The energy level of each octopus is a value between <code>0</code> and <code>9</code>. Here, the top-left octopus
-      has an energy level of <code>5</code>, the bottom-right one has an energy level of <code>6</code>, and so on.</p>
-    <p>You can model the energy levels and flashes of light in <em>steps</em>. During a single step, the following
-      occurs:</p>
-    <ul>
-      <li>First, the energy level of each octopus increases by <code>1</code>.</li>
-      <li>Then, any octopus with an energy level greater than <code>9</code> <em>flashes</em>. This increases the energy
-        level of all adjacent octopuses by <code>1</code>, including octopuses that are diagonally adjacent. If this
-        causes an octopus to have an energy level greater than <code>9</code>, it <em>also flashes</em>. This process
-        continues as long as new octopuses keep having their energy level increased beyond <code>9</code>. (An octopus
-        can only flash <em>at most once per step</em>.)</li>
-      <li>Finally, any octopus that flashed during this step has its energy level set to <code>0</code>, as it used all
-        of its energy to flash.</li>
-    </ul>
-    <p>Adjacent flashes can cause an octopus to flash on a step even if it begins that step with very little energy.
-      Consider the middle octopus with <code>1</code> energy in this situation:</p>
-    <pre><code>Before any steps:
+<p>The energy level of each octopus is a value between <code>0</code> and <code>9</code>. Here, the top-left octopus has an energy level of <code>5</code>, the bottom-right one has an energy level of <code>6</code>, and so on.</p>
+<p>You can model the energy levels and flashes of light in <em>steps</em>. During a single step, the following occurs:</p>
+<ul>
+<li>First, the energy level of each octopus increases by <code>1</code>.</li>
+<li>Then, any octopus with an energy level greater than <code>9</code> <em>flashes</em>. This increases the energy level of all adjacent octopuses by <code>1</code>, including octopuses that are diagonally adjacent. If this causes an octopus to have an energy level greater than <code>9</code>, it <em>also flashes</em>. This process continues as long as new octopuses keep having their energy level increased beyond <code>9</code>. (An octopus can only flash <em>at most once per step</em>.)</li>
+<li>Finally, any octopus that flashed during this step has its energy level set to <code>0</code>, as it used all of its energy to flash.</li>
+</ul>
+<p>Adjacent flashes can cause an octopus to flash on a step even if it begins that step with very little energy. Consider the middle octopus with <code>1</code> energy in this situation:</p>
+<pre><code>Before any steps:
 11111
 19991
 19191
@@ -58,9 +137,9 @@ After step 2:
 51115
 45654
 </code></pre>
-    <p>An octopus is <em>highlighted</em> when it flashed during the given step.</p>
-    <p>Here is how the larger example above progresses:</p>
-    <pre><code>Before any steps:
+<p>An octopus is <em>highlighted</em> when it flashed during the given step.</p>
+<p>Here is how the larger example above progresses:</p>
+<pre><code>Before any steps:
 5483143223
 2745854711
 5264556173
@@ -193,10 +272,9 @@ After step 10:
 <em>00</em>3224<em>0000</em>
 </code></pre>
 
-    <p>After step 10, there have been a total of <code>204</code> flashes. Fast forwarding, here is the same
-      configuration every 10 steps:</p>
+<p>After step 10, there have been a total of <code>204</code> flashes. Fast forwarding, here is the same configuration every 10 steps:</p>
 
-    <pre><code>After step 20:
+<pre><code>After step 20:
 3936556452
 56865568<em>0</em>6
 449655569<em>0</em>
@@ -304,17 +382,12 @@ After step 100:
 7922286866
 6789998766
 </code></pre>
-    <p>After 100 steps, there have been a total of <code><em>1656</em></code> flashes.</p>
-    <p>Given the starting energy levels of the dumbo octopuses in your cavern, simulate 100 steps. <em>How many total
-        flashes are there after 100 steps?</em></p>
-  </article>
-  <p>Your puzzle answer was <code>1667</code>.</p>
-  <article class="day-desc">
-    <h2 id="part2">--- Part Two ---</h2>
-    <p>It seems like the individual flashes aren't bright enough to navigate. However, you might have a better option:
-      the flashes seem to be <em>synchronizing</em>!</p>
-    <p>In the example above, the first time all octopuses flash simultaneously is step <code><em>195</em></code>:</p>
-    <pre><code>After step 193:
+<p>After 100 steps, there have been a total of <code><em>1656</em></code> flashes.</p>
+<p>Given the starting energy levels of the dumbo octopuses in your cavern, simulate 100 steps. <em>How many total flashes are there after 100 steps?</em></p>
+</article>
+<p>Your puzzle answer was <code>1667</code>.</p><article class="day-desc"><h2 id="part2">--- Part Two ---</h2><p>It seems like the individual flashes aren't bright enough to navigate. However, you might have a better option: the flashes seem to be <em>synchronizing</em>!</p>
+<p>In the example above, the first time all octopuses flash simultaneously is step <code><em>195</em></code>:</p>
+<pre><code>After step 193:
 5877777777
 8877777777
 7777777777
@@ -350,17 +423,27 @@ After step 195:
 <em>0000000000</em>
 <em>0000000000</em>
 </code></pre>
-    <p>If you can calculate the exact moments when the octopuses will all flash simultaneously, you should be able to
-      navigate through the cavern. <em>What is the first step during which all octopuses flash?</em></p>
-  </article>
-  <p>Your puzzle answer was <code>488</code>.</p>
-  <p class="day-success">Both parts of this puzzle are complete! They provide two gold stars: **</p>
-  <p>At this point, you should <a href="/2021">return to your Advent calendar</a> and try another puzzle.</p>
-  <p>If you still want to see it, you can <a href="11/input" target="_blank">get your puzzle input</a>.</p>
-  <p>You can also <span class="share">[Share<span class="share-content">on
-        <a href="https://twitter.com/intent/tweet?text=I%27ve+completed+%22Dumbo+Octopus%22+%2D+Day+11+%2D+Advent+of+Code+2021&amp;url=https%3A%2F%2Fadventofcode%2Ecom%2F2021%2Fday%2F11&amp;related=ericwastl&amp;hashtags=AdventOfCode"
-          target="_blank">Twitter</a>
-        <a href="javascript:void(0);"
-          onclick="var mastodon_instance=prompt('Mastodon Instance / Server Name?'); if(typeof mastodon_instance==='string' && mastodon_instance.length){this.href='https://'+mastodon_instance+'/share?text=I%27ve+completed+%22Dumbo+Octopus%22+%2D+Day+11+%2D+Advent+of+Code+2021+%23AdventOfCode+https%3A%2F%2Fadventofcode%2Ecom%2F2021%2Fday%2F11'}else{return false;}"
-          target="_blank">Mastodon</a></span>]</span> this puzzle.</p>
+<p>If you can calculate the exact moments when the octopuses will all flash simultaneously, you should be able to navigate through the cavern. <em>What is the first step during which all octopuses flash?</em></p>
+</article>
+<p>Your puzzle answer was <code>488</code>.</p><p class="day-success">Both parts of this puzzle are complete! They provide two gold stars: **</p>
+<p>At this point, you should <a href="https://adventofcode.com/2021">return to your Advent calendar</a> and try another puzzle.</p>
+<p>If you still want to see it, you can <a href="https://adventofcode.com/2021/day/11/input" target="_blank">get your puzzle input</a>.</p>
+<p>You can also <span class="share">[Share<span class="share-content">on
+  <a href="https://twitter.com/intent/tweet?text=I%27ve+completed+%22Dumbo+Octopus%22+%2D+Day+11+%2D+Advent+of+Code+2021&amp;url=https%3A%2F%2Fadventofcode%2Ecom%2F2021%2Fday%2F11&amp;related=ericwastl&amp;hashtags=AdventOfCode" target="_blank">Twitter</a>
+  <a href="https://adventofcode.com/2021/day/javascript:void(0);" onclick="var ms; try{ms=localStorage.getItem('mastodon.server')}finally{} if(typeof ms!=='string')ms=''; ms=prompt('Mastodon Server?',ms); if(typeof ms==='string' && ms.length){this.href='https://'+ms+'/share?text=I%27ve+completed+%22Dumbo+Octopus%22+%2D+Day+11+%2D+Advent+of+Code+2021+%23AdventOfCode+https%3A%2F%2Fadventofcode%2Ecom%2F2021%2Fday%2F11';try{localStorage.setItem('mastodon.server',ms);}finally{}}else{return false;}" target="_blank">Mastodon</a
+></span>]</span> this puzzle.</p>
 </main>
+
+<!-- ga -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-69522494-1', 'auto');
+ga('set', 'anonymizeIp', true);
+ga('send', 'pageview');
+</script>
+<!-- /ga -->
+</body>
+</html>
