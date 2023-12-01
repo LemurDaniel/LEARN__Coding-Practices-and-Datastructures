@@ -198,35 +198,12 @@ class Downloader {
 
   }
 
-  async #hasStarted() {
+  async #showTimer(StartEST, text) {
 
-    if (this.#year.match(/^\d{4}$/) == null) {
-      throw new Error(`'${YEAR}' is not a valid year. | Must be a four digit year like: 2023`)
-    }
-    if (parseInt(this.#year) < 2015) {
-      throw new Error(`'${YEAR}' is not a valid year. | Advent Of Code dates back to 2015`)
-    }
+    let CurrentEST = null
+    let timespan = null
 
-    const StartEST = (new Date(new Date("2023-12-01").toUTCString()))
-
-
-    let CurrentEST = (new Date(new Date().toUTCString()))
-    CurrentEST.setUTCHours(CurrentEST.getUTCHours() - 5)
-
-    if (this.#year < CurrentEST.getFullYear()) {
-      return true
-    }
-    if (this.#year > CurrentEST.getFullYear()) {
-      return false
-    }
-
-    let timespan = StartEST.getTime() - CurrentEST.getTime()
-    if (Math.floor(timespan / (1000 * 60 * 60 * 24)) > 0) {
-      return false
-    }
-
-
-    while (StartEST.getTime() - CurrentEST.getTime() > 0) {
+    do {
 
       CurrentEST = (new Date(new Date().toUTCString()))
       CurrentEST.setUTCHours(CurrentEST.getUTCHours() - 5)
@@ -241,12 +218,42 @@ class Downloader {
       const seconds = Math.floor(timespan / 1000)
       timespan -= seconds * 1000
 
-      process.stdout.write(` Timer until AOC starts: ${hours.toString().padStart(2, 0)}:${mins.toString().padStart(2, 0)}:${seconds.toString().padStart(2, 0)}`)
+      process.stdout.write(`${text}${hours.toString().padStart(2, 0)}:${mins.toString().padStart(2, 0)}:${seconds.toString().padStart(2, 0)}`)
 
       // wait a second for each loop
       await new Promise((resolve, reject) => setTimeout(() => resolve(), 1000))
       process.stdout.clearLine(0)
       process.stdout.cursorTo(0)
+    } while (StartEST.getTime() - CurrentEST.getTime() > 0)
+
+  }
+
+  async #hasStarted() {
+
+    if (this.#year.match(/^\d{4}$/) == null) {
+      throw new Error(`'${YEAR}' is not a valid year. | Must be a four digit year like: 2023`)
+    }
+    if (parseInt(this.#year) < 2015) {
+      throw new Error(`'${YEAR}' is not a valid year. | Advent Of Code dates back to 2015`)
+    }
+
+    const StartEST = (new Date(new Date("2023-12-01").toUTCString()))
+    const CurrentEST = (new Date(new Date().toUTCString()))
+    CurrentEST.setUTCHours(CurrentEST.getUTCHours() - 5)
+
+    if (this.#year < CurrentEST.getFullYear()) {
+      return true
+    }
+    if (this.#year > CurrentEST.getFullYear()) {
+      return false
+    }
+
+    let timespan = StartEST.getTime() - CurrentEST.getTime()
+    if (Math.floor(timespan / (1000 * 60 * 60 * 24)) > 0) {
+      return false
+    }
+    if (timespan > 0) {
+      await this.#showTimer(StartEST, "Timer until AOC starts: ")
     }
 
     return true
@@ -268,7 +275,7 @@ class Downloader {
       return console.log(`\x1b[38;2;0;0;255m No Problems were found \x1b[0m`)
     }
 
-    matches
+    await Promise.all(matches
       .map(path => path.split('/')[3])
       .map(day => day.padStart(2, '0'))
       // Not needed anymore
@@ -282,8 +289,15 @@ class Downloader {
       //    .match(/<p>Your puzzle answer was <code>[\dA-Za-z]+<\/code>.<\/p>/g)?.length < 2
       //)
       .sort((a, b) => parseInt(a) - parseInt(b))
-      .forEach(day => this.#downloadDay(day))
+      .map(day => this.#downloadDay(day))
+    )
 
+    if (matches.length < 25) {
+      const nextDay = matches.length + 1
+      const startTime = new Date(new Date(`${this.#year}-12-${nextDay.toString().padStart(2, 0)}`).toUTCString())
+      await this.#showTimer(startTime, ` Day ${nextDay} unlocks in: `)
+      return this.#downloadYear()
+    }
   }
 
   async #downloadDay(day) {
